@@ -8,7 +8,14 @@ export default {
 
 const Template: StoryFn<typeof Button> = (args) => <Button {...args} />;
 
-export const PrimaryButton = Template.bind({});
-PrimaryButton.args = {
+export const FilledButton = Template.bind({});
+FilledButton.args = {
   children: "데이트팝 Button",
+  variant: "filled",
+};
+
+export const OutlineButton = Template.bind({});
+OutlineButton.args = {
+  children: "데이트팝 Button",
+  variant: "outline",
 };
