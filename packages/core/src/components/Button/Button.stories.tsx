@@ -19,3 +19,9 @@ OutlineButton.args = {
   children: "데이트팝 Button",
   variant: "outline",
 };
+
+export const LightButton = Template.bind({});
+LightButton.args = {
+  children: "데이트팝 Button",
+  variant: "light",
+};
