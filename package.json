@@ -5,15 +5,13 @@
     "packages/*"
   ],
   "scripts": {
-    "start:core": "lerna run --scope @datepop/core storybook --stream",
+    "start": "storybook dev",
+    "test": "NODE_ENV=test jest --coverage",
+    "build-storybook": "storybook build",
     "build:core": "lerna run --scope @datepop/core build --stream",
     "test:core": "lerna run --scope @datepop/core test --stream",
-    "start:chart": "lerna run --scope @datepop/chart storybook --stream",
     "build:chart": "lerna run --scope @datepop/chart build --stream",
-    "test:chart": "lerna run --scope @datepop/chart test --stream",
-    "build": "lerna run build --stream",
-    "test": "NODE_ENV=test jest --coverage",
-    "build-storybook": "lerna run build-storybook --stream"
+    "test:chart": "lerna run --scope @datepop/chart test --stream"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",

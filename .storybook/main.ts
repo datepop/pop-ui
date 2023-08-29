@@ -1,7 +1,10 @@
 import type { StorybookConfig } from "@storybook/react-vite";
 
 const config: StorybookConfig = {
-  stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
+  stories: [
+    "../packages/**/*.mdx",
+    "../packages/**/*.stories.@(js|jsx|ts|tsx)",
+  ],
   addons: [
     {
       name: "@storybook/preset-scss",

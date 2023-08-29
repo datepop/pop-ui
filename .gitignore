@@ -28,3 +28,5 @@ dist
 Network Trash Folder
 Temporary Items
 .apdisk
+
+lerna-debug.log
