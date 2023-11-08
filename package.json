@@ -4,6 +4,13 @@
   "workspaces": [
     "packages/*"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/datepop/pop-ui"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "scripts": {
     "start:core": "lerna run --scope @datepop/core storybook --stream",
     "build:core": "lerna run --scope @datepop/core build --stream",
