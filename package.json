@@ -37,7 +37,7 @@
     "@tiptap/react": "^2.1.7",
     "@tiptap/starter-kit": "^2.1.7",
     "dayjs": "^1.11.9",
-    "embla-carousel-react": "^8.0.0-rc12",
+    "embla-carousel-react": "^7.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -51,8 +51,11 @@
     "@storybook/addon-interactions": "^7.3.2",
     "@storybook/addon-links": "^7.3.2",
     "@storybook/addon-themes": "^7.3.2",
+    "@storybook/addons": "^7.5.3",
     "@storybook/blocks": "^7.3.2",
     "@storybook/builder-vite": "^7.3.2",
+    "@storybook/components": "^7.5.3",
+    "@storybook/manager-api": "^7.5.3",
     "@storybook/preset-scss": "^1.0.3",
     "@storybook/react": "^7.3.2",
     "@storybook/react-vite": "^7.3.2",
@@ -81,6 +84,7 @@
     "lerna": "^7.1.5",
     "path": "^0.12.7",
     "polished": "^4.2.2",
+    "postcss": "^8.4.31",
     "postcss-nesting": "^12.0.1",
     "prettier": "^3.0.2",
     "prop-types": "^15.8.1",
@@ -94,5 +98,6 @@
     "typescript": "^5.2.2",
     "vite": "^4.4.9",
     "webpack": "^5.88.2"
-  }
+  },
+  "packageManager": "yarn@4.0.1"
 }
