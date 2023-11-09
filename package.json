@@ -16,7 +16,8 @@
     "build:core": "lerna run --scope @datepop/core build --stream",
     "test:core": "lerna run --scope @datepop/core test --stream",
     "build": "lerna run build --stream",
-    "test": "NODE_ENV=test jest --coverage"
+    "test": "NODE_ENV=test jest --coverage",
+    "build-storybook": "lerna run build-storybook --stream"
   },
   "devDependencies": {
     "jest": "^29.6.4",
@@ -24,5 +25,8 @@
     "lerna": "^7.1.5",
     "webpack": "^5.88.2"
   },
-  "packageManager": "yarn@4.0.1"
+  "packageManager": "yarn@4.0.1",
+  "dependencies": {
+    "chromatic": "^7.6.0"
+  }
 }
