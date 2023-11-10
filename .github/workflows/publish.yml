@@ -10,8 +10,8 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     env:
-      NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -29,4 +29,4 @@ jobs:
       - name: Drop uncommitted changes
         run: git stash drop
       - name: Lerna publish
-        run: yes | yarn lerna publish --canary
+        run: echo 'y' | yarn lerna publish --canary
