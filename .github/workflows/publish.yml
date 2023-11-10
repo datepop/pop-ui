@@ -28,5 +28,10 @@ jobs:
         run: git stash
       - name: Drop uncommitted changes
         run: git stash drop
+      - name: Authenticate with Registry
+        run: |
+          echo "@datepop:registry=http://npm.pkg.github.com/" > .npmrc
+          echo "registry=http://npm.pkg.github.com/" >> .npmrc
+          echo "//npm.pkg.github.com/:_authToken=$NPM_TOKEN" >> .npmrc
       - name: Lerna publish
         run: echo 'y' | yarn lerna publish --canary
