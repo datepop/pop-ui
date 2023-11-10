@@ -24,8 +24,9 @@ jobs:
         run: yarn
       - name: Lerna build
         run: yarn build
-      - name: Delete uncommitted changes
+      - name: Stash uncommitted changes
         run: git stash
+      - name: Drop uncommitted changes
         run: git stash drop
       - name: Lerna publish
         run: yarn lerna publish --canary
