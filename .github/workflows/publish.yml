@@ -1,9 +1,10 @@
 name: "lerna publish"
 
 on:
-  push:
-    branches:
-      - main
+  push
+  # :
+  #   branches:
+  #     - main
 
 jobs:
   publish:
