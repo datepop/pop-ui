@@ -29,4 +29,4 @@ jobs:
       - name: Drop uncommitted changes
         run: git stash drop
       - name: Lerna publish
-        run: yarn lerna publish --canary
+        run: yes | yarn lerna publish --canary
