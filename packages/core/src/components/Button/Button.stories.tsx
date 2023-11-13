@@ -12,3 +12,9 @@ export const PrimaryButton = Template.bind({});
 PrimaryButton.args = {
   children: "데이트팝 Button",
 };
+
+export const OutlineButton = Template.bind({});
+OutlineButton.args = {
+  children: "데이트팝 Button outline",
+  variant: "outline",
+};
