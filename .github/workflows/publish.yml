@@ -38,3 +38,5 @@ jobs:
           echo "//npm.pkg.github.com/:_authToken=$NPM_TOKEN" >> .npmrc
       - name: Lerna publish
         run: echo 'y' | yarn lerna publish patch
+      - name: Push version change
+        run: git push origin main
