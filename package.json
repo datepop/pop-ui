@@ -19,7 +19,7 @@
     "build": "lerna run build --stream",
     "test": "NODE_ENV=test jest --coverage",
     "build-storybook": "storybook build",
-    "token-transformed": "token-transformer token.json transformed-token.json --expandTypography",
+    "token-transformed": "token-transformer token.json transformed-token.json --expandTypography --expandShadow --expandCompotision --expandBorder",
     "token-build": "style-dictionary build"
   },
   "devDependencies": {
