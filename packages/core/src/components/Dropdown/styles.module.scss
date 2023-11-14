@@ -1,0 +1,103 @@
+@import "../shared/variables.scss";
+
+.left_label_textfield {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.top_label_textfield {
+  display: flex;
+  flex-direction: column;
+}
+
+.sm_label {
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0em;
+  text-align: left;
+  margin: 8px 3px;
+}
+
+.md_label {
+  font-family: Pretendard;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0em;
+  text-align: left;
+  margin: 12px 4px;
+}
+
+.lg_label {
+  font-family: Pretendard;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: 0em;
+  text-align: left;
+  margin: 16px 4px;
+}
+
+.sm_tooltip {
+  width: 14px;
+  height: 14px;
+}
+
+.md_tooltip {
+  width: 16px;
+  height: 16px;
+}
+
+.lg_tooltip {
+  width: 18px;
+  height: 18px;
+}
+
+@mixin border_focus {
+  &:hover {
+    outline: 1.5px solid $color-aqua-300;
+    border-color: transparent;
+  }
+  &:focus-within {
+    outline: 1.5px solid $color-aqua-500;
+    border-color: transparent;
+  }
+}
+
+.sm_textfield {
+  input {
+    height: 30px;
+    padding: 8px;
+    font-size: 14px;
+    min-height: 30px;
+    @include border_focus;
+  }
+}
+
+.md_textfield {
+  input {
+    height: 40px;
+    padding: 12px;
+    font-size: 14px;
+    min-height: 40px;
+    @include border_focus;
+  }
+}
+
+.lg_textfield {
+  input {
+    height: 50px;
+    padding: 16px;
+    font-size: 16px;
+    min-height: 50px;
+    @include border_focus;
+  }
+}
+
+.input_description {
+  margin-top: 8px;
+}
+
+.input_error_msg {
+  margin-top: 4px;
+}
