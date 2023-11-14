@@ -3,3 +3,4 @@ export { TextField } from "./TextField";
 export { SearchBar } from "./SearchBar";
 export { Dropdown } from "./Dropdown";
 export { Checkbox } from "./Checkbox";
+export { Radio } from "./Radio";
