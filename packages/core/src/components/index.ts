@@ -4,3 +4,4 @@ export { SearchBar } from "./SearchBar";
 export { Dropdown } from "./Dropdown";
 export { Checkbox } from "./Checkbox";
 export { Radio } from "./Radio";
+export { Toggle } from "./Toggle";
