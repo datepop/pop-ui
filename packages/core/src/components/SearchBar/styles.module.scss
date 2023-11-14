@@ -89,6 +89,7 @@
 .sm_textfield {
   input {
     height: 30px;
+    min-height: 30px;
     padding: 8px;
     font-size: 14px;
     @include border_focus;
@@ -98,6 +99,7 @@
 .md_textfield {
   input {
     height: 40px;
+    min-height: 40px;
     padding: 12px;
     font-size: 14px;
     @include border_focus;
@@ -107,6 +109,7 @@
 .lg_textfield {
   input {
     height: 50px;
+    min-height: 50px;
     padding: 16px;
     font-size: 16px;
     @include border_focus;
