@@ -1,0 +1,24 @@
+@import "../shared/variables.scss";
+
+@mixin tooltip_text {
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
+  color: $color-gray-0;
+}
+
+.tooltip_body {
+  display: flex;
+  flex-direction: column;
+}
+
+.tooltip_title {
+  @include tooltip_text;
+  margin-bottom: 8px;
+}
+
+.tooltip_content {
+  @include tooltip_text;
+}
