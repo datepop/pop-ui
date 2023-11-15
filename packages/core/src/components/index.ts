@@ -7,3 +7,4 @@ export { Radio } from "./Radio";
 export { Toggle } from "./Toggle";
 export { DatePicker } from "./DatePicker";
 export { TimePicker } from "./TimePicker";
+export { Pagination } from "./Pagination";
