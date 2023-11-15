@@ -1,0 +1,67 @@
+@import "../shared/variables.scss";
+
+@mixin focus {
+  &:hover {
+    outline: 1.5px solid $color-aqua-300;
+    border-color: transparent;
+    background-color: $color-gray-0;
+  }
+  &:focus-within {
+    outline: 1.5px solid $color-aqua-500;
+    border-color: transparent;
+  }
+  &[data-in-range] {
+    background-color: $color-aqua-50;
+  }
+  &[data-selected] {
+    background-color: $color-aqua-500;
+    &:hover {
+      outline: 1.5px solid $color-aqua-300;
+      background-color: $color-aqua-50;
+      color: $color-gray-1000;
+      border-color: transparent;
+    }
+  }
+}
+
+.sm_textfield {
+  button {
+    height: 30px;
+    min-height: 30px;
+    padding: 8px;
+    font-size: 14px;
+    line-height: 100%;
+    @include focus;
+  }
+  input {
+    @include focus;
+  }
+}
+
+.md_textfield {
+  button {
+    height: 40px;
+    min-height: 40px;
+    padding: 12px;
+    font-size: 14px;
+    line-height: 100%;
+    @include focus;
+  }
+  input {
+    @include focus;
+  }
+}
+
+.lg_textfield {
+  button {
+    height: 50px;
+    min-height: 50px;
+    padding: 16px;
+    font-size: 16px;
+    line-height: 100%;
+    @include focus;
+  }
+  input {
+    @include focus;
+  }
+}

@@ -5,3 +5,4 @@ export { Dropdown } from "./Dropdown";
 export { Checkbox } from "./Checkbox";
 export { Radio } from "./Radio";
 export { Toggle } from "./Toggle";
+export { DatePicker } from "./DatePicker";
