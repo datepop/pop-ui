@@ -21,6 +21,12 @@
     &:hover {
       background-color: $color-gray-50;
     }
+    .border_bottom {
+      position: absolute;
+      bottom: -9px;
+      left: 0;
+      width: 100%;
+    }
     &[data-active] {
       position: relative;
       color: $color-aqua-900;
