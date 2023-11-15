@@ -1,0 +1,65 @@
+@import "../shared/variables.scss";
+
+@mixin alert_title {
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
+}
+
+@mixin alert_content {
+  color: $color-gray-900;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 150%;
+}
+
+.light_success {
+  background-color: $color-green-50;
+  border-radius: 6px;
+  border: 1.5px solid $color-green-500;
+  span {
+    @include alert_title;
+    color: $color-green-500;
+  }
+  div {
+    @include alert_content;
+  }
+}
+.light_error {
+  background-color: $color-red-50;
+  border-radius: 6px;
+  border: 1.5px solid $color-red-500;
+  span {
+    @include alert_title;
+    color: $color-red-500;
+  }
+  div {
+    @include alert_content;
+  }
+}
+.fill_success {
+  background-color: $color-green-100;
+  border-radius: 6px;
+  span {
+    @include alert_title;
+    color: $color-green-500;
+  }
+  div {
+    @include alert_content;
+  }
+}
+.fill_error {
+  background-color: $color-red-100;
+  border-radius: 6px;
+  span {
+    @include alert_title;
+    color: $color-red-500;
+  }
+  div {
+    @include alert_content;
+  }
+}
