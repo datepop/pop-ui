@@ -1,0 +1,36 @@
+@import "../shared/variables.scss";
+
+.tab_title_list {
+  border-bottom: 2px solid $color-gray-200;
+  button {
+    margin-bottom: 7px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    height: $button-size-button-large;
+    color: $color-gray-400;
+    border-radius: 6px;
+    border: none;
+    padding: 0 20px;
+    cursor: pointer;
+    &:hover {
+      background-color: $color-gray-50;
+    }
+    &[data-active] {
+      position: relative;
+      color: $color-aqua-900;
+      .border_bottom {
+        position: absolute;
+        bottom: -9px;
+        left: 0;
+        width: 100%;
+        border-bottom: 2px solid $color-aqua-900;
+        border-color: $color-aqua-900;
+      }
+    }
+  }
+}

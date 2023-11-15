@@ -8,3 +8,4 @@ export { Toggle } from "./Toggle";
 export { DatePicker } from "./DatePicker";
 export { TimePicker } from "./TimePicker";
 export { Pagination } from "./Pagination";
+export { Tab } from "./Tab";
