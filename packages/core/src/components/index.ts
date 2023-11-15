@@ -9,3 +9,4 @@ export { DatePicker } from "./DatePicker";
 export { TimePicker } from "./TimePicker";
 export { Pagination } from "./Pagination";
 export { Tab } from "./Tab";
+export { SegmentButton } from "./SegmentButton";
