@@ -234,14 +234,6 @@ export const Table = ({
                       {rowData?.row}
                     </tr>
                   )}
-                  {/* <tr
-                  key={`table_${tableId || 0}_tr_${index}`}
-                  className={
-                    striped && index % 2 === 1 ? styles.tr_gray : undefined
-                  }
-                >
-                  {row}
-                </tr> */}
                 </Draggable>
               ))}
               {dropProvided.placeholder}
