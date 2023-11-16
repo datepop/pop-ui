@@ -184,13 +184,12 @@ export const Table = ({
           {headerList?.map((header, index) => (
             <th
               key={`table_header_col_${index}`}
-              className={styles.th_cell}
+              className={sortable ? styles.th_cell_sortable : styles.th_cell}
               onClick={() => {
                 if (sortable) {
                   sortingHandler(index);
                 }
               }}
-              style={sortable ? { cursor: "pointer" } : undefined}
             >
               <div>
                 {header}

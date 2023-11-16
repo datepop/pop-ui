@@ -36,6 +36,23 @@
       align-items: center;
       justify-content: center;
     }
+    border-bottom: 1px solid $color-gray-200;
+    background-color: $color-gray-50;
+  }
+  .th_cell_sortable {
+    div {
+      color: $color-gray-900;
+      font-family: Pretendard;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 100%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: center;
+    }
     img {
       width: 14px;
       height: 14px;
@@ -43,6 +60,10 @@
     }
     border-bottom: 1px solid $color-gray-200;
     background-color: $color-gray-50;
+    &:hover {
+      cursor: pointer;
+      background-color: $color-gray-100;
+    }
   }
   .td_cell {
     color: $color-gray-800;
