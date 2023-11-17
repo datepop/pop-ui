@@ -1,0 +1,94 @@
+@import "../shared/variables.scss";
+@import "../shared/font.css";
+
+@mixin radio_color {
+  &:hover {
+    background-color: $color-aqua-50;
+    border-color: $color-aqua-300;
+    border-width: 2px;
+  }
+  &:checked {
+    background-color: $color-aqua-500;
+    border-color: $color-aqua-500;
+  }
+  &:disabled {
+    background-color: $color-gray-100;
+    border-color: $color-gray-200;
+    border-width: 2px;
+  }
+}
+
+.sm_radio {
+  input {
+    @include radio_color;
+    width: 18px;
+    height: 18px;
+  }
+  label {
+    height: 18px;
+    color: $color-gray-900;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+  }
+  div {
+    color: $color-gray-600;
+    font-family: Pretendard;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+  }
+}
+
+.md_radio {
+  input {
+    @include radio_color;
+    width: 24px;
+    height: 24px;
+  }
+  label {
+    height: 24px;
+    color: $color-gray-900;
+    font-family: Pretendard;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+  }
+  div {
+    color: $color-gray-600;
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+  }
+}
+
+.lg_radio {
+  input {
+    @include radio_color;
+    width: 32px;
+    height: 32px;
+  }
+  label {
+    height: 32px;
+    color: $color-gray-900;
+    font-family: Pretendard;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+  }
+  div {
+    color: $color-gray-600;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+  }
+}

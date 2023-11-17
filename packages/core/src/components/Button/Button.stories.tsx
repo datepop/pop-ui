@@ -11,10 +11,39 @@ const Template: StoryFn<typeof Button> = (args) => <Button {...args} />;
 export const PrimaryButton = Template.bind({});
 PrimaryButton.args = {
   children: "데이트팝 Button",
+  styleType: "primary",
+  size: "md",
+  disabled: false,
 };
 
-export const OutlineButton = Template.bind({});
-OutlineButton.args = {
-  children: "데이트팝 Button outline",
-  variant: "outline",
+export const PrimaryLineButton = Template.bind({});
+PrimaryLineButton.args = {
+  children: "데이트팝 Button",
+  styleType: "primaryline",
+  size: "md",
+  disabled: false,
+};
+
+export const BasicButton = Template.bind({});
+BasicButton.args = {
+  children: "데이트팝 Button",
+  styleType: "basic",
+  size: "md",
+  disabled: false,
+};
+
+export const DangerButton = Template.bind({});
+DangerButton.args = {
+  children: "데이트팝 Button",
+  styleType: "danger",
+  size: "md",
+  disabled: false,
+};
+
+export const SettingButton = Template.bind({});
+SettingButton.args = {
+  children: "데이트팝 Button",
+  styleType: "setting",
+  size: "md",
+  disabled: false,
 };

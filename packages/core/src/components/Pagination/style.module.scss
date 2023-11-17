@@ -1,0 +1,52 @@
+@import "../shared/variables.scss";
+@import "../shared/font.css";
+
+.pagination {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  @mixin number_box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    gap: 10px;
+    font-family: Pretendard;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0px;
+    text-align: center;
+    color: $color-gray-600;
+    border: none;
+    cursor: pointer;
+    &:hover {
+      background-color: $color-gray-50;
+    }
+    &:active {
+      background-color: $color-gray-100;
+    }
+  }
+  .page_index {
+    @include number_box;
+    background-color: #ffffff00;
+  }
+  .page_index_active {
+    @include number_box;
+    font-weight: 700;
+    background-color: $color-gray-100;
+    color: $color-gray-800;
+  }
+  .arrow {
+    @include number_box;
+    border: 1px solid $color-gray-400;
+    margin: 0 8px;
+    width: 40px;
+    height: 40px;
+    background-color: $color-gray-0;
+  }
+}

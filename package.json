@@ -18,7 +18,9 @@
     "test:core": "lerna run --scope @datepop/core test --stream",
     "build": "lerna run build --stream",
     "test": "NODE_ENV=test jest --coverage",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "token-transformed": "token-transformer token.json transformed-token.json --expandTypography --expandShadow --expandCompotision --expandBorder",
+    "token-build": "style-dictionary build"
   },
   "devDependencies": {
     "@storybook/addon-actions": "^7.3.2",
@@ -45,7 +47,9 @@
     "sass-loader": "^13.3.2",
     "storybook": "^7.3.2",
     "storybook-addon-mock": "^4.2.1",
+    "style-dictionary": "^3.9.0",
     "style-loader": "^3.3.3",
+    "token-transformer": "^0.0.33",
     "vite": "^4.4.9",
     "webpack": "^5.88.2"
   },
