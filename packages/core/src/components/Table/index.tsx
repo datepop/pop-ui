@@ -17,6 +17,7 @@ interface RowData {
     cell: ReactNode;
     sortTarget?: string | number | boolean;
     dndId?: string | number;
+    trClassName?: string;
   }; // sortTarget은 cell의 내용이 Html element인 경우 sort를 위해 따로 비교할 수 있는 값을 사용한다
 }
 
@@ -31,7 +32,24 @@ export interface TableProps {
   onDragEnd?: (rows: { dndId?: string | number }[]) => void;
   className?: string;
 }
-
+/**
+ * ----- table props -----
+ ** tableId: 드래그앤드롭에 사용하는 고유한 id
+ ** headerList: ReactNode[]인 헤더 리스트
+ ** tableData: {
+      [key:string]: { 
+        cell:ReactNode; 
+        sortTarget: string | number | boolean; 
+        dndId:(사용시, 첫번째 key value에선 필수) string | number; 
+        trClassName:(사용시, 첫번째 key value에선 필수) string;
+      }
+    }[]
+ ** sortable: 정렬 가능여부
+ ** draggable: 드래그앤드롭 가능여부
+ ** striped: stripe 스타일 적용 여부 
+ ** onDragEnd: 드래그앤드롭 이후, 새로 정렬된 dndId list return
+ ** className: table custom style 적용 필요시 사용  
+ */
 export const Table = ({
   tableId,
   headerList,
@@ -43,7 +61,9 @@ export const Table = ({
   className,
 }: TableProps) => {
   const [rows, setRows] =
-    useState<{ row: JSX.Element; dndId?: string | number }[]>();
+    useState<
+      { row: JSX.Element; dndId?: string | number; trClassName?: string }[]
+    >();
   const [sortedColIndex, setSortedColIndex] = useState<number>();
   const [sortedDirection, setSortedDirection] = useState<"asc" | "desc">();
 
@@ -70,7 +90,11 @@ export const Table = ({
           );
         }
 
-        return { row: row, dndId: data[dataKeys[0]]?.dndId };
+        return {
+          row: row,
+          dndId: data[dataKeys[0]]?.dndId,
+          trClassName: data[dataKeys[0]]?.trClassName,
+        };
       });
       setRows(tableRows);
     },
@@ -220,9 +244,9 @@ export const Table = ({
                       {...dragProvided.draggableProps}
                       ref={dragProvided.innerRef}
                       key={`table_${tableId || 0}_tr_${index}`}
-                      className={
-                        striped && index % 2 === 1 ? styles.tr_gray : undefined
-                      }
+                      className={`${
+                        striped && index % 2 === 1 ? styles.tr_gray : ""
+                      } ${rowData.trClassName}`}
                     >
                       {draggable && (
                         <td className={styles.td_cell} style={{ padding: 0 }}>
