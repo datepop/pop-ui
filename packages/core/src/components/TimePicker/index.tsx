@@ -8,6 +8,11 @@ export interface TimePickerProps extends TimeInputProps {
   size?: "sm" | "md" | "lg";
 }
 
+/**
+ * ----- time picker props -----
+ ** size: 'sm' | 'md' | 'lg'
+ ** 기타 props는 mantine time input props 사용: https://v6.mantine.dev/dates/time-input/?t=props
+ */
 export const TimePicker = ({ size = "md", ...props }: TimePickerProps) => {
   const timeInputRef = useRef<HTMLInputElement>(null);
 

@@ -15,6 +15,14 @@ export interface ImageUploaderProps extends DropzoneProps {
   file?: string | FileWithPath;
 }
 
+/**
+ * ----- image uploader props -----
+ ** width: number
+ ** height: number
+ ** defaultMsg: ReactNode, placeholder 대체
+ ** file: string | FileWithPath
+ ** 기타 props는 mantine dropzone props 사용: https://v6.mantine.dev/others/dropzone/?t=props
+ */
 export const ImageUploader = ({
   width,
   height,

@@ -18,6 +18,19 @@ export interface SearchBarProps extends AutocompleteProps {
   onClear?: () => void;
 }
 
+/**
+ * ----- search bar props -----
+ ** label?: string, 라벨
+ ** labelPosition?: "top" | "left", 라벨 위치
+ ** size?: "sm" | "md" | "lg"
+ ** tooltip?: string, 툴팁
+ ** tooltipPosition?: "top" | "bottom" | "left" | "right", 툴팁 위치
+ ** description?: string, 상세 텍스트
+ ** errorMsg?: string, 에러 메시지
+ ** onChange?: (event: any) => void
+ ** onClear?: () => void, clear button 노출시 필요
+ ** 기타 props는 mantine autocomplete props 사용: https://v6.mantine.dev/core/autocomplete/?t=props
+ */
 export const SearchBar = ({
   label,
   labelPosition = "top",

@@ -8,6 +8,12 @@ export interface ModalProps extends MantineModalProps {
   width?: number;
 }
 
+/**
+ * ----- modal props -----
+ ** size: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+ ** width: number
+ ** 기타 props는 mantine modal props 사용: https://v6.mantine.dev/core/modal/?t=props
+ */
 export const Modal = ({
   size = "md",
   width,

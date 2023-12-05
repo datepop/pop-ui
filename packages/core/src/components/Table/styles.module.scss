@@ -23,7 +23,7 @@
     }
   }
   .th_cell {
-    div {
+    > div {
       color: $color-gray-900;
       font-family: Pretendard;
       font-size: 14px;
@@ -40,7 +40,7 @@
     background-color: $color-gray-50;
   }
   .th_cell_sortable {
-    div {
+    > div {
       color: $color-gray-900;
       font-family: Pretendard;
       font-size: 14px;
@@ -73,7 +73,7 @@
     font-weight: 500;
     line-height: 140%;
     border-bottom: 1px solid $color-gray-100;
-    div {
+    > div {
       display: flex;
       align-items: center;
       justify-content: center;
