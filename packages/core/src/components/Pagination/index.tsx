@@ -12,6 +12,14 @@ export interface PaginationProps extends HTMLAttributes<HTMLDivElement> {
   onPageChange?: (e: number) => void;
 }
 
+/**
+ * ----- pagination props -----
+ ** currentPageIdx: 0부터 시작, 현재 page index
+ ** rowsPerPage: 한 페이지에 보이는 아이템 개수
+ ** totalLength: 페이지네이션 사용할 data의 총 개수
+ ** paginationSize: 페이지네이션 숫자 노출 수 default: 5 (1~5)
+ ** onPageChange: (page: number) => void
+ */
 export const Pagination = ({
   currentPageIdx,
   rowsPerPage,

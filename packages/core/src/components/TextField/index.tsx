@@ -21,6 +21,23 @@ export interface TextFieldProps extends InputProps {
   onClear?: () => void;
 }
 
+/**
+ * ----- textfield props -----
+ ** label: string, 라벨
+ ** labelPosition: "top" | "left", 라벨 위치
+ ** size: "sm" | "md" | "lg"
+ ** required: boolean, 필수 입력여부
+ ** tooltip: string, 툴팁
+ ** tooltipPosition: "top" | "bottom" | "left" | "right", 툴팁 위치
+ ** description: string, 상세 텍스트
+ ** errorMsg: string, 에러 메시지
+ ** textarea: boolean, textarea element로 사용할지 여부
+ ** minRows: number, textarea element 사용시, height 대신 사용
+ ** maxTextCount: number, 최대 텍스트 제한
+ ** onChange: (event: any) => void
+ ** onClear: () => void
+ ** 기타 props는 mantine input props 사용: https://v6.mantine.dev/core/input/?t=props
+ */
 export const TextField = ({
   label,
   labelPosition = "top",

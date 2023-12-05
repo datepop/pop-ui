@@ -9,6 +9,12 @@ export interface TooltipProps extends MantineTooltipProps {
   content: string;
 }
 
+/**
+ * ----- tooltip props -----
+ ** title: string
+ ** content: string
+ ** 기타 props는 mantine tooltip props 사용: https://v6.mantine.dev/core/tooltip/?t=props
+ */
 export const Tooltip = ({
   title,
   content,

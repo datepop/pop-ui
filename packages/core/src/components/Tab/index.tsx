@@ -12,6 +12,17 @@ export interface TabProps extends TabsProps {
   containerPaddingTop?: "xs" | "sm" | "md" | "lg" | "xl";
 }
 
+/**
+ * ----- tab props -----
+ ** tabList: {
+      title: string;
+      value: string;
+      body: ReactNode;
+      icon?: ReactNode;
+    }[];
+ ** containerPaddingTop?: "xs" | "sm" | "md" | "lg" | "xl";
+ ** 기타 props는 mantine tabs props 사용: https://v6.mantine.dev/core/tabs/?t=props
+ */
 export const Tab = ({
   tabList = [],
   containerPaddingTop,

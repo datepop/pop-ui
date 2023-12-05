@@ -8,6 +8,11 @@ export interface RadioProps extends MantineRadioProps {
   size?: "sm" | "md" | "lg";
 }
 
+/**
+ * ----- radio props -----
+ ** size: 'sm' | 'md' | 'lg'
+ ** 기타 props는 mantine radio props 사용: https://v6.mantine.dev/core/radio/?t=props
+ */
 export const Radio = ({ size = "md", ...props }: RadioProps) => {
   let sizeStyle = styles.md_radio;
   if (size === "sm") {

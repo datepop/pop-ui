@@ -10,6 +10,12 @@ export interface ButtonProps extends MantineButtonProps {
   styleType?: "primary" | "primaryline" | "basic" | "danger" | "setting";
 }
 
+/**
+ * ----- button props -----
+ ** size: 'sm' | 'md' | 'lg'
+ ** styleType: 'primary' | 'primaryline' | 'basic' | 'danger' | 'setting'
+ ** 기타 props는 mantine button props 사용: https://v6.mantine.dev/core/button/?t=props
+ */
 export const Button = ({
   children,
   size = "md",
