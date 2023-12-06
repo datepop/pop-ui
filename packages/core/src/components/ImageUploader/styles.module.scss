@@ -17,8 +17,8 @@
   }
   .preview {
     object-fit: cover;
-    width: 200px;
-    height: 200px;
+    width: 100%;
+    height: 100%;
   }
   div {
     display: flex;
@@ -36,6 +36,28 @@
       font-style: normal;
       font-weight: 500;
       line-height: 140%;
+    }
+  }
+}
+
+.image_uploader_wrapper {
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+
+  .file_clear_button {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: -12px;
+    right: -12px;
+    width: 24px;
+    height: 24px;
+    z-index: 1;
+    cursor: pointer;
+    &:hover {
+      opacity: 0.9;
     }
   }
 }
