@@ -6,20 +6,27 @@ const config: StorybookConfig = {
     "../packages/**/*.mdx",
     "../packages/**/*.stories.@(js|jsx|ts|tsx)",
   ],
-  addons: [{
-    name: "@storybook/preset-scss",
-    options: {
-      cssLoaderOptions: {
-        importLoaders: 1,
-        modules: {
-          mode: "local",
-          auto: true,
-          localIdentName: "[name]__[local]___[hash:base64:5]",
-          exportGlobals: true,
+  addons: [
+    {
+      name: "@storybook/preset-scss",
+      options: {
+        cssLoaderOptions: {
+          importLoaders: 1,
+          modules: {
+            mode: "local",
+            auto: true,
+            localIdentName: "[name]__[local]___[hash:base64:5]",
+            exportGlobals: true,
+          },
         },
       },
     },
-  }, getAbsolutePath("@storybook/addon-links"), getAbsolutePath("@storybook/addon-essentials"), getAbsolutePath("@storybook/addon-interactions"), getAbsolutePath("@storybook/addon-themes"), getAbsolutePath("storybook-addon-mock"), getAbsolutePath("@storybook/addon-mdx-gfm")],
+    getAbsolutePath("@storybook/addon-links"),
+    getAbsolutePath("@storybook/addon-essentials"),
+    getAbsolutePath("@storybook/addon-interactions"),
+    getAbsolutePath("@storybook/addon-themes"),
+    getAbsolutePath("storybook-addon-mock"),
+  ],
   framework: {
     name: getAbsolutePath("@storybook/react-vite"),
     options: {},
