@@ -1,4 +1,5 @@
 {
+  "exclude": ["node_modules", "**/dist", "storybook-static"],
   "compilerOptions": {
     "module": "ESNext",
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
@@ -17,9 +18,9 @@
     "noFallthroughCasesInSwitch": true,
     "declarationMap": false,
     "esModuleInterop": true,
-    "allowImportingTsExtensions": true,
+    // "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
-    "emitDeclarationOnly": true,
+    // "emitDeclarationOnly": true,
     "skipLibCheck": true
   },
   "references": [{ "path": "./tsconfig.node.json" }]

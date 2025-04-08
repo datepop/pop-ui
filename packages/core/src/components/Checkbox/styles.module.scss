@@ -1,5 +1,5 @@
-@import "../shared/variables.scss";
-@import "../shared/font.css";
+@use "../shared/variables.scss" as *;
+@use "../shared/font.css" as *;
 
 @mixin checkbox_color {
   &:hover {

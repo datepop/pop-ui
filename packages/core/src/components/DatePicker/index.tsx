@@ -39,6 +39,9 @@ export const DatePicker = ({
   if (withTime) {
     return (
       <DateTimePicker
+        placeholder={undefined}
+        onPointerEnterCapture={undefined}
+        onPointerLeaveCapture={undefined}
         className={sizeStyle}
         size={size}
         locale="ko"
