@@ -37,8 +37,8 @@ jobs:
       - name: Drop uncommitted changes
         run: |
           git add .
-          git stash
-          git stash drop
+          git stash || true
+          git stash drop || true
 
       - name: Lerna publish all changed packages
         run: |
