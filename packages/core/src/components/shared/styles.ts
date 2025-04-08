@@ -1,49 +1,51 @@
-import { css } from '@storybook/theming';
-import { rgba } from 'polished';
+import { css } from "@storybook/theming";
+import { rgba } from "polished";
+
+type SerializedStyles = ReturnType<typeof css>;
 
 export const background = {
-  app: '#F6F9FC',
-  appInverse: '#7A8997',
-  positive: '#E1FFD4',
-  negative: '#FEDED2',
-  warning: '#FFF5CF',
-  calmBlue: '#E3F3FF',
+  app: "#F6F9FC",
+  appInverse: "#7A8997",
+  positive: "#E1FFD4",
+  negative: "#FEDED2",
+  warning: "#FFF5CF",
+  calmBlue: "#E3F3FF",
 };
 
 export const color = {
-  aqua: '#0FD3D8', 
-  secondary: '#029CFD', 
-  tertiary: '#E3E6E8', 
+  aqua: "#0FD3D8",
+  secondary: "#029CFD",
+  tertiary: "#E3E6E8",
 
-  orange: '#FC521F',
-  gold: '#FFAE00',
-  green: '#66BF3C',
-  seafoam: '#37D5D3',
-  purple: '#6F2CAC',
-  ultraviolet: '#2A0481',
-  red: '#ff4400',
+  orange: "#FC521F",
+  gold: "#FFAE00",
+  green: "#66BF3C",
+  seafoam: "#37D5D3",
+  purple: "#6F2CAC",
+  ultraviolet: "#2A0481",
+  red: "#ff4400",
 
-  bluelight: '#E3F3FF',
-  bluelighter: '#F5FBFF',
+  bluelight: "#E3F3FF",
+  bluelighter: "#F5FBFF",
 
-  lightest: '#FFFFFF',
-  lighter: '#F7FAFC',
-  light: '#EEF3F6',
-  mediumlight: '#ECF4F9',
-  medium: '#D9E8F2',
-  mediumdark: '#73828C',
-  dark: '#5C6870',
-  darker: '#454E54',
-  darkest: '#2E3438',
-  tr10: 'rgba(0, 0, 0, 0.1)',
-  tr5: 'rgba(0, 0, 0, 0.05)',
+  lightest: "#FFFFFF",
+  lighter: "#F7FAFC",
+  light: "#EEF3F6",
+  mediumlight: "#ECF4F9",
+  medium: "#D9E8F2",
+  mediumdark: "#73828C",
+  dark: "#5C6870",
+  darker: "#454E54",
+  darkest: "#2E3438",
+  tr10: "rgba(0, 0, 0, 0.1)",
+  tr5: "rgba(0, 0, 0, 0.05)",
 
-  border: 'hsla(203, 50%, 30%, 0.15)',
+  border: "hsla(203, 50%, 30%, 0.15)",
 
-  positive: '#448028',
-  negative: '#D43900',
-  warning: '#A15C20',
-  selected: '#0271B6',
+  positive: "#448028",
+  negative: "#D43900",
+  warning: "#A15C20",
+  selected: "#0271B6",
 };
 
 export const spacing = {
@@ -64,9 +66,9 @@ export const typography = {
     code: '"SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace',
   },
   weight: {
-    regular: '400',
-    bold: '700',
-    extrabold: '800',
+    regular: "400",
+    bold: "700",
+    extrabold: "800",
   },
   size: {
     s1: 12,
@@ -85,7 +87,7 @@ export const typography = {
 export const breakpoint = 600;
 export const pageMargin = 5.55555;
 
-export const pageMargins = css`
+export const pageMargins: SerializedStyles = css`
   padding: 0 ${spacing.padding.medium}px;
   @media (min-width: ${breakpoint * 1}px) {
     margin: 0 ${pageMargin * 1}%;
@@ -101,10 +103,13 @@ export const pageMargins = css`
   }
 `;
 
-export const hoverEffect = css`
+export const hoverEffect: SerializedStyles = css`
   border: 1px solid ${color.border};
   border-radius: ${spacing.borderRadius.small}px;
-  transition: background 150ms ease-out, border 150ms ease-out, transform 150ms ease-out;
+  transition:
+    background 150ms ease-out,
+    border 150ms ease-out,
+    transform 150ms ease-out;
 
   &:hover,
   &.__hover {
@@ -124,7 +129,7 @@ export const zIndex = {
   tooltip: 2147483647,
 };
 
-export const headers = {
+export const headers: Record<string, SerializedStyles> = {
   hero1: css({
     fontSize: typography.size.l3,
     fontWeight: typography.weight.bold,
@@ -159,76 +164,76 @@ export const headers = {
   }),
 };
 
-export const subheading = {
+export const subheading: Record<string, SerializedStyles> = {
   regular: css({
     fontSize: 13,
     fontWeight: typography.weight.extrabold,
-    lineHeight: '18px',
-    letterSpacing: '0.38em',
+    lineHeight: "18px",
+    letterSpacing: "0.38em",
   }),
   small: css({
     fontSize: 11,
     fontWeight: typography.weight.extrabold,
-    lineHeight: '16px',
-    letterSpacing: '0.38em',
+    lineHeight: "16px",
+    letterSpacing: "0.38em",
   }),
 };
 
-export const text = {
+export const text: Record<string, SerializedStyles> = {
   storybookMediumBold: css({
     fontSize: 13,
     fontWeight: typography.weight.bold,
-    lineHeight: '18px',
+    lineHeight: "18px",
   }),
   storybookMedium: css({
     fontSize: 13,
     fontWeight: typography.weight.regular,
-    lineHeight: '18px',
+    lineHeight: "18px",
   }),
   largeBold: css({
     fontSize: typography.size.s3,
     fontWeight: typography.weight.bold,
-    lineHeight: '24px',
+    lineHeight: "24px",
   }),
   small: css({
     fontSize: typography.size.s1,
     fontWeight: typography.weight.regular,
-    lineHeight: '18px',
+    lineHeight: "18px",
   }),
   regularBold: css({
     fontSize: typography.size.s2,
     fontWeight: typography.weight.bold,
-    lineHeight: '20px',
+    lineHeight: "20px",
   }),
   smallBold: css({
     fontSize: typography.size.s1,
     fontWeight: typography.weight.bold,
-    lineHeight: '18px',
+    lineHeight: "18px",
   }),
   large: css({
     fontSize: typography.size.s3,
     fontWeight: typography.weight.regular,
-    lineHeight: '24px',
+    lineHeight: "24px",
   }),
   regular: css({
     fontSize: typography.size.s2,
     fontWeight: typography.weight.regular,
-    lineHeight: '20px',
+    lineHeight: "20px",
   }),
 };
 
-export const code = {
+export const code: Record<string, SerializedStyles> = {
   regular: css({
     fontFamily: typography.type.code,
     fontSize: typography.size.s2,
     fontWeight: typography.weight.regular,
-    lineHeight: '17px',
+    lineHeight: "17px",
   }),
 
   small: css({
     fontFamily: typography.type.code,
     fontSize: typography.size.s1,
     fontWeight: typography.weight.regular,
-    lineHeight: '14px',
+    lineHeight: "14px",
   }),
 };
