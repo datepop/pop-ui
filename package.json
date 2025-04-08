@@ -1,7 +1,6 @@
 {
   "name": "root",
   "type": "module",
-  "private": true,
   "workspaces": [
     "packages/*"
   ],
@@ -10,7 +9,7 @@
     "url": "https://github.com/datepop/pop-ui"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://registry.npmjs.org"
   },
   "scripts": {
     "start": "storybook dev",

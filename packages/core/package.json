@@ -9,6 +9,11 @@
     "type": "git",
     "url": "https://github.com/datepop/pop-ui"
   },
+  "files": ["dist"],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build && tsc",
