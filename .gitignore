@@ -3,6 +3,8 @@ storybook-static
 coverage
 dist
 .idea/
+.yarn/cache
+.yarn/install-state.gz
 
 # General
 .DS_Store
