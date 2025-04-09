@@ -13,9 +13,9 @@
   },
   "scripts": {
     "start": "storybook dev",
-    "start:core": "lerna run --scope @datepop/core storybook --stream",
-    "build:core": "lerna run --scope @datepop/core build --stream",
-    "test:core": "lerna run --scope @datepop/core test --stream",
+    "start:core": "lerna run --scope @pop-ui/core storybook --stream",
+    "build:core": "lerna run --scope @pop-ui/core build --stream",
+    "test:core": "lerna run --scope @pop-ui/core test --stream",
     "build": "lerna run build --stream",
     "test": "NODE_ENV=test jest --coverage",
     "build-storybook": "storybook build",

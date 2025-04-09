@@ -1,5 +1,5 @@
 {
-  "name": "@datepop/core",
+  "name": "@pop-ui/core",
   "type": "module",
   "version": "0.0.9",
   "main": "./dist/core.umd.cjs",
