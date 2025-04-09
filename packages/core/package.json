@@ -1,5 +1,5 @@
 {
-  "name": "@datepop/core",
+  "name": "@pop-ui/core",
   "type": "module",
   "version": "0.0.9",
   "main": "./dist/core.umd.cjs",
@@ -25,11 +25,9 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@mantine/carousel": "^6.0.22",
-    "@mantine/core": "^6.0.22",
     "@mantine/dates": "^6.0.22",
     "@mantine/dropzone": "^6.0.22",
     "@mantine/form": "^6.0.22",
-    "@mantine/hooks": "^6.0.22",
     "@mantine/modals": "^6.0.22",
     "@mantine/notifications": "^6.0.22",
     "@mantine/nprogress": "^6.0.22",
@@ -38,14 +36,18 @@
     "@mantine/tiptap": "^6.0.22",
     "@tabler/icons-react": "^2.47.0",
     "@tiptap/extension-link": "^2.11.7",
-    "@tiptap/react": "^2.11.7",
     "@tiptap/starter-kit": "^2.11.7",
     "dayjs": "^1.11.13",
     "embla-carousel-react": "^7.1.0",
-    "react": "^18.3.1",
     "react-beautiful-dnd": "^13.1.1",
-    "react-dom": "^18.3.1",
     "sass": "^1.86.3"
+  },
+  "peerDependencies": {
+    "@mantine/core": "^6.0.22",
+    "@mantine/hooks": "^6.0.22",
+    "@tiptap/react": "^2.11.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.22.11",
