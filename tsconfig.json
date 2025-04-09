@@ -2,12 +2,13 @@
   "exclude": ["node_modules", "**/dist", "storybook-static"],
   "compilerOptions": {
     "module": "ESNext",
-    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "target": "ESNext",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "sourceMap": false,
     "jsx": "react-jsx",
     "allowJs": true,
-    "moduleResolution": "node",
     "types": ["vite/client", "jest", "@testing-library/jest-dom"],
     "declaration": true,
     "declarationDir": "./dist/types",
@@ -17,10 +18,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "declarationMap": false,
-    "esModuleInterop": true,
-    // "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
-    // "emitDeclarationOnly": true,
     "skipLibCheck": true
   },
   "references": [{ "path": "./tsconfig.node.json" }]
