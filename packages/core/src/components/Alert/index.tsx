@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Alert as MantineAlert,
   AlertProps as MatineAlertProps,
@@ -12,14 +14,7 @@ export interface AlertProps extends MatineAlertProps {
   variant?: "fill" | "light";
   title?: string;
 }
-/**
- * ----- alert props -----
- ** visible: 노출 여부
- ** type: 'success' | 'error'
- ** variant: 'fill' | 'light'
- ** title: alert 타이틀
- ** 기타 props는 mantine alert props 사용: https://v6.mantine.dev/core/alert/?t=props
- */
+
 export const Alert = ({
   visible = false,
   type = "success",

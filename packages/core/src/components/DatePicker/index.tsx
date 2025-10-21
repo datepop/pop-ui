@@ -1,3 +1,5 @@
+'use client'
+
 import "dayjs/locale/ko";
 import {
   DatePickerInput,
@@ -13,13 +15,6 @@ export interface DatePickerProps extends DatePickerInputProps {
   withTime?: boolean;
 }
 
-/**
- * ----- datepicker props -----
- ** size: 'sm' | 'md' | 'lg'
- ** type:  'default' | 'multiple' | 'range'
- ** withTime: 시간 포함 여부
- ** 기타 props는 mantine datepicker props 사용: https://v6.mantine.dev/dates/date-picker-input/?t=props
- */
 export const DatePicker = ({
   size = "md",
   type = "default",

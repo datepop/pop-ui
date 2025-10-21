@@ -1,3 +1,5 @@
+'use client'
+
 import { Input, Select, SelectProps, Tooltip } from "@mantine/core";
 import ic_tooltip from "../../assets/icons/ic_tooltip.svg";
 import ic_chevron_up from "../../assets/icons/ic_chevron_up.svg";
@@ -15,17 +17,6 @@ export interface SearchBarProps extends SelectProps {
   errorMsg?: string;
 }
 
-/**
- * ----- dropdown props -----
- ** label: string, 라벨
- ** labelPosition: 'top' | 'left', 라벨위치
- ** size: 'sm' | 'md' | 'lg'
- ** tooltip: string, 툴팁
- ** tooltipPosition: 'top' | 'bottom' | 'left' | 'right', 툴팁 위치
- ** description: string, 상세 설명
- ** errorMsg: string, 에러 메시지
- ** 기타 props는 mantine select props 사용: https://v6.mantine.dev/core/select/?t=props
- */
 export const Dropdown = ({
   label,
   labelPosition = "top",
