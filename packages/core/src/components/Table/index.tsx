@@ -1,3 +1,5 @@
+'use client'
+
 import styles from "./styles.module.scss";
 import { ReactNode, useCallback, useMemo, useState } from "react";
 import {
@@ -18,7 +20,7 @@ interface RowData {
     sortTarget?: string | number | boolean;
     dndId?: string | number;
     trClassName?: string;
-  }; // sortTarget은 cell의 내용이 Html element인 경우 sort를 위해 따로 비교할 수 있는 값을 사용한다
+  };
 }
 
 export interface TableProps {
@@ -32,24 +34,7 @@ export interface TableProps {
   onDragEnd?: (rows: { dndId?: string | number }[]) => void;
   className?: string;
 }
-/**
- * ----- table props -----
- ** tableId: 드래그앤드롭에 사용하는 고유한 id
- ** headerList: ReactNode[]인 헤더 리스트
- ** tableData: {
-      [key:string]: { 
-        cell:ReactNode; 
-        sortTarget: string | number | boolean; 
-        dndId:(사용시, 첫번째 key value에선 필수) string | number; 
-        trClassName:(사용시, 첫번째 key value에선 필수) string;
-      }
-    }[]
- ** sortable: 정렬 가능여부
- ** draggable: 드래그앤드롭 가능여부
- ** striped: stripe 스타일 적용 여부 
- ** onDragEnd: 드래그앤드롭 이후, 새로 정렬된 dndId list return
- ** className: table custom style 적용 필요시 사용  
- */
+
 export const Table = ({
   tableId,
   headerList,

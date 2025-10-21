@@ -1,3 +1,5 @@
+'use client'
+
 import { Switch, SwitchProps } from "@mantine/core";
 import styles from "./styles.module.scss";
 import { useCallback, useState } from "react";
@@ -10,14 +12,6 @@ export interface ToggleProps extends SwitchProps {
   onChange?: (event: any) => void;
 }
 
-/**
- * ----- toggle props -----
- ** size: 'sm' | 'md' | 'lg'
- ** labelPosition: 'left' | 'right', 라벨 위치
- ** disabled: boolean
- ** onChange: (event) => void
- ** 기타 props는 mantine switch props 사용: https://v6.mantine.dev/core/switch/?t=props
- */
 export const Toggle = ({
   size = "md",
   labelPosition = "right",

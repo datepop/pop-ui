@@ -64,6 +64,8 @@ yarn add @mantine/tiptap @tiptap/react @tiptap/starter-kit @tiptap/extension-lin
 
 ## 사용 방법
 
+### React (Vite)
+
 ```tsx
 import { Button, TextField } from '@pop-ui/core';
 
@@ -76,6 +78,77 @@ function App() {
       <TextField placeholder="텍스트를 입력하세요" />
     </div>
   );
+}
+```
+
+### Next.js
+
+Next.js에서 사용하려면 Mantine Provider 설정이 필요합니다.
+
+#### App Router (Next.js 13+)
+
+1. Providers 컴포넌트 생성:
+
+```tsx
+// app/providers.tsx
+'use client'
+
+import { MantineProvider } from '@mantine/core'
+import '@mantine/core/styles.css'
+
+export function Providers({ children }: { children: React.ReactNode }) {
+  return <MantineProvider>{children}</MantineProvider>
+}
+```
+
+2. Layout에서 사용:
+
+```tsx
+// app/layout.tsx
+import { Providers } from './providers'
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="ko">
+      <body>
+        <Providers>{children}</Providers>
+      </body>
+    </html>
+  )
+}
+```
+
+3. 컴포넌트 사용:
+
+```tsx
+// app/page.tsx
+'use client'
+
+import { Button } from '@pop-ui/core'
+
+export default function Page() {
+  return <Button onClick={() => alert('클릭!')}>클릭하세요</Button>
+}
+```
+
+#### Pages Router (Next.js 12 이하)
+
+```tsx
+// pages/_app.tsx
+import { MantineProvider } from '@mantine/core'
+import '@mantine/core/styles.css'
+import type { AppProps } from 'next/app'
+
+export default function App({ Component, pageProps }: AppProps) {
+  return (
+    <MantineProvider>
+      <Component {...pageProps} />
+    </MantineProvider>
+  )
 }
 ```
 

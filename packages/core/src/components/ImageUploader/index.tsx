@@ -1,3 +1,5 @@
+'use client'
+
 import { ReactNode, useCallback, useState } from "react";
 import {
   Dropzone,
@@ -18,16 +20,6 @@ export interface ImageUploaderProps extends DropzoneProps {
   onClear?: () => void;
 }
 
-/**
- * ----- image uploader props -----
- ** width: number
- ** height: number
- ** defaultMsg: ReactNode, placeholder 대체
- ** file: string | FileWithPath
- ** showClearButton: boolean, 업로드 파일 clear 버튼 노출 여부
- ** onClear: () => void, 업로드 파일 clear시 실행될 함수
- ** 기타 props는 mantine dropzone props 사용: https://v6.mantine.dev/others/dropzone/?t=props
- */
 export const ImageUploader = ({
   width,
   height,

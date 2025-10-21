@@ -1,3 +1,5 @@
+'use client'
+
 import { SegmentedControl, SegmentedControlProps } from "@mantine/core";
 import styles from "./styles.module.scss";
 
@@ -6,12 +8,6 @@ export interface SegmentButtonProps extends SegmentedControlProps {
   radius?: number | "xs" | "sm" | "md" | "lg" | "xl";
 }
 
-/**
- * ----- segment button props -----
- ** size: 'sm' | 'md' | 'lg'
- ** radius: number | 'xs' | 'sm' | 'md' | 'lg' | 'xl'
- ** 기타 props는 mantine segmented control props 사용: https://v6.mantine.dev/core/segmented-control/?t=props
- */
 export const SegmentButton = ({
   size = "md",
   radius = 6,
