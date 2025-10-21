@@ -3535,11 +3535,63 @@ __metadata:
     vite: "npm:^6.2.5"
     webpack: "npm:^5.99.1"
   peerDependencies:
+    "@emotion/react": ^11.11.1
+    "@mantine/carousel": ^6.0.22
     "@mantine/core": ^6.0.22
+    "@mantine/dates": ^6.0.22
+    "@mantine/dropzone": ^6.0.22
+    "@mantine/form": ^6.0.22
     "@mantine/hooks": ^6.0.22
+    "@mantine/modals": ^6.0.22
+    "@mantine/notifications": ^6.0.22
+    "@mantine/nprogress": ^6.0.22
+    "@mantine/prism": ^6.0.22
+    "@mantine/spotlight": ^6.0.22
+    "@mantine/tiptap": ^6.0.22
+    "@tabler/icons-react": ^2.47.0
+    "@tiptap/extension-link": ^2.11.7
     "@tiptap/react": ^2.11.7
+    "@tiptap/starter-kit": ^2.11.7
+    dayjs: ^1.11.13
+    embla-carousel-react: ^7.1.0
     react: ^18.3.1
+    react-beautiful-dnd: ^13.1.1
     react-dom: ^18.3.1
+  peerDependenciesMeta:
+    "@emotion/react":
+      optional: true
+    "@mantine/carousel":
+      optional: true
+    "@mantine/dates":
+      optional: true
+    "@mantine/dropzone":
+      optional: true
+    "@mantine/form":
+      optional: true
+    "@mantine/modals":
+      optional: true
+    "@mantine/notifications":
+      optional: true
+    "@mantine/nprogress":
+      optional: true
+    "@mantine/prism":
+      optional: true
+    "@mantine/spotlight":
+      optional: true
+    "@mantine/tiptap":
+      optional: true
+    "@tabler/icons-react":
+      optional: true
+    "@tiptap/extension-link":
+      optional: true
+    "@tiptap/starter-kit":
+      optional: true
+    dayjs:
+      optional: true
+    embla-carousel-react:
+      optional: true
+    react-beautiful-dnd:
+      optional: true
   languageName: unknown
   linkType: soft
 
