@@ -22,12 +22,14 @@
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@emotion/react": "^11.11.1",
     "@mantine/carousel": "^6.0.22",
+    "@mantine/core": "^6.0.22",
     "@mantine/dates": "^6.0.22",
     "@mantine/dropzone": "^6.0.22",
     "@mantine/form": "^6.0.22",
+    "@mantine/hooks": "^6.0.22",
     "@mantine/modals": "^6.0.22",
     "@mantine/notifications": "^6.0.22",
     "@mantine/nprogress": "^6.0.22",
@@ -36,31 +38,93 @@
     "@mantine/tiptap": "^6.0.22",
     "@tabler/icons-react": "^2.47.0",
     "@tiptap/extension-link": "^2.11.7",
+    "@tiptap/react": "^2.11.7",
     "@tiptap/starter-kit": "^2.11.7",
     "dayjs": "^1.11.13",
     "embla-carousel-react": "^7.1.0",
-    "react-beautiful-dnd": "^13.1.1",
-    "sass": "^1.86.3"
-  },
-  "peerDependencies": {
-    "@mantine/core": "^6.0.22",
-    "@mantine/hooks": "^6.0.22",
-    "@tiptap/react": "^2.11.7",
     "react": "^18.3.1",
+    "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.3.1"
+  },
+  "peerDependenciesMeta": {
+    "@emotion/react": {
+      "optional": true
+    },
+    "@mantine/carousel": {
+      "optional": true
+    },
+    "@mantine/dates": {
+      "optional": true
+    },
+    "@mantine/dropzone": {
+      "optional": true
+    },
+    "@mantine/form": {
+      "optional": true
+    },
+    "@mantine/modals": {
+      "optional": true
+    },
+    "@mantine/notifications": {
+      "optional": true
+    },
+    "@mantine/nprogress": {
+      "optional": true
+    },
+    "@mantine/prism": {
+      "optional": true
+    },
+    "@mantine/spotlight": {
+      "optional": true
+    },
+    "@mantine/tiptap": {
+      "optional": true
+    },
+    "@tabler/icons-react": {
+      "optional": true
+    },
+    "@tiptap/extension-link": {
+      "optional": true
+    },
+    "@tiptap/starter-kit": {
+      "optional": true
+    },
+    "dayjs": {
+      "optional": true
+    },
+    "embla-carousel-react": {
+      "optional": true
+    },
+    "react-beautiful-dnd": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@babel/core": "^7.22.11",
     "@babel/preset-env": "^7.22.10",
     "@babel/preset-react": "^7.22.5",
     "@babel/preset-typescript": "^7.22.11",
+    "@emotion/react": "^11.11.1",
+    "@mantine/carousel": "^6.0.22",
     "@mantine/core": "^6.0.22",
+    "@mantine/dates": "^6.0.22",
+    "@mantine/dropzone": "^6.0.22",
+    "@mantine/form": "^6.0.22",
     "@mantine/hooks": "^6.0.22",
+    "@mantine/modals": "^6.0.22",
+    "@mantine/notifications": "^6.0.22",
+    "@mantine/nprogress": "^6.0.22",
+    "@mantine/prism": "^6.0.22",
+    "@mantine/spotlight": "^6.0.22",
+    "@mantine/tiptap": "^6.0.22",
+    "@tabler/icons-react": "^2.47.0",
     "@testing-library/jest-dom": "^6.1.2",
     "@testing-library/react": "^14.3.1",
     "@tiptap/core": "^2.1.7",
+    "@tiptap/extension-link": "^2.11.7",
     "@tiptap/pm": "^2.1.7",
     "@tiptap/react": "^2.11.7",
+    "@tiptap/starter-kit": "^2.11.7",
     "@types/jest": "^29.5.4",
     "@types/node": "^20.17.30",
     "@types/react": "^18.3.20",
@@ -72,6 +136,8 @@
     "babel-jest": "^29.6.4",
     "babel-loader": "^9.2.1",
     "css-loader": "^6.11.0",
+    "dayjs": "^1.11.13",
+    "embla-carousel-react": "^7.1.0",
     "eslint": "^8.57.1",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.3",
@@ -83,7 +149,9 @@
     "prettier": "^3.0.2",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
+    "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.3.1",
+    "sass": "^1.86.3",
     "sass-loader": "^14.2.1",
     "style-loader": "^3.3.4",
     "ts-node": "^10.9.1",
