@@ -29,7 +29,7 @@ jobs:
           always-auth: true
 
       - name: Install dependencies(Yarn)
-        run: yarn install --frozen-lockfile
+        run: yarn install
 
       - name: Lerna build
         run: yarn build
