@@ -9,7 +9,7 @@
 모든 컴포넌트를 사용하기 위한 필수 패키지를 설치합니다.
 
 ```bash
-yarn add @pop-ui/core react react-dom @mantine/core @mantine/hooks
+yarn add @pop-ui/core react react-dom @mantine/core @mantine/hooks @emotion/react @emotion/cache @emotion/serialize @emotion/utils
 ```
 
 ### 컴포넌트별 추가 패키지
