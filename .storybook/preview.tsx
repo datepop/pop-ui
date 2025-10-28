@@ -1,7 +1,8 @@
 import React from "react";
 import type { Preview } from "@storybook/react";
-import { MantineProvider } from "@mantine/core";
 import "@mantine/core/styles.css";
+
+import { ThemeProvider } from "../packages/core/src/theme/ThemeProvider";
 
 const preview: Preview = {
   parameters: {
@@ -19,9 +20,9 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => (
-      <MantineProvider>
+      <ThemeProvider>
         <Story />
-      </MantineProvider>
+      </ThemeProvider>
     ),
   ],
 };
