@@ -3,8 +3,7 @@ import type { StorybookConfig } from "@storybook/react-vite";
 
 const config: StorybookConfig = {
   stories: [
-    "../packages/**/*.mdx",
-    "../packages/**/*.stories.@(js|jsx|ts|tsx)",
+    "../packages/**/src/**/*.stories.@(js|jsx|ts|tsx)",
   ],
   addons: [
     {
@@ -22,17 +21,11 @@ const config: StorybookConfig = {
       },
     },
     getAbsolutePath("@storybook/addon-links"),
-    getAbsolutePath("@storybook/addon-essentials"),
-    getAbsolutePath("@storybook/addon-interactions"),
     getAbsolutePath("@storybook/addon-themes"),
-    getAbsolutePath("storybook-addon-mock"),
   ],
   framework: {
     name: getAbsolutePath("@storybook/react-vite"),
     options: {},
-  },
-  docs: {
-    autodocs: "tag",
   },
 };
 
