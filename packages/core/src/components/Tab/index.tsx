@@ -23,7 +23,7 @@ export const Tab = ({
     <Tabs {...props}>
       <Tabs.List className={styles.tab_title_list}>
         {tabList?.map((tab, index) => (
-          <Tabs.Tab key={`tab_${index}`} value={tab.value} icon={tab.icon}>
+          <Tabs.Tab key={`tab_${index}`} value={tab.value} leftSection={tab.icon}>
             {tab.title}
             <div className={styles.border_bottom} />
           </Tabs.Tab>

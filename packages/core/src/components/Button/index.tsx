@@ -1,23 +1,15 @@
-'use client'
+"use client";
 
-import {
-  Button as MantineButton,
-  ButtonProps as MantineButtonProps,
-} from "@mantine/core";
+import { Button as MantineButton } from "@mantine/core";
 import styles from "./styles.module.scss";
+import type { IButtonProps } from "./type";
 
-export interface ButtonProps extends MantineButtonProps {
-  onClick?: () => void;
-  size?: "sm" | "md" | "lg";
-  styleType?: "primary" | "primaryline" | "basic" | "danger" | "setting";
-}
-
-export const Button = ({
+export function Button({
   children,
   size = "md",
   styleType = "primary",
   ...props
-}: ButtonProps) => {
+}: IButtonProps) {
   let sizeStyle = styles.md_button;
   if (size === "sm") {
     sizeStyle = styles.sm_button;
@@ -28,8 +20,8 @@ export const Button = ({
   let buttonStyle = styles.primary;
   if (styleType === "basic") {
     buttonStyle = styles.basic;
-  } else if (styleType === "primaryline") {
-    buttonStyle = styles.primaryline;
+  } else if (styleType === "primaryLine") {
+    buttonStyle = styles.primaryLine;
   } else if (styleType === "danger") {
     buttonStyle = styles.danger;
   } else if (styleType === "setting") {
@@ -45,6 +37,6 @@ export const Button = ({
       {children}
     </MantineButton>
   );
-};
+}
 
 export default Button;

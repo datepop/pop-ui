@@ -1,12 +1,12 @@
 'use client'
 
-import { Input, InputProps, Textarea, Tooltip } from "@mantine/core";
+import { Input, InputProps, Textarea, TextareaProps, Tooltip } from "@mantine/core";
 import ic_tooltip from "../../assets/icons/ic_tooltip.svg";
 import ic_input_clear from "../../assets/icons/ic_input_clear.svg";
 import styles from "./styles.module.scss";
 import { useCallback, useState } from "react";
 
-export interface TextFieldProps extends InputProps {
+interface CommonTextFieldProps {
   label?: string;
   labelPosition?: "top" | "left";
   size?: "sm" | "md" | "lg";
@@ -15,30 +15,35 @@ export interface TextFieldProps extends InputProps {
   tooltipPosition?: "top" | "bottom" | "left" | "right";
   description?: string;
   errorMsg?: string;
-  textarea?: boolean;
-  minRows?: number;
   maxTextCount?: number;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onChange?: (event: any) => void;
   onClear?: () => void;
 }
 
-export const TextField = ({
-  label,
-  labelPosition = "top",
-  size = "md",
-  required,
-  tooltip,
-  tooltipPosition = "top",
-  errorMsg,
-  description,
-  textarea = false,
-  minRows,
-  maxTextCount,
-  onChange,
-  onClear,
-  ...props
-}: TextFieldProps) => {
+export type TextFieldProps = CommonTextFieldProps & (
+  | ({ textarea?: false } & Omit<InputProps, keyof CommonTextFieldProps | 'vars'>)
+  | ({ textarea: true; minRows?: number } & Omit<TextareaProps, keyof CommonTextFieldProps | 'vars'>)
+);
+
+export const TextField = (allProps: TextFieldProps) => {
+  const {
+    label,
+    labelPosition = "top",
+    size = "md",
+    required,
+    tooltip,
+    tooltipPosition = "top",
+    errorMsg,
+    description,
+    textarea = false,
+    maxTextCount,
+    onChange,
+    onClear,
+    ...otherProps
+  } = allProps;
+
+  const minRows = 'minRows' in allProps ? allProps.minRows : undefined;
   const [textCount, setTextCount] = useState<number>(0);
 
   let labelStyle = styles.md_label;
@@ -103,8 +108,8 @@ export const TextField = ({
               minRows={minRows}
               error={errorMsg}
               onChange={onChangeHandler}
-              disabled={props?.disabled}
-              {...props}
+              disabled={otherProps?.disabled}
+              {...otherProps}
             />
           ) : (
             <Input
@@ -118,7 +123,7 @@ export const TextField = ({
                   </div>
                 ) : undefined
               }
-              {...props}
+              {...otherProps}
             />
           )}
           {maxTextCount && maxTextCount > 0 && (

@@ -86,8 +86,7 @@ export const SearchBar = ({
             error={errorMsg}
             className={searchBarStyle}
             onChange={onChangeHandler}
-            icon={<img src={ic_search} />}
-            iconWidth={48}
+            leftSection={<img src={ic_search} />}
             rightSection={
               onClear && textCount > 0 ? (
                 <div className={styles.clear_button} onClick={onClear}>
