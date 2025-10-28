@@ -82,7 +82,7 @@ export const Dropdown = ({
           onDropdownOpen={() => setIsOpen(true)}
           onDropdownClose={() => setIsOpen(false)}
           styles={() => ({
-            item: {
+            option: {
               "&[data-selected]": {
                 "&, &:hover": {
                   backgroundColor: "#e7e7e7",
@@ -90,7 +90,7 @@ export const Dropdown = ({
                 },
               },
             },
-          })}
+          } as any)}
         />
         {description && (
           <Input.Description className={styles.input_description}>

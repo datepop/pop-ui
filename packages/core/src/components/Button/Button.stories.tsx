@@ -1,12 +1,13 @@
 import { StoryFn, Meta } from "@storybook/react";
 import { Button } from ".";
+import type { IButtonProps } from "./type";
 
 export default {
   title: "Core/Button",
   component: Button,
 } as Meta<typeof Button>;
 
-const Template: StoryFn<typeof Button> = (args) => <Button {...args} />;
+const Template: StoryFn<IButtonProps> = (args) => <Button {...args} />;
 
 export const PrimaryButton = Template.bind({});
 PrimaryButton.args = {
@@ -19,7 +20,7 @@ PrimaryButton.args = {
 export const PrimaryLineButton = Template.bind({});
 PrimaryLineButton.args = {
   children: "데이트팝 Button",
-  styleType: "primaryline",
+  styleType: "primaryLine",
   size: "md",
   disabled: false,
 };
