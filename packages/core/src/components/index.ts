@@ -12,6 +12,5 @@ export { Tab } from "./Tab";
 export { SegmentButton } from "./SegmentButton";
 export { Alert } from "./Alert";
 export { Tooltip } from "./Tooltip";
-export { Table } from "./Table";
 export { Modal } from "./Modal";
 export { ImageUploader } from "./ImageUploader";

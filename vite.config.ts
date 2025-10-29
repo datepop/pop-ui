@@ -60,6 +60,11 @@ export const getBaseConfig = ({ plugins = [], lib }) =>
       copyFontPlugin(),
       ...plugins
     ],
+    css: {
+      modules: {
+        generateScopedName: '[name]__[local]___[hash:base64:5]',
+      },
+    },
     build: {
       assetsInlineLimit: 0,
       lib: {
