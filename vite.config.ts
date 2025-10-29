@@ -2,6 +2,7 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 import { defineConfig, Plugin } from "vite";
 import fs from "fs";
+import dts from "vite-plugin-dts";
 
 const isExternal = (id: string) => !id.startsWith(".") && !path.isAbsolute(id);
 
@@ -48,7 +49,17 @@ const copyFontPlugin = (fontPath?: string): Plugin => {
 
 export const getBaseConfig = ({ plugins = [], lib }) =>
   defineConfig({
-    plugins: [react(), copyFontPlugin(), ...plugins],
+    plugins: [
+      react(),
+      dts({
+        rollupTypes: true,
+        skipDiagnostics: true,
+        outDir: 'dist/types',
+        entryRoot: 'src',
+      }),
+      copyFontPlugin(),
+      ...plugins
+    ],
     build: {
       assetsInlineLimit: 0,
       lib: {

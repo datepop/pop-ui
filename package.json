@@ -42,6 +42,7 @@
     "style-loader": "^4.0.0",
     "token-transformer": "^0.0.33",
     "vite": "^7.1.12",
+    "vite-plugin-dts": "^4.5.4",
     "webpack": "^5.99.1"
   },
   "packageManager": "yarn@4.10.3",
