@@ -1,165 +1,194 @@
 @use "../shared/variables.scss" as *;
 @use "../shared/font.css" as *;
 
-.lg_button {
-  font-family: $button-typo-button-large-font-family;
-  font-size: $button-typo-button-large-font-size;
-  font-weight: $button-typo-button-large-font-weight;
-  line-height: $button-typo-button-large-line-height;
-  height: $button-size-button-large;
-  padding: $button-spacing-button-large;
-  border-radius: $button-border-radius-large;
-}
-
-.md_button {
-  font-family: $button-typo-button-medium-font-family;
-  font-size: $button-typo-button-medium-font-size;
-  font-weight: $button-typo-button-medium-font-weight;
-  line-height: $button-typo-button-medium-line-height;
-  height: $button-size-button-medium;
-  padding: $button-spacing-button-medium;
-  border-radius: $button-border-radius-medium;
-}
-
-.sm_button {
-  font-family: $button-typo-button-small-font-family;
-  font-size: $button-typo-button-small-font-size;
-  font-weight: $button-typo-button-small-font-weight;
-  line-height: $button-typo-button-small-line-height;
-  height: $button-size-button-small;
-  padding: $button-spacing-button-small;
-  border-radius: $button-border-radius-small;
-}
-
-.primary {
-  background-color: $bg-color-button-bg-primary-default;
-  color: $text-color-button-text-primary-default;
+.baseButton {
   cursor: pointer;
-  &:focus {
-    background-color: $bg-color-button-bg-primary-focused;
-    color: $text-color-button-text-primary-focused;
-  }
-  &:hover {
-    background-color: $bg-color-button-bg-primary-hover;
-    color: $text-color-button-text-primary-hover;
-  }
-  &:active {
-    background-color: $bg-color-button-bg-primary-pressed;
-    color: $text-color-button-text-primary-pressed;
-  }
-  &:disabled {
-    background-color: $bg-color-button-bg-primary-disabled;
-    color: $text-color-button-text-primary-disabled;
-  }
-}
 
-.primaryLine {
-  background-color: $bg-color-button-bg-primaryline-default;
-  color: $text-color-button-text-primaryline-default;
-  border-color: $border-color-button-border-primaryline-default;
-  border-style: $button-border-button-primaryline-default-style;
-  border-width: $button-border-button-primaryline-default-width;
-  cursor: pointer;
-  &:focus {
-    background-color: $bg-color-button-bg-primaryline-focused;
-    color: $text-color-button-text-primaryline-focused;
-    border-color: $border-color-button-border-primaryline-focused;
-    border-style: $button-border-button-primaryline-focused-style;
-    border-width: $button-border-button-primaryline-focused-width;
+  &--sizeLg {
+    font-family: $button-typo-button-large-font-family;
+    font-size: $button-typo-button-large-font-size;
+    font-weight: $button-typo-button-large-font-weight;
+    line-height: $button-typo-button-large-line-height;
+    height: $button-size-button-large;
+    padding: $button-spacing-button-large;
+    border-radius: $button-border-radius-large;
   }
-  &:hover {
-    background-color: $bg-color-button-bg-primaryline-hover;
-    color: $text-color-button-text-primaryline-hover;
-    border-color: $border-color-button-border-primaryline-hover;
-    border-style: $button-border-button-primaryline-hover-style;
-    border-width: $button-border-button-primaryline-hover-width;
-  }
-  &:active {
-    background-color: $bg-color-button-bg-primaryline-pressed;
-    color: $text-color-button-text-primaryline-pressed;
-    border-color: $border-color-button-border-primaryline-pressed;
-    border-style: $button-border-button-primaryline-pressed-style;
-    border-width: $button-border-button-primaryline-pressed-width;
-  }
-  &:disabled {
-    background-color: $bg-color-button-bg-primaryline-disabled;
-    color: $text-color-button-text-primaryline-disabled;
-  }
-}
 
-.basic {
-  background-color: $bg-color-button-bg-basic-default;
-  color: $text-color-button-text-basic-default;
-  border-color: $border-color-button-border-basic-default;
-  border-style: $button-border-button-basic-default-style;
-  border-width: $button-border-button-basic-default-width;
-  cursor: pointer;
-  &:focus {
-    background-color: $bg-color-button-bg-basic-focused;
-    color: $text-color-button-text-basic-focused;
-    border-color: $border-color-button-border-basic-focused;
-    border-style: $button-border-button-basic-focused-style;
-    border-width: $button-border-button-basic-focused-width;
+  &--sizeMd {
+    font-family: $button-typo-button-medium-font-family;
+    font-size: $button-typo-button-medium-font-size;
+    font-weight: $button-typo-button-medium-font-weight;
+    line-height: $button-typo-button-medium-line-height;
+    height: $button-size-button-medium;
+    padding: $button-spacing-button-medium;
+    border-radius: $button-border-radius-medium;
   }
-  &:hover {
-    background-color: $bg-color-button-bg-basic-hover;
-    color: $text-color-button-text-basic-hover;
-    border-color: $border-color-button-border-basic-hover;
-    border-style: $button-border-button-basic-hover-style;
-    border-width: $button-border-button-basic-hover-width;
-  }
-  &:active {
-    background-color: $bg-color-button-bg-basic-preseed;
-    color: $text-color-button-text-basic-pressed;
-    border-color: $button-border-button-basic-pressed-color;
-    border-width: $button-border-button-basic-pressed-width;
-  }
-  &:disabled {
-    background-color: $bg-color-button-bg-basic-disabled;
-    color: $text-color-button-text-basic-disabled;
-  }
-}
 
-.danger {
-  background-color: $bg-color-button-bg-warning-default;
-  color: $text-color-button-text-warning-default;
-  cursor: pointer;
-  &:focus {
-    background-color: $bg-color-button-bg-warning-focused;
-    color: $text-color-button-text-warning-focused;
+  &--sizeSm {
+    font-family: $button-typo-button-small-font-family;
+    font-size: $button-typo-button-small-font-size;
+    font-weight: $button-typo-button-small-font-weight;
+    line-height: $button-typo-button-small-line-height;
+    height: $button-size-button-small;
+    padding: $button-spacing-button-small;
+    border-radius: $button-border-radius-small;
   }
-  &:hover {
-    background-color: $bg-color-button-bg-warning-hover;
-    color: $text-color-button-text-warning-hover;
-  }
-  &:active {
-    background-color: $bg-color-button-bg-warning-pressed;
-    color: $text-color-button-text-warning-pressed;
-  }
-  &:disabled {
-    background-color: $bg-color-button-bg-warning-disabled;
-    color: $text-color-button-text-warning-disabled;
-  }
-}
 
-.setting {
-  background-color: $bg-color-button-bg-setting-default;
-  color: $text-color-button-text-setting-default;
-  cursor: pointer;
-  &:focus {
-    background-color: $bg-color-button-bg-setting-focused;
-    color: $text-color-button-text-setting-focused;
+  &--primary {
+    background-color: $bg-color-button-bg-primary-default;
+    color: $text-color-button-text-primary-default;
+
+    &:focus {
+      background-color: $bg-color-button-bg-primary-focused;
+      color: $text-color-button-text-primary-focused;
+    }
+
+    &:hover {
+      background-color: $bg-color-button-bg-primary-hover;
+      color: $text-color-button-text-primary-hover;
+    }
+
+    &:active {
+      background-color: $bg-color-button-bg-primary-pressed;
+      color: $text-color-button-text-primary-pressed;
+    }
+
+    &:disabled {
+      background-color: $bg-color-button-bg-primary-disabled;
+      color: $text-color-button-text-primary-disabled;
+    }
   }
-  &:hover {
-    background-color: $bg-color-button-bg-setting-hover;
-    color: $text-color-button-text-setting-hover;
+
+  &--primaryLine {
+    background-color: $bg-color-button-bg-primaryline-default;
+    color: $text-color-button-text-primaryline-default;
+    border: 1px solid $border-color-button-border-primaryline-default;
+
+    &:focus {
+      background-color: $bg-color-button-bg-primaryline-focused;
+      color: $text-color-button-text-primaryline-focused;
+      border-color: $border-color-button-border-primaryline-focused;
+    }
+
+    &:hover {
+      background-color: $bg-color-button-bg-primaryline-hover;
+      color: $text-color-button-text-primaryline-hover;
+      border-color: $border-color-button-border-primaryline-hover;
+    }
+
+    &:active {
+      background-color: $bg-color-button-bg-primaryline-pressed;
+      color: $text-color-button-text-primaryline-pressed;
+      border-color: $border-color-button-border-primaryline-pressed;
+    }
+
+    &:disabled {
+      background-color: $bg-color-button-bg-primaryline-disabled;
+      color: $text-color-button-text-primaryline-disabled;
+    }
   }
-  &:active {
-    background-color: $bg-color-button-bg-setting-pressed;
-    color: $text-color-button-text-setting-pressed;
+
+  &--basic {
+    background-color: $bg-color-button-bg-basic-default;
+    color: $text-color-button-text-basic-default;
+    border: 1px solid $border-color-button-border-basic-default;
+
+    &:focus {
+      background-color: $bg-color-button-bg-basic-focused;
+      color: $text-color-button-text-basic-focused;
+      border-color: $border-color-button-border-basic-focused;
+    }
+
+    &:hover {
+      background-color: $bg-color-button-bg-basic-hover;
+      color: $text-color-button-text-basic-hover;
+      border-color: $border-color-button-border-basic-hover;
+    }
+
+    &:active {
+      background-color: $bg-color-button-bg-basic-preseed;
+      color: $text-color-button-text-basic-pressed;
+      border-color: $button-border-button-basic-pressed-color;
+    }
+
+    &:disabled {
+      background-color: $bg-color-button-bg-basic-disabled;
+      color: $text-color-button-text-basic-disabled;
+    }
   }
-  &:disabled {
-    background-color: $bg-color-button-bg-setting-disabled;
-    color: $text-color-button-text-setting-disabled;
+
+  &--danger {
+    background-color: $bg-color-button-bg-warning-default;
+    color: $text-color-button-text-warning-default;
+
+    &:focus {
+      background-color: $bg-color-button-bg-warning-focused;
+      color: $text-color-button-text-warning-focused;
+    }
+
+    &:hover {
+      background-color: $bg-color-button-bg-warning-hover;
+      color: $text-color-button-text-warning-hover;
+    }
+
+    &:active {
+      background-color: $bg-color-button-bg-warning-pressed;
+      color: $text-color-button-text-warning-pressed;
+    }
+
+    &:disabled {
+      background-color: $bg-color-button-bg-warning-disabled;
+      color: $text-color-button-text-warning-disabled;
+    }
+  }
+
+  &--setting {
+    background-color: $bg-color-button-bg-setting-default;
+    color: $text-color-button-text-setting-default;
+
+    &:focus {
+      background-color: $bg-color-button-bg-setting-focused;
+      color: $text-color-button-text-setting-focused;
+    }
+
+    &:hover {
+      background-color: $bg-color-button-bg-setting-hover;
+      color: $text-color-button-text-setting-hover;
+    }
+
+    &:active {
+      background-color: $bg-color-button-bg-setting-pressed;
+      color: $text-color-button-text-setting-pressed;
+    }
+
+    &:disabled {
+      background-color: $bg-color-button-bg-setting-disabled;
+      color: $text-color-button-text-setting-disabled;
+    }
+  }
+
+  &--warning {
+    background-color: $bg-color-button-bg-warning-default;
+    color: $text-color-button-text-warning-default;
+
+    &:focus {
+      background-color: $bg-color-button-bg-warning-focused;
+      color: $text-color-button-text-warning-focused;
+    }
+
+    &:hover {
+      background-color: $bg-color-button-bg-warning-hover;
+      color: $text-color-button-text-warning-hover;
+    }
+
+    &:active {
+      background-color: $bg-color-button-bg-warning-pressed;
+      color: $text-color-button-text-warning-pressed;
+    }
+
+    &:disabled {
+      background-color: $bg-color-button-bg-warning-disabled;
+      color: $text-color-button-text-warning-disabled;
+    }
   }
 }
