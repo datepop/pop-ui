@@ -29,19 +29,39 @@ const copyFontPlugin = (fontPath?: string): Plugin => {
         console.log('Font file copied to:', fontDest);
       }
 
-      const cssFiles = fs.readdirSync(assetsDir).filter(f => f.endsWith('.css'));
-      cssFiles.forEach(cssFile => {
-        const cssPath = path.join(assetsDir, cssFile);
+      // CSS 파일은 dist 루트에 생성되므로 거기서 찾아서 수정
+      const rootCssFiles = fs.readdirSync(outDir).filter(f => f.endsWith('.css'));
+      rootCssFiles.forEach(cssFile => {
+        const cssPath = path.join(outDir, cssFile);
         let cssContent = fs.readFileSync(cssPath, 'utf-8');
         const regex = /url\(data:font\/woff2;base64,[^)]+\)/g;
         const matches = cssContent.match(regex);
 
         if (matches) {
           console.log(`Found ${matches.length} base64 font URLs in ${cssFile}`);
-          cssContent = cssContent.replace(regex, 'url(./PretendardVariable.woff2)');
-          fs.writeFileSync(cssPath, cssContent);
-          console.log(`CSS font URLs replaced in ${cssFile}`);
+          cssContent = cssContent.replace(regex, 'url(./assets/PretendardVariable.woff2)');
         }
+
+        const mantineCssFiles = [
+          '@mantine/core/styles.css',
+          '@mantine/dates/styles.css',
+          '@mantine/dropzone/styles.css',
+        ];
+
+        const rootNodeModules = path.join(__dirname, 'node_modules');
+        mantineCssFiles.forEach(mantineFile => {
+          const mantineCssPath = path.join(rootNodeModules, mantineFile);
+          if (fs.existsSync(mantineCssPath)) {
+            const mantineCss = fs.readFileSync(mantineCssPath, 'utf-8');
+            cssContent += '\n' + mantineCss;
+            console.log(`Merged ${mantineFile}`);
+          } else {
+            console.log(`Not found: ${mantineCssPath}`);
+          }
+        });
+
+        fs.writeFileSync(cssPath, cssContent);
+        console.log(`Mantine CSS merged into ${cssFile}`);
       });
     },
   };
@@ -80,6 +100,9 @@ export const getBaseConfig = ({ plugins = [], lib }) =>
           assetFileNames: (assetInfo) => {
             if (assetInfo.name && assetInfo.name.endsWith('.woff2')) {
               return 'assets/[name][extname]';
+            }
+            if (assetInfo.name && assetInfo.name.endsWith('.css')) {
+              return '[name].css';
             }
             return 'assets/[name]-[hash][extname]';
           },
