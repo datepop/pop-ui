@@ -20,7 +20,7 @@ jobs:
       (github.event_name == 'pull_request_review_comment')
     steps:
       - uses: actions/checkout@v4
-      - uses: datepop/notify-pr-review@v1.0.3
+      - uses: datepop/notify-pr-review@v1.2.0
         with:
           slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
           user_mappings: ${{ secrets.USER_MAPPINGS }}
