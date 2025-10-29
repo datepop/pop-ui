@@ -1,7 +1,7 @@
 {
   "name": "@pop-ui/core",
   "type": "module",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "main": "./dist/core.umd.cjs",
   "module": "./dist/core.js",
   "types": "./dist/types/index.d.ts",
@@ -46,6 +46,7 @@
     "@mantine/core": "^8.3.6",
     "@mantine/dates": "^8.3.6",
     "@mantine/dropzone": "^8.3.6",
+    "@mantine/hooks": "^8.3.6",
     "dayjs": "^1.11.18"
   },
   "peerDependencies": {
@@ -66,11 +67,11 @@
     "@mantine/spotlight": "^8.3.6",
     "@mantine/tiptap": "^8.3.6",
     "@tabler/icons-react": "^3.35.0",
-    "@tiptap/core": "^3.9.0",
-    "@tiptap/extension-link": "^3.9.0",
-    "@tiptap/pm": "^3.9.0",
+    "@tiptap/core": "^3.9.1",
+    "@tiptap/extension-link": "^3.9.1",
+    "@tiptap/pm": "^3.9.1",
     "@tiptap/react": "^3.9.0",
-    "@tiptap/starter-kit": "^3.9.0",
+    "@tiptap/starter-kit": "^3.9.1",
     "@types/node": "^24.9.2",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",

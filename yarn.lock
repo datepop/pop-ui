@@ -4081,11 +4081,11 @@ __metadata:
     "@mantine/spotlight": "npm:^8.3.6"
     "@mantine/tiptap": "npm:^8.3.6"
     "@tabler/icons-react": "npm:^3.35.0"
-    "@tiptap/core": "npm:^3.9.0"
-    "@tiptap/extension-link": "npm:^3.9.0"
-    "@tiptap/pm": "npm:^3.9.0"
+    "@tiptap/core": "npm:^3.9.1"
+    "@tiptap/extension-link": "npm:^3.9.1"
+    "@tiptap/pm": "npm:^3.9.1"
     "@tiptap/react": "npm:^3.9.0"
-    "@tiptap/starter-kit": "npm:^3.9.0"
+    "@tiptap/starter-kit": "npm:^3.9.1"
     "@types/node": "npm:^24.9.2"
     "@types/react": "npm:^19.2.2"
     "@types/react-dom": "npm:^19.2.2"
@@ -4734,7 +4734,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/core@npm:^3.9.0, @tiptap/core@npm:^3.9.1":
+"@tiptap/core@npm:^3.9.1":
   version: 3.9.1
   resolution: "@tiptap/core@npm:3.9.1"
   peerDependencies:
@@ -4876,7 +4876,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/extension-link@npm:^3.9.0, @tiptap/extension-link@npm:^3.9.1":
+"@tiptap/extension-link@npm:^3.9.1":
   version: 3.9.1
   resolution: "@tiptap/extension-link@npm:3.9.1"
   dependencies:
@@ -4971,7 +4971,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/pm@npm:^3.9.0, @tiptap/pm@npm:^3.9.1":
+"@tiptap/pm@npm:^3.9.1":
   version: 3.9.1
   resolution: "@tiptap/pm@npm:3.9.1"
   dependencies:
@@ -5022,7 +5022,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/starter-kit@npm:^3.9.0":
+"@tiptap/starter-kit@npm:^3.9.1":
   version: 3.9.1
   resolution: "@tiptap/starter-kit@npm:3.9.1"
   dependencies:
