@@ -26,15 +26,20 @@
     "@babel/preset-env": "^7.28.5",
     "@babel/preset-react": "^7.28.5",
     "@babel/preset-typescript": "^7.28.5",
+    "@storybook/addon-links": "^10.0.1",
+    "@storybook/addon-themes": "^10.0.1",
     "@storybook/react": "^10.0.1",
     "@storybook/react-vite": "^10.0.1",
     "@storybook/testing-library": "^0.2.2",
     "@types/react": "^19.2.2",
     "@vitejs/plugin-react": "^5.1.0",
+    "chromatic": "^13.3.2",
     "eslint-plugin-storybook": "^10.0.1",
     "jest": "^30.2.0",
     "jest-environment-jsdom": "^30.2.0",
     "lerna": "^9.0.0",
+    "react": "^19.2.0",
+    "storybook": "^10.0.1",
     "style-dictionary": "^5.1.1",
     "token-transformer": "^0.0.33",
     "vite": "^7.1.12",
@@ -44,12 +49,5 @@
   "resolutions": {
     "tar": "^6.2.1",
     "tmp": "^0.2.4"
-  },
-  "dependencies": {
-    "@storybook/addon-links": "^10.0.1",
-    "@storybook/addon-themes": "^10.0.1",
-    "chromatic": "^13.3.2",
-    "react": "^19.2.0",
-    "storybook": "^10.0.1"
   }
 }
