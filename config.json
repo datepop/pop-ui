@@ -10,6 +10,19 @@
           "format": "scss/variables"
         }
       ]
+    },
+    "ts": {
+      "transformGroup": "js",
+      "buildPath": "./packages/core/src/tokens/",
+      "files": [
+        {
+          "destination": "colors.ts",
+          "format": "javascript/es6",
+          "filter": {
+            "type": "color"
+          }
+        }
+      ]
     }
   }
 }

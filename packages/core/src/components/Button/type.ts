@@ -6,10 +6,12 @@ export type TButtonVariant =
   | "primaryLine"
   | "basic"
   | "danger"
-  | "setting";
+  | "setting"
+  | "warning";
 
 export interface IButtonProps extends MantineButtonProps {
   onClick?: () => void;
   size?: TButtonSize;
   styleType?: TButtonVariant;
+  isLoading?: boolean;
 }
