@@ -15,9 +15,14 @@
         "types": "./dist/types/index.d.ts",
         "default": "./dist/core.umd.cjs"
       }
-    }
+    },
+    "./styles.css": "./dist/core.css"
   },
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss",
+    "dist/**/*.css"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/datepop/pop-ui"
