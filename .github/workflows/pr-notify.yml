@@ -24,3 +24,4 @@ jobs:
         with:
           slack_bot_token: ${{ secrets.SLACK_BOT_TOKEN }}
           user_mappings: ${{ secrets.USER_MAPPINGS }}
+          github_token: ${{ secrets.GH_PAT }}
