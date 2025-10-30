@@ -1,12 +1,8 @@
-/**
- * Color Palette Storybook
- */
-
 import type { Meta, StoryObj } from '@storybook/react';
 import { ColorPalette } from './ColorPalette';
 
 const meta: Meta<typeof ColorPalette> = {
-  title: 'Design System/Colors',
+  title: 'Foundation/Colors',
   component: ColorPalette,
   parameters: {
     layout: 'fullscreen',

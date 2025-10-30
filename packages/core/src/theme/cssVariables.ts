@@ -5,7 +5,7 @@
  * Light/Dark 테마 모두 동일한 색상 사용
  */
 
-import { colors, getCSSVariableName } from './colors/tokens';
+import { colors, getCSSVariableName } from '@pop-ui/foundation';
 
 export type ThemeMode = 'light' | 'dark';
 

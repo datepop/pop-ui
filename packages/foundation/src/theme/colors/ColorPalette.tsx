@@ -136,7 +136,7 @@ export const ColorPalette: React.FC = () => {
           </Text>
         </Box>
         {colorNames.map((colorName) => (
-          <ColorGroup key={colorName} colorName={colorName} />
+          <ColorGroup key={colorName as string} colorName={colorName as string} />
         ))}
       </Stack>
     </Container>

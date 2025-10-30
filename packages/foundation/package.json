@@ -1,0 +1,53 @@
+{
+  "name": "@pop-ui/foundation",
+  "type": "module",
+  "version": "0.0.21",
+  "main": "./dist/foundation.umd.cjs",
+  "module": "./dist/foundation.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/foundation.js"
+      },
+      "require": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/foundation.umd.cjs"
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/datepop/pop-ui"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "typecheck": "tsc",
+    "token-transform": "token-transformer token.json transformed-token.json --expandTypography --expandShadow --expandCompotision --expandBorder",
+    "token-build": "style-dictionary build --config config.json"
+  },
+  "peerDependencies": {
+    "react": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.2",
+    "@types/react": "^19.2.2",
+    "@vitejs/plugin-react": "^5.1.0",
+    "react": "^19.2.0",
+    "style-dictionary": "^5.1.1",
+    "token-transformer": "^0.0.33",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.12",
+    "vite-plugin-dts": "^4.5.4"
+  }
+}

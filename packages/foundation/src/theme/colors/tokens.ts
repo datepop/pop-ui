@@ -5,19 +5,19 @@
  * 모든 색상은 global.color에서 정의됩니다.
  */
 
-import tokenData from '../../../../../token.json';
+import tokenData from '../../../token.json';
 
 export interface ColorShades {
   [shade: string]: string;
 }
 
-export interface ColorPalette {
+export interface ColorPaletteType {
   [colorName: string]: ColorShades;
 }
 
 const rawColors = tokenData.global.color;
 
-export const colors: ColorPalette = Object.entries(rawColors).reduce(
+export const colors: ColorPaletteType = Object.entries(rawColors).reduce(
   (acc, [colorName, shades]) => {
     acc[colorName] = Object.entries(shades as Record<string, any>).reduce(
       (shadeAcc, [shade, tokenValue]) => {
@@ -28,7 +28,7 @@ export const colors: ColorPalette = Object.entries(rawColors).reduce(
     );
     return acc;
   },
-  {} as ColorPalette
+  {} as ColorPaletteType
 );
 
 export type ColorName = keyof typeof colors;

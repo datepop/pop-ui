@@ -39,6 +39,11 @@ jobs:
             git push origin main
           fi
 
+      - name: Generate design tokens
+        run: |
+          yarn token-transform
+          yarn token-build
+
       - name: Lerna build
         run: yarn build
 

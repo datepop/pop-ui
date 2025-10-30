@@ -5,7 +5,7 @@
  */
 
 import { createTheme, MantineColorsTuple } from '@mantine/core';
-import { colors, getCSSVariableRef } from './colors/tokens';
+import { colors, getCSSVariableRef } from '@pop-ui/foundation';
 
 const createColorTuple = (colorName: string): MantineColorsTuple => {
   const shades = colors[colorName];

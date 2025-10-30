@@ -4080,6 +4080,7 @@ __metadata:
     "@mantine/prism": "npm:^6.0.22"
     "@mantine/spotlight": "npm:^8.3.6"
     "@mantine/tiptap": "npm:^8.3.6"
+    "@pop-ui/foundation": "workspace:*"
     "@tabler/icons-react": "npm:^3.35.0"
     "@tiptap/core": "npm:^3.9.1"
     "@tiptap/extension-link": "npm:^3.9.1"
@@ -4111,6 +4112,24 @@ __metadata:
   peerDependencies:
     react: ^19.2.0
     react-dom: ^19.2.0
+  languageName: unknown
+  linkType: soft
+
+"@pop-ui/foundation@workspace:*, @pop-ui/foundation@workspace:packages/foundation":
+  version: 0.0.0-use.local
+  resolution: "@pop-ui/foundation@workspace:packages/foundation"
+  dependencies:
+    "@types/node": "npm:^24.9.2"
+    "@types/react": "npm:^19.2.2"
+    "@vitejs/plugin-react": "npm:^5.1.0"
+    react: "npm:^19.2.0"
+    style-dictionary: "npm:^5.1.1"
+    token-transformer: "npm:^0.0.33"
+    typescript: "npm:^5.9.3"
+    vite: "npm:^7.1.12"
+    vite-plugin-dts: "npm:^4.5.4"
+  peerDependencies:
+    react: ^19.2.0
   languageName: unknown
   linkType: soft
 

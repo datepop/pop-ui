@@ -1,0 +1,28 @@
+{
+  "source": ["./transformed-token.json"],
+  "platforms": {
+    "scss": {
+      "transformGroup": "scss",
+      "buildPath": "../core/src/components/shared/",
+      "files": [
+        {
+          "destination": "variables.scss",
+          "format": "scss/variables"
+        }
+      ]
+    },
+    "ts": {
+      "transformGroup": "js",
+      "buildPath": "./src/tokens/",
+      "files": [
+        {
+          "destination": "colors.ts",
+          "format": "javascript/es6",
+          "filter": {
+            "type": "color"
+          }
+        }
+      ]
+    }
+  }
+}

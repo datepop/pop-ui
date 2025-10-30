@@ -14,13 +14,14 @@
   "scripts": {
     "start": "storybook dev",
     "start:core": "lerna run --scope @pop-ui/core storybook --stream",
+    "build:foundation": "lerna run --scope @pop-ui/foundation build --stream",
     "build:core": "lerna run --scope @pop-ui/core build --stream",
     "test:core": "lerna run --scope @pop-ui/core test --stream",
-    "build": "lerna run build --stream",
+    "build": "yarn build:foundation && lerna run build --stream",
     "test": "NODE_ENV=test jest --coverage",
     "build-storybook": "storybook build",
-    "token-transformed": "token-transformer token.json transformed-token.json --expandTypography --expandShadow --expandCompotision --expandBorder",
-    "token-build": "style-dictionary build"
+    "token-transform": "cd packages/foundation && yarn token-transform",
+    "token-build": "cd packages/foundation && yarn token-build"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.28.5",

@@ -57,7 +57,7 @@ import {
   BorderColorButtonBorderBasicHover,
   BorderColorButtonBorderBasicPressed,
   BorderColorButtonBorderBasicFocused,
-} from '../../tokens/colors';
+} from '@pop-ui/foundation';
 
 import type { CSSProperties } from 'react';
 import type { TButtonSize, TButtonVariant } from './type';
