@@ -4084,7 +4084,7 @@ __metadata:
     "@tiptap/core": "npm:^3.9.1"
     "@tiptap/extension-link": "npm:^3.9.1"
     "@tiptap/pm": "npm:^3.9.1"
-    "@tiptap/react": "npm:^3.9.0"
+    "@tiptap/react": "npm:^3.9.1"
     "@tiptap/starter-kit": "npm:^3.9.1"
     "@types/node": "npm:^24.9.2"
     "@types/react": "npm:^19.2.2"
@@ -4997,7 +4997,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tiptap/react@npm:^3.9.0":
+"@tiptap/react@npm:^3.9.1":
   version: 3.9.1
   resolution: "@tiptap/react@npm:3.9.1"
   dependencies:
