@@ -9,9 +9,9 @@ export type TButtonVariant =
   | "setting"
   | "warning";
 
-export interface IButtonProps extends MantineButtonProps {
+export interface IButtonProps extends Omit<MantineButtonProps, 'variant' | 'styles'> {
   onClick?: () => void;
   size?: TButtonSize;
-  styleType?: TButtonVariant;
+  variant?: TButtonVariant;
   isLoading?: boolean;
 }

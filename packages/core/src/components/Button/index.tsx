@@ -3,51 +3,24 @@
 import { Button as MantineButton, Loader } from "@mantine/core";
 import { useMemo } from "react";
 
-import styles from "./styles.module.scss";
-import type { IButtonProps } from "./type";
-import {
-  TextColorButtonTextPrimaryDefault,
-  TextColorButtonTextPrimarylineDefault,
-  TextColorButtonTextBasicDefault,
-} from "../../tokens/colors";
+import { getButtonStyles, LOADER_COLOR_MAP } from "./style";
 
-const LOADER_COLOR_MAP = {
-  primary: TextColorButtonTextPrimaryDefault,
-  primaryLine: TextColorButtonTextPrimarylineDefault,
-  basic: TextColorButtonTextBasicDefault,
-  danger: TextColorButtonTextPrimaryDefault,
-  setting: TextColorButtonTextPrimaryDefault,
-  warning: TextColorButtonTextPrimaryDefault,
-} as const;
+import type { IButtonProps } from "./type";
 
 export function Button({
   children,
   size = "md",
-  styleType = "primary",
+  variant = "primary",
   isLoading = false,
   disabled = false,
   ...props
 }: IButtonProps) {
-  const buttonClassName = useMemo(() => {
-    const sizeMap = {
-      lg: "baseButton--sizeLg",
-      md: "baseButton--sizeMd",
-      sm: "baseButton--sizeSm",
-    };
+  const buttonStyles = useMemo(
+    () => getButtonStyles(variant, size),
+    [variant, size]
+  );
 
-    const variantMap = {
-      primary: "baseButton--primary",
-      primaryLine: "baseButton--primaryLine",
-      basic: "baseButton--basic",
-      danger: "baseButton--danger",
-      setting: "baseButton--setting",
-      warning: "baseButton--warning",
-    };
-
-    return `${styles.baseButton} ${styles[sizeMap[size]]} ${styles[variantMap[styleType]]}`;
-  }, [size, styleType]);
-
-  const loaderColor = LOADER_COLOR_MAP[styleType];
+  const loaderColor = LOADER_COLOR_MAP[variant];
 
   const loaderSize = useMemo(() => {
     switch (size) {
@@ -64,7 +37,7 @@ export function Button({
   return (
     <MantineButton
       type="button"
-      className={buttonClassName}
+      styles={buttonStyles}
       disabled={disabled || isLoading}
       {...props}
     >
