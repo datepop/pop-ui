@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { ActionIcon } from "@mantine/core";
 import { TimeInput, TimeInputProps } from "@mantine/dates";
-import ic_clock from "../../assets/icons/ic_clock.svg";
+import { IconClock } from "@pop-ui/foundation";
 import styles from "./styles.module.scss";
 
 export interface TimePickerProps extends TimeInputProps {
@@ -37,7 +37,7 @@ export const TimePicker = ({ size = "md", ...props }: TimePickerProps) => {
             }
           }}
         >
-          <img width={iconSize} src={ic_clock} alt="clock_icon" />
+          <IconClock size={iconSize} />
         </ActionIcon>
       }
     />

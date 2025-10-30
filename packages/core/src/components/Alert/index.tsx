@@ -4,8 +4,7 @@ import {
   Alert as MantineAlert,
   AlertProps as MatineAlertProps,
 } from "@mantine/core";
-import ic_success from "../../assets/icons/ic_success.svg";
-import ic_error from "../../assets/icons/ic_error.svg";
+import { IconCheckCircle, IconWarningCircle } from "@pop-ui/foundation";
 import styles from "./styles.module.scss";
 
 export interface AlertProps extends MatineAlertProps {
@@ -42,10 +41,11 @@ export const Alert = ({
     <MantineAlert
       className={typeStyle}
       icon={
-        <img
-          src={type === "success" ? ic_success : ic_error}
-          alt="alert_icon"
-        />
+        type === "success" ? (
+          <IconCheckCircle size={20} />
+        ) : (
+          <IconWarningCircle size={20} />
+        )
       }
       styles={{
         title: {
