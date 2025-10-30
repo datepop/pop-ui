@@ -96,6 +96,10 @@ export const getBaseConfig = ({ plugins = [], lib }) =>
         output: {
           globals: {
             react: "React",
+            "react-dom": "ReactDOM",
+            "react/jsx-runtime": "jsxRuntime",
+            "@mantine/core": "MantineCore",
+            "@mantine/hooks": "MantineHooks",
           },
           assetFileNames: (assetInfo) => {
             if (assetInfo.name && assetInfo.name.endsWith('.woff2')) {
