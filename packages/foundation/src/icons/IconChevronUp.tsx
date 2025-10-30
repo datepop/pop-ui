@@ -1,12 +1,12 @@
-import React from 'react';
-import type { IconProps } from '../types/icon';
-import { ColorGray900 } from '../tokens/colors';
+import { ColorGray900 } from "../tokens/colors";
 
-const IcChevronDown: React.FC<IconProps> = ({
+import type { IconProps } from "../types/icon";
+
+export default function IconChevronUp({
   size = 24,
   color = ColorGray900,
   ...props
-}) => {
+}: IconProps) {
   return (
     <svg
       width={size}
@@ -17,14 +17,12 @@ const IcChevronDown: React.FC<IconProps> = ({
       {...props}
     >
       <path
-        d="M18 9L12 15L6 9"
+        d="M15 12L9 6L3 12"
         stroke={color}
-        strokeWidth="1.5"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
     </svg>
   );
-};
-
-export default IcChevronDown;
+}
