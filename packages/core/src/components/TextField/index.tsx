@@ -1,8 +1,10 @@
 'use client'
 
 import { Input, InputProps, Textarea, TextareaProps, Tooltip } from "@mantine/core";
-import ic_tooltip from "../../assets/icons/ic_tooltip.svg";
-import ic_input_clear from "../../assets/icons/ic_input_clear.svg";
+import {
+  IconInfoCircle,
+  IconClose,
+} from "@pop-ui/foundation";
 import styles from "./styles.module.scss";
 import { useCallback, useState } from "react";
 
@@ -95,7 +97,9 @@ export const TextField = (allProps: TextFieldProps) => {
         )}
         {tooltip && (
           <Tooltip label={tooltip} position={tooltipPosition}>
-            <img className={tooltipStyle} src={ic_tooltip} alt="tooltip_icon" />
+            <div className={tooltipStyle}>
+              <IconInfoCircle size={size === "sm" ? 14 : size === "lg" ? 20 : 16} />
+            </div>
           </Tooltip>
         )}
       </div>
@@ -119,7 +123,7 @@ export const TextField = (allProps: TextFieldProps) => {
               rightSection={
                 onClear && textCount > 0 ? (
                   <div className={styles.clear_button} onClick={onClear}>
-                    <img src={ic_input_clear} />
+                    <IconClose size={size === "sm" ? 16 : size === "lg" ? 24 : 20} />
                   </div>
                 ) : undefined
               }

@@ -1,29 +1,120 @@
-import React, { useState } from 'react';
-import type { Meta, StoryObj } from '@storybook/react';
-import { Stack, Text, Paper, Group, TextInput, Button, Box, Badge } from '@mantine/core';
-import IcChevronDown from './IcChevronDown';
-import IcChevronUp from './IcChevronUp';
-import IcChevronLeft from './IcChevronLeft';
-import IcChevronRight from './IcChevronRight';
-import { ColorGray900, ColorAqua500, ColorRed500, ColorBlue400, ColorGreen500 } from '../tokens/colors';
+import React, { useState } from "react";
+import type { Meta, StoryObj } from "@storybook/react";
+import {
+  Stack,
+  Text,
+  Paper,
+  Group,
+  TextInput,
+  Button,
+  Box,
+} from "@mantine/core";
+import IconAnalytics from "./IconAnalytics";
+import IconCalendar from "./IconCalendar";
+import IconCamera from "./IconCamera";
+import IconCheck from "./IconCheck";
+import IconCheckCircle from "./IconCheckCircle";
+import IconCheckSquare from "./IconCheckSquare";
+import IconChevronDown from "./IconChevronDown";
+import IconChevronLeft from "./IconChevronLeft";
+import IconChevronRight from "./IconChevronRight";
+import IconChevronRightDouble from "./IconChevronRightDouble";
+import IconChevronUp from "./IconChevronUp";
+import IconClock from "./IconClock";
+import IconClose from "./IconClose";
+import IconCloseCircle from "./IconCloseCircle";
+import IconCompass from "./IconCompass";
+import IconCopy from "./IconCopy";
+import IconDown from "./IconDown";
+import IconDragMenu from "./IconDragMenu";
+import IconFilter from "./IconFilter";
+import IconInfoCircle from "./IconInfoCircle";
+import IconKebap from "./IconKebap";
+import IconLink from "./IconLink";
+import IconListMenu from "./IconListMenu";
+import IconMap from "./IconMap";
+import IconMapMarker from "./IconMapMarker";
+import IconMenu from "./IconMenu";
+import IconMoney from "./IconMoney";
+import IconPhone from "./IconPhone";
+import IconPhoneCall from "./IconPhoneCall";
+import IconPhoto from "./IconPhoto";
+import IconPlus from "./IconPlus";
+import IconPlusCircle from "./IconPlusCircle";
+import IconPlusSquare from "./IconPlusSquare";
+import IconQuestionCircle from "./IconQuestionCircle";
+import IconReset from "./IconReset";
+import IconSales from "./IconSales";
+import IconSearch from "./IconSearch";
+import IconSetting from "./IconSetting";
+import IconSquare from "./IconSquare";
+import IconStar from "./IconStar";
+import IconStore from "./IconStore";
+import IconTicket from "./IconTicket";
+import IconTrash from "./IconTrash";
+import IconUp from "./IconUp";
+import IconWarning from "./IconWarning";
+import IconWarningCircle from "./IconWarningCircle";
+import { ColorGray900 } from "../tokens/colors";
 
 const iconList = [
-  { name: 'IcChevronDown', component: IcChevronDown, defaultSize: 24 },
-  { name: 'IcChevronUp', component: IcChevronUp, defaultSize: 24 },
-  { name: 'IcChevronLeft', component: IcChevronLeft, defaultSize: 8 },
-  { name: 'IcChevronRight', component: IcChevronRight, defaultSize: 8 },
+  { name: "IconAnalytics", component: IconAnalytics, defaultSize: 24 },
+  { name: "IconCalendar", component: IconCalendar, defaultSize: 24 },
+  { name: "IconCamera", component: IconCamera, defaultSize: 24 },
+  { name: "IconCheck", component: IconCheck, defaultSize: 24 },
+  { name: "IconCheckCircle", component: IconCheckCircle, defaultSize: 24 },
+  { name: "IconCheckSquare", component: IconCheckSquare, defaultSize: 24 },
+  { name: "IconChevronDown", component: IconChevronDown, defaultSize: 24 },
+  { name: "IconChevronLeft", component: IconChevronLeft, defaultSize: 24 },
+  { name: "IconChevronRight", component: IconChevronRight, defaultSize: 24 },
+  { name: "IconChevronRightDouble", component: IconChevronRightDouble, defaultSize: 24 },
+  { name: "IconChevronUp", component: IconChevronUp, defaultSize: 24 },
+  { name: "IconClock", component: IconClock, defaultSize: 24 },
+  { name: "IconClose", component: IconClose, defaultSize: 24 },
+  { name: "IconCloseCircle", component: IconCloseCircle, defaultSize: 24 },
+  { name: "IconCompass", component: IconCompass, defaultSize: 24 },
+  { name: "IconCopy", component: IconCopy, defaultSize: 24 },
+  { name: "IconDown", component: IconDown, defaultSize: 24 },
+  { name: "IconDragMenu", component: IconDragMenu, defaultSize: 24 },
+  { name: "IconFilter", component: IconFilter, defaultSize: 24 },
+  { name: "IconInfoCircle", component: IconInfoCircle, defaultSize: 24 },
+  { name: "IconKebap", component: IconKebap, defaultSize: 24 },
+  { name: "IconLink", component: IconLink, defaultSize: 24 },
+  { name: "IconListMenu", component: IconListMenu, defaultSize: 24 },
+  { name: "IconMap", component: IconMap, defaultSize: 24 },
+  { name: "IconMapMarker", component: IconMapMarker, defaultSize: 24 },
+  { name: "IconMenu", component: IconMenu, defaultSize: 24 },
+  { name: "IconMoney", component: IconMoney, defaultSize: 24 },
+  { name: "IconPhone", component: IconPhone, defaultSize: 24 },
+  { name: "IconPhoneCall", component: IconPhoneCall, defaultSize: 24 },
+  { name: "IconPhoto", component: IconPhoto, defaultSize: 24 },
+  { name: "IconPlus", component: IconPlus, defaultSize: 24 },
+  { name: "IconPlusCircle", component: IconPlusCircle, defaultSize: 24 },
+  { name: "IconPlusSquare", component: IconPlusSquare, defaultSize: 24 },
+  { name: "IconQuestionCircle", component: IconQuestionCircle, defaultSize: 24 },
+  { name: "IconReset", component: IconReset, defaultSize: 24 },
+  { name: "IconSales", component: IconSales, defaultSize: 24 },
+  { name: "IconSearch", component: IconSearch, defaultSize: 24 },
+  { name: "IconSetting", component: IconSetting, defaultSize: 24 },
+  { name: "IconSquare", component: IconSquare, defaultSize: 24 },
+  { name: "IconStar", component: IconStar, defaultSize: 24 },
+  { name: "IconStore", component: IconStore, defaultSize: 24 },
+  { name: "IconTicket", component: IconTicket, defaultSize: 24 },
+  { name: "IconTrash", component: IconTrash, defaultSize: 24 },
+  { name: "IconUp", component: IconUp, defaultSize: 24 },
+  { name: "IconWarning", component: IconWarning, defaultSize: 24 },
+  { name: "IconWarningCircle", component: IconWarningCircle, defaultSize: 24 },
 ];
 
 const meta: Meta = {
-  title: 'Foundation/Icons',
+  title: "Foundation/Icons",
   parameters: {
-    layout: 'padded',
+    layout: "padded",
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 };
 
 export default meta;
-type Story = StoryObj;
 
 const IconCard: React.FC<{
   name: string;
@@ -35,13 +126,13 @@ const IconCard: React.FC<{
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
-    const code = `import { ${name} } from '@pop-ui/foundation';\n\n<${name} ${size && size !== defaultSize ? `size={${size}} ` : ''}${color && color !== ColorGray900 ? `color="${color}" ` : ''}/>`;
+    const code = `import { ${name} } from '@pop-ui/foundation';\n\n<${name} ${size && size !== defaultSize ? `size={${size}} ` : ""}${color && color !== ColorGray900 ? `color="${color}" ` : ""}/>`;
     try {
       await navigator.clipboard.writeText(code);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      console.error('Failed to copy:', err);
+      console.error("Failed to copy:", err);
     }
   };
 
@@ -50,33 +141,33 @@ const IconCard: React.FC<{
       p="lg"
       withBorder
       style={{
-        cursor: 'pointer',
-        transition: 'all 0.2s',
-        minHeight: '180px',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
+        cursor: "pointer",
+        transition: "all 0.2s",
+        minHeight: "180px",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
       }}
       onClick={handleCopy}
       onMouseEnter={(e) => {
-        e.currentTarget.style.transform = 'translateY(-4px)';
-        e.currentTarget.style.boxShadow = '0 8px 16px rgba(0,0,0,0.12)';
+        e.currentTarget.style.transform = "translateY(-4px)";
+        e.currentTarget.style.boxShadow = "0 8px 16px rgba(0,0,0,0.12)";
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.transform = 'translateY(0)';
-        e.currentTarget.style.boxShadow = 'none';
+        e.currentTarget.style.transform = "translateY(0)";
+        e.currentTarget.style.boxShadow = "none";
       }}
     >
       <Stack gap="md" align="center">
         <Box
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '80px',
-            height: '80px',
-            backgroundColor: '#f8f9fa',
-            borderRadius: '8px',
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "80px",
+            height: "80px",
+            backgroundColor: "#f8f9fa",
+            borderRadius: "8px",
           }}
         >
           <Icon size={size || defaultSize} color={color || ColorGray900} />
@@ -86,7 +177,7 @@ const IconCard: React.FC<{
             {name}
           </Text>
           <Text size="xs" c="dimmed">
-            {copied ? 'Copied!' : 'Click to copy'}
+            {copied ? "Copied!" : "Click to copy"}
           </Text>
         </Stack>
       </Stack>
@@ -104,12 +195,29 @@ const IconCard: React.FC<{
   );
 };
 
-export const AllIcons: Story = {
-  render: () => {
-    const [searchTerm, setSearchTerm] = useState('');
+export const AllIcons: StoryObj<{
+  size: number;
+  color: string;
+}> = {
+  args: {
+    size: 24,
+    color: ColorGray900,
+  },
+  argTypes: {
+    size: {
+      control: { type: "range", min: 8, max: 64, step: 4 },
+      description: "Icon size in pixels",
+    },
+    color: {
+      control: "color",
+      description: "Icon color",
+    },
+  },
+  render: (args) => {
+    const [searchTerm, setSearchTerm] = useState("");
 
     const filteredIcons = iconList.filter((icon) =>
-      icon.name.toLowerCase().includes(searchTerm.toLowerCase())
+      icon.name.toLowerCase().includes(searchTerm.toLowerCase()),
     );
 
     return (
@@ -119,17 +227,17 @@ export const AllIcons: Story = {
             All Icons
           </Text>
           <Text size="sm" c="dimmed" mb="lg">
-            Click any icon card to copy its import code
+            Click any icon card to copy its import code. Use the controls panel to adjust size and color.
           </Text>
           <Group gap="md">
             <TextInput
               placeholder="Search icons..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={{ flex: 1, maxWidth: '400px' }}
+              style={{ flex: 1, maxWidth: "400px" }}
             />
             {searchTerm && (
-              <Button variant="subtle" onClick={() => setSearchTerm('')}>
+              <Button variant="subtle" onClick={() => setSearchTerm("")}>
                 Clear
               </Button>
             )}
@@ -145,9 +253,9 @@ export const AllIcons: Story = {
         ) : (
           <div
             style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-              gap: '16px',
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
+              gap: "16px",
             }}
           >
             {filteredIcons.map((icon) => (
@@ -156,221 +264,35 @@ export const AllIcons: Story = {
                 name={icon.name}
                 Icon={icon.component}
                 defaultSize={icon.defaultSize}
+                size={args.size}
+                color={args.color}
               />
             ))}
           </div>
         )}
 
-        <Paper p="lg" withBorder style={{ backgroundColor: '#f8f9fa' }}>
+        <Paper p="lg" withBorder style={{ backgroundColor: "#f8f9fa" }}>
           <Text size="sm" fw={600} mb="sm">
             Usage Example
           </Text>
           <pre
             style={{
-              backgroundColor: '#fff',
-              padding: '12px',
-              borderRadius: '4px',
-              overflow: 'auto',
-              fontSize: '13px',
+              backgroundColor: "#fff",
+              padding: "12px",
+              borderRadius: "4px",
+              overflow: "auto",
+              fontSize: "13px",
             }}
           >
-            {`import { IcChevronDown } from '@pop-ui/foundation';
+            {`import { IconChevronDown } from '@pop-ui/foundation';
 
-<IcChevronDown />
-<IcChevronDown size={32} />
-<IcChevronDown color="#1971C2" />
-<IcChevronDown size={20} color="#FA5252" />`}
+<IconChevronDown />
+<IconChevronDown size={32} />
+<IconChevronDown color="#1971C2" />
+<IconChevronDown size={20} color="#FA5252" />`}
           </pre>
         </Paper>
       </Stack>
     );
-  },
-};
-
-export const Sizes: Story = {
-  render: () => {
-    const sizes = [16, 24, 32, 48];
-
-    return (
-      <Stack gap="xl" p="md">
-        <Box>
-          <Text size="xl" fw={700} mb="xs">
-            Icon Sizes
-          </Text>
-          <Text size="sm" c="dimmed">
-            Icons can be scaled to any size using the size prop
-          </Text>
-        </Box>
-
-        {iconList.map((icon) => (
-          <Paper key={icon.name} p="lg" withBorder>
-            <Text size="md" fw={600} mb="md">
-              {icon.name}
-            </Text>
-            <Group gap="xl" align="center">
-              {sizes.map((size) => (
-                <Stack key={size} gap="xs" align="center">
-                  <Box
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      width: '80px',
-                      height: '80px',
-                      backgroundColor: '#f8f9fa',
-                      borderRadius: '8px',
-                    }}
-                  >
-                    <icon.component size={size} />
-                  </Box>
-                  <Badge size="sm" variant="light">
-                    {size}px
-                  </Badge>
-                </Stack>
-              ))}
-            </Group>
-          </Paper>
-        ))}
-      </Stack>
-    );
-  },
-};
-
-export const Colors: Story = {
-  render: () => {
-    const colors = [
-      { name: 'Gray 900 (Default)', value: ColorGray900 },
-      { name: 'Aqua 500', value: ColorAqua500 },
-      { name: 'Red 500', value: ColorRed500 },
-      { name: 'Blue 400', value: ColorBlue400 },
-      { name: 'Green 500', value: ColorGreen500 },
-    ];
-
-    return (
-      <Stack gap="xl" p="md">
-        <Box>
-          <Text size="xl" fw={700} mb="xs">
-            Icon Colors
-          </Text>
-          <Text size="sm" c="dimmed">
-            Icons accept any color value via the color prop
-          </Text>
-        </Box>
-
-        {iconList.map((icon) => (
-          <Paper key={icon.name} p="lg" withBorder>
-            <Text size="md" fw={600} mb="md">
-              {icon.name}
-            </Text>
-            <Group gap="xl" align="center">
-              {colors.map((colorItem) => (
-                <Stack key={colorItem.name} gap="xs" align="center">
-                  <Box
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      width: '80px',
-                      height: '80px',
-                      backgroundColor: '#f8f9fa',
-                      borderRadius: '8px',
-                    }}
-                  >
-                    <icon.component
-                      size={icon.defaultSize}
-                      color={colorItem.value}
-                    />
-                  </Box>
-                  <Text size="xs" ta="center" style={{ maxWidth: '80px' }}>
-                    {colorItem.name}
-                  </Text>
-                  <Text size="xs" c="dimmed" ff="monospace">
-                    {colorItem.value}
-                  </Text>
-                </Stack>
-              ))}
-            </Group>
-          </Paper>
-        ))}
-      </Stack>
-    );
-  },
-};
-
-export const Interactive: Story = {
-  render: (args) => {
-    const selectedIcon = iconList.find((icon) => icon.name === args.icon);
-    const Icon = selectedIcon?.component || IcChevronDown;
-
-    return (
-      <Stack gap="xl" p="md">
-        <Box>
-          <Text size="xl" fw={700} mb="xs">
-            Interactive Icon
-          </Text>
-          <Text size="sm" c="dimmed">
-            Use the controls panel to adjust icon properties in real-time
-          </Text>
-        </Box>
-
-        <Paper
-          p="xl"
-          withBorder
-          style={{
-            backgroundColor: args.backgroundColor || 'transparent',
-            minHeight: '300px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Icon size={args.size} color={args.color} />
-        </Paper>
-
-        <Paper p="lg" withBorder style={{ backgroundColor: '#f8f9fa' }}>
-          <Text size="sm" fw={600} mb="sm">
-            Current Code
-          </Text>
-          <pre
-            style={{
-              backgroundColor: '#fff',
-              padding: '12px',
-              borderRadius: '4px',
-              overflow: 'auto',
-              fontSize: '13px',
-            }}
-          >
-            {`import { ${args.icon} } from '@pop-ui/foundation';
-
-<${args.icon}${args.size !== selectedIcon?.defaultSize ? ` size={${args.size}}` : ''}${args.color !== ColorGray900 ? ` color="${args.color}"` : ''} />`}
-          </pre>
-        </Paper>
-      </Stack>
-    );
-  },
-  args: {
-    icon: 'IcChevronDown',
-    size: 24,
-    color: ColorGray900,
-    backgroundColor: 'transparent',
-  },
-  argTypes: {
-    icon: {
-      control: 'select',
-      options: iconList.map((icon) => icon.name),
-      description: 'Select an icon',
-    },
-    size: {
-      control: { type: 'range', min: 8, max: 64, step: 4 },
-      description: 'Icon size in pixels',
-    },
-    color: {
-      control: 'color',
-      description: 'Icon color',
-    },
-    backgroundColor: {
-      control: 'color',
-      description: 'Background color for testing contrast',
-    },
   },
 };

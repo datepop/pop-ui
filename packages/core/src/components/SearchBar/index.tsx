@@ -1,9 +1,11 @@
 'use client'
 
 import { Autocomplete, AutocompleteProps, Input, Tooltip } from "@mantine/core";
-import ic_tooltip from "../../assets/icons/ic_tooltip.svg";
-import ic_input_clear from "../../assets/icons/ic_input_clear.svg";
-import ic_search from "../../assets/icons/ic_search.svg";
+import {
+  IconInfoCircle,
+  IconClose,
+  IconSearch,
+} from "@pop-ui/foundation";
 import styles from "./styles.module.scss";
 import { useCallback, useState } from "react";
 
@@ -74,7 +76,9 @@ export const SearchBar = ({
         )}
         {tooltip && (
           <Tooltip label={tooltip} position={tooltipPosition}>
-            <img className={tooltipStyle} src={ic_tooltip} alt="tooltip_icon" />
+            <div className={tooltipStyle}>
+              <IconInfoCircle size={size === "sm" ? 14 : size === "lg" ? 20 : 16} />
+            </div>
           </Tooltip>
         )}
       </div>
@@ -86,11 +90,11 @@ export const SearchBar = ({
             error={errorMsg}
             className={searchBarStyle}
             onChange={onChangeHandler}
-            leftSection={<img src={ic_search} />}
+            leftSection={<IconSearch size={size === "sm" ? 16 : size === "lg" ? 24 : 20} />}
             rightSection={
               onClear && textCount > 0 ? (
                 <div className={styles.clear_button} onClick={onClear}>
-                  <img src={ic_input_clear} />
+                  <IconClose size={size === "sm" ? 16 : size === "lg" ? 24 : 20} />
                 </div>
               ) : undefined
             }

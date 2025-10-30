@@ -6,7 +6,7 @@ import {
   DatePickerInputProps,
   DateTimePicker,
 } from "@mantine/dates";
-import ic_calendar from "../../assets/icons/ic_calendar.svg";
+import { IconCalendar } from "@pop-ui/foundation";
 import styles from "./styles.module.scss";
 
 export interface DatePickerProps extends DatePickerInputProps {
@@ -40,7 +40,7 @@ export const DatePicker = ({
         firstDayOfWeek={0}
         monthLabelFormat={"YYYY년 MM월"}
         valueFormat="YYYY-MM-DD | a hh:mm"
-        rightSection={<img width={iconSize} src={ic_calendar} />}
+        rightSection={<IconCalendar size={iconSize} />}
         {...props}
       />
     );
@@ -55,7 +55,7 @@ export const DatePicker = ({
       firstDayOfWeek={0}
       monthLabelFormat={"YYYY년 MM월"}
       valueFormat="YYYY-MM-DD"
-      rightSection={<img width={iconSize} src={ic_calendar} />}
+      rightSection={<IconCalendar size={iconSize} />}
       {...props}
     />
   );

@@ -8,8 +8,7 @@ import {
   DropzoneProps,
 } from "@mantine/dropzone";
 import styles from "./styles.module.scss";
-import ic_image_colored from "../../assets/icons/ic_image_colored.svg";
-import ic_cancel_circle from "../../assets/icons/ic_cancel_circle.svg";
+import { IconPhoto, IconCloseCircle } from "@pop-ui/foundation";
 
 export interface ImageUploaderProps extends DropzoneProps {
   width?: number;
@@ -45,7 +44,7 @@ export const ImageUploader = ({
     <div className={styles.image_uploader_wrapper}>
       {showClearButton && fileData ? (
         <div className={styles.file_clear_button} onClick={handleFileDataClear}>
-          <img src={ic_cancel_circle} alt="clear_file_data" />
+          <IconCloseCircle size={24} />
         </div>
       ) : null}
       <Dropzone
@@ -82,7 +81,7 @@ export const ImageUploader = ({
             />
           ) : (
             <div>
-              <img src={ic_image_colored} alt="ic_image_colored" />
+              <IconPhoto size={48} />
               <span>{defaultMsg}</span>
             </div>
           )}

@@ -1,8 +1,7 @@
 'use client'
 
 import { HTMLAttributes, useMemo, useState } from "react";
-import chevron_left from "../../assets/icons/ic_chevron_left.svg";
-import chevron_right from "../../assets/icons/ic_chevron_right.svg";
+import { IconChevronLeft, IconChevronRight } from "@pop-ui/foundation";
 
 import style from "./style.module.scss";
 
@@ -56,7 +55,7 @@ export const Pagination = ({
     <div {...props} className={style.pagination}>
       {currentIdx >= paginationLength ? (
         <button className={style.arrow} onClick={onClickPrev}>
-          <img src={chevron_left} alt="prev" />
+          <IconChevronLeft size={20} />
         </button>
       ) : null}
       {new Array(paginationLength).fill(0).map((_v, index) => {
@@ -92,7 +91,7 @@ export const Pagination = ({
         paginationLength <
       Math.ceil(totalrows / maxPageRows) ? (
         <button className={style.arrow} onClick={onClickNext}>
-          <img src={chevron_right} alt="next" />
+          <IconChevronRight size={20} />
         </button>
       ) : null}
     </div>

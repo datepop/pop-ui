@@ -1,9 +1,11 @@
 'use client'
 
 import { Input, Select, SelectProps, Tooltip } from "@mantine/core";
-import ic_tooltip from "../../assets/icons/ic_tooltip.svg";
-import ic_chevron_up from "../../assets/icons/ic_chevron_up.svg";
-import ic_chevron_down from "../../assets/icons/ic_chevron_down.svg";
+import {
+  IconInfoCircle,
+  IconChevronUp,
+  IconChevronDown,
+} from "@pop-ui/foundation";
 import styles from "./styles.module.scss";
 import { useState } from "react";
 
@@ -62,7 +64,9 @@ export const Dropdown = ({
         )}
         {tooltip && (
           <Tooltip label={tooltip} position={tooltipPosition}>
-            <img className={tooltipStyle} src={ic_tooltip} alt="tooltip_icon" />
+            <div className={tooltipStyle}>
+              <IconInfoCircle size={size === "sm" ? 14 : size === "lg" ? 20 : 16} />
+            </div>
           </Tooltip>
         )}
       </div>
@@ -74,9 +78,9 @@ export const Dropdown = ({
           className={selectStyle}
           rightSection={
             isOpen ? (
-              <img width={chevronSize} src={ic_chevron_up} />
+              <IconChevronUp size={chevronSize} />
             ) : (
-              <img width={chevronSize} src={ic_chevron_down} />
+              <IconChevronDown size={chevronSize} />
             )
           }
           onDropdownOpen={() => setIsOpen(true)}

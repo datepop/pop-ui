@@ -12,6 +12,12 @@ jobs:
         with:
           fetch-depth: 0
       - run: yarn
+      - name: Generate design tokens
+        run: |
+          yarn token-transform
+          yarn token-build
+      - name: Build packages
+        run: yarn build
       - uses: chromaui/action@v1
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
