@@ -153,12 +153,12 @@ yarn build
 
 ## 타입 정의
 
-### IconProps
+### IIconProps
 
 ```typescript
-import type { IconProps } from '@pop-ui/foundation';
+import type { IIconProps } from '@pop-ui/foundation';
 
-interface IconProps extends SVGProps<SVGSVGElement> {
+interface IIconProps extends SVGProps<SVGSVGElement> {
   size?: number;
   color?: string;
 }

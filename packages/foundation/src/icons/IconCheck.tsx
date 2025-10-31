@@ -1,25 +1,25 @@
 import { ColorGray900 } from "../tokens/colors";
 
-import type { IconProps } from "../types/icon";
+import type { IIconProps } from "../types/icon";
 
 export default function IconCheck({
   size = 24,
   color = ColorGray900,
   ...props
-}: IconProps) {
+}: IIconProps) {
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 14 14"
+      viewBox="0 0 40 40"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <path
-        d="M1.68935 7L5.26288 10.375L11.8143 3.625"
+        d="M5.00403 20L15.5923 30L35.004 10"
         stroke={color}
-        strokeWidth="2"
+        strokeWidth="3.33333"
         strokeLinecap="round"
         strokeLinejoin="round"
       />

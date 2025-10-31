@@ -1,12 +1,12 @@
 import { ColorGray900 } from "../tokens/colors";
 
-import type { IconProps } from "../types/icon";
+import type { IIconProps } from "../types/icon";
 
 export default function IconCamera({
   size = 24,
   color = ColorGray900,
   ...props
-}: IconProps) {
+}: IIconProps) {
   return (
     <svg
       width={size}
@@ -22,7 +22,14 @@ export default function IconCamera({
         strokeWidth="1.5"
       />
       <circle cx="12" cy="13" r="3" stroke={color} strokeWidth="1.5" />
-      <ellipse cx="16.5211" cy="9.54499" rx="0.753488" ry="0.739322" fill={color} />
+      <ellipse
+        cx="16.5211"
+        cy="9.54499"
+        rx="0.753488"
+        ry="0.739322"
+        fill={color}
+        stroke={color}
+      />
     </svg>
   );
 }

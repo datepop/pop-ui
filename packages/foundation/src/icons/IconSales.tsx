@@ -1,35 +1,42 @@
 import { ColorGray900 } from "../tokens/colors";
 
-import type { IconProps } from "../types/icon";
+import type { IIconProps } from "../types/icon";
 
 export default function IconSales({
   size = 24,
   color = ColorGray900,
   ...props
-}: IconProps) {
+}: IIconProps) {
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 24 24"
+      viewBox="0 0 40 40"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <rect
-        x="3"
-        y="6.77783"
-        width="18"
-        height="13.2222"
-        rx="2"
+        x="5"
+        y="11.2963"
+        width="30"
+        height="22.037"
+        rx="3.33333"
         stroke={color}
-        strokeWidth="1.5"
+        strokeWidth="2.5"
       />
-      <rect x="3" y="15" width="18" height="2" fill={color} />
+      <rect
+        x="5"
+        y="25"
+        width="30"
+        height="3.33333"
+        fill={color}
+        strokeWidth={0}
+      />
       <path
-        d="M8 8.66667V4.5C8 3.67157 8.67157 3 9.5 3H14.5C15.3284 3 16 3.67157 16 4.5V8.66667"
+        d="M13.3334 14.4444V7.5C13.3334 6.11929 14.4527 5 15.8334 5H24.1667C25.5474 5 26.6667 6.11929 26.6667 7.5V14.4444"
         stroke={color}
-        strokeWidth="1.5"
+        strokeWidth="2.5"
         strokeLinecap="round"
       />
     </svg>

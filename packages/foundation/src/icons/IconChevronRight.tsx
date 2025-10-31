@@ -1,24 +1,25 @@
 import { ColorGray900 } from "../tokens/colors";
 
-import type { IconProps } from "../types/icon";
+import type { IIconProps } from "../types/icon";
 
 export default function IconChevronRight({
   size = 24,
   color = ColorGray900,
   ...props
-}: IconProps) {
+}: IIconProps) {
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 24 24"
+      viewBox="0 0 40 40"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <path
-        d="M8.58094 4.58076C8.07326 5.08844 8.07326 5.91155 8.58094 6.41924L14.1617 12L8.58094 17.5808C8.07326 18.0884 8.07326 18.9116 8.58094 19.4192C9.08862 19.9269 9.91174 19.9269 10.4194 19.4192L16.9194 12.9192C17.4271 12.4116 17.4271 11.5884 16.9194 11.0808L10.4194 4.58076C9.91173 4.07308 9.08862 4.07308 8.58094 4.58076Z"
+        d="M10.9687 5.1335C10.1225 5.97964 10.1225 7.35149 10.9687 8.19762L22.7699 19.9989L10.9687 31.8001C10.1225 32.6462 10.1225 34.0181 10.9687 34.8642C11.8148 35.7103 13.1867 35.7103 14.0328 34.8642L27.3661 21.5309C28.2122 20.6848 28.2122 19.3129 27.3661 18.4668L14.0328 5.1335C13.1867 4.28737 11.8148 4.28737 10.9687 5.1335Z"
         fill={color}
+        strokeWidth={0}
       />
     </svg>
   );

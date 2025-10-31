@@ -2,7 +2,7 @@ import { ColorGray900 } from "../tokens/colors";
 
 import type { IIconProps } from "../types/icon";
 
-export default function IconClock({
+export default function IconHome({
   size = 24,
   color = ColorGray900,
   ...props
@@ -17,24 +17,23 @@ export default function IconClock({
       {...props}
     >
       <path
-        d="M20 35C28.2843 35 35 28.2843 35 20C35 11.7157 28.2843 5 20 5C11.7157 5 5 11.7157 5 20C5 28.2843 11.7157 35 20 35Z"
+        d="M33.6119 15.0537V32.1261C33.6119 33.9718 32.1163 35.4674 30.2706 35.4674H9.74559C7.89992 35.4674 6.4043 33.9718 6.4043 32.1261V15.0537"
         stroke={color}
         strokeWidth="2.5"
         strokeMiterlimit="10"
       />
       <path
-        d="M20.2 20V11.75"
+        d="M3.33328 17.3767L17.5894 5.42761C18.9737 4.23429 21.0262 4.23429 22.4104 5.42761L36.6666 17.3926"
         stroke={color}
         strokeWidth="2.5"
-        strokeMiterlimit="10"
         strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
-        d="M26.95 20H20.2"
+        d="M15.2985 35.4674V27.8143C15.2985 25.9686 16.7941 24.473 18.6398 24.473H21.3924C23.238 24.473 24.7337 25.9686 24.7337 27.8143V35.4674"
         stroke={color}
         strokeWidth="2.5"
-        strokeMiterlimit="10"
-        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

@@ -1,27 +1,27 @@
 import { ColorGray900 } from "../tokens/colors";
 
-import type { IconProps } from "../types/icon";
+import type { IIconProps } from "../types/icon";
 
 export default function IconDragMenu({
   size = 24,
   color = ColorGray900,
   ...props
-}: IconProps) {
+}: IIconProps) {
   return (
     <svg
       width={size}
       height={size}
-      viewBox={`0 0 ${size} ${size}`}
+      viewBox="0 0 40 40"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <circle cx="9.5" cy="5.5" r="1.5" fill={color} />
-      <circle cx="14.5" cy="5.5" r="1.5" fill={color} />
-      <circle cx="9.5" cy="11.5" r="1.5" fill={color} />
-      <circle cx="14.5" cy="11.5" r="1.5" fill={color} />
-      <circle cx="9.5" cy="17.5" r="1.5" fill={color} />
-      <circle cx="14.5" cy="17.5" r="1.5" fill={color} />
+      <circle cx="15.8334" cy="9.16663" r="2.5" fill={color} strokeWidth={0} />
+      <circle cx="24.1667" cy="9.16663" r="2.5" fill={color} strokeWidth={0} />
+      <circle cx="15.8334" cy="19.1666" r="2.5" fill={color} strokeWidth={0} />
+      <circle cx="24.1667" cy="19.1666" r="2.5" fill={color} strokeWidth={0} />
+      <circle cx="15.8334" cy="29.1666" r="2.5" fill={color} strokeWidth={0} />
+      <circle cx="24.1667" cy="29.1666" r="2.5" fill={color} strokeWidth={0} />
     </svg>
   );
 }

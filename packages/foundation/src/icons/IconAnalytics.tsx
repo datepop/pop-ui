@@ -1,12 +1,13 @@
 import { ColorGray900 } from "../tokens/colors";
 
-import type { IconProps } from "../types/icon";
+import type { IIconProps } from "../types/icon";
 
 export default function IconAnalytics({
   size = 24,
   color = ColorGray900,
+  filled = false,
   ...props
-}: IconProps) {
+}: IIconProps) {
   return (
     <svg
       width={size}
@@ -23,7 +24,8 @@ export default function IconAnalytics({
         height="6.61111"
         rx="1"
         stroke={color}
-        strokeWidth="1.5"
+        strokeWidth={filled ? 0 : 1.5}
+        fill={filled ? color : undefined}
       />
       <rect
         x="10.1113"
@@ -32,7 +34,8 @@ export default function IconAnalytics({
         height="17"
         rx="1"
         stroke={color}
-        strokeWidth="1.5"
+        strokeWidth={filled ? 0 : 1.5}
+        fill={filled ? color : undefined}
       />
       <rect
         x="16.7222"
@@ -41,7 +44,8 @@ export default function IconAnalytics({
         height="11.3333"
         rx="1"
         stroke={color}
-        strokeWidth="1.5"
+        strokeWidth={filled ? 0 : 1.5}
+        fill={filled ? color : undefined}
       />
     </svg>
   );

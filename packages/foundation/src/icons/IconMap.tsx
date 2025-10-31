@@ -1,12 +1,12 @@
 import { ColorGray900 } from "../tokens/colors";
 
-import type { IconProps } from "../types/icon";
+import type { IIconProps } from "../types/icon";
 
 export default function IconMap({
   size = 24,
   color = ColorGray900,
   ...props
-}: IconProps) {
+}: IIconProps) {
   return (
     <svg
       width={size}
@@ -22,8 +22,18 @@ export default function IconMap({
         strokeWidth="1.35"
         strokeMiterlimit="10"
       />
-      <path d="M6.58887 14.625V2.19751" stroke={color} strokeWidth="1.35" strokeMiterlimit="10" />
-      <path d="M11.3438 15.8025V3.375" stroke={color} strokeWidth="1.35" strokeMiterlimit="10" />
+      <path
+        d="M6.58887 14.625V2.19751"
+        stroke={color}
+        strokeWidth="1.35"
+        strokeMiterlimit="10"
+      />
+      <path
+        d="M11.3438 15.8025V3.375"
+        stroke={color}
+        strokeWidth="1.35"
+        strokeMiterlimit="10"
+      />
     </svg>
   );
 }

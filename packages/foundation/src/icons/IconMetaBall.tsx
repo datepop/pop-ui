@@ -2,9 +2,10 @@ import { ColorGray900 } from "../tokens/colors";
 
 import type { IIconProps } from "../types/icon";
 
-export default function IconListMenu({
+export default function IconMetaBall({
   size = 24,
   color = ColorGray900,
+  filled = false,
   ...props
 }: IIconProps) {
   return (
@@ -16,32 +17,26 @@ export default function IconListMenu({
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <rect
-        x="5"
-        y="6.66663"
-        width="30"
-        height="2.5"
-        rx="1.25"
+      <circle
+        cx="10.8333"
+        cy="19.1667"
+        r="2.5"
+        transform="rotate(-90 10.8333 19.1667)"
         fill={color}
-        strokeWidth={0}
       />
-      <rect
-        x="5"
-        y="19.1666"
-        width="30"
-        height="2.5"
-        rx="1.25"
+      <circle
+        cx="20.8333"
+        cy="19.1666"
+        r="2.5"
+        transform="rotate(-90 20.8333 19.1666)"
         fill={color}
-        strokeWidth={0}
       />
-      <rect
-        x="5"
-        y="31.6666"
-        width="30"
-        height="2.5"
-        rx="1.25"
+      <circle
+        cx="30.8333"
+        cy="19.1666"
+        r="2.5"
+        transform="rotate(-90 30.8333 19.1666)"
         fill={color}
-        strokeWidth={0}
       />
     </svg>
   );

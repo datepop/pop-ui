@@ -9,102 +9,51 @@ import {
   Button,
   Box,
 } from "@mantine/core";
-import IconAnalytics from "./IconAnalytics";
-import IconCalendar from "./IconCalendar";
-import IconCamera from "./IconCamera";
-import IconCheck from "./IconCheck";
-import IconCheckCircle from "./IconCheckCircle";
-import IconCheckSquare from "./IconCheckSquare";
-import IconChevronDown from "./IconChevronDown";
-import IconChevronLeft from "./IconChevronLeft";
-import IconChevronRight from "./IconChevronRight";
-import IconChevronRightDouble from "./IconChevronRightDouble";
-import IconChevronUp from "./IconChevronUp";
-import IconClock from "./IconClock";
-import IconClose from "./IconClose";
-import IconCloseCircle from "./IconCloseCircle";
-import IconCompass from "./IconCompass";
-import IconCopy from "./IconCopy";
-import IconDown from "./IconDown";
-import IconDragMenu from "./IconDragMenu";
-import IconFilter from "./IconFilter";
-import IconInfoCircle from "./IconInfoCircle";
-import IconKebap from "./IconKebap";
-import IconLink from "./IconLink";
-import IconListMenu from "./IconListMenu";
-import IconMap from "./IconMap";
-import IconMapMarker from "./IconMapMarker";
-import IconMenu from "./IconMenu";
-import IconMoney from "./IconMoney";
-import IconPhone from "./IconPhone";
-import IconPhoneCall from "./IconPhoneCall";
-import IconPhoto from "./IconPhoto";
-import IconPlus from "./IconPlus";
-import IconPlusCircle from "./IconPlusCircle";
-import IconPlusSquare from "./IconPlusSquare";
-import IconQuestionCircle from "./IconQuestionCircle";
-import IconReset from "./IconReset";
-import IconSales from "./IconSales";
-import IconSearch from "./IconSearch";
-import IconSetting from "./IconSetting";
-import IconSquare from "./IconSquare";
-import IconStar from "./IconStar";
-import IconStore from "./IconStore";
-import IconTicket from "./IconTicket";
-import IconTrash from "./IconTrash";
-import IconUp from "./IconUp";
-import IconWarning from "./IconWarning";
-import IconWarningCircle from "./IconWarningCircle";
-import { ColorGray900 } from "../tokens/colors";
+const iconModules = import.meta.glob<{ default: React.FC<any> }>(
+  "./Icon*.tsx",
+  { eager: true },
+);
+import {
+  ColorGray900,
+  ColorGray0,
+  ColorGray500,
+  ColorAqua500,
+  ColorAqua600,
+  ColorRed500,
+  ColorOrange500,
+  ColorYellow500,
+  ColorGreen500,
+  ColorBlue500,
+  ColorPurple500,
+  ColorGrape500,
+} from "../tokens/colors";
 
-const iconList = [
-  { name: "IconAnalytics", component: IconAnalytics, defaultSize: 24 },
-  { name: "IconCalendar", component: IconCalendar, defaultSize: 24 },
-  { name: "IconCamera", component: IconCamera, defaultSize: 24 },
-  { name: "IconCheck", component: IconCheck, defaultSize: 24 },
-  { name: "IconCheckCircle", component: IconCheckCircle, defaultSize: 24 },
-  { name: "IconCheckSquare", component: IconCheckSquare, defaultSize: 24 },
-  { name: "IconChevronDown", component: IconChevronDown, defaultSize: 24 },
-  { name: "IconChevronLeft", component: IconChevronLeft, defaultSize: 24 },
-  { name: "IconChevronRight", component: IconChevronRight, defaultSize: 24 },
-  { name: "IconChevronRightDouble", component: IconChevronRightDouble, defaultSize: 24 },
-  { name: "IconChevronUp", component: IconChevronUp, defaultSize: 24 },
-  { name: "IconClock", component: IconClock, defaultSize: 24 },
-  { name: "IconClose", component: IconClose, defaultSize: 24 },
-  { name: "IconCloseCircle", component: IconCloseCircle, defaultSize: 24 },
-  { name: "IconCompass", component: IconCompass, defaultSize: 24 },
-  { name: "IconCopy", component: IconCopy, defaultSize: 24 },
-  { name: "IconDown", component: IconDown, defaultSize: 24 },
-  { name: "IconDragMenu", component: IconDragMenu, defaultSize: 24 },
-  { name: "IconFilter", component: IconFilter, defaultSize: 24 },
-  { name: "IconInfoCircle", component: IconInfoCircle, defaultSize: 24 },
-  { name: "IconKebap", component: IconKebap, defaultSize: 24 },
-  { name: "IconLink", component: IconLink, defaultSize: 24 },
-  { name: "IconListMenu", component: IconListMenu, defaultSize: 24 },
-  { name: "IconMap", component: IconMap, defaultSize: 24 },
-  { name: "IconMapMarker", component: IconMapMarker, defaultSize: 24 },
-  { name: "IconMenu", component: IconMenu, defaultSize: 24 },
-  { name: "IconMoney", component: IconMoney, defaultSize: 24 },
-  { name: "IconPhone", component: IconPhone, defaultSize: 24 },
-  { name: "IconPhoneCall", component: IconPhoneCall, defaultSize: 24 },
-  { name: "IconPhoto", component: IconPhoto, defaultSize: 24 },
-  { name: "IconPlus", component: IconPlus, defaultSize: 24 },
-  { name: "IconPlusCircle", component: IconPlusCircle, defaultSize: 24 },
-  { name: "IconPlusSquare", component: IconPlusSquare, defaultSize: 24 },
-  { name: "IconQuestionCircle", component: IconQuestionCircle, defaultSize: 24 },
-  { name: "IconReset", component: IconReset, defaultSize: 24 },
-  { name: "IconSales", component: IconSales, defaultSize: 24 },
-  { name: "IconSearch", component: IconSearch, defaultSize: 24 },
-  { name: "IconSetting", component: IconSetting, defaultSize: 24 },
-  { name: "IconSquare", component: IconSquare, defaultSize: 24 },
-  { name: "IconStar", component: IconStar, defaultSize: 24 },
-  { name: "IconStore", component: IconStore, defaultSize: 24 },
-  { name: "IconTicket", component: IconTicket, defaultSize: 24 },
-  { name: "IconTrash", component: IconTrash, defaultSize: 24 },
-  { name: "IconUp", component: IconUp, defaultSize: 24 },
-  { name: "IconWarning", component: IconWarning, defaultSize: 24 },
-  { name: "IconWarningCircle", component: IconWarningCircle, defaultSize: 24 },
-];
+const colorPalette = {
+  "Gray 900 (Default)": ColorGray900,
+  "Gray 0 (White)": ColorGray0,
+  "Gray 500": ColorGray500,
+  "Aqua 500 (Primary)": ColorAqua500,
+  "Aqua 600": ColorAqua600,
+  "Red 500": ColorRed500,
+  "Orange 500": ColorOrange500,
+  "Yellow 500": ColorYellow500,
+  "Green 500": ColorGreen500,
+  "Blue 500": ColorBlue500,
+  "Purple 500": ColorPurple500,
+  "Grape 500": ColorGrape500,
+};
+
+const iconList = Object.entries(iconModules)
+  .map(([path, module]) => {
+    const name = path.replace("./", "").replace(".tsx", "");
+    return {
+      name,
+      component: module.default,
+      defaultSize: 24,
+    };
+  })
+  .filter((icon) => !icon.name.includes(".stories"))
+  .sort((a, b) => a.name.localeCompare(b.name));
 
 const meta: Meta = {
   title: "Foundation/Icons",
@@ -122,11 +71,13 @@ const IconCard: React.FC<{
   defaultSize: number;
   size?: number;
   color?: string;
-}> = ({ name, Icon, defaultSize, size, color }) => {
+  stroke?: string;
+  filled?: boolean;
+}> = ({ name, Icon, defaultSize, size, color, stroke, filled }) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
-    const code = `import { ${name} } from '@pop-ui/foundation';\n\n<${name} ${size && size !== defaultSize ? `size={${size}} ` : ""}${color && color !== ColorGray900 ? `color="${color}" ` : ""}/>`;
+    const code = `import { ${name} } from '@pop-ui/foundation';\n\n<${name} ${size && size !== defaultSize ? `size={${size}} ` : ""}${color && color !== ColorGray900 ? `color="${color}" ` : ""}${stroke ? `stroke="${stroke}" ` : ""}${filled ? `filled={${filled}} ` : ""}/>`;
     try {
       await navigator.clipboard.writeText(code);
       setCopied(true);
@@ -170,7 +121,12 @@ const IconCard: React.FC<{
             borderRadius: "8px",
           }}
         >
-          <Icon size={size || defaultSize} color={color || ColorGray900} />
+          <Icon
+            size={size || defaultSize}
+            color={color || ColorGray900}
+            stroke={stroke}
+            filled={filled}
+          />
         </Box>
         <Stack gap="xs" align="center">
           <Text size="sm" fw={600}>
@@ -198,10 +154,14 @@ const IconCard: React.FC<{
 export const AllIcons: StoryObj<{
   size: number;
   color: string;
+  stroke?: string;
+  filled?: boolean;
 }> = {
   args: {
     size: 24,
     color: ColorGray900,
+    stroke: undefined,
+    filled: false,
   },
   argTypes: {
     size: {
@@ -209,8 +169,21 @@ export const AllIcons: StoryObj<{
       description: "Icon size in pixels",
     },
     color: {
-      control: "color",
-      description: "Icon color",
+      control: { type: "select" },
+      options: Object.keys(colorPalette),
+      mapping: colorPalette,
+      description: "Icon fill color (from color palette)",
+    },
+    stroke: {
+      control: { type: "select" },
+      options: ["None", ...Object.keys(colorPalette)],
+      mapping: { None: undefined, ...colorPalette },
+      description: "Icon stroke color (from color palette)",
+    },
+    filled: {
+      control: { type: "boolean" },
+      description:
+        "Whether the icon should be filled (for icons that support this)",
     },
   },
   render: (args) => {
@@ -227,7 +200,8 @@ export const AllIcons: StoryObj<{
             All Icons
           </Text>
           <Text size="sm" c="dimmed" mb="lg">
-            Click any icon card to copy its import code. Use the controls panel to adjust size and color.
+            Click any icon card to copy its import code. Use the controls panel
+            to adjust size and color.
           </Text>
           <Group gap="md">
             <TextInput
@@ -266,6 +240,8 @@ export const AllIcons: StoryObj<{
                 defaultSize={icon.defaultSize}
                 size={args.size}
                 color={args.color}
+                stroke={args.stroke}
+                filled={args.filled}
               />
             ))}
           </div>
@@ -284,12 +260,17 @@ export const AllIcons: StoryObj<{
               fontSize: "13px",
             }}
           >
-            {`import { IconChevronDown } from '@pop-ui/foundation';
+            {`import { IconChevronDown, IconStar } from '@pop-ui/foundation';
 
+// Basic usage
 <IconChevronDown />
 <IconChevronDown size={32} />
 <IconChevronDown color="#1971C2" />
-<IconChevronDown size={20} color="#FA5252" />`}
+
+// With stroke (for icons that support it)
+<IconStar stroke="#FA5252" />
+<IconStar filled={true} color="#FFD700" />
+<IconStar filled={false} stroke="#1971C2" />`}
           </pre>
         </Paper>
       </Stack>

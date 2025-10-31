@@ -1,36 +1,35 @@
 import { ColorGray900, SemanticColorBgWhite } from "../tokens/colors";
 
-import type { IconProps } from "../types/icon";
-
-interface IconMapMarkerProps extends IconProps {
-  border?: string;
-}
+import type { IIconProps } from "../types/icon";
 
 export default function IconMapMarker({
   size = 24,
   color = ColorGray900,
-  border = SemanticColorBgWhite,
+  filled = false,
   ...props
-}: IconMapMarkerProps) {
+}: IIconProps) {
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 36 36"
+      viewBox="0 0 40 40"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <path
-        d="M5.75293 13.6914C5.75293 6.62953 11.6406 0.936517 18.7686 1.2627L18.7676 1.26367C26.0046 1.58748 31.0642 8.17833 30.5908 15.2178L30.5635 15.5527V15.5537C29.8101 23.6524 24.3179 30.2832 21.1777 33.4844L21.1787 33.4854C19.5264 35.177 16.8096 35.177 15.1572 33.4854V33.4844C11.7574 30.0379 5.75298 22.5631 5.75293 13.6914Z"
-        fill={color}
-        stroke={border}
-        strokeWidth="2"
+        d="M33.2968 17.1853C32.4556 25.7853 26.2866 32.9186 22.6589 36.4353C21.1867 37.8686 18.7682 37.8686 17.2961 36.4353C13.3879 32.652 6.64062 24.6186 6.64062 15.2186C6.64062 8.00197 12.9673 2.1853 20.6259 2.50197C28.4598 2.8353 34.0153 9.75197 33.2968 17.1686V17.1853Z"
+        stroke={color}
+        strokeWidth={filled ? 0 : 2.5}
         strokeMiterlimit="10"
+        fill={filled ? color : undefined}
       />
       <path
-        d="M18.4084 18.2387C20.8523 18.2387 22.8334 16.2575 22.8334 13.8137C22.8334 11.3698 20.8523 9.38867 18.4084 9.38867C15.9645 9.38867 13.9834 11.3698 13.9834 13.8137C13.9834 16.2575 15.9645 18.2387 18.4084 18.2387Z"
-        fill={border}
+        d="M20.2452 20.2686C22.9606 20.2686 25.1619 18.0674 25.1619 15.352C25.1619 12.6366 22.9606 10.4353 20.2452 10.4353C17.5298 10.4353 15.3286 12.6366 15.3286 15.352C15.3286 18.0674 17.5298 20.2686 20.2452 20.2686Z"
+        stroke={color}
+        strokeWidth={filled ? 0 : 2.5}
+        fill={filled ? SemanticColorBgWhite : undefined}
+        strokeMiterlimit="10"
       />
     </svg>
   );
