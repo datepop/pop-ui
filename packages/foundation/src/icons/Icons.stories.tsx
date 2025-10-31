@@ -29,10 +29,10 @@ import {
 } from "../tokens/colors";
 
 const colorPalette = {
-  "Gray 900 (Default)": ColorGray900,
-  "Gray 0 (White)": ColorGray0,
+  "Gray 900": ColorGray900,
+  "Gray 0": ColorGray0,
   "Gray 500": ColorGray500,
-  "Aqua 500 (Primary)": ColorAqua500,
+  "Aqua 500": ColorAqua500,
   "Aqua 600": ColorAqua600,
   "Red 500": ColorRed500,
   "Orange 500": ColorOrange500,
@@ -71,13 +71,12 @@ const IconCard: React.FC<{
   defaultSize: number;
   size?: number;
   color?: string;
-  stroke?: string;
   filled?: boolean;
-}> = ({ name, Icon, defaultSize, size, color, stroke, filled }) => {
+}> = ({ name, Icon, defaultSize, size, color, filled }) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
-    const code = `import { ${name} } from '@pop-ui/foundation';\n\n<${name} ${size && size !== defaultSize ? `size={${size}} ` : ""}${color && color !== ColorGray900 ? `color="${color}" ` : ""}${stroke ? `stroke="${stroke}" ` : ""}${filled ? `filled={${filled}} ` : ""}/>`;
+    const code = `import { ${name} } from '@pop-ui/foundation';\n\n<${name} ${size && size !== defaultSize ? `size={${size}} ` : ""}${color && color !== ColorGray900 ? `color="${color}" ` : ""}${filled ? `filled={${filled}} ` : ""}/>`;
     try {
       await navigator.clipboard.writeText(code);
       setCopied(true);
@@ -124,7 +123,6 @@ const IconCard: React.FC<{
           <Icon
             size={size || defaultSize}
             color={color || ColorGray900}
-            stroke={stroke}
             filled={filled}
           />
         </Box>
@@ -154,13 +152,11 @@ const IconCard: React.FC<{
 export const AllIcons: StoryObj<{
   size: number;
   color: string;
-  stroke?: string;
   filled?: boolean;
 }> = {
   args: {
     size: 24,
     color: ColorGray900,
-    stroke: undefined,
     filled: false,
   },
   argTypes: {
@@ -169,16 +165,11 @@ export const AllIcons: StoryObj<{
       description: "Icon size in pixels",
     },
     color: {
-      control: { type: "select" },
-      options: Object.keys(colorPalette),
-      mapping: colorPalette,
-      description: "Icon fill color (from color palette)",
-    },
-    stroke: {
-      control: { type: "select" },
-      options: ["None", ...Object.keys(colorPalette)],
-      mapping: { None: undefined, ...colorPalette },
-      description: "Icon stroke color (from color palette)",
+      control: {
+        type: "color",
+        presetColors: Object.values(colorPalette),
+      },
+      description: "Icon fill color",
     },
     filled: {
       control: { type: "boolean" },
@@ -240,7 +231,6 @@ export const AllIcons: StoryObj<{
                 defaultSize={icon.defaultSize}
                 size={args.size}
                 color={args.color}
-                stroke={args.stroke}
                 filled={args.filled}
               />
             ))}
@@ -267,10 +257,9 @@ export const AllIcons: StoryObj<{
 <IconChevronDown size={32} />
 <IconChevronDown color="#1971C2" />
 
-// With stroke (for icons that support it)
-<IconStar stroke="#FA5252" />
+// With filled (for icons that support it)
 <IconStar filled={true} color="#FFD700" />
-<IconStar filled={false} stroke="#1971C2" />`}
+<IconStar filled={false} />`}
           </pre>
         </Paper>
       </Stack>

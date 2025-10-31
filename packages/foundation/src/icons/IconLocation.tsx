@@ -5,7 +5,6 @@ import type { IIconProps } from "../types/icon";
 export default function IconLocation({
   size = 24,
   color = ColorGray900,
-  stroke = ColorGray900,
   filled = false,
   ...props
 }: IIconProps) {
