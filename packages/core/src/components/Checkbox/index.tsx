@@ -11,13 +11,13 @@ export interface CheckboxProps extends MantineCheckboxProps {
 }
 
 export const Checkbox = ({ size = "md", ...props }: CheckboxProps) => {
-  let sizeStyle = styles.md_checkbox;
+  let sizeStyle = styles["Checkbox--Medium"];
   let sizeNumber = 24;
   if (size === "sm") {
-    sizeStyle = styles.sm_checkbox;
+    sizeStyle = styles["Checkbox--Small"];
     sizeNumber = 18;
   } else if (size === "lg") {
-    sizeStyle = styles.lg_checkbox;
+    sizeStyle = styles["Checkbox--Large"];
     sizeNumber = 32;
   }
 

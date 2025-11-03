@@ -1,46 +1,50 @@
 @use "../shared/variables.scss" as *;
 
-@mixin focus {
+@mixin TimePickerFocus {
   &:hover {
     outline: 1.5px solid $color-aqua-300;
     border-color: transparent;
     background-color: $color-gray-0;
   }
+
   &:focus-within {
     outline: 1.5px solid $color-aqua-500;
     border-color: transparent;
   }
 }
 
-.sm_textfield {
+.TimePicker--Small {
   input {
     height: 30px;
     min-height: 30px;
     padding: 8px;
     font-size: 14px;
     line-height: 100%;
-    @include focus;
+
+    @include TimePickerFocus;
   }
 }
 
-.md_textfield {
+.TimePicker--Medium {
   input {
     height: 40px;
     min-height: 40px;
     padding: 12px;
     font-size: 14px;
     line-height: 100%;
-    @include focus;
+
+    @include TimePickerFocus;
   }
 }
 
-.lg_textfield {
+.TimePicker--Large {
   input {
     height: 50px;
     min-height: 50px;
     padding: 16px;
     font-size: 16px;
     line-height: 100%;
-    @include focus;
+
+    @include TimePickerFocus;
   }
 }

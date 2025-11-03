@@ -48,17 +48,17 @@ export const TextField = (allProps: TextFieldProps) => {
   const minRows = 'minRows' in allProps ? allProps.minRows : undefined;
   const [textCount, setTextCount] = useState<number>(0);
 
-  let labelStyle = styles.md_label;
-  let textfieldStyle = styles.md_textfield;
-  let tooltipStyle = styles.md_tooltip;
+  let labelStyle = styles["TextField__Label--Medium"];
+  let textfieldStyle = styles["TextField--Medium"];
+  let tooltipStyle = styles["TextField__Tooltip--Medium"];
   if (size === "sm") {
-    labelStyle = styles.sm_label;
-    textfieldStyle = styles.sm_textfield;
-    tooltipStyle = styles.sm_tooltip;
+    labelStyle = styles["TextField__Label--Small"];
+    textfieldStyle = styles["TextField--Small"];
+    tooltipStyle = styles["TextField__Tooltip--Small"];
   } else if (size === "lg") {
-    labelStyle = styles.lg_label;
-    textfieldStyle = styles.lg_textfield;
-    tooltipStyle = styles.lg_tooltip;
+    labelStyle = styles["TextField__Label--Large"];
+    textfieldStyle = styles["TextField--Large"];
+    tooltipStyle = styles["TextField__Tooltip--Large"];
   }
 
   const onChangeHandler = useCallback(
@@ -85,8 +85,8 @@ export const TextField = (allProps: TextFieldProps) => {
     <div
       className={
         labelPosition === "top"
-          ? styles.top_label_textfield
-          : styles.left_label_textfield
+          ? styles["TextField--TopLabel"]
+          : styles["TextField--LeftLabel"]
       }
     >
       <div>
@@ -104,10 +104,10 @@ export const TextField = (allProps: TextFieldProps) => {
         )}
       </div>
       <div>
-        <div className={styles.textfield_wrapper}>
+        <div className={styles["TextField__Wrapper"]}>
           {textarea ? (
             <Textarea
-              className={styles.textarea}
+              className={styles["TextField--Textarea"]}
               size={size}
               minRows={minRows}
               error={errorMsg}
@@ -122,7 +122,7 @@ export const TextField = (allProps: TextFieldProps) => {
               onChange={onChangeHandler}
               rightSection={
                 onClear && textCount > 0 ? (
-                  <div className={styles.clear_button} onClick={onClear}>
+                  <div className={styles["TextField__ClearButton"]} onClick={onClear}>
                     <IconClose size={size === "sm" ? 16 : size === "lg" ? 24 : 20} />
                   </div>
                 ) : undefined
@@ -132,17 +132,17 @@ export const TextField = (allProps: TextFieldProps) => {
           )}
           {maxTextCount && maxTextCount > 0 && (
             <span
-              className={styles.text_counter}
+              className={styles["TextField__TextCounter"]}
             >{`${textCount}/${maxTextCount}`}</span>
           )}
         </div>
         {description && (
-          <Input.Description className={styles.input_description}>
+          <Input.Description className={styles["TextField__Description"]}>
             {description}
           </Input.Description>
         )}
         {errorMsg && (
-          <Input.Error className={styles.input_error_msg}>
+          <Input.Error className={styles["TextField__ErrorMsg"]}>
             {errorMsg}
           </Input.Error>
         )}

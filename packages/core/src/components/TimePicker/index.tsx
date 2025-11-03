@@ -13,13 +13,13 @@ export interface TimePickerProps extends TimeInputProps {
 export const TimePicker = ({ size = "md", ...props }: TimePickerProps) => {
   const timeInputRef = useRef<HTMLInputElement>(null);
 
-  let sizeStyle = styles.md_textfield;
+  let sizeStyle = styles["TimePicker--Medium"];
   let iconSize = 18;
   if (size === "sm") {
-    sizeStyle = styles.sm_textfield;
+    sizeStyle = styles["TimePicker--Small"];
     iconSize = 14;
   } else if (size === "lg") {
-    sizeStyle = styles.lg_textfield;
+    sizeStyle = styles["TimePicker--Large"];
     iconSize = 24;
   }
 

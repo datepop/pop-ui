@@ -37,17 +37,17 @@ export const SearchBar = ({
 }: SearchBarProps) => {
   const [textCount, setTextCount] = useState<number>(0);
 
-  let labelStyle = styles.md_label;
-  let searchBarStyle = styles.md_textfield;
-  let tooltipStyle = styles.md_tooltip;
+  let labelStyle = styles["SearchBar__Label--Medium"];
+  let searchBarStyle = styles["SearchBar--Medium"];
+  let tooltipStyle = styles["SearchBar__Tooltip--Medium"];
   if (size === "sm") {
-    labelStyle = styles.sm_label;
-    searchBarStyle = styles.sm_textfield;
-    tooltipStyle = styles.sm_tooltip;
+    labelStyle = styles["SearchBar__Label--Small"];
+    searchBarStyle = styles["SearchBar--Small"];
+    tooltipStyle = styles["SearchBar__Tooltip--Small"];
   } else if (size === "lg") {
-    labelStyle = styles.lg_label;
-    searchBarStyle = styles.lg_textfield;
-    tooltipStyle = styles.lg_tooltip;
+    labelStyle = styles["SearchBar__Label--Large"];
+    searchBarStyle = styles["SearchBar--Large"];
+    tooltipStyle = styles["SearchBar__Tooltip--Large"];
   }
 
   const onChangeHandler = useCallback(
@@ -64,8 +64,8 @@ export const SearchBar = ({
     <div
       className={
         labelPosition === "top"
-          ? styles.top_label_textfield
-          : styles.left_label_textfield
+          ? styles["SearchBar--TopLabel"]
+          : styles["SearchBar--LeftLabel"]
       }
     >
       <div>
@@ -83,7 +83,7 @@ export const SearchBar = ({
         )}
       </div>
       <div>
-        <div className={styles.textfield_wrapper}>
+        <div className={styles["SearchBar__Wrapper"]}>
           <Autocomplete
             {...props}
             size={size}
@@ -93,7 +93,7 @@ export const SearchBar = ({
             leftSection={<IconSearch size={size === "sm" ? 16 : size === "lg" ? 24 : 20} />}
             rightSection={
               onClear && textCount > 0 ? (
-                <div className={styles.clear_button} onClick={onClear}>
+                <div className={styles["SearchBar__ClearButton"]} onClick={onClear}>
                   <IconClose size={size === "sm" ? 16 : size === "lg" ? 24 : 20} />
                 </div>
               ) : undefined
@@ -101,12 +101,12 @@ export const SearchBar = ({
           />
         </div>
         {description && (
-          <Input.Description className={styles.input_description}>
+          <Input.Description className={styles["SearchBar__Description"]}>
             {description}
           </Input.Description>
         )}
         {errorMsg && (
-          <Input.Error className={styles.input_error_msg}>
+          <Input.Error className={styles["SearchBar__ErrorMsg"]}>
             {errorMsg}
           </Input.Error>
         )}

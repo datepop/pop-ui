@@ -22,18 +22,18 @@ export const Alert = ({
   right = 48,
   ...props
 }: AlertProps) => {
-  let typeStyle = styles.light_success;
+  let typeStyle = styles["Alert--LightSuccess"];
   if (variant === "fill") {
     if (type === "success") {
-      typeStyle = styles.fill_success;
+      typeStyle = styles["Alert--FillSuccess"];
     } else if (type === "error") {
-      typeStyle = styles.fill_error;
+      typeStyle = styles["Alert--FillError"];
     }
   } else {
     if (type === "success") {
-      typeStyle = styles.light_success;
+      typeStyle = styles["Alert--LightSuccess"];
     } else if (type === "error") {
-      typeStyle = styles.light_error;
+      typeStyle = styles["Alert--LightError"];
     }
   }
 

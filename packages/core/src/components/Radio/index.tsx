@@ -11,11 +11,11 @@ export interface RadioProps extends MantineRadioProps {
 }
 
 export const Radio = ({ size = "md", ...props }: RadioProps) => {
-  let sizeStyle = styles.md_radio;
+  let sizeStyle = styles["Radio--Medium"];
   if (size === "sm") {
-    sizeStyle = styles.sm_radio;
+    sizeStyle = styles["Radio--Small"];
   } else if (size === "lg") {
-    sizeStyle = styles.lg_radio;
+    sizeStyle = styles["Radio--Large"];
   }
 
   return <MantineRadio className={sizeStyle} size={size} {...props} />;

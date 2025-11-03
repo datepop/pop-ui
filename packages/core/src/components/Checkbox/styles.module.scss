@@ -1,15 +1,17 @@
 @use "../shared/variables.scss" as *;
 
-@mixin checkbox_color {
+@mixin CheckboxColor {
   &:hover {
     background-color: $color-aqua-50;
     border-color: $color-aqua-300;
     border-width: 2px;
   }
+
   &:checked {
     background-color: $color-aqua-500;
     border-color: $color-aqua-500;
   }
+
   &:disabled {
     background-color: $color-gray-100;
     border-color: $color-gray-200;
@@ -17,12 +19,14 @@
   }
 }
 
-.sm_checkbox {
+.Checkbox--Small {
   input {
-    @include checkbox_color;
+    @include CheckboxColor;
+
     width: 18px;
     height: 18px;
   }
+
   label {
     height: 18px;
     color: $color-gray-900;
@@ -33,6 +37,7 @@
     display: flex;
     align-items: center;
   }
+
   div {
     color: $color-gray-600;
     font-family: Pretendard;
@@ -42,12 +47,14 @@
   }
 }
 
-.md_checkbox {
+.Checkbox--Medium {
   input {
-    @include checkbox_color;
+    @include CheckboxColor;
+
     width: 24px;
     height: 24px;
   }
+
   label {
     height: 24px;
     color: $color-gray-900;
@@ -58,6 +65,7 @@
     display: flex;
     align-items: center;
   }
+
   div {
     color: $color-gray-600;
     font-family: Pretendard;
@@ -67,12 +75,14 @@
   }
 }
 
-.lg_checkbox {
+.Checkbox--Large {
   input {
-    @include checkbox_color;
+    @include CheckboxColor;
+
     width: 32px;
     height: 32px;
   }
+
   label {
     height: 32px;
     color: $color-gray-900;
@@ -83,6 +93,7 @@
     display: flex;
     align-items: center;
   }
+
   div {
     color: $color-gray-600;
     font-family: Pretendard;

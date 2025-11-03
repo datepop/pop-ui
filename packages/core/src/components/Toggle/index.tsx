@@ -21,13 +21,13 @@ export const Toggle = ({
 }: ToggleProps) => {
   const [isChecked, setIsChecked] = useState<boolean>(props?.checked || false);
 
-  let sizeStyle = styles.md_toggle;
+  let sizeStyle = styles["Toggle--Medium"];
   let trackWidth = 50;
   if (size === "sm") {
-    sizeStyle = styles.sm_toggle;
+    sizeStyle = styles["Toggle--Small"];
     trackWidth = 38;
   } else if (size === "lg") {
-    sizeStyle = styles.lg_toggle;
+    sizeStyle = styles["Toggle--Large"];
     trackWidth = 67;
   }
 

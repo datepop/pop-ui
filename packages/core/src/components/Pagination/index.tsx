@@ -52,9 +52,9 @@ export const Pagination = ({
   };
 
   return (
-    <div {...props} className={style.pagination}>
+    <div {...props} className={style["Pagination"]}>
       {currentIdx >= paginationLength ? (
-        <button className={style.arrow} onClick={onClickPrev}>
+        <button className={style["Pagination__Arrow"]} onClick={onClickPrev}>
           <IconChevronLeft size={20} />
         </button>
       ) : null}
@@ -73,8 +73,8 @@ export const Pagination = ({
             key={`pagination_${index}`}
             className={
               currentIdx === indexNumber - 1
-                ? style.page_index_active
-                : style.page_index
+                ? style["Pagination__PageIndex--Active"]
+                : style["Pagination__PageIndex"]
             }
             onClick={() => {
               setCurrentIdx(indexNumber - 1);
@@ -90,7 +90,7 @@ export const Pagination = ({
       {Math.floor(currentIdx / paginationLength) * paginationLength +
         paginationLength <
       Math.ceil(totalrows / maxPageRows) ? (
-        <button className={style.arrow} onClick={onClickNext}>
+        <button className={style["Pagination__Arrow"]} onClick={onClickNext}>
           <IconChevronRight size={20} />
         </button>
       ) : null}

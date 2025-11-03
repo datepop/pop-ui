@@ -1,103 +1,107 @@
 @use "../shared/variables.scss" as *;
 
-.left_label_textfield {
+.Dropdown--LeftLabel {
   display: flex;
   flex-direction: row;
   gap: 20px;
 }
 
-.top_label_textfield {
+.Dropdown--TopLabel {
   display: flex;
   flex-direction: column;
 }
 
-.sm_label {
+.Dropdown__Label--Small {
   font-family: Pretendard;
   font-size: 14px;
   font-weight: 600;
-  letter-spacing: 0em;
+  letter-spacing: 0;
   text-align: left;
   margin: 8px 3px;
 }
 
-.md_label {
+.Dropdown__Label--Medium {
   font-family: Pretendard;
   font-size: 16px;
   font-weight: 600;
-  letter-spacing: 0em;
+  letter-spacing: 0;
   text-align: left;
   margin: 12px 4px;
 }
 
-.lg_label {
+.Dropdown__Label--Large {
   font-family: Pretendard;
   font-size: 18px;
   font-weight: 600;
-  letter-spacing: 0em;
+  letter-spacing: 0;
   text-align: left;
   margin: 16px 4px;
 }
 
-.sm_tooltip {
+.Dropdown__Tooltip--Small {
   width: 14px;
   height: 14px;
 }
 
-.md_tooltip {
+.Dropdown__Tooltip--Medium {
   width: 16px;
   height: 16px;
 }
 
-.lg_tooltip {
+.Dropdown__Tooltip--Large {
   width: 18px;
   height: 18px;
 }
 
-@mixin border_focus {
+@mixin DropdownBorderFocus {
   &:hover {
     outline: 1.5px solid $color-aqua-300;
     border-color: transparent;
   }
+
   &:focus-within {
     outline: 1.5px solid $color-aqua-500;
     border-color: transparent;
   }
 }
 
-.sm_textfield {
+.Dropdown--Small {
   input {
     height: 30px;
     padding: 8px;
     font-size: 14px;
     min-height: 30px;
-    @include border_focus;
+
+    @include DropdownBorderFocus;
   }
 }
 
-.md_textfield {
+.Dropdown--Medium {
   input {
     height: 40px;
     padding: 12px;
     font-size: 14px;
     min-height: 40px;
-    @include border_focus;
+
+    @include DropdownBorderFocus;
   }
 }
 
-.lg_textfield {
+.Dropdown--Large {
   input {
     height: 50px;
     padding: 16px;
     font-size: 16px;
     min-height: 50px;
-    @include border_focus;
+
+    @include DropdownBorderFocus;
   }
 }
 
-.input_description {
+.Dropdown__Description {
   margin-top: 8px;
 }
 
-.input_error_msg {
+.Dropdown__ErrorMsg {
   margin-top: 4px;
 }

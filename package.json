@@ -21,7 +21,9 @@
     "test": "NODE_ENV=test jest --coverage",
     "build-storybook": "storybook build",
     "token-transform": "cd packages/foundation && yarn token-transform",
-    "token-build": "cd packages/foundation && yarn token-build"
+    "token-build": "cd packages/foundation && yarn token-build",
+    "lint:style": "stylelint \"packages/**/*.scss\"",
+    "lint:style:fix": "stylelint \"packages/**/*.scss\" --fix"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.28.5",
@@ -39,9 +41,12 @@
     "jest": "^30.2.0",
     "jest-environment-jsdom": "^30.2.0",
     "lerna": "^9.0.0",
+    "postcss-scss": "^4.0.9",
     "react": "^19.2.0",
     "storybook": "^10.0.1",
     "style-dictionary": "^5.1.1",
+    "stylelint": "^16.25.0",
+    "stylelint-config-standard-scss": "^16.0.0",
     "token-transformer": "^0.0.33",
     "vite": "^7.1.12",
     "vite-plugin-dts": "^4.5.4"

@@ -21,13 +21,13 @@ export const DatePicker = ({
   withTime,
   ...props
 }: DatePickerProps) => {
-  let sizeStyle = styles.md_textfield;
+  let sizeStyle = styles["DatePicker--Medium"];
   let iconSize = 18;
   if (size === "sm") {
-    sizeStyle = styles.sm_textfield;
+    sizeStyle = styles["DatePicker--Small"];
     iconSize = 14;
   } else if (size === "lg") {
-    sizeStyle = styles.lg_textfield;
+    sizeStyle = styles["DatePicker--Large"];
     iconSize = 24;
   }
 

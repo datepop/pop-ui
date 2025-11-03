@@ -1,0 +1,29 @@
+{
+  "extends": "stylelint-config-standard-scss",
+  "customSyntax": "postcss-scss",
+  "rules": {
+    "selector-class-pattern": [
+      "^[A-Z][a-zA-Z0-9]*(__[A-Z][a-zA-Z0-9]*)?(--[A-Z][a-zA-Z0-9]*)*$",
+      {
+        "message": "클래스명은 파스칼 케이스 BEM을 따라야 합니다 (예: .Card, .Card__Header, .Card__Header--Active)"
+      }
+    ],
+    "color-hex-length": "short",
+    "declaration-block-no-duplicate-properties": true,
+    "no-descending-specificity": null,
+    "scss/at-import-partial-extension": null,
+    "scss/comment-no-empty": null,
+    "scss/at-mixin-pattern": null,
+    "font-family-no-missing-generic-family-keyword": null
+  },
+  "ignoreFiles": [
+    "node_modules/**/*",
+    ".next/**/*",
+    "build/**/*",
+    "dist/**/*",
+    "storybook-static/**/*",
+    "coverage/**/*",
+    "packages/core/src/components/shared/variables.scss",
+    "packages/core/src/components/shared/font.css"
+  ]
+}

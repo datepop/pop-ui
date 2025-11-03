@@ -13,11 +13,11 @@ export const SegmentButton = ({
   radius = 6,
   ...props
 }: SegmentButtonProps) => {
-  let sizeStyle = styles.md_segment_button;
+  let sizeStyle = styles["SegmentButton--Medium"];
   if (size === "sm") {
-    sizeStyle = styles.sm_segment_button;
+    sizeStyle = styles["SegmentButton--Small"];
   } else if (size === "lg") {
-    sizeStyle = styles.lg_segment_button;
+    sizeStyle = styles["SegmentButton--Large"];
   }
 
   return (

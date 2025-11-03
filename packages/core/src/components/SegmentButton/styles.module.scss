@@ -1,36 +1,40 @@
 @use "../shared/variables.scss" as *;
 
-@mixin segment_label {
+@mixin SegmentButtonLabel {
   box-sizing: border-box;
   display: flex;
   align-items: center;
   color: $color-gray-500;
+
   &[data-active] {
     color: $text-color-button-text-basic-default;
   }
 }
 
-.sm_segment_button {
+.SegmentButton--Small {
   label {
-    @include segment_label;
+    @include SegmentButtonLabel;
+
     height: 30px;
     padding: 0 8px;
     font-size: 14px;
   }
 }
 
-.md_segment_button {
+.SegmentButton--Medium {
   label {
-    @include segment_label;
+    @include SegmentButtonLabel;
+
     height: 40px;
     padding: 0 12px;
     font-size: 14px;
   }
 }
 
-.lg_segment_button {
+.SegmentButton--Large {
   label {
-    @include segment_label;
+    @include SegmentButtonLabel;
+
     height: 50px;
     padding: 0 16px;
     font-size: 16px;

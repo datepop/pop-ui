@@ -1,6 +1,6 @@
 @use "../shared/variables.scss" as *;
 
-.sm_toggle {
+.Toggle--Small {
   label {
     height: 18px;
     color: $color-gray-900;
@@ -11,6 +11,7 @@
     display: flex;
     align-items: center;
   }
+
   div {
     color: $color-gray-600;
     font-family: Pretendard;
@@ -20,7 +21,7 @@
   }
 }
 
-.md_toggle {
+.Toggle--Medium {
   label {
     height: 24px;
     color: $color-gray-900;
@@ -31,6 +32,7 @@
     display: flex;
     align-items: center;
   }
+
   div {
     color: $color-gray-600;
     font-family: Pretendard;
@@ -40,7 +42,7 @@
   }
 }
 
-.lg_toggle {
+.Toggle--Large {
   label {
     height: 32px;
     color: $color-gray-900;
@@ -51,6 +53,7 @@
     display: flex;
     align-items: center;
   }
+
   div {
     color: $color-gray-600;
     font-family: Pretendard;

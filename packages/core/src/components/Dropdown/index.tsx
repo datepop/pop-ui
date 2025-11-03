@@ -32,19 +32,19 @@ export const Dropdown = ({
 }: SearchBarProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  let labelStyle = styles.md_label;
-  let selectStyle = styles.md_textfield;
-  let tooltipStyle = styles.md_tooltip;
+  let labelStyle = styles["Dropdown__Label--Medium"];
+  let selectStyle = styles["Dropdown--Medium"];
+  let tooltipStyle = styles["Dropdown__Tooltip--Medium"];
   let chevronSize = 18;
   if (size === "sm") {
-    labelStyle = styles.sm_label;
-    selectStyle = styles.sm_textfield;
-    tooltipStyle = styles.sm_tooltip;
+    labelStyle = styles["Dropdown__Label--Small"];
+    selectStyle = styles["Dropdown--Small"];
+    tooltipStyle = styles["Dropdown__Tooltip--Small"];
     chevronSize = 14;
   } else if (size === "lg") {
-    labelStyle = styles.lg_label;
-    selectStyle = styles.lg_textfield;
-    tooltipStyle = styles.lg_tooltip;
+    labelStyle = styles["Dropdown__Label--Large"];
+    selectStyle = styles["Dropdown--Large"];
+    tooltipStyle = styles["Dropdown__Tooltip--Large"];
     chevronSize = 24;
   }
 
@@ -52,8 +52,8 @@ export const Dropdown = ({
     <div
       className={
         labelPosition === "top"
-          ? styles.top_label_textfield
-          : styles.left_label_textfield
+          ? styles["Dropdown--TopLabel"]
+          : styles["Dropdown--LeftLabel"]
       }
     >
       <div>
@@ -97,12 +97,12 @@ export const Dropdown = ({
           } as any)}
         />
         {description && (
-          <Input.Description className={styles.input_description}>
+          <Input.Description className={styles["Dropdown__Description"]}>
             {description}
           </Input.Description>
         )}
         {errorMsg && (
-          <Input.Error className={styles.input_error_msg}>
+          <Input.Error className={styles["Dropdown__ErrorMsg"]}>
             {errorMsg}
           </Input.Error>
         )}

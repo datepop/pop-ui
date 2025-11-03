@@ -41,16 +41,16 @@ export const ImageUploader = ({
   }, [onClear]);
 
   return (
-    <div className={styles.image_uploader_wrapper}>
+    <div className={styles["ImageUploader__Wrapper"]}>
       {showClearButton && fileData ? (
-        <div className={styles.file_clear_button} onClick={handleFileDataClear}>
+        <div className={styles["ImageUploader__FileClearButton"]} onClick={handleFileDataClear}>
           <IconCloseCircle size={24} />
         </div>
       ) : null}
       <Dropzone
         {...props}
         maxFiles={1}
-        className={styles.image_uploader}
+        className={styles["ImageUploader"]}
         accept={IMAGE_MIME_TYPE}
         onDrop={(e) => {
           setFileData(e[0]);
@@ -66,7 +66,7 @@ export const ImageUploader = ({
         <>
           {fileData ? (
             <img
-              className={styles.preview}
+              className={styles["ImageUploader__Preview"]}
               src={
                 typeof fileData === "string"
                   ? fileData

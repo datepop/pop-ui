@@ -21,11 +21,11 @@ export const Tab = ({
 }: TabProps) => {
   return (
     <Tabs {...props}>
-      <Tabs.List className={styles.tab_title_list}>
+      <Tabs.List className={styles["Tab__TitleList"]}>
         {tabList?.map((tab, index) => (
           <Tabs.Tab key={`tab_${index}`} value={tab.value} leftSection={tab.icon}>
             {tab.title}
-            <div className={styles.border_bottom} />
+            <div className={styles["Tab__BorderBottom"]} />
           </Tabs.Tab>
         ))}
       </Tabs.List>

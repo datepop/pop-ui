@@ -1,6 +1,6 @@
 @use "../shared/variables.scss" as *;
 
-@mixin alert_title {
+@mixin AlertTitle {
   font-family: Pretendard;
   font-size: 14px;
   font-style: normal;
@@ -8,7 +8,7 @@
   line-height: 150%;
 }
 
-@mixin alert_content {
+@mixin AlertContent {
   color: $color-gray-900;
   font-family: Pretendard;
   font-size: 14px;
@@ -17,49 +17,64 @@
   line-height: 150%;
 }
 
-.light_success {
+.Alert--LightSuccess {
   background-color: $color-green-50;
   border-radius: 6px;
   border: 1.5px solid $color-green-500;
+
   span {
-    @include alert_title;
+    @include AlertTitle;
+
     color: $color-green-500;
   }
+
   div {
-    @include alert_content;
+    @include AlertContent;
   }
 }
-.light_error {
+
+.Alert--LightError {
   background-color: $color-red-50;
   border-radius: 6px;
   border: 1.5px solid $color-red-500;
+
   span {
-    @include alert_title;
+    @include AlertTitle;
+
     color: $color-red-500;
   }
+
   div {
-    @include alert_content;
+    @include AlertContent;
   }
 }
-.fill_success {
+
+.Alert--FillSuccess {
   background-color: $color-green-100;
   border-radius: 6px;
+
   span {
-    @include alert_title;
+    @include AlertTitle;
+
     color: $color-green-500;
   }
+
   div {
-    @include alert_content;
+    @include AlertContent;
   }
 }
-.fill_error {
+
+.Alert--FillError {
   background-color: $color-red-100;
   border-radius: 6px;
+
   span {
-    @include alert_title;
+    @include AlertTitle;
+
     color: $color-red-500;
   }
+
   div {
-    @include alert_content;
+    @include AlertContent;
   }
 }

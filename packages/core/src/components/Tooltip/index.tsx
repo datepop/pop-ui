@@ -24,9 +24,9 @@ export const Tooltip = ({
       maw={maw}
       multiline={multiline}
       label={
-        <div className={styles.tooltip_body}>
-          {title && <span className={styles.tooltip_title}>{title}</span>}
-          <span className={styles.tooltip_content}>{content}</span>
+        <div className={styles["Tooltip__Body"]}>
+          {title && <span className={styles["Tooltip__Title"]}>{title}</span>}
+          <span className={styles["Tooltip__Content"]}>{content}</span>
         </div>
       }
     />

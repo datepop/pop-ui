@@ -1,7 +1,8 @@
 @use "../shared/variables.scss" as *;
 
-.tab_title_list {
+.Tab__TitleList {
   border-bottom: 2px solid $color-gray-200;
+
   button {
     margin-bottom: 7px;
     display: flex;
@@ -17,19 +18,23 @@
     border: none;
     padding: 0 20px;
     cursor: pointer;
+
     &:hover {
       background-color: $color-gray-50;
     }
-    .border_bottom {
+
+    .Tab__BorderBottom {
       position: absolute;
       bottom: -9px;
       left: 0;
       width: 100%;
     }
+
     &[data-active] {
       position: relative;
       color: $color-aqua-900;
-      .border_bottom {
+
+      .Tab__BorderBottom {
         position: absolute;
         bottom: -9px;
         left: 0;
