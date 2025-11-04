@@ -1,17 +1,17 @@
-import React from "react";
+import React from 'react';
 
-import type { Preview } from "@storybook/react-vite";
-import "@mantine/core/styles.css";
+import { ThemeProvider } from '../packages/core/src/theme/ThemeProvider';
+import '@mantine/core/styles.css';
 
-import { ThemeProvider } from "../packages/core/src/theme/ThemeProvider";
+import type { Preview } from '@storybook/react-vite';
 
 const preview: Preview = {
   parameters: {
-    actions: { argTypesRegex: "^on[A-Z].*" },
+    actions: { argTypesRegex: '^on[A-Z].*' },
     options: {
-      storySort: (a, b) => a.title === b.title ? 0 : a.id.localeCompare(b.id, { numeric: true }),
+      storySort: (a, b) => (a.title === b.title ? 0 : a.id.localeCompare(b.id, { numeric: true })),
     },
-    layout: "fullscreen",
+    layout: 'fullscreen',
     controls: {
       matchers: {
         color: /(background|color)$/i,

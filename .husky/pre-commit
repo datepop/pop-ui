@@ -4,5 +4,4 @@
 yarn lint-staged
 
 # Run TypeScript type checking
-# TODO: Fix TypeScript errors before enabling
-# yarn typecheck
+yarn typecheck

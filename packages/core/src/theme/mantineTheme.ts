@@ -13,17 +13,21 @@ const createColorTuple = (colorName: string): MantineColorsTuple => {
   const shades = colors[colorName];
   const shadeKeys = Object.keys(shades).sort((a, b) => Number(a) - Number(b));
 
-  const tuple: string[] = [];
-  for (let i = 0; i < 10; i++) {
-    const shade = shadeKeys[i];
-    if (shade) {
-      tuple.push(getCSSVariableRef(colorName, shade));
-    } else {
-      tuple.push(getCSSVariableRef(colorName, shadeKeys[shadeKeys.length - 1]));
-    }
-  }
+  // MantineColorsTuple은 정확히 10개의 요소를 가진 튜플
+  const tuple: [string, string, string, string, string, string, string, string, string, string] = [
+    getCSSVariableRef(colorName, shadeKeys[0] || shadeKeys[shadeKeys.length - 1]),
+    getCSSVariableRef(colorName, shadeKeys[1] || shadeKeys[shadeKeys.length - 1]),
+    getCSSVariableRef(colorName, shadeKeys[2] || shadeKeys[shadeKeys.length - 1]),
+    getCSSVariableRef(colorName, shadeKeys[3] || shadeKeys[shadeKeys.length - 1]),
+    getCSSVariableRef(colorName, shadeKeys[4] || shadeKeys[shadeKeys.length - 1]),
+    getCSSVariableRef(colorName, shadeKeys[5] || shadeKeys[shadeKeys.length - 1]),
+    getCSSVariableRef(colorName, shadeKeys[6] || shadeKeys[shadeKeys.length - 1]),
+    getCSSVariableRef(colorName, shadeKeys[7] || shadeKeys[shadeKeys.length - 1]),
+    getCSSVariableRef(colorName, shadeKeys[8] || shadeKeys[shadeKeys.length - 1]),
+    getCSSVariableRef(colorName, shadeKeys[9] || shadeKeys[shadeKeys.length - 1]),
+  ];
 
-  return tuple as MantineColorsTuple;
+  return tuple;
 };
 
 export const mantineTheme = createTheme({

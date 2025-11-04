@@ -1,11 +1,11 @@
-import { ColorGray900 } from "../tokens/colors";
+import { ColorGray900 } from '../tokens/colors';
 
-import type { IIconProps } from "../types/icon";
+import type { IIconProps } from '../types/icon';
 
 export default function IconExport({
   size = 24,
   color = ColorGray900,
-  filled = false,
+  filled: _filled = false,
   ...props
 }: IIconProps) {
   return (

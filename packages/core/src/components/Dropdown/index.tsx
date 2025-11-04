@@ -1,62 +1,56 @@
-'use client'
+'use client';
 
-import { Input, Select, Tooltip } from "@mantine/core";
-import {
-  IconInfoCircle,
-  IconChevronUp,
-  IconChevronDown,
-} from "@pop-ui/foundation";
-import { useState } from "react";
+import { Input, Select, Tooltip } from '@mantine/core';
+import { IconInfoCircle, IconChevronUp, IconChevronDown } from '@pop-ui/foundation';
+import { useState } from 'react';
 
-import styles from "./styles.module.scss";
+import styles from './styles.module.scss';
 
-import type { SelectProps} from "@mantine/core";
+import type { SelectProps, CSSProperties } from '@mantine/core';
 
 export interface SearchBarProps extends SelectProps {
   label?: string;
-  labelPosition?: "top" | "left";
-  size?: "sm" | "md" | "lg";
+  labelPosition?: 'top' | 'left';
+  size?: 'sm' | 'md' | 'lg';
   tooltip?: string;
-  tooltipPosition?: "top" | "bottom" | "left" | "right";
+  tooltipPosition?: 'top' | 'bottom' | 'left' | 'right';
   description?: string;
   errorMsg?: string;
 }
 
 export const Dropdown = ({
   label,
-  labelPosition = "top",
-  size = "md",
+  labelPosition = 'top',
+  size = 'md',
   required,
   tooltip,
-  tooltipPosition = "top",
+  tooltipPosition = 'top',
   errorMsg,
   description,
   ...props
 }: SearchBarProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  let labelStyle = styles["Dropdown__Label--Medium"];
-  let selectStyle = styles["Dropdown--Medium"];
-  let tooltipStyle = styles["Dropdown__Tooltip--Medium"];
+  let labelStyle = styles['Dropdown__Label--Medium'];
+  let selectStyle = styles['Dropdown--Medium'];
+  let tooltipStyle = styles['Dropdown__Tooltip--Medium'];
   let chevronSize = 18;
-  if (size === "sm") {
-    labelStyle = styles["Dropdown__Label--Small"];
-    selectStyle = styles["Dropdown--Small"];
-    tooltipStyle = styles["Dropdown__Tooltip--Small"];
+  if (size === 'sm') {
+    labelStyle = styles['Dropdown__Label--Small'];
+    selectStyle = styles['Dropdown--Small'];
+    tooltipStyle = styles['Dropdown__Tooltip--Small'];
     chevronSize = 14;
-  } else if (size === "lg") {
-    labelStyle = styles["Dropdown__Label--Large"];
-    selectStyle = styles["Dropdown--Large"];
-    tooltipStyle = styles["Dropdown__Tooltip--Large"];
+  } else if (size === 'lg') {
+    labelStyle = styles['Dropdown__Label--Large'];
+    selectStyle = styles['Dropdown--Large'];
+    tooltipStyle = styles['Dropdown__Tooltip--Large'];
     chevronSize = 24;
   }
 
   return (
     <div
       className={
-        labelPosition === "top"
-          ? styles["Dropdown--TopLabel"]
-          : styles["Dropdown--LeftLabel"]
+        labelPosition === 'top' ? styles['Dropdown--TopLabel'] : styles['Dropdown--LeftLabel']
       }
     >
       <div>
@@ -68,7 +62,7 @@ export const Dropdown = ({
         {tooltip && (
           <Tooltip label={tooltip} position={tooltipPosition}>
             <div className={tooltipStyle}>
-              <IconInfoCircle size={size === "sm" ? 14 : size === "lg" ? 20 : 16} />
+              <IconInfoCircle size={size === 'sm' ? 14 : size === 'lg' ? 20 : 16} />
             </div>
           </Tooltip>
         )}
@@ -80,35 +74,27 @@ export const Dropdown = ({
           error={errorMsg}
           className={selectStyle}
           rightSection={
-            isOpen ? (
-              <IconChevronUp size={chevronSize} />
-            ) : (
-              <IconChevronDown size={chevronSize} />
-            )
+            isOpen ? <IconChevronUp size={chevronSize} /> : <IconChevronDown size={chevronSize} />
           }
           onDropdownOpen={() => setIsOpen(true)}
           onDropdownClose={() => setIsOpen(false)}
-          styles={() => ({
+          styles={{
             option: {
-              "&[data-selected]": {
-                "&, &:hover": {
-                  backgroundColor: "#e7e7e7",
-                  color: "#000000",
-                },
-              },
-            },
-          } as any)}
+              '&[data-selected]': {
+                '&, &:hover': {
+                  backgroundColor: '#e7e7e7',
+                  color: '#000000',
+                } as CSSProperties,
+              } as CSSProperties,
+            } as CSSProperties,
+          }}
         />
         {description && (
-          <Input.Description className={styles["Dropdown__Description"]}>
+          <Input.Description className={styles['Dropdown__Description']}>
             {description}
           </Input.Description>
         )}
-        {errorMsg && (
-          <Input.Error className={styles["Dropdown__ErrorMsg"]}>
-            {errorMsg}
-          </Input.Error>
-        )}
+        {errorMsg && <Input.Error className={styles['Dropdown__ErrorMsg']}>{errorMsg}</Input.Error>}
       </div>
     </div>
   );

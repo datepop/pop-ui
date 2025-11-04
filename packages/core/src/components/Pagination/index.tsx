@@ -1,11 +1,11 @@
-'use client'
+'use client';
 
-import { IconChevronLeft, IconChevronRight } from "@pop-ui/foundation";
-import { useMemo, useState } from "react";
+import { IconChevronLeft, IconChevronRight } from '@pop-ui/foundation';
+import { useEffect, useState } from 'react';
 
-import style from "./style.module.scss";
+import style from './style.module.scss';
 
-import type { HTMLAttributes} from "react";
+import type { HTMLAttributes } from 'react';
 
 export interface PaginationProps extends HTMLAttributes<HTMLDivElement> {
   currentPageIdx: number;
@@ -24,16 +24,16 @@ export const Pagination = ({
   ...props
 }: PaginationProps) => {
   const [currentIdx, setCurrentIdx] = useState<number>(currentPageIdx);
-  const [maxPageRows, setMaxPageRows] = useState<number>(50);
-  const [totalrows, setTotalRows] = useState<number>(1);
-  const [paginationLength, setPaginationLength] = useState<number>(5);
 
-  useMemo(() => {
+  // Derive values from props instead of storing in state
+  const maxPageRows = rowsPerPage || 50;
+  const totalrows = totalLength || 1;
+  const paginationLength = paginationSize || 5;
+
+  // Sync currentIdx when currentPageIdx prop changes
+  useEffect(() => {
     setCurrentIdx(currentPageIdx);
-    setMaxPageRows(rowsPerPage || 50);
-    setTotalRows(totalLength || 1);
-    setPaginationLength(paginationSize || 5);
-  }, [currentPageIdx, rowsPerPage, totalLength, paginationSize]);
+  }, [currentPageIdx]);
 
   const onClickPrev = () => {
     if (onPageChange) {
@@ -44,27 +44,21 @@ export const Pagination = ({
 
   const onClickNext = () => {
     if (onPageChange) {
-      onPageChange(
-        currentIdx + paginationLength - (currentIdx % paginationLength),
-      );
+      onPageChange(currentIdx + paginationLength - (currentIdx % paginationLength));
     }
-    setCurrentIdx(
-      (prev) => prev + paginationLength - (prev % paginationLength),
-    );
+    setCurrentIdx((prev) => prev + paginationLength - (prev % paginationLength));
   };
 
   return (
-    <div {...props} className={style["Pagination"]}>
+    <div {...props} className={style['Pagination']}>
       {currentIdx >= paginationLength ? (
-        <button className={style["Pagination__Arrow"]} onClick={onClickPrev}>
+        <button className={style['Pagination__Arrow']} onClick={onClickPrev}>
           <IconChevronLeft size={20} />
         </button>
       ) : null}
       {new Array(paginationLength).fill(0).map((_v, index) => {
         const indexNumber =
-          Math.floor(currentIdx / paginationLength) * paginationLength +
-          index +
-          1;
+          Math.floor(currentIdx / paginationLength) * paginationLength + index + 1;
 
         if (indexNumber > Math.ceil(totalrows / maxPageRows)) {
           return;
@@ -75,8 +69,8 @@ export const Pagination = ({
             key={`pagination_${index}`}
             className={
               currentIdx === indexNumber - 1
-                ? style["Pagination__PageIndex--Active"]
-                : style["Pagination__PageIndex"]
+                ? style['Pagination__PageIndex--Active']
+                : style['Pagination__PageIndex']
             }
             onClick={() => {
               setCurrentIdx(indexNumber - 1);
@@ -89,10 +83,9 @@ export const Pagination = ({
           </button>
         );
       })}
-      {Math.floor(currentIdx / paginationLength) * paginationLength +
-        paginationLength <
+      {Math.floor(currentIdx / paginationLength) * paginationLength + paginationLength <
       Math.ceil(totalrows / maxPageRows) ? (
-        <button className={style["Pagination__Arrow"]} onClick={onClickNext}>
+        <button className={style['Pagination__Arrow']} onClick={onClickNext}>
           <IconChevronRight size={20} />
         </button>
       ) : null}
