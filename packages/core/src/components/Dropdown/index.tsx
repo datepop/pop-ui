@@ -1,13 +1,16 @@
 'use client'
 
-import { Input, Select, SelectProps, Tooltip } from "@mantine/core";
+import { Input, Select, Tooltip } from "@mantine/core";
 import {
   IconInfoCircle,
   IconChevronUp,
   IconChevronDown,
 } from "@pop-ui/foundation";
-import styles from "./styles.module.scss";
 import { useState } from "react";
+
+import styles from "./styles.module.scss";
+
+import type { SelectProps} from "@mantine/core";
 
 export interface SearchBarProps extends SelectProps {
   label?: string;

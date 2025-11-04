@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-import type { Meta, StoryObj } from "@storybook/react";
 import {
   Stack,
   Text,
@@ -9,6 +7,10 @@ import {
   Button,
   Box,
 } from "@mantine/core";
+import React, { useState } from "react";
+
+import type { Meta, StoryObj } from "@storybook/react";
+
 const iconModules = import.meta.glob<{ default: React.FC<any> }>(
   "./Icon*.tsx",
   { eager: true },

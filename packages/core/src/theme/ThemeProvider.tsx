@@ -4,10 +4,13 @@
  * CSS Variables와 Mantine Theme을 통합 관리
  */
 
-import React, { createContext, useContext, useEffect, useState } from 'react';
 import { MantineProvider } from '@mantine/core';
-import { ThemeMode, injectCSSVariables } from './cssVariables';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+
+import { injectCSSVariables } from './cssVariables';
 import { mantineTheme } from './mantineTheme';
+
+import type { ThemeMode} from './cssVariables';
 
 interface ThemeContextValue {
   theme: ThemeMode;

@@ -1,5 +1,7 @@
-import { StoryFn, Meta } from "@storybook/react";
 import { SearchBar } from ".";
+
+import type { StoryFn, Meta } from "@storybook/react";
+
 
 export default {
   title: "Core/SearchBar",

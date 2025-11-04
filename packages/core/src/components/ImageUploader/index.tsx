@@ -1,14 +1,18 @@
 'use client'
 
-import { ReactNode, useCallback, useState } from "react";
 import {
   Dropzone,
-  IMAGE_MIME_TYPE,
-  FileWithPath,
-  DropzoneProps,
+  IMAGE_MIME_TYPE
 } from "@mantine/dropzone";
-import styles from "./styles.module.scss";
 import { IconPhoto, IconCloseCircle } from "@pop-ui/foundation";
+import { useCallback, useState } from "react";
+
+import styles from "./styles.module.scss";
+
+import type {
+  FileWithPath,
+  DropzoneProps} from "@mantine/dropzone";
+import type { ReactNode} from "react";
 
 export interface ImageUploaderProps extends DropzoneProps {
   width?: number;

@@ -1,12 +1,15 @@
 'use client'
 
-import { Input, InputProps, Textarea, TextareaProps, Tooltip } from "@mantine/core";
+import { Input, Textarea, Tooltip } from "@mantine/core";
 import {
   IconInfoCircle,
   IconClose,
 } from "@pop-ui/foundation";
-import styles from "./styles.module.scss";
 import { useCallback, useState } from "react";
+
+import styles from "./styles.module.scss";
+
+import type { InputProps, TextareaProps} from "@mantine/core";
 
 interface CommonTextFieldProps {
   label?: string;

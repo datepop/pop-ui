@@ -1,13 +1,16 @@
 'use client'
 
-import { Autocomplete, AutocompleteProps, Input, Tooltip } from "@mantine/core";
+import { Autocomplete, Input, Tooltip } from "@mantine/core";
 import {
   IconInfoCircle,
   IconClose,
   IconSearch,
 } from "@pop-ui/foundation";
-import styles from "./styles.module.scss";
 import { useCallback, useState } from "react";
+
+import styles from "./styles.module.scss";
+
+import type { AutocompleteProps} from "@mantine/core";
 
 export interface SearchBarProps extends AutocompleteProps {
   label?: string;

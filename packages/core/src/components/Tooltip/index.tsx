@@ -1,10 +1,13 @@
 'use client'
 
 import {
-  Tooltip as MantineTooltip,
-  TooltipProps as MantineTooltipProps,
+  Tooltip as MantineTooltip
 } from "@mantine/core";
+
 import styles from "./styles.module.scss";
+
+import type {
+  TooltipProps as MantineTooltipProps} from "@mantine/core";
 
 export interface TooltipProps extends MantineTooltipProps {
   title?: string;

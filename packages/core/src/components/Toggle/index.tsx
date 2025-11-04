@@ -1,8 +1,11 @@
 'use client'
 
-import { Switch, SwitchProps } from "@mantine/core";
-import styles from "./styles.module.scss";
+import { Switch } from "@mantine/core";
 import { useCallback, useState } from "react";
+
+import styles from "./styles.module.scss";
+
+import type { SwitchProps } from "@mantine/core";
 
 export interface ToggleProps extends SwitchProps {
   size?: "sm" | "md" | "lg";

@@ -59,8 +59,8 @@ import {
   BorderColorButtonBorderBasicFocused,
 } from '@pop-ui/foundation';
 
-import type { CSSProperties } from 'react';
 import type { TButtonSize, TButtonVariant } from './type';
+import type { CSSProperties } from 'react';
 
 interface VariantStyleStates {
   default: CSSProperties;

@@ -1,7 +1,10 @@
 'use client'
 
-import { SegmentedControl, SegmentedControlProps } from "@mantine/core";
+import { SegmentedControl } from "@mantine/core";
+
 import styles from "./styles.module.scss";
+
+import type { SegmentedControlProps } from "@mantine/core";
 
 export interface SegmentButtonProps extends SegmentedControlProps {
   size?: "sm" | "md" | "lg";

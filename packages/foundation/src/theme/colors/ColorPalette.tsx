@@ -4,7 +4,6 @@
  * 디자인 시스템의 모든 색상을 시각적으로 표시
  */
 
-import React, { useState } from 'react';
 import {
   Box,
   Container,
@@ -17,6 +16,8 @@ import {
   Group,
   Badge,
 } from '@mantine/core';
+import React, { useState } from 'react';
+
 import { colors, colorNames, getCSSVariableName } from './tokens';
 
 interface ColorChipProps {

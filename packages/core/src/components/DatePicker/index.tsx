@@ -3,11 +3,14 @@
 import "dayjs/locale/ko";
 import {
   DatePickerInput,
-  DatePickerInputProps,
   DateTimePicker,
 } from "@mantine/dates";
 import { IconCalendar } from "@pop-ui/foundation";
+
 import styles from "./styles.module.scss";
+
+import type {
+  DatePickerInputProps} from "@mantine/dates";
 
 export interface DatePickerProps extends DatePickerInputProps {
   size?: "sm" | "md" | "lg";

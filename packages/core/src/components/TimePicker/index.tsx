@@ -1,10 +1,13 @@
 'use client'
 
-import { useRef } from "react";
 import { ActionIcon } from "@mantine/core";
-import { TimeInput, TimeInputProps } from "@mantine/dates";
+import { TimeInput } from "@mantine/dates";
 import { IconClock } from "@pop-ui/foundation";
+import { useRef } from "react";
+
 import styles from "./styles.module.scss";
+
+import type { TimeInputProps } from "@mantine/dates";
 
 export interface TimePickerProps extends TimeInputProps {
   size?: "sm" | "md" | "lg";

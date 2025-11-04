@@ -1,9 +1,11 @@
 'use client'
 
-import { HTMLAttributes, useMemo, useState } from "react";
 import { IconChevronLeft, IconChevronRight } from "@pop-ui/foundation";
+import { useMemo, useState } from "react";
 
 import style from "./style.module.scss";
+
+import type { HTMLAttributes} from "react";
 
 export interface PaginationProps extends HTMLAttributes<HTMLDivElement> {
   currentPageIdx: number;

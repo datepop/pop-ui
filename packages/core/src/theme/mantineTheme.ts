@@ -4,8 +4,10 @@
  * CSS Variables를 활용한 Mantine 테마 설정
  */
 
-import { createTheme, MantineColorsTuple } from '@mantine/core';
+import { createTheme } from '@mantine/core';
 import { colors, getCSSVariableRef } from '@pop-ui/foundation';
+
+import type { MantineColorsTuple } from '@mantine/core';
 
 const createColorTuple = (colorName: string): MantineColorsTuple => {
   const shades = colors[colorName];

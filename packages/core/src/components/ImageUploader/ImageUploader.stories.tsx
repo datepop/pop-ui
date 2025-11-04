@@ -1,5 +1,7 @@
-import { StoryFn, Meta } from "@storybook/react";
 import { ImageUploader } from ".";
+
+import type { StoryFn, Meta } from "@storybook/react";
+
 
 export default {
   title: "Core/ImageUploader",

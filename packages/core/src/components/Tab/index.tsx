@@ -1,8 +1,12 @@
 'use client'
 
-import { Tabs, TabsProps } from "@mantine/core";
+import { Tabs } from "@mantine/core";
+
+
 import styles from "./styles.module.scss";
-import { ReactNode } from "react";
+
+import type { TabsProps } from "@mantine/core";
+import type { ReactNode } from "react";
 
 export interface TabProps extends TabsProps {
   tabList: {

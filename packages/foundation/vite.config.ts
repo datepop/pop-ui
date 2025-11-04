@@ -1,4 +1,5 @@
 import * as path from "path";
+
 import { getBaseConfig } from "../../vite.config";
 
 export default getBaseConfig({

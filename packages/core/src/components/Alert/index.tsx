@@ -1,11 +1,14 @@
 'use client'
 
 import {
-  Alert as MantineAlert,
-  AlertProps as MatineAlertProps,
+  Alert as MantineAlert
 } from "@mantine/core";
 import { IconCheckCircle, IconWarningCircle } from "@pop-ui/foundation";
+
 import styles from "./styles.module.scss";
+
+import type {
+  AlertProps as MatineAlertProps} from "@mantine/core";
 
 export interface AlertProps extends MatineAlertProps {
   visible: boolean;

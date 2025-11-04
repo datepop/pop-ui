@@ -1,10 +1,13 @@
 'use client'
 
 import {
-  Radio as MantineRadio,
-  RadioProps as MantineRadioProps,
+  Radio as MantineRadio
 } from "@mantine/core";
+
 import styles from "./styles.module.scss";
+
+import type {
+  RadioProps as MantineRadioProps} from "@mantine/core";
 
 export interface RadioProps extends MantineRadioProps {
   size?: "sm" | "md" | "lg";

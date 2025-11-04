@@ -1,6 +1,8 @@
-import { StoryFn, Meta } from "@storybook/react";
+
 import { Button } from ".";
+
 import type { IButtonProps } from "./type";
+import type { StoryFn, Meta } from "@storybook/react";
 
 export default { title: "Core/Button", component: Button } as Meta<
   typeof Button

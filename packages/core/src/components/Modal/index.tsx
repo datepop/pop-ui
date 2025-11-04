@@ -1,9 +1,11 @@
 'use client'
 
 import {
-  Modal as MantineModal,
-  ModalProps as MantineModalProps,
+  Modal as MantineModal
 } from "@mantine/core";
+
+import type {
+  ModalProps as MantineModalProps} from "@mantine/core";
 
 export interface ModalProps extends MantineModalProps {
   size?: "xs" | "sm" | "md" | "lg" | "xl";
