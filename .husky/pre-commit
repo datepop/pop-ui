@@ -1,0 +1,8 @@
+#!/bin/sh
+
+# Run lint-staged for changed files
+yarn lint-staged
+
+# Run TypeScript type checking
+# TODO: Fix TypeScript errors before enabling
+# yarn typecheck

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Run build to ensure everything compiles
+yarn build

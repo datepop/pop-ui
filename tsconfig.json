@@ -1,5 +1,5 @@
 {
-  "exclude": ["node_modules", "**/dist", "storybook-static"],
+  "exclude": ["node_modules", "**/dist", "storybook-static", "eslint.config.mjs"],
   "compilerOptions": {
     "module": "ESNext",
     "target": "ESNext",
@@ -9,7 +9,7 @@
     "sourceMap": false,
     "jsx": "react-jsx",
     "allowJs": true,
-    "types": ["vite/client", "jest", "@testing-library/jest-dom"],
+    "types": ["vite/client", "vitest/globals", "@testing-library/jest-dom"],
     "declaration": true,
     "declarationDir": "./dist/types",
     "isolatedModules": true,

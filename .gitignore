@@ -5,6 +5,7 @@ dist
 .idea/
 .yarn/cache/
 .yarn/install-state.gz
+.vscode/
 
 # General
 .DS_Store
