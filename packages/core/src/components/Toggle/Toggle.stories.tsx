@@ -1,20 +1,18 @@
 import { Toggle } from ".";
 
-import type { StoryFn, Meta } from "@storybook/react";
-
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 export default {
   title: "Core/Toggle",
   component: Toggle,
-} as Meta<typeof Toggle>;
+} satisfies Meta<typeof Toggle>;
 
-const Template: StoryFn<typeof Toggle> = (args) => <Toggle {...args} />;
-
-export const DefaultToggle = Template.bind({});
-DefaultToggle.args = {
-  label: "toggle label",
-  labelPosition: "left",
-  description: "description text",
-  size: "md",
-  disabled: false,
+export const DefaultToggle: StoryObj<typeof Toggle> = {
+  args: {
+    label: "toggle label",
+    labelPosition: "left",
+    description: "description text",
+    size: "md",
+    disabled: false,
+  },
 };

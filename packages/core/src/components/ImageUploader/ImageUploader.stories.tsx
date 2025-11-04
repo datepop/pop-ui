@@ -1,16 +1,12 @@
 import { ImageUploader } from ".";
 
-import type { StoryFn, Meta } from "@storybook/react";
-
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 export default {
   title: "Core/ImageUploader",
   component: ImageUploader,
-} as Meta<typeof ImageUploader>;
+} satisfies Meta<typeof ImageUploader>;
 
-const Template: StoryFn<typeof ImageUploader> = (args) => (
-  <ImageUploader {...args} />
-);
-
-export const DefaultImageUploader = Template.bind({});
-DefaultImageUploader.args = {};
+export const DefaultImageUploader: StoryObj<typeof ImageUploader> = {
+  args: {},
+};

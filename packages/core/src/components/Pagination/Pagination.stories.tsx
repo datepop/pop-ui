@@ -1,19 +1,17 @@
 import { Pagination } from ".";
 
-import type { StoryFn, Meta } from "@storybook/react";
-
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 export default {
   title: "Core/Pagination",
   component: Pagination,
-} as Meta<typeof Pagination>;
+} satisfies Meta<typeof Pagination>;
 
-const Template: StoryFn<typeof Pagination> = (args) => <Pagination {...args} />;
-
-export const DefaultPagination = Template.bind({});
-DefaultPagination.args = {
-  currentPageIdx: 0,
-  rowsPerPage: 10,
-  totalLength: 50,
-  paginationSize: 5,
+export const DefaultPagination: StoryObj<typeof Pagination> = {
+  args: {
+    currentPageIdx: 0,
+    rowsPerPage: 10,
+    totalLength: 50,
+    paginationSize: 5,
+  },
 };

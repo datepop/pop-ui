@@ -1,18 +1,16 @@
 import { Modal } from ".";
 
-import type { StoryFn, Meta } from "@storybook/react";
-
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 export default {
   title: "Core/Modal",
   component: Modal,
-} as Meta<typeof Modal>;
+} satisfies Meta<typeof Modal>;
 
-const Template: StoryFn<typeof Modal> = (args) => <Modal {...args} />;
-
-export const DefaultModal = Template.bind({});
-DefaultModal.args = {
-  children: "test",
-  opened: true,
-  centered: false,
+export const DefaultModal: StoryObj<typeof Modal> = {
+  args: {
+    children: "test",
+    opened: true,
+    centered: false,
+  },
 };

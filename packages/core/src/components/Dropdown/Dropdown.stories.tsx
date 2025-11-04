@@ -1,21 +1,19 @@
 import { Dropdown } from ".";
 
-import type { StoryFn, Meta } from "@storybook/react";
-
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 export default {
   title: "Core/Dropdown",
   component: Dropdown,
-} as Meta<typeof Dropdown>;
+} satisfies Meta<typeof Dropdown>;
 
-const Template: StoryFn<typeof Dropdown> = (args) => <Dropdown {...args} />;
-
-export const DefaultDropdown = Template.bind({});
-DefaultDropdown.args = {
-  label: "label text",
-  labelPosition: "top",
-  size: "md",
-  required: false,
-  disabled: false,
-  data: ["select 1", "select 2", "select 3"],
+export const DefaultDropdown: StoryObj<typeof Dropdown> = {
+  args: {
+    label: "label text",
+    labelPosition: "top",
+    size: "md",
+    required: false,
+    disabled: false,
+    data: ["select 1", "select 2", "select 3"],
+  },
 };

@@ -1,21 +1,17 @@
 import { SegmentButton } from ".";
 
-import type { StoryFn, Meta } from "@storybook/react";
-
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 export default {
   title: "Core/SegmentButton",
   component: SegmentButton,
-} as Meta<typeof SegmentButton>;
+} satisfies Meta<typeof SegmentButton>;
 
-const Template: StoryFn<typeof SegmentButton> = (args) => (
-  <SegmentButton {...args} />
-);
-
-export const DefaultSegmentButton = Template.bind({});
-DefaultSegmentButton.args = {
-  data: ["data1", "data2", "data3"],
-  size: "md",
-  radius: 6,
-  disabled: false,
+export const DefaultSegmentButton: StoryObj<typeof SegmentButton> = {
+  args: {
+    data: ["data1", "data2", "data3"],
+    size: "md",
+    radius: 6,
+    disabled: false,
+  },
 };

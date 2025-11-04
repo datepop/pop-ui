@@ -1,19 +1,17 @@
 import { Radio } from ".";
 
-import type { StoryFn, Meta } from "@storybook/react";
-
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 export default {
   title: "Core/Radio",
   component: Radio,
-} as Meta<typeof Radio>;
+} satisfies Meta<typeof Radio>;
 
-const Template: StoryFn<typeof Radio> = (args) => <Radio {...args} />;
-
-export const DefaultRadio = Template.bind({});
-DefaultRadio.args = {
-  label: "radio label",
-  description: "description text",
-  size: "md",
-  disabled: false,
+export const DefaultRadio: StoryObj<typeof Radio> = {
+  args: {
+    label: "radio label",
+    description: "description text",
+    size: "md",
+    disabled: false,
+  },
 };

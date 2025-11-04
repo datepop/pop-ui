@@ -1,19 +1,17 @@
 import { Checkbox } from ".";
 
-import type { StoryFn, Meta } from "@storybook/react";
-
+import type { Meta, StoryObj } from "@storybook/react-vite";
 
 export default {
   title: "Core/Checkbox",
   component: Checkbox,
-} as Meta<typeof Checkbox>;
+} satisfies Meta<typeof Checkbox>;
 
-const Template: StoryFn<typeof Checkbox> = (args) => <Checkbox {...args} />;
-
-export const DefaultCheckbox = Template.bind({});
-DefaultCheckbox.args = {
-  label: "checkbox label",
-  description: "description text",
-  size: "md",
-  disabled: false,
+export const DefaultCheckbox: StoryObj<typeof Checkbox> = {
+  args: {
+    label: "checkbox label",
+    description: "description text",
+    size: "md",
+    disabled: false,
+  },
 };
