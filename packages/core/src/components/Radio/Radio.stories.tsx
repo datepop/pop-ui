@@ -10,8 +10,8 @@ export default {
 
 const Template: StoryFn<typeof Radio> = (args) => <Radio {...args} />;
 
-export const defaultRadio = Template.bind({});
-defaultRadio.args = {
+export const DefaultRadio = Template.bind({});
+DefaultRadio.args = {
   label: "radio label",
   description: "description text",
   size: "md",

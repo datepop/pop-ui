@@ -10,8 +10,8 @@ export default {
 
 const Template: StoryFn<typeof Toggle> = (args) => <Toggle {...args} />;
 
-export const defaultToggle = Template.bind({});
-defaultToggle.args = {
+export const DefaultToggle = Template.bind({});
+DefaultToggle.args = {
   label: "toggle label",
   labelPosition: "left",
   description: "description text",

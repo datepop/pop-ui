@@ -10,8 +10,8 @@ export default {
 
 const Template: StoryFn<typeof Tab> = (args) => <Tab {...args} />;
 
-export const defaultTab = Template.bind({});
-defaultTab.args = {
+export const DefaultTab = Template.bind({});
+DefaultTab.args = {
   tabList: [
     {
       title: "tab title 1",

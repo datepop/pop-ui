@@ -10,8 +10,8 @@ export default {
 
 const Template: StoryFn<typeof Checkbox> = (args) => <Checkbox {...args} />;
 
-export const defaultCheckbox = Template.bind({});
-defaultCheckbox.args = {
+export const DefaultCheckbox = Template.bind({});
+DefaultCheckbox.args = {
   label: "checkbox label",
   description: "description text",
   size: "md",

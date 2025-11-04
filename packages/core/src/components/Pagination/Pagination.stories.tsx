@@ -10,8 +10,8 @@ export default {
 
 const Template: StoryFn<typeof Pagination> = (args) => <Pagination {...args} />;
 
-export const defaultPagination = Template.bind({});
-defaultPagination.args = {
+export const DefaultPagination = Template.bind({});
+DefaultPagination.args = {
   currentPageIdx: 0,
   rowsPerPage: 10,
   totalLength: 50,

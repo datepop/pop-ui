@@ -12,8 +12,8 @@ const Template: StoryFn<typeof SegmentButton> = (args) => (
   <SegmentButton {...args} />
 );
 
-export const defaultSegmentButton = Template.bind({});
-defaultSegmentButton.args = {
+export const DefaultSegmentButton = Template.bind({});
+DefaultSegmentButton.args = {
   data: ["data1", "data2", "data3"],
   size: "md",
   radius: 6,

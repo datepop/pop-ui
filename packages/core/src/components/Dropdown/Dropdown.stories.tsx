@@ -10,8 +10,8 @@ export default {
 
 const Template: StoryFn<typeof Dropdown> = (args) => <Dropdown {...args} />;
 
-export const defaultDropdown = Template.bind({});
-defaultDropdown.args = {
+export const DefaultDropdown = Template.bind({});
+DefaultDropdown.args = {
   label: "label text",
   labelPosition: "top",
   size: "md",

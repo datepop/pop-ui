@@ -10,8 +10,8 @@ export default {
 
 const Template: StoryFn<typeof Modal> = (args) => <Modal {...args} />;
 
-export const defaultModal = Template.bind({});
-defaultModal.args = {
+export const DefaultModal = Template.bind({});
+DefaultModal.args = {
   children: "test",
   opened: true,
   centered: false,

@@ -10,8 +10,8 @@ export default {
 
 const Template: StoryFn<typeof Alert> = (args) => <Alert {...args} />;
 
-export const defaultAlert = Template.bind({});
-defaultAlert.args = {
+export const DefaultAlert = Template.bind({});
+DefaultAlert.args = {
   visible: true,
   type: "success",
   variant: "light",

@@ -12,5 +12,5 @@ const Template: StoryFn<typeof ImageUploader> = (args) => (
   <ImageUploader {...args} />
 );
 
-export const defaultImageUploader = Template.bind({});
-defaultImageUploader.args = {};
+export const DefaultImageUploader = Template.bind({});
+DefaultImageUploader.args = {};

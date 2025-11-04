@@ -10,23 +10,23 @@ export default {
 
 const Template: StoryFn<typeof DatePicker> = (args) => <DatePicker {...args} />;
 
-export const datePicker = Template.bind({});
-datePicker.args = {
+export const DatePicker = Template.bind({});
+DatePicker.args = {
   size: "md",
   type: "default",
   disabled: false,
   withTime: false,
 };
 
-export const datetimePicker = Template.bind({});
-datetimePicker.args = {
+export const DateTimePicker = Template.bind({});
+DateTimePicker.args = {
   size: "md",
   disabled: false,
   withTime: true,
 };
 
-export const rangePicker = Template.bind({});
-rangePicker.args = {
+export const RangePicker = Template.bind({});
+RangePicker.args = {
   size: "md",
   type: "range",
   disabled: false,

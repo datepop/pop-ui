@@ -10,8 +10,8 @@ export default {
 
 const Template: StoryFn<typeof SearchBar> = (args) => <SearchBar {...args} />;
 
-export const defaultSearchBar = Template.bind({});
-defaultSearchBar.args = {
+export const DefaultSearchBar = Template.bind({});
+DefaultSearchBar.args = {
   label: "label text",
   labelPosition: "top",
   size: "md",

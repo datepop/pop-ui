@@ -10,8 +10,8 @@ export default {
 
 const Template: StoryFn<typeof Tooltip> = (args) => <Tooltip {...args} />;
 
-export const defaultTooltip = Template.bind({});
-defaultTooltip.args = {
+export const DefaultTooltip = Template.bind({});
+DefaultTooltip.args = {
   title: "tooltip title",
   content:
     "tooltip content content content content content content content content content content content",
