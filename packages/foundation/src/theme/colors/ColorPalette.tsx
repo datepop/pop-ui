@@ -20,13 +20,13 @@ import React, { useState } from 'react';
 
 import { colors, colorNames, getCSSVariableName } from './tokens';
 
-interface ColorChipProps {
+interface IColorChipProps {
   colorName: string;
   shade: string;
   value: string;
 }
 
-const ColorChip: React.FC<ColorChipProps> = ({ colorName, shade, value }) => {
+const ColorChip: React.FC<IColorChipProps> = ({ colorName, shade, value }) => {
   const [copied, setCopied] = useState(false);
   const cssVarName = getCSSVariableName(colorName, shade);
 
@@ -43,11 +43,7 @@ const ColorChip: React.FC<ColorChipProps> = ({ colorName, shade, value }) => {
   const isLight = parseInt(value.replace('#', ''), 16) > 0xffffff / 2;
 
   return (
-    <Tooltip
-      label={copied ? 'Copied!' : 'Click to copy HEX'}
-      position="top"
-      withArrow
-    >
+    <Tooltip label={copied ? 'Copied!' : 'Click to copy HEX'} position="top" withArrow>
       <Paper
         p="md"
         style={{
@@ -78,17 +74,10 @@ const ColorChip: React.FC<ColorChipProps> = ({ colorName, shade, value }) => {
           >
             {shade}
           </Badge>
-          <Text
-            size="xs"
-            fw={600}
-            style={{ color: isLight ? '#333' : '#fff' }}
-          >
+          <Text size="xs" fw={600} style={{ color: isLight ? '#333' : '#fff' }}>
             {value.toUpperCase()}
           </Text>
-          <Text
-            size="xs"
-            style={{ color: isLight ? '#666' : '#ccc', fontFamily: 'monospace' }}
-          >
+          <Text size="xs" style={{ color: isLight ? '#666' : '#ccc', fontFamily: 'monospace' }}>
             {cssVarName}
           </Text>
         </Stack>
@@ -97,11 +86,11 @@ const ColorChip: React.FC<ColorChipProps> = ({ colorName, shade, value }) => {
   );
 };
 
-interface ColorGroupProps {
+interface IColorGroupProps {
   colorName: string;
 }
 
-const ColorGroup: React.FC<ColorGroupProps> = ({ colorName }) => {
+const ColorGroup: React.FC<IColorGroupProps> = ({ colorName }) => {
   const shades = colors[colorName];
   const shadeEntries = Object.entries(shades);
 

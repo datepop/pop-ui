@@ -7,46 +7,46 @@
 
 import tokenData from '../../../token.json';
 
-export interface ColorShades {
+export interface IColorShades {
   [shade: string]: string;
 }
 
-export interface ColorPaletteType {
-  [colorName: string]: ColorShades;
+export interface IColorPaletteType {
+  [colorName: string]: IColorShades;
 }
 
-interface TokenValue {
+interface ITokenValue {
   value: string;
   type: string;
 }
 
 const rawColors = tokenData.global.color;
 
-export const colors: ColorPaletteType = Object.entries(rawColors).reduce(
+export const colors: IColorPaletteType = Object.entries(rawColors).reduce(
   (acc, [colorName, shades]) => {
-    acc[colorName] = Object.entries(shades as Record<string, TokenValue>).reduce(
+    acc[colorName] = Object.entries(shades as Record<string, ITokenValue>).reduce(
       (shadeAcc, [shade, tokenValue]) => {
         shadeAcc[shade] = tokenValue.value;
         return shadeAcc;
       },
-      {} as ColorShades,
+      {} as IColorShades,
     );
     return acc;
   },
-  {} as ColorPaletteType,
+  {} as IColorPaletteType,
 );
 
-export type ColorName = keyof typeof colors;
+export type TColorName = keyof typeof colors;
 
-export type ColorShade<T extends ColorName> = keyof (typeof colors)[T];
+export type TColorShade<T extends TColorName> = keyof (typeof colors)[T];
 
-export const colorNames = Object.keys(colors) as ColorName[];
+export const colorNames = Object.keys(colors) as TColorName[];
 
-export const getColorShades = (colorName: ColorName): ColorShades => {
+export const getColorShades = (colorName: TColorName): IColorShades => {
   return colors[colorName];
 };
 
-export const getColorValue = (colorName: ColorName, shade: string): string | undefined => {
+export const getColorValue = (colorName: TColorName, shade: string): string | undefined => {
   return colors[colorName]?.[shade];
 };
 

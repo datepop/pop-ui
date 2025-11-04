@@ -8,7 +8,7 @@ import styles from './styles.module.scss';
 
 import type { InputProps, TextareaProps } from '@mantine/core';
 
-interface CommonTextFieldProps {
+interface ICommonTextFieldProps {
   label?: string;
   labelPosition?: 'top' | 'left';
   size?: 'sm' | 'md' | 'lg';
@@ -23,16 +23,16 @@ interface CommonTextFieldProps {
   onClear?: () => void;
 }
 
-export type TextFieldProps = CommonTextFieldProps &
+export type TTextFieldProps = ICommonTextFieldProps &
   (
-    | ({ textarea?: false } & Omit<InputProps, keyof CommonTextFieldProps | 'vars'>)
+    | ({ textarea?: false } & Omit<InputProps, keyof ICommonTextFieldProps | 'vars'>)
     | ({ textarea: true; minRows?: number } & Omit<
         TextareaProps,
-        keyof CommonTextFieldProps | 'vars'
+        keyof ICommonTextFieldProps | 'vars'
       >)
   );
 
-export const TextField = (allProps: TextFieldProps) => {
+export const TextField = (allProps: TTextFieldProps) => {
   const {
     label,
     labelPosition = 'top',
@@ -115,7 +115,7 @@ export const TextField = (allProps: TextFieldProps) => {
               error={errorMsg}
               onChange={onChangeHandler}
               disabled={otherProps?.disabled}
-              {...(otherProps as Omit<TextareaProps, keyof CommonTextFieldProps | 'vars'>)}
+              {...(otherProps as Omit<TextareaProps, keyof ICommonTextFieldProps | 'vars'>)}
             />
           ) : (
             <Input
@@ -129,7 +129,7 @@ export const TextField = (allProps: TextFieldProps) => {
                   </div>
                 ) : undefined
               }
-              {...(otherProps as Omit<InputProps, keyof CommonTextFieldProps | 'vars'>)}
+              {...(otherProps as Omit<InputProps, keyof ICommonTextFieldProps | 'vars'>)}
             />
           )}
           {maxTextCount && maxTextCount > 0 && (

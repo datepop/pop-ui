@@ -6,11 +6,11 @@ import styles from './styles.module.scss';
 
 import type { CheckboxProps as MantineCheckboxProps } from '@mantine/core';
 
-export interface CheckboxProps extends MantineCheckboxProps {
+export interface ICheckboxProps extends MantineCheckboxProps {
   size?: 'sm' | 'md' | 'lg';
 }
 
-export const Checkbox = ({ size = 'md', ...props }: CheckboxProps) => {
+export const Checkbox = ({ size = 'md', ...props }: ICheckboxProps) => {
   let sizeStyle = styles['Checkbox--Medium'];
   let sizeNumber = 24;
   if (size === 'sm') {

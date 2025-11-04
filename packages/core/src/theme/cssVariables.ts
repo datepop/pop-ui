@@ -7,9 +7,9 @@
 
 import { colors, getCSSVariableName } from '@pop-ui/foundation';
 
-export type ThemeMode = 'light' | 'dark';
+export type TThemeMode = 'light' | 'dark';
 
-export const generateCSSVariables = (_theme: ThemeMode = 'light'): string => {
+export const generateCSSVariables = (_theme: TThemeMode = 'light'): string => {
   const cssVars: string[] = [];
 
   Object.entries(colors).forEach(([colorName, shades]) => {
@@ -22,7 +22,7 @@ export const generateCSSVariables = (_theme: ThemeMode = 'light'): string => {
   return cssVars.join('\n  ');
 };
 
-export const injectCSSVariables = (_theme: ThemeMode = 'light'): void => {
+export const injectCSSVariables = (_theme: TThemeMode = 'light'): void => {
   const existingStyle = document.getElementById('pop-ui-theme-vars');
   if (existingStyle) {
     existingStyle.remove();

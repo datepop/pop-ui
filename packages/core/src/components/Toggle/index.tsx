@@ -1,36 +1,36 @@
-'use client'
+'use client';
 
-import { Switch } from "@mantine/core";
-import { useCallback, useState } from "react";
+import { Switch } from '@mantine/core';
+import { useCallback, useState } from 'react';
 
-import styles from "./styles.module.scss";
+import styles from './styles.module.scss';
 
-import type { SwitchProps } from "@mantine/core";
+import type { SwitchProps } from '@mantine/core';
 
-export interface ToggleProps extends SwitchProps {
-  size?: "sm" | "md" | "lg";
-  labelPosition: "left" | "right";
+export interface IToggleProps extends SwitchProps {
+  size?: 'sm' | 'md' | 'lg';
+  labelPosition: 'left' | 'right';
   disabled?: boolean;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   onChange?: (event: any) => void;
 }
 
 export const Toggle = ({
-  size = "md",
-  labelPosition = "right",
+  size = 'md',
+  labelPosition = 'right',
   disabled,
   onChange,
   ...props
-}: ToggleProps) => {
+}: IToggleProps) => {
   const [isChecked, setIsChecked] = useState<boolean>(props?.checked || false);
 
-  let sizeStyle = styles["Toggle--Medium"];
+  let sizeStyle = styles['Toggle--Medium'];
   let trackWidth = 50;
-  if (size === "sm") {
-    sizeStyle = styles["Toggle--Small"];
+  if (size === 'sm') {
+    sizeStyle = styles['Toggle--Small'];
     trackWidth = 38;
-  } else if (size === "lg") {
-    sizeStyle = styles["Toggle--Large"];
+  } else if (size === 'lg') {
+    sizeStyle = styles['Toggle--Large'];
     trackWidth = 67;
   }
 
@@ -54,10 +54,8 @@ export const Toggle = ({
       onChange={onChangeHandler}
       styles={() => ({
         track: {
-          backgroundColor:
-            !disabled && isChecked ? "#0fd3d8 !important" : undefined,
-          borderColor:
-            !disabled && isChecked ? "#0fd3d8 !important" : undefined,
+          backgroundColor: !disabled && isChecked ? '#0fd3d8 !important' : undefined,
+          borderColor: !disabled && isChecked ? '#0fd3d8 !important' : undefined,
           width: trackWidth,
         },
       })}

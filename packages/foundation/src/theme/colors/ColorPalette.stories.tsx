@@ -12,8 +12,8 @@ const meta: Meta<typeof ColorPalette> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof ColorPalette>;
+type TStory = StoryObj<typeof ColorPalette>;
 
-export const AllColors: Story = {
+export const AllColors: TStory = {
   render: () => <ColorPalette />,
 };

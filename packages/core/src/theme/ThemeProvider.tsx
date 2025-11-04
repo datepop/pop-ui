@@ -10,26 +10,26 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { injectCSSVariables } from './cssVariables';
 import { mantineTheme } from './mantineTheme';
 
-import type { ThemeMode} from './cssVariables';
+import type { TThemeMode } from './cssVariables';
 
-interface ThemeContextValue {
-  theme: ThemeMode;
-  setTheme: (theme: ThemeMode) => void;
+interface IThemeContextValue {
+  theme: TThemeMode;
+  setTheme: (theme: TThemeMode) => void;
   toggleTheme: () => void;
 }
 
-const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
+const ThemeContext = createContext<IThemeContextValue | undefined>(undefined);
 
-interface ThemeProviderProps {
+interface IThemeProviderProps {
   children: React.ReactNode;
-  defaultTheme?: ThemeMode;
+  defaultTheme?: TThemeMode;
 }
 
-export const ThemeProvider: React.FC<ThemeProviderProps> = ({
+export const ThemeProvider: React.FC<IThemeProviderProps> = ({
   children,
   defaultTheme = 'light',
 }) => {
-  const [theme, setTheme] = useState<ThemeMode>(defaultTheme);
+  const [theme, setTheme] = useState<TThemeMode>(defaultTheme);
 
   useEffect(() => {
     injectCSSVariables(theme);
@@ -42,14 +42,12 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme, toggleTheme }}>
-      <MantineProvider theme={mantineTheme}>
-        {children}
-      </MantineProvider>
+      <MantineProvider theme={mantineTheme}>{children}</MantineProvider>
     </ThemeContext.Provider>
   );
 };
 
-export const useTheme = (): ThemeContextValue => {
+export const useTheme = (): IThemeContextValue => {
   const context = useContext(ThemeContext);
   if (!context) {
     throw new Error('useTheme must be used within ThemeProvider');

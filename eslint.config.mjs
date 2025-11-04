@@ -91,6 +91,21 @@ const config = [
           disallowTypeAnnotations: false,
         },
       ],
+
+      // TypeScript naming convention: Interface는 I prefix, Type은 T prefix
+      '@typescript-eslint/naming-convention': [
+        'error',
+        {
+          selector: 'interface',
+          format: ['PascalCase'],
+          prefix: ['I'],
+        },
+        {
+          selector: 'typeAlias',
+          format: ['PascalCase'],
+          prefix: ['T'],
+        },
+      ],
     },
   },
 

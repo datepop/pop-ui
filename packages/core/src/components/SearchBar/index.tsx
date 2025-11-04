@@ -1,23 +1,19 @@
-'use client'
+'use client';
 
-import { Autocomplete, Input, Tooltip } from "@mantine/core";
-import {
-  IconInfoCircle,
-  IconClose,
-  IconSearch,
-} from "@pop-ui/foundation";
-import { useCallback, useState } from "react";
+import { Autocomplete, Input, Tooltip } from '@mantine/core';
+import { IconInfoCircle, IconClose, IconSearch } from '@pop-ui/foundation';
+import { useCallback, useState } from 'react';
 
-import styles from "./styles.module.scss";
+import styles from './styles.module.scss';
 
-import type { AutocompleteProps} from "@mantine/core";
+import type { AutocompleteProps } from '@mantine/core';
 
-export interface SearchBarProps extends AutocompleteProps {
+export interface ISearchBarProps extends AutocompleteProps {
   label?: string;
-  labelPosition?: "top" | "left";
-  size?: "sm" | "md" | "lg";
+  labelPosition?: 'top' | 'left';
+  size?: 'sm' | 'md' | 'lg';
   tooltip?: string;
-  tooltipPosition?: "top" | "bottom" | "left" | "right";
+  tooltipPosition?: 'top' | 'bottom' | 'left' | 'right';
   description?: string;
   errorMsg?: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,30 +23,30 @@ export interface SearchBarProps extends AutocompleteProps {
 
 export const SearchBar = ({
   label,
-  labelPosition = "top",
-  size = "md",
+  labelPosition = 'top',
+  size = 'md',
   required,
   tooltip,
-  tooltipPosition = "top",
+  tooltipPosition = 'top',
   errorMsg,
   description,
   onChange,
   onClear,
   ...props
-}: SearchBarProps) => {
+}: ISearchBarProps) => {
   const [textCount, setTextCount] = useState<number>(0);
 
-  let labelStyle = styles["SearchBar__Label--Medium"];
-  let searchBarStyle = styles["SearchBar--Medium"];
-  let tooltipStyle = styles["SearchBar__Tooltip--Medium"];
-  if (size === "sm") {
-    labelStyle = styles["SearchBar__Label--Small"];
-    searchBarStyle = styles["SearchBar--Small"];
-    tooltipStyle = styles["SearchBar__Tooltip--Small"];
-  } else if (size === "lg") {
-    labelStyle = styles["SearchBar__Label--Large"];
-    searchBarStyle = styles["SearchBar--Large"];
-    tooltipStyle = styles["SearchBar__Tooltip--Large"];
+  let labelStyle = styles['SearchBar__Label--Medium'];
+  let searchBarStyle = styles['SearchBar--Medium'];
+  let tooltipStyle = styles['SearchBar__Tooltip--Medium'];
+  if (size === 'sm') {
+    labelStyle = styles['SearchBar__Label--Small'];
+    searchBarStyle = styles['SearchBar--Small'];
+    tooltipStyle = styles['SearchBar__Tooltip--Small'];
+  } else if (size === 'lg') {
+    labelStyle = styles['SearchBar__Label--Large'];
+    searchBarStyle = styles['SearchBar--Large'];
+    tooltipStyle = styles['SearchBar__Tooltip--Large'];
   }
 
   const onChangeHandler = useCallback(
@@ -66,9 +62,7 @@ export const SearchBar = ({
   return (
     <div
       className={
-        labelPosition === "top"
-          ? styles["SearchBar--TopLabel"]
-          : styles["SearchBar--LeftLabel"]
+        labelPosition === 'top' ? styles['SearchBar--TopLabel'] : styles['SearchBar--LeftLabel']
       }
     >
       <div>
@@ -80,38 +74,36 @@ export const SearchBar = ({
         {tooltip && (
           <Tooltip label={tooltip} position={tooltipPosition}>
             <div className={tooltipStyle}>
-              <IconInfoCircle size={size === "sm" ? 14 : size === "lg" ? 20 : 16} />
+              <IconInfoCircle size={size === 'sm' ? 14 : size === 'lg' ? 20 : 16} />
             </div>
           </Tooltip>
         )}
       </div>
       <div>
-        <div className={styles["SearchBar__Wrapper"]}>
+        <div className={styles['SearchBar__Wrapper']}>
           <Autocomplete
             {...props}
             size={size}
             error={errorMsg}
             className={searchBarStyle}
             onChange={onChangeHandler}
-            leftSection={<IconSearch size={size === "sm" ? 16 : size === "lg" ? 24 : 20} />}
+            leftSection={<IconSearch size={size === 'sm' ? 16 : size === 'lg' ? 24 : 20} />}
             rightSection={
               onClear && textCount > 0 ? (
-                <div className={styles["SearchBar__ClearButton"]} onClick={onClear}>
-                  <IconClose size={size === "sm" ? 16 : size === "lg" ? 24 : 20} />
+                <div className={styles['SearchBar__ClearButton']} onClick={onClear}>
+                  <IconClose size={size === 'sm' ? 16 : size === 'lg' ? 24 : 20} />
                 </div>
               ) : undefined
             }
           />
         </div>
         {description && (
-          <Input.Description className={styles["SearchBar__Description"]}>
+          <Input.Description className={styles['SearchBar__Description']}>
             {description}
           </Input.Description>
         )}
         {errorMsg && (
-          <Input.Error className={styles["SearchBar__ErrorMsg"]}>
-            {errorMsg}
-          </Input.Error>
+          <Input.Error className={styles['SearchBar__ErrorMsg']}>{errorMsg}</Input.Error>
         )}
       </div>
     </div>

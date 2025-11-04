@@ -1,28 +1,28 @@
-'use client'
+'use client';
 
-import { ActionIcon } from "@mantine/core";
-import { TimeInput } from "@mantine/dates";
-import { IconClock } from "@pop-ui/foundation";
-import { useRef } from "react";
+import { ActionIcon } from '@mantine/core';
+import { TimeInput } from '@mantine/dates';
+import { IconClock } from '@pop-ui/foundation';
+import { useRef } from 'react';
 
-import styles from "./styles.module.scss";
+import styles from './styles.module.scss';
 
-import type { TimeInputProps } from "@mantine/dates";
+import type { TimeInputProps } from '@mantine/dates';
 
-export interface TimePickerProps extends TimeInputProps {
-  size?: "sm" | "md" | "lg";
+export interface ITimePickerProps extends TimeInputProps {
+  size?: 'sm' | 'md' | 'lg';
 }
 
-export const TimePicker = ({ size = "md", ...props }: TimePickerProps) => {
+export const TimePicker = ({ size = 'md', ...props }: ITimePickerProps) => {
   const timeInputRef = useRef<HTMLInputElement>(null);
 
-  let sizeStyle = styles["TimePicker--Medium"];
+  let sizeStyle = styles['TimePicker--Medium'];
   let iconSize = 18;
-  if (size === "sm") {
-    sizeStyle = styles["TimePicker--Small"];
+  if (size === 'sm') {
+    sizeStyle = styles['TimePicker--Small'];
     iconSize = 14;
-  } else if (size === "lg") {
-    sizeStyle = styles["TimePicker--Large"];
+  } else if (size === 'lg') {
+    sizeStyle = styles['TimePicker--Large'];
     iconSize = 24;
   }
 

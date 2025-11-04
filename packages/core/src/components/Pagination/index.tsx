@@ -7,7 +7,7 @@ import style from './style.module.scss';
 
 import type { HTMLAttributes } from 'react';
 
-export interface PaginationProps extends HTMLAttributes<HTMLDivElement> {
+export interface IPaginationProps extends HTMLAttributes<HTMLDivElement> {
   currentPageIdx: number;
   rowsPerPage?: number;
   totalLength?: number;
@@ -22,7 +22,7 @@ export const Pagination = ({
   paginationSize,
   onPageChange,
   ...props
-}: PaginationProps) => {
+}: IPaginationProps) => {
   const [currentIdx, setCurrentIdx] = useState<number>(currentPageIdx);
 
   // Derive values from props instead of storing in state

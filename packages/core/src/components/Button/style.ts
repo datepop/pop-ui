@@ -62,7 +62,7 @@ import {
 import type { TButtonSize, TButtonVariant } from './type';
 import type { CSSProperties } from 'react';
 
-interface VariantStyleStates {
+interface IVariantStyleStates {
   default: CSSProperties;
   hover: CSSProperties;
   active: CSSProperties;
@@ -70,7 +70,7 @@ interface VariantStyleStates {
   disabled: CSSProperties;
 }
 
-interface SizeStyle extends CSSProperties {
+interface ISizeStyle extends CSSProperties {
   height: string;
   padding: string;
   fontSize: string;
@@ -88,7 +88,7 @@ export const LOADER_COLOR_MAP = {
   warning: TextColorButtonTextPrimaryDefault,
 } as const;
 
-export const BUTTON_VARIANT_STYLES: Record<TButtonVariant, VariantStyleStates> = {
+export const BUTTON_VARIANT_STYLES: Record<TButtonVariant, IVariantStyleStates> = {
   primary: {
     default: {
       backgroundColor: BgColorButtonBgPrimaryDefault,
@@ -241,7 +241,7 @@ export const BUTTON_VARIANT_STYLES: Record<TButtonVariant, VariantStyleStates> =
   },
 };
 
-export const BUTTON_SIZE_STYLES: Record<TButtonSize, SizeStyle> = {
+export const BUTTON_SIZE_STYLES: Record<TButtonSize, ISizeStyle> = {
   lg: {
     height: '50px',
     padding: '0 20px',

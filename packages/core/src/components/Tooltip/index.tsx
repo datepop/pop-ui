@@ -1,15 +1,12 @@
-'use client'
+'use client';
 
-import {
-  Tooltip as MantineTooltip
-} from "@mantine/core";
+import { Tooltip as MantineTooltip } from '@mantine/core';
 
-import styles from "./styles.module.scss";
+import styles from './styles.module.scss';
 
-import type {
-  TooltipProps as MantineTooltipProps} from "@mantine/core";
+import type { TooltipProps as MantineTooltipProps } from '@mantine/core';
 
-export interface TooltipProps extends MantineTooltipProps {
+export interface ITooltipProps extends MantineTooltipProps {
   title?: string;
   content: string;
 }
@@ -20,16 +17,16 @@ export const Tooltip = ({
   maw = 280,
   multiline = true,
   ...props
-}: TooltipProps) => {
+}: ITooltipProps) => {
   return (
     <MantineTooltip
       {...props}
       maw={maw}
       multiline={multiline}
       label={
-        <div className={styles["Tooltip__Body"]}>
-          {title && <span className={styles["Tooltip__Title"]}>{title}</span>}
-          <span className={styles["Tooltip__Content"]}>{content}</span>
+        <div className={styles['Tooltip__Body']}>
+          {title && <span className={styles['Tooltip__Title']}>{title}</span>}
+          <span className={styles['Tooltip__Content']}>{content}</span>
         </div>
       }
     />

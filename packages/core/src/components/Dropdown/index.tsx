@@ -8,7 +8,7 @@ import styles from './styles.module.scss';
 
 import type { SelectProps, CSSProperties } from '@mantine/core';
 
-export interface SearchBarProps extends SelectProps {
+export interface IDropdownProps extends SelectProps {
   label?: string;
   labelPosition?: 'top' | 'left';
   size?: 'sm' | 'md' | 'lg';
@@ -28,7 +28,7 @@ export const Dropdown = ({
   errorMsg,
   description,
   ...props
-}: SearchBarProps) => {
+}: IDropdownProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   let labelStyle = styles['Dropdown__Label--Medium'];

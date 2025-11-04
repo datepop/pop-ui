@@ -1,7 +1,7 @@
 import { rgba } from 'polished';
 
 // Simple CSS style type for documentation purposes
-type CSSStyleString = string;
+type TCSSStyleString = string;
 
 export const background = {
   app: '#F6F9FC',
@@ -87,7 +87,7 @@ export const typography = {
 export const breakpoint = 600;
 export const pageMargin = 5.55555;
 
-export const pageMargins: CSSStyleString = `
+export const pageMargins: TCSSStyleString = `
   padding: 0 ${spacing.padding.medium}px;
   @media (min-width: ${breakpoint * 1}px) {
     margin: 0 ${pageMargin * 1}%;
@@ -103,7 +103,7 @@ export const pageMargins: CSSStyleString = `
   }
 `;
 
-export const hoverEffect: CSSStyleString = `
+export const hoverEffect: TCSSStyleString = `
   border: 1px solid ${color.border};
   border-radius: ${spacing.borderRadius.small}px;
   transition:
@@ -129,7 +129,7 @@ export const zIndex = {
   tooltip: 2147483647,
 };
 
-export const headers: Record<string, CSSStyleString> = {
+export const headers: Record<string, TCSSStyleString> = {
   hero1: `font-size: ${typography.size.l3}px; font-weight: ${typography.weight.bold};`,
   hero2: `font-size: ${typography.size.l2}px; font-weight: ${typography.weight.bold};`,
   h1: `font-size: ${typography.size.l1}px; font-weight: ${typography.weight.bold};`,
@@ -140,12 +140,12 @@ export const headers: Record<string, CSSStyleString> = {
   h6: `font-size: ${typography.size.s2}px; font-weight: ${typography.weight.bold};`,
 };
 
-export const subheading: Record<string, CSSStyleString> = {
+export const subheading: Record<string, TCSSStyleString> = {
   regular: `font-size: 13px; font-weight: ${typography.weight.extrabold}; line-height: 18px; letter-spacing: 0.38em;`,
   small: `font-size: 11px; font-weight: ${typography.weight.extrabold}; line-height: 16px; letter-spacing: 0.38em;`,
 };
 
-export const text: Record<string, CSSStyleString> = {
+export const text: Record<string, TCSSStyleString> = {
   storybookMediumBold: `font-size: 13px; font-weight: ${typography.weight.bold}; line-height: 18px;`,
   storybookMedium: `font-size: 13px; font-weight: ${typography.weight.regular}; line-height: 18px;`,
   largeBold: `font-size: ${typography.size.s3}px; font-weight: ${typography.weight.bold}; line-height: 24px;`,
@@ -156,7 +156,7 @@ export const text: Record<string, CSSStyleString> = {
   regular: `font-size: ${typography.size.s2}px; font-weight: ${typography.weight.regular}; line-height: 20px;`,
 };
 
-export const code: Record<string, CSSStyleString> = {
+export const code: Record<string, TCSSStyleString> = {
   regular: `font-family: ${typography.type.code}; font-size: ${typography.size.s2}px; font-weight: ${typography.weight.regular}; line-height: 17px;`,
   small: `font-family: ${typography.type.code}; font-size: ${typography.size.s1}px; font-weight: ${typography.weight.regular}; line-height: 14px;`,
 };

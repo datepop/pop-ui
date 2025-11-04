@@ -1,6 +1,6 @@
-import { ColorGray900 } from "../tokens/colors";
+import { ColorGray900 } from '../tokens/colors';
 
-import type { IIconProps } from "../types/icon";
+import type { IIconProps } from '../types/icon';
 
 export default function IconAnalytics({
   size = 24,
