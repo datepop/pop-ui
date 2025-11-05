@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { PopUiProvider } from '../packages/core/src/theme/ThemeProvider';
 import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
+import { PopUiProvider } from '../packages/core/src/theme/ThemeProvider';
 
 import type { Preview } from '@storybook/react-vite';
 

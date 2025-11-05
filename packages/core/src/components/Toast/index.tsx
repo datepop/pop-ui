@@ -23,13 +23,12 @@ import type { IToastOptions, TToastInput } from './type';
 export const toast = (input: TToastInput): void => {
   const options: IToastOptions = typeof input === 'string' ? { message: input } : input;
 
-  const { message, icon, autoClose = 3000 } = options;
+  const { message, icon, autoClose } = options;
 
   notifications.show({
     message: <div className={styles.Toast__Message}>{message}</div>,
     icon,
     autoClose,
-    position: 'bottom-center',
     classNames: {
       root: styles.Toast,
       body: styles.Toast__Body,
