@@ -21,11 +21,17 @@ const preview: Preview = {
     },
   },
   decorators: [
-    (Story) => (
-      <PopUiProvider>
-        <Story />
-      </PopUiProvider>
-    ),
+    (Story, context) => {
+      // Position 스토리는 자체 PopUiProvider 사용
+      if (context.parameters.disablePopUiProvider) {
+        return <Story />;
+      }
+      return (
+        <PopUiProvider>
+          <Story />
+        </PopUiProvider>
+      );
+    },
   ],
 };
 

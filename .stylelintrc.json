@@ -8,6 +8,12 @@
         "message": "클래스명은 파스칼 케이스 BEM을 따라야 합니다 (예: .Card, .Card__Header, .Card__Header--Active)"
       }
     ],
+    "selector-pseudo-class-no-unknown": [
+      true,
+      {
+        "ignorePseudoClasses": ["global"]
+      }
+    ],
     "color-hex-length": "short",
     "declaration-block-no-duplicate-properties": true,
     "no-descending-specificity": null,
