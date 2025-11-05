@@ -1,13 +1,13 @@
-import fs from "fs";
-import path from "path";
+import fs from 'fs';
+import path from 'path';
 
-import react from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
-import dts from "vite-plugin-dts";
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
+import dts from 'vite-plugin-dts';
 
-import type { Plugin } from "vite";
+import type { Plugin } from 'vite';
 
-const isExternal = (id: string) => !id.startsWith(".") && !path.isAbsolute(id);
+const isExternal = (id: string) => !id.startsWith('.') && !path.isAbsolute(id);
 
 const copyFontPlugin = (fontPath?: string): Plugin => {
   let outDir = 'dist';
@@ -18,7 +18,10 @@ const copyFontPlugin = (fontPath?: string): Plugin => {
       outDir = config.build.outDir;
     },
     closeBundle() {
-      const defaultFontPath = path.join(process.cwd(), 'src/components/shared/PretendardVariable.woff2');
+      const defaultFontPath = path.join(
+        process.cwd(),
+        'src/components/shared/PretendardVariable.woff2',
+      );
       const fontSource = fontPath || defaultFontPath;
       const assetsDir = path.join(outDir, 'assets');
 
@@ -33,8 +36,8 @@ const copyFontPlugin = (fontPath?: string): Plugin => {
       }
 
       // CSS 파일은 dist 루트에 생성되므로 거기서 찾아서 수정
-      const rootCssFiles = fs.readdirSync(outDir).filter(f => f.endsWith('.css'));
-      rootCssFiles.forEach(cssFile => {
+      const rootCssFiles = fs.readdirSync(outDir).filter((f) => f.endsWith('.css'));
+      rootCssFiles.forEach((cssFile) => {
         const cssPath = path.join(outDir, cssFile);
         let cssContent = fs.readFileSync(cssPath, 'utf-8');
         const regex = /url\(data:font\/woff2;base64,[^)]+\)/g;
@@ -49,10 +52,11 @@ const copyFontPlugin = (fontPath?: string): Plugin => {
           '@mantine/core/styles.css',
           '@mantine/dates/styles.css',
           '@mantine/dropzone/styles.css',
+          '@mantine/notifications/styles.css',
         ];
 
         const rootNodeModules = path.join(__dirname, 'node_modules');
-        mantineCssFiles.forEach(mantineFile => {
+        mantineCssFiles.forEach((mantineFile) => {
           const mantineCssPath = path.join(rootNodeModules, mantineFile);
           if (fs.existsSync(mantineCssPath)) {
             const mantineCss = fs.readFileSync(mantineCssPath, 'utf-8');
@@ -81,7 +85,7 @@ export const getBaseConfig = ({ plugins = [], lib }) =>
         entryRoot: 'src',
       }),
       copyFontPlugin(),
-      ...plugins
+      ...plugins,
     ],
     css: {
       modules: {
@@ -91,18 +95,18 @@ export const getBaseConfig = ({ plugins = [], lib }) =>
     build: {
       assetsInlineLimit: 0,
       lib: {
-        entry: path.resolve(__dirname, "src/index.ts"),
+        entry: path.resolve(__dirname, 'src/index.ts'),
         ...lib,
       },
       rollupOptions: {
         external: isExternal,
         output: {
           globals: {
-            react: "React",
-            "react-dom": "ReactDOM",
-            "react/jsx-runtime": "jsxRuntime",
-            "@mantine/core": "MantineCore",
-            "@mantine/hooks": "MantineHooks",
+            react: 'React',
+            'react-dom': 'ReactDOM',
+            'react/jsx-runtime': 'jsxRuntime',
+            '@mantine/core': 'MantineCore',
+            '@mantine/hooks': 'MantineHooks',
           },
           assetFileNames: (assetInfo) => {
             if (assetInfo.name && assetInfo.name.endsWith('.woff2')) {
@@ -120,8 +124,8 @@ export const getBaseConfig = ({ plugins = [], lib }) =>
 
 const config = getBaseConfig({
   lib: {
-    name: "UI",
-    fileName: "ui",
+    name: 'UI',
+    fileName: 'ui',
   },
 });
 

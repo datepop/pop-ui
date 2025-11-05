@@ -1,4 +1,3 @@
-import { Notifications } from '@mantine/notifications';
 import { ColorAqua500, ColorRed400, IconCheckCircle, IconWarning } from '@pop-ui/foundation';
 
 import { toast } from '.';
@@ -8,37 +7,42 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const meta = {
   title: 'Core/Toast',
-  decorators: [
-    (Story) => (
-      <>
-        <Notifications position="bottom-center" limit={5} style={{ marginBottom: 20 }} />
-        <Story />
-      </>
-    ),
-  ],
   parameters: {
     docs: {
       description: {
         component: `
-Toast notification component using Mantine notifications system.
+Toast notification component built on Pop UI notification system.
 
 ## Setup Required
 
-Before using Toast in your app, add the Notifications provider to your root component:
+Before using Toast in your app, wrap your root component with PopUiProvider:
 
 \`\`\`tsx
-import { MantineProvider } from '@mantine/core';
-import { Notifications } from '@mantine/notifications';
-import '@mantine/notifications/styles.css';
+import { PopUiProvider } from '@pop-ui/core';
+import '@pop-ui/core/styles.css';
 
 function App() {
   return (
-    <MantineProvider>
-      <Notifications position="bottom-center" />
+    <PopUiProvider>
       <YourApp />
-    </MantineProvider>
+    </PopUiProvider>
   );
 }
+\`\`\`
+
+## Provider Options
+
+You can customize notification behavior with provider props:
+
+\`\`\`tsx
+<PopUiProvider
+  notificationPosition="top-right"  // Position: top-left, top-right, top-center, bottom-left, bottom-right, bottom-center
+  notificationLimit={3}              // Maximum number of visible notifications
+  notificationAutoClose={4000}       // Default auto-close time in ms (or false to disable)
+  notificationZIndex={1000}          // Z-index for notification container
+>
+  <YourApp />
+</PopUiProvider>
 \`\`\`
 
 ## Usage

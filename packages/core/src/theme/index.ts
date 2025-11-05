@@ -2,4 +2,5 @@ export * from '@pop-ui/foundation';
 
 export * from './cssVariables';
 export * from './mantineTheme';
-export * from './ThemeProvider';
+export { PopUiProvider, useTheme } from './ThemeProvider';
+export type { IPopUiProviderProps } from './ThemeProvider';

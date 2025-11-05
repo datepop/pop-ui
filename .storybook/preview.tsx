@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ThemeProvider } from '../packages/core/src/theme/ThemeProvider';
+import { PopUiProvider } from '../packages/core/src/theme/ThemeProvider';
 import '@mantine/core/styles.css';
 
 import type { Preview } from '@storybook/react-vite';
@@ -21,9 +21,9 @@ const preview: Preview = {
   },
   decorators: [
     (Story) => (
-      <ThemeProvider>
+      <PopUiProvider>
         <Story />
-      </ThemeProvider>
+      </PopUiProvider>
     ),
   ],
 };

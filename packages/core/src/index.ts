@@ -1,5 +1,5 @@
-import "./components/shared/font.css";
+import './components/shared/font.css';
 
-export * from "./components";
-
-export { MantineProvider as PopUiProvider } from "@mantine/core";
+export * from './components';
+export { PopUiProvider, useTheme } from './theme';
+export type { IPopUiProviderProps } from './theme';
