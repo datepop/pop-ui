@@ -1,0 +1,56 @@
+@use "../shared/variables.scss" as *;
+
+.Toast {
+  background-color: $color-gray-0;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgb(0 0 0 / 8%);
+  height: 48px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  max-width: max-content;
+  border: none !important;
+  border-left: none !important;
+  position: relative !important;
+  left: auto !important;
+  right: auto !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  margin-bottom: 12px !important;
+
+  &::before {
+    display: none !important;
+  }
+}
+
+.Toast__Icon {
+  background: none !important;
+  background-color: transparent !important;
+  border-radius: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  margin-right: 8px !important;
+  padding: 0 !important;
+}
+
+.Toast__Body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.Toast__Message {
+  color: $color-gray-900;
+  font-family: Pretendard;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 150%;
+  padding: 0 !important;
+  margin: 0 !important;
+}
