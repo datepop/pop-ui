@@ -18,8 +18,7 @@ interface ICommonTextFieldProps {
   description?: string;
   errorMsg?: string;
   maxTextCount?: number;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onChange?: (event: any) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onClear?: () => void;
 }
 
@@ -66,8 +65,7 @@ export const TextField = (allProps: TTextFieldProps) => {
   }
 
   const onChangeHandler = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (event: any) => {
+    (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       if (maxTextCount) {
         if (event.currentTarget?.value?.length > maxTextCount) {
           return;

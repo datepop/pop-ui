@@ -3,6 +3,7 @@ import reactPlugin from 'eslint-plugin-react';
 import reactHooksPlugin from 'eslint-plugin-react-hooks';
 import storybookPlugin from 'eslint-plugin-storybook';
 import importPlugin from 'eslint-plugin-import';
+import eslintCommentsPlugin from 'eslint-plugin-eslint-comments';
 import prettierConfig from 'eslint-config-prettier';
 
 const config = [
@@ -30,6 +31,7 @@ const config = [
       react: reactPlugin,
       'react-hooks': reactHooksPlugin,
       import: importPlugin,
+      'eslint-comments': eslintCommentsPlugin,
     },
     languageOptions: {
       parserOptions: {
@@ -106,6 +108,13 @@ const config = [
           prefix: ['T'],
         },
       ],
+
+      // ESLint 주석 규칙: @typescript-eslint/no-explicit-any에 대한 disable 금지
+      'eslint-comments/no-restricted-disable': [
+        'error',
+        '@typescript-eslint/no-explicit-any',
+      ],
+      'eslint-comments/no-unlimited-disable': 'error',
     },
   },
 

@@ -11,8 +11,7 @@ export interface IToggleProps extends SwitchProps {
   size?: 'sm' | 'md' | 'lg';
   labelPosition: 'left' | 'right';
   disabled?: boolean;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onChange?: (event: any) => void;
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const Toggle = ({
@@ -35,8 +34,7 @@ export const Toggle = ({
   }
 
   const onChangeHandler = useCallback(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (event: any) => {
+    (event: React.ChangeEvent<HTMLInputElement>) => {
       if (onChange) {
         onChange(event);
       }

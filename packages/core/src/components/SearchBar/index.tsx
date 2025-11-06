@@ -16,8 +16,7 @@ export interface ISearchBarProps extends AutocompleteProps {
   tooltipPosition?: 'top' | 'bottom' | 'left' | 'right';
   description?: string;
   errorMsg?: string;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  onChange?: (event: any) => void;
+  onChange?: (value: string) => void;
   onClear?: () => void;
 }
 
