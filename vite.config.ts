@@ -48,27 +48,8 @@ const copyFontPlugin = (fontPath?: string): Plugin => {
           cssContent = cssContent.replace(regex, 'url(./assets/PretendardVariable.woff2)');
         }
 
-        const mantineCssFiles = [
-          '@mantine/core/styles.css',
-          '@mantine/dates/styles.css',
-          '@mantine/dropzone/styles.css',
-          '@mantine/notifications/styles.css',
-        ];
-
-        const rootNodeModules = path.join(__dirname, 'node_modules');
-        mantineCssFiles.forEach((mantineFile) => {
-          const mantineCssPath = path.join(rootNodeModules, mantineFile);
-          if (fs.existsSync(mantineCssPath)) {
-            const mantineCss = fs.readFileSync(mantineCssPath, 'utf-8');
-            cssContent += '\n' + mantineCss;
-            console.log(`Merged ${mantineFile}`);
-          } else {
-            console.log(`Not found: ${mantineCssPath}`);
-          }
-        });
-
         fs.writeFileSync(cssPath, cssContent);
-        console.log(`Mantine CSS merged into ${cssFile}`);
+        console.log(`Font URLs processed in ${cssFile}`);
       });
     },
   };

@@ -1,0 +1,18 @@
+/**
+ * Pop UI Core Styles
+ *
+ * Mantine 관련 CSS를 자동으로 포함하여
+ * 사용자가 별도로 CSS를 import하지 않아도 되도록 합니다.
+ */
+
+/* Mantine Core Styles */
+@import '@mantine/core/styles.css';
+
+/* Mantine Notifications Styles */
+@import '@mantine/notifications/styles.css';
+
+/* Mantine Dates Styles */
+@import '@mantine/dates/styles.css';
+
+/* Mantine Dropzone Styles */
+@import '@mantine/dropzone/styles.css';
