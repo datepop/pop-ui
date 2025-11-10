@@ -19,7 +19,11 @@
     "noFallthroughCasesInSwitch": true,
     "declarationMap": false,
     "resolveJsonModule": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@pop-ui/*": ["./packages/*/src"]
+    }
   },
   "references": [{ "path": "./tsconfig.node.json" }]
 }
