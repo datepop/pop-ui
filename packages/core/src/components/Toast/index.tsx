@@ -44,10 +44,20 @@ export const toast = (input: TToastInput): void => {
 
   const { message, id, icon, autoClose, backgroundColor, textColor } = options;
 
+  // 스타일 객체를 미리 계산하여 불필요한 재생성 방지
+  const messageStyle = textColor ? { color: textColor } : undefined;
+  const rootStyles = backgroundColor
+    ? {
+        root: {
+          backgroundColor,
+        },
+      }
+    : undefined;
+
   notifications.show({
     id,
     message: (
-      <div className={styles.Toast__Message} style={textColor ? { color: textColor } : undefined}>
+      <div className={styles.Toast__Message} style={messageStyle}>
         {message}
       </div>
     ),
@@ -58,13 +68,7 @@ export const toast = (input: TToastInput): void => {
       body: styles.Toast__Body,
       icon: styles.Toast__Icon,
     },
-    styles: backgroundColor
-      ? {
-          root: {
-            backgroundColor,
-          },
-        }
-      : undefined,
+    styles: rootStyles,
     withCloseButton: false,
     withBorder: false,
   });
@@ -94,10 +98,19 @@ toast.update = (id: string, input: TToastInput): void => {
 
   const { message, icon, autoClose, backgroundColor, textColor } = options;
 
+  const messageStyle = textColor ? { color: textColor } : undefined;
+  const rootStyles = backgroundColor
+    ? {
+        root: {
+          backgroundColor,
+        },
+      }
+    : undefined;
+
   notifications.update({
     id,
     message: (
-      <div className={styles.Toast__Message} style={textColor ? { color: textColor } : undefined}>
+      <div className={styles.Toast__Message} style={messageStyle}>
         {message}
       </div>
     ),
@@ -108,13 +121,7 @@ toast.update = (id: string, input: TToastInput): void => {
       body: styles.Toast__Body,
       icon: styles.Toast__Icon,
     },
-    styles: backgroundColor
-      ? {
-          root: {
-            backgroundColor,
-          },
-        }
-      : undefined,
+    styles: rootStyles,
     withCloseButton: false,
     withBorder: false,
   });
