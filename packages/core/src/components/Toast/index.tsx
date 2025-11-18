@@ -20,6 +20,13 @@ import type { IToastOptions, TToastInput } from './type';
  *   autoClose: 5000,
  * });
  *
+ * // 색상 커스터마이징
+ * toast({
+ *   message: '커스텀 색상 토스트',
+ *   backgroundColor: 'rgba(0, 0, 0, 0.6)',
+ *   textColor: '#ffffff',
+ * });
+ *
  * // id를 사용한 중복 방지 및 업데이트
  * toast({
  *   id: 'save-toast',
@@ -35,11 +42,15 @@ import type { IToastOptions, TToastInput } from './type';
 export const toast = (input: TToastInput): void => {
   const options: IToastOptions = typeof input === 'string' ? { message: input } : input;
 
-  const { message, id, icon, autoClose } = options;
+  const { message, id, icon, autoClose, backgroundColor, textColor } = options;
 
   notifications.show({
     id,
-    message: <div className={styles.Toast__Message}>{message}</div>,
+    message: (
+      <div className={styles.Toast__Message} style={textColor ? { color: textColor } : undefined}>
+        {message}
+      </div>
+    ),
     icon,
     autoClose,
     classNames: {
@@ -47,6 +58,13 @@ export const toast = (input: TToastInput): void => {
       body: styles.Toast__Body,
       icon: styles.Toast__Icon,
     },
+    styles: backgroundColor
+      ? {
+          root: {
+            backgroundColor,
+          },
+        }
+      : undefined,
     withCloseButton: false,
     withBorder: false,
   });
@@ -63,15 +81,26 @@ export const toast = (input: TToastInput): void => {
  *   message: '저장 완료!',
  *   icon: <IconCheck />,
  * });
+ *
+ * // 색상과 함께 업데이트
+ * toast.update('save-toast', {
+ *   message: '저장 완료!',
+ *   backgroundColor: 'rgba(0, 0, 0, 0.6)',
+ *   textColor: '#ffffff',
+ * });
  */
 toast.update = (id: string, input: TToastInput): void => {
   const options: IToastOptions = typeof input === 'string' ? { message: input } : input;
 
-  const { message, icon, autoClose } = options;
+  const { message, icon, autoClose, backgroundColor, textColor } = options;
 
   notifications.update({
     id,
-    message: <div className={styles.Toast__Message}>{message}</div>,
+    message: (
+      <div className={styles.Toast__Message} style={textColor ? { color: textColor } : undefined}>
+        {message}
+      </div>
+    ),
     icon,
     autoClose,
     classNames: {
@@ -79,6 +108,13 @@ toast.update = (id: string, input: TToastInput): void => {
       body: styles.Toast__Body,
       icon: styles.Toast__Icon,
     },
+    styles: backgroundColor
+      ? {
+          root: {
+            backgroundColor,
+          },
+        }
+      : undefined,
     withCloseButton: false,
     withBorder: false,
   });

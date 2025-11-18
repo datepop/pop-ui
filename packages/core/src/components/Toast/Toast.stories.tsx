@@ -24,6 +24,13 @@ interface IPositionArgs {
   autoClose: number;
 }
 
+interface ICustomColorArgs {
+  message: string;
+  backgroundColor: string;
+  textColor: string;
+  autoClose: number;
+}
+
 const meta = {
   title: 'Core/Toast',
   parameters: {
@@ -77,6 +84,13 @@ toast({
   message: 'Operation successful',
   icon: <IconCheck />,
   autoClose: 5000, // ms, or false to disable (use 0 in controls)
+});
+
+// Custom colors
+toast({
+  message: 'Custom colored toast',
+  backgroundColor: 'rgba(0, 0, 0, 0.6)',
+  textColor: '#ffffff',
 });
 \`\`\`
         `,
@@ -340,4 +354,62 @@ toast.hide()와 toast.clean()을 사용하여 토스트를 수동으로 제어�
       <Button onClick={() => toast.clean()}>모든 토스트 제거</Button>
     </div>
   ),
+};
+
+export const CustomColors: StoryObj = {
+  args: {
+    message: 'Custom colored toast',
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    textColor: '#ffffff',
+    autoClose: 4000,
+  },
+  argTypes: {
+    message: {
+      control: 'text',
+      description: 'Toast message content',
+    },
+    backgroundColor: {
+      control: 'color',
+      description: 'Background color of the toast',
+    },
+    textColor: {
+      control: 'color',
+      description: 'Text color of the toast message',
+    },
+    autoClose: {
+      control: { type: 'range', min: 0, max: 10000, step: 500 },
+      description: 'Auto close time in ms (0 = never close)',
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: `
+배경색과 텍스트색을 커스터마이징하여 프로젝트의 브랜드 색상에 맞게 토스트를 사용할 수 있습니다.
+
+- backgroundColor: 토스트 배경색 (hex, rgb, rgba 등 CSS 색상 값)
+- textColor: 토스트 메시지 텍스트 색상 (hex, rgb, rgba 등 CSS 색상 값)
+        `,
+      },
+    },
+  },
+  render: (args) => {
+    const typedArgs = args as ICustomColorArgs;
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', padding: '20px' }}>
+        <Button
+          onClick={() =>
+            toast({
+              message: typedArgs.message,
+              backgroundColor: typedArgs.backgroundColor,
+              textColor: typedArgs.textColor,
+              autoClose: typedArgs.autoClose === 0 ? false : typedArgs.autoClose,
+            })
+          }
+        >
+          Show Toast
+        </Button>
+      </div>
+    );
+  },
 };
