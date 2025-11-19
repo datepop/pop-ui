@@ -5,8 +5,6 @@ export interface IToastOptions {
   id?: string;
   icon?: ReactNode;
   autoClose?: number | false;
-  backgroundColor?: string;
-  textColor?: string;
 }
 
 export type TToastInput = string | IToastOptions;
