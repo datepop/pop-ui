@@ -39,7 +39,11 @@ export const toast = (input: TToastInput): void => {
 
   notifications.show({
     id,
-    message: <div className={styles.Toast__Message}>{message}</div>,
+    message: (
+      <div className={styles.Toast__Message}>
+        {message}
+      </div>
+    ),
     icon,
     autoClose,
     classNames: {
@@ -63,6 +67,7 @@ export const toast = (input: TToastInput): void => {
  *   message: '저장 완료!',
  *   icon: <IconCheck />,
  * });
+ *
  */
 toast.update = (id: string, input: TToastInput): void => {
   const options: IToastOptions = typeof input === 'string' ? { message: input } : input;
@@ -71,7 +76,11 @@ toast.update = (id: string, input: TToastInput): void => {
 
   notifications.update({
     id,
-    message: <div className={styles.Toast__Message}>{message}</div>,
+    message: (
+      <div className={styles.Toast__Message}>
+        {message}
+      </div>
+    ),
     icon,
     autoClose,
     classNames: {

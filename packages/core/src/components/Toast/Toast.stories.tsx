@@ -78,6 +78,7 @@ toast({
   icon: <IconCheck />,
   autoClose: 5000, // ms, or false to disable (use 0 in controls)
 });
+
 \`\`\`
         `,
       },
@@ -341,3 +342,4 @@ toast.hide()와 toast.clean()을 사용하여 토스트를 수동으로 제어�
     </div>
   ),
 };
+
