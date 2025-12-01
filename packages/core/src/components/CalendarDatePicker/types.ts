@@ -11,6 +11,7 @@ import type { DatePickerProps } from '@mantine/dates';
  */
 export interface ICalendarDatePickerProps extends Omit<DatePickerProps, 'excludeDate'> {
   type?: 'default' | 'multiple' | 'range';
+  showTodayIndicator?: boolean;
   /**
    * 제외할 날짜 배열
    * - 단일 날짜: 'YYYY-MM-DD' 형식의 문자열

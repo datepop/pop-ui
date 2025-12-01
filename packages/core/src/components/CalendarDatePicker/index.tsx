@@ -31,6 +31,7 @@ export const CalendarDatePicker = ({
   type = 'default',
   value,
   onChange,
+  showTodayIndicator = false,
   ...props
 }: ICalendarDatePickerProps) => {
   const [internalValue, setInternalValue] = useState<DateValue | undefined>(
@@ -76,15 +77,20 @@ export const CalendarDatePicker = ({
     internalValue,
   });
   const renderDay = (date: DateStringValue) => {
-    const day = dayjs(date).date();
-    const isToday = dayjs(date).isSame(dayjs(), 'day');
-    const isTodayDisabled = isToday && isExcluded(date);
+    const current = dayjs(date);
+    const day = current.date();
+
+    const isToday = current.isSame(dayjs(), 'day');
+    const isExcludedToday = isToday && isExcluded(date);
+
+    const shouldShowIndicator = isToday && showTodayIndicator;
 
     return (
       <div className={styles.dayWrapper}>
         <span>{day}</span>
-        {isToday && (
-          <span className={isTodayDisabled ? styles.todayLabelDisabled : styles.todayLabel}>
+
+        {shouldShowIndicator && (
+          <span className={isExcludedToday ? styles.todayIndicatorDisabled : styles.todayIndicator}>
             오늘
           </span>
         )}
@@ -96,6 +102,7 @@ export const CalendarDatePicker = ({
 
   return (
     <DatePicker
+      className={showTodayIndicator ? styles.withTodayIndicator : styles.withoutTodayIndicator}
       classNames={{
         levelsGroup: styles.datePickerWrapper,
         calendarHeader: styles.calendarHeader,
@@ -112,7 +119,7 @@ export const CalendarDatePicker = ({
       maxLevel="month"
       type={type}
       value={resolvedValue}
-      size="xl"
+      size="lg"
       onChange={handleChange}
       {...restProps}
       excludeDate={handleExcludeDate}

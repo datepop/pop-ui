@@ -1,10 +1,9 @@
 @use '../shared/variables.scss' as *;
 
 // 오늘 날짜 표시를 위한 wrapper 스타일
-
 .datePickerWrapper {
   justify-content: center;
-  width: 375px !important;
+  max-width: 375px !important;
   .div {
     box-sizing: border-box;
   }
@@ -16,23 +15,33 @@
   justify-content: center;
   gap: 1px;
   line-height: 1;
-  .todayLabel {
-    font-size: 8px;
+
+  .todayIndicator {
+    font-size: 10px;
+    line-height: 13px;
     font-weight: 500;
   }
-  .todayLabelDisabled {
-    font-size: 8px;
+  .todayIndicatorDisabled {
     font-weight: 500;
     color: $color-gray-400;
   }
 }
+.withoutTodayIndicator {
+  .day[data-today] {
+    color: $color-gray-900;
+  }
 
+  .todayIndicator,
+  .todayIndicatorDisabled {
+    display: none !important;
+  }
+}
 // CalendarDatePicker day styling
 .day {
-  height: 44px;
-  width: 44px;
-  font-size: 16px;
   border-radius: 100%;
+  height: #{$spacing-1100}px;
+  width: #{$spacing-1100}px;
+  font-size: #{$font-size-500}px;
   font-weight: 400;
   color: $color-gray-900;
   // 기본 hover 상태
@@ -45,6 +54,9 @@
   &[data-today] {
     font-weight: 600;
     color: $color-aqua-500;
+  }
+  &[data-today]:not([data-disabled]):not([data-selected]):not([data-in-range]) {
+    font-weight: inherit;
   }
   // 주말 스타일
   &[data-weekend]:not([data-disabled]):not([data-selected]):not([data-in-range]) {
@@ -70,7 +82,7 @@
   // 선택된 날짜
   &[data-selected] {
     background-color: $color-aqua-500;
-    color: $color-gray-0;
+    color: $color-gray-0 !important;
     font-weight: 600;
   }
   // 현재 월이 아닌 날짜 (비활성 표시)
@@ -82,33 +94,35 @@
 
 .calendarHeader {
   justify-content: center !important;
-  width: 375px;
-  gap: 24px;
-  padding: 24px 16px;
+  width: 100%;
+  gap: #{$spacing-600}px;
+  padding: #{$spacing-600}px #{$spacing-400}px;
   margin: 0;
 }
 .calendarHeaderLevel {
   white-space: nowrap;
   flex-grow: 0 !important;
-  font-size: 16px;
+  font-size: #{$font-size-500}px;
   height: auto;
 }
 .calendarHeaderControl {
-  width: 20px;
+  width: #{$spacing-500}px;
   height: auto;
 }
 .month {
+  box-sizing: border-box;
   table-layout: fixed;
-  width: 375px;
+  width: 100%;
   text-align: center;
   margin: 0;
   border: hidden;
-  font-size: 16px !important;
-  border-left: 16px solid transparent;
-  border-right: 16px solid transparent;
+  font-size: #{$font-size-500}px !important;
+  // border-left: #{$spacing-400}px solid transparent;
+  // border-right: #{$spacing-400}px solid transparent;
+  border-bottom: 11px solid transparent;
   th {
-    font-size: 16px;
-    height: 48px;
+    font-size: #{$font-size-500}px;
+    height: #{$spacing-1200}px;
     padding: 0;
   }
   td {
@@ -118,10 +132,10 @@
   }
   tbody {
     tr {
-      height: 48px;
-      border-bottom: 6px solid transparent;
-      border-left: 16px solid transparent;
-      border-right: 16px solid transparent;
+      height: #{$spacing-1200}px;
+      border-bottom: #{$spacing-150}px solid transparent;
+      border-left: #{$spacing-400}px solid transparent;
+      border-right: #{$spacing-400}px solid transparent;
     }
   }
 }

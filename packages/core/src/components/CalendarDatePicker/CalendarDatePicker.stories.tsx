@@ -62,16 +62,11 @@ export default {
     type: 'default',
     excludedDays: [],
     excludedDates: [],
+    showTodayIndicator: true,
   },
   argTypes: {
     value: { control: false },
-    defaultValue: { control: false },
     onChange: { action: 'change' },
-  },
-  parameters: {
-    controls: {
-      exclude: ['value', 'defaultValues'],
-    },
   },
   decorators: [withTypeResetDecorator],
 } satisfies Meta<typeof CalendarDatePicker>;
@@ -89,6 +84,22 @@ export const WithExcludedDays: StoryObj<typeof CalendarDatePicker> = {
     type: 'default',
     excludedDays: [0, 6], // 주말 제외
   },
+  argTypes: {
+    excludedDays: {
+      options: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '주말'],
+      mapping: {
+        일요일: [0],
+        월요일: [1],
+        화요일: [2],
+        수요일: [3],
+        목요일: [4],
+        금요일: [5],
+        토요일: [6],
+        주말: [0, 6],
+      },
+      control: { type: 'radio' },
+    },
+  },
   parameters: {
     controls: {
       exclude: ['type', 'excludedDates'],
@@ -100,40 +111,12 @@ export const WithExcludedDates: StoryObj<typeof CalendarDatePicker> = {
   args: {
     type: 'default',
     excludedDates: ['2025-11-28', '2025-12-25', ['2025-12-28', '2026-01-03']],
+    minDate: '2025-11-02',
+    maxDate: '2025-12-01',
   },
   parameters: {
     controls: {
       exclude: ['excludedDays'],
-    },
-  },
-};
-
-export const WithAllExclusions: StoryObj<typeof CalendarDatePicker> = {
-  args: {
-    type: 'default',
-    excludedDays: [0, 6], // 주말 제외
-    excludedDates: [
-      '2025-11-28', // 추수감사절
-      '2025-12-25', // 크리스마스
-      ['2025-12-28', '2026-01-03'], // 연말연시 휴가
-    ],
-  },
-};
-
-export const WithRangeValidation: StoryObj<typeof CalendarDatePicker> = {
-  args: {
-    type: 'range',
-    excludedDates: [
-      '2025-11-27', // 제외된 날짜
-      ['2025-12-24', '2025-12-26'], // 크리스마스 연휴
-    ],
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          '⚠️ **Range 타입 검증**: 선택한 범위 내에 제외된 날짜가 있으면 선택이 취소됩니다.\n\n예: 11/26 ~ 11/28 범위를 선택하면 11/27이 제외되어 있어 선택이 취소됩니다.',
-      },
     },
   },
 };
