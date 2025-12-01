@@ -30,8 +30,8 @@ export interface ICalendarDatePickerProps extends Omit<DatePickerProps, 'exclude
 }
 
 export type TExcludeCheckerOptions = {
-  excludeWeekdays?: number[];
-  excludeDates?: (string | [string, string])[];
+  excludedDays?: number[];
+  excludedDates?: (string | [string, string])[];
 };
 
 export type TCalendarDatePickerType = NonNullable<ICalendarDatePickerProps['type']>;

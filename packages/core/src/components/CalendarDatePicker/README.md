@@ -196,8 +196,8 @@ CalendarDatePicker/
 
 ```typescript
 const isExcluded = createExcludedDateChecker({
-  excludeWeekdays: [0, 6], // 주말
-  excludeDates: ['2025-12-25', ['2025-12-24', '2025-12-26']],
+  excludedDays: [0, 6], // 주말
+  excludedDates: ['2025-12-25', ['2025-12-24', '2025-12-26']],
 });
 
 isExcluded(new Date('2025-12-25')); // true (단일 날짜)

@@ -41,8 +41,8 @@ export const CalendarDatePicker = ({
   const isExcluded = useMemo(
     () =>
       createExcludedDateChecker({
-        excludeWeekdays: excludedDays,
-        excludeDates: excludedDates,
+        excludedDays,
+        excludedDates,
       }),
     [excludedDays, excludedDates],
   );
@@ -90,7 +90,7 @@ export const CalendarDatePicker = ({
         <span>{day}</span>
 
         {shouldShowIndicator && (
-          <span className={isExcludedToday ? styles.todayIndicatorDisabled : styles.todayIndicator}>
+          <span className={styles.todayIndicator} data-disabled={isExcludedToday || undefined}>
             오늘
           </span>
         )}
@@ -102,7 +102,7 @@ export const CalendarDatePicker = ({
 
   return (
     <DatePicker
-      className={showTodayIndicator ? styles.withTodayIndicator : styles.withoutTodayIndicator}
+      className={showTodayIndicator ? undefined : styles.withoutTodayIndicator}
       classNames={{
         levelsGroup: styles.datePickerWrapper,
         calendarHeader: styles.calendarHeader,

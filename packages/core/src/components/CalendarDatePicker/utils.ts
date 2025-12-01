@@ -9,14 +9,14 @@ import type { DateValue } from '@mantine/dates';
  * @see README.md - Architecture 섹션 참고
  */
 export const createExcludedDateChecker = ({
-  excludeWeekdays = [],
-  excludeDates = [],
+  excludedDays = [],
+  excludedDates = [],
 }: TExcludeCheckerOptions) => {
   // excludeDates를 단일 날짜와 범위로 분리
   const singleDates: string[] = [];
   const dateRanges: [string, string][] = [];
 
-  for (const item of excludeDates) {
+  for (const item of excludedDates) {
     if (typeof item === 'string') {
       singleDates.push(item);
     } else {
@@ -38,7 +38,7 @@ export const createExcludedDateChecker = ({
     if (!d.isValid()) return false;
 
     // 1) 특정 요일 제외
-    if (Array.isArray(excludeWeekdays) && excludeWeekdays.includes(d.day())) {
+    if (Array.isArray(excludedDays) && excludedDays.includes(d.day())) {
       return true;
     }
 

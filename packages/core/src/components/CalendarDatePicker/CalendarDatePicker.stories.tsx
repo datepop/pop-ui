@@ -109,10 +109,10 @@ export const WithExcludedDays: StoryObj<typeof CalendarDatePicker> = {
 
 export const WithExcludedDates: StoryObj<typeof CalendarDatePicker> = {
   args: {
-    type: 'default',
+    type: 'range',
     excludedDates: ['2025-11-28', '2025-12-25', ['2025-12-28', '2026-01-03']],
     minDate: '2025-11-02',
-    maxDate: '2025-12-01',
+    maxDate: '2025-12-31',
   },
   parameters: {
     controls: {

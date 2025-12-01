@@ -4,9 +4,6 @@
 .datePickerWrapper {
   justify-content: center;
   max-width: 375px !important;
-  .div {
-    box-sizing: border-box;
-  }
 }
 .dayWrapper {
   display: flex;
@@ -21,22 +18,17 @@
     line-height: 13px;
     font-weight: 500;
   }
-  .todayIndicatorDisabled {
-    font-weight: 500;
-    color: $color-gray-400;
-  }
 }
 .withoutTodayIndicator {
   .day[data-today] {
     color: $color-gray-900;
   }
 
-  .todayIndicator,
-  .todayIndicatorDisabled {
+  .todayIndicator {
     display: none !important;
   }
 }
-// CalendarDatePicker day styling
+
 .day {
   border-radius: 100%;
   height: #{$spacing-1100}px;
@@ -117,8 +109,6 @@
   margin: 0;
   border: hidden;
   font-size: #{$font-size-500}px !important;
-  // border-left: #{$spacing-400}px solid transparent;
-  // border-right: #{$spacing-400}px solid transparent;
   border-bottom: 11px solid transparent;
   th {
     font-size: #{$font-size-500}px;
