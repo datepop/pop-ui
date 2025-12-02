@@ -1,5 +1,6 @@
 import type { DatePickerProps, DateValue } from '@mantine/dates';
 
+type TDayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 /**
  * CalendarDatePickerProps
  * - 기본 Mantine DatePickerProps에서 excludeDate를 제거하고,
@@ -31,11 +32,11 @@ export interface ICalendarDatePickerProps
    * ]}
    */
   excludedDates?: (string | [string, string])[];
-  excludedDays?: number[]; // Array of day numbers (0-6) where 0 is Sunday
+  excludedDays?: TDayOfWeek[]; // Array of day numbers (0-6) where 0 is Sunday
 }
 
 export type TExcludeCheckerOptions = {
-  excludedDays?: number[];
+  excludedDays?: TDayOfWeek[];
   excludedDates?: (string | [string, string])[];
 };
 
