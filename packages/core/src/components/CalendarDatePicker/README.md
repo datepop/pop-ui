@@ -4,11 +4,9 @@ Mantine DatePicker 기반의 인라인 캘린더 컴포넌트로, 날짜 선택 
 
 ## 📦 Features
 
-- ✅ **단일/범위 날짜 제외**: 특정 날짜 또는 날짜 범위를 비활성화
+- ✅ **날짜 제외**: 특정 날짜 또는 날짜 범위를 비활성화
 - ✅ **요일 제외**: 주말이나 특정 요일을 비활성화
 - ✅ **유연한 API**: 단일 날짜와 범위를 하나의 배열에서 혼합 사용 가능
-- ✅ **커스텀 스타일링**: SCSS 모듈을 통한 세밀한 스타일 제어
-- ✅ **타입 안전성**: TypeScript로 작성되어 완벽한 타입 지원
 
 ## 🚀 Usage
 
@@ -100,6 +98,30 @@ DatePicker 타입을 지정합니다.
 - **타입**: `'default' | 'multiple' | 'range'`
 - **기본값**: `'default'`
 
+### `onChange`
+
+날짜 선택 시 호출되는 콜백 함수입니다.
+
+- **타입**: `(value: DateValue) => void`
+- **설명**: `DateValue`는 `type` prop에 따라 다른 타입을 가집니다:
+  - `type="default"`: `Date | null`
+  - `type="range"`: `[Date | null, Date | null]`
+  - `type="multiple"`: `Date[]`
+
+**예시:**
+
+```tsx
+<CalendarDatePicker
+  type="default"
+  onChange={(value) => console.log(value)} // value: Date | null
+/>
+
+<CalendarDatePicker
+  type="range"
+  onChange={(value) => console.log(value)} // value: [Date | null, Date | null]
+/>
+```
+
 ### `showTodayIndicator`
 
 오늘 날짜에 "오늘" 텍스트를 표시합니다.
@@ -133,8 +155,8 @@ Mantine의 `DatePicker` 컴포넌트의 모든 props를 지원합니다.
 
 ### 오늘 날짜 표시 스타일
 
-- `.todayIndicator`: 오늘 날짜 하단의 "오늘" 텍스트 (활성화 상태)
-- `.todayIndicatorDisabled`: 오늘 날짜 하단의 "오늘" 텍스트 (비활성화 상태)
+- `.todayIndicator`: 오늘 날짜 하단의 "오늘" 텍스트
+  - `[data-disabled]` 속성으로 비활성화 상태 구분
 - `.withoutTodayIndicator`: `showTodayIndicator={false}` 일 때 적용되는 래퍼 클래스
 
 ### 커스텀 스타일 예시
@@ -186,8 +208,9 @@ CalendarDatePicker/
 **동작 방식:**
 
 1. **입력 처리**: `excludedDates` 배열을 단일 날짜와 범위로 분리
-2. **정규화**: 날짜를 `YYYY-MM-DD` 형식으로 정규화하고 dayjs 객체로 파싱
-3. **검사**: 주어진 날짜가 다음 조건에 해당하는지 확인
+2. **유효성 검증**: `.isValid()`로 유효하지 않은 날짜 필터링
+3. **정규화**: 날짜를 `YYYY-MM-DD` 형식으로 정규화하고 dayjs 객체로 파싱
+4. **검사**: 주어진 날짜가 다음 조건에 해당하는지 확인
    - 제외된 요일인가?
    - 제외된 단일 날짜인가?
    - 제외된 범위 내에 있는가?
@@ -204,6 +227,40 @@ isExcluded(new Date('2025-12-25')); // true (단일 날짜)
 isExcluded(new Date('2025-12-24')); // true (범위 내)
 isExcluded(new Date('2025-12-27')); // false
 ```
+
+### 성능 최적화: `hasExcludedDateInRange`
+
+범위 선택(`type="range"`) 시, 선택된 범위 내에 제외된 날짜가 있는지 확인하는 함수입니다.
+
+**범위 겹침 알고리즘 사용:**
+
+두 범위가 겹치지 않는 경우는:
+
+- 범위 A가 범위 B보다 완전히 앞: `end < exStart`
+- 범위 A가 범위 B보다 완전히 뒤: `start > exEnd`
+
+따라서 겹치는 경우: `!(end < exStart || start > exEnd)`
+
+```typescript
+// O(m) 복잡도 - m은 제외 범위 개수
+for (const [exStart, exEnd] of excludedRanges) {
+  if (!(endDay.isBefore(exStart) || startDay.isAfter(exEnd))) {
+    return true; // 범위 겹침 발견!
+  }
+}
+```
+
+**성능 비교:**
+
+- **이전**: O(n) - 범위 내 모든 날짜 순회 (1년 = 365회)
+- **최적화**: O(m) - 제외 범위 개수만큼만 체크 (예: 3회)
+- **결과**: 큰 범위 선택 시 ~100배 빠른 성능 🚀
+
+**검사 순서:**
+
+1. 제외된 범위와의 겹침 검사 (범위 겹침 알고리즘)
+2. 단일 제외 날짜가 범위 내에 있는지 확인
+3. 제외된 요일이 범위 내에 있는지 순회 검사
 
 ## 🧪 Storybook
 

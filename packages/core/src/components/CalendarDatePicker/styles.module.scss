@@ -21,7 +21,8 @@
 }
 .withoutTodayIndicator {
   .day[data-today] {
-    color: $color-gray-900;
+    color: inherit;
+    font-weight: inherit;
   }
 
   .todayIndicator {
@@ -46,9 +47,6 @@
   &[data-today] {
     font-weight: 600;
     color: $color-aqua-500;
-  }
-  &[data-today]:not([data-disabled]):not([data-selected]):not([data-in-range]) {
-    font-weight: inherit;
   }
   // 주말 스타일
   &[data-weekend]:not([data-disabled]):not([data-selected]):not([data-in-range]) {
@@ -75,7 +73,7 @@
   &[data-selected] {
     background-color: $color-aqua-500;
     color: $color-gray-0 !important;
-    font-weight: 600;
+    font-weight: 600 !important;
   }
   // 현재 월이 아닌 날짜 (비활성 표시)
   &[data-outside] {
@@ -93,7 +91,7 @@
 }
 .calendarHeaderLevel {
   white-space: nowrap;
-  flex-grow: 0 !important;
+  flex-grow: 0;
   font-size: #{$font-size-500}px;
   height: auto;
 }

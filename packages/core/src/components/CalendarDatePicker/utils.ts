@@ -25,8 +25,10 @@ export const createExcludedDateChecker = ({
   }
 
   // 단일 날짜를 'YYYY-MM-DD' 포맷으로 정규화
-  const parsedExcludeDates = singleDates.map((d) => dayjs(d).format('YYYY-MM-DD')).filter(Boolean);
-
+  const parsedExcludeDates = singleDates
+    .map((d) => dayjs(d))
+    .filter((d) => d.isValid())
+    .map((d) => d.format('YYYY-MM-DD'));
   // 범위의 start/end 를 dayjs 객체로 미리 파싱
   const parsedRanges = dateRanges
     .map(([s, e]) => [dayjs(s), dayjs(e)] as const)
@@ -64,29 +66,73 @@ export const createExcludedDateChecker = ({
 /**
  * 날짜 범위 내에 제외된 날짜가 있는지 확인
  *
+ * 범위 겹침 알고리즘을 사용하여 O(n) 대신 O(m) 복잡도로 최적화
+ * (n = 범위 내 일수, m = 제외 범위 개수)
+ *
  * @param start - 시작 날짜
  * @param end - 종료 날짜
- * @param isExcludedChecker - 날짜 제외 체크 함수
+ * @param excludedDates - 제외할 날짜 배열 (단일 날짜 또는 범위)
+ * @param excludedDays - 제외할 요일 배열 (0=일요일)
  * @returns 범위 내에 제외된 날짜가 있으면 true
  *
  * @example
- * const isExcluded = createExcludedDateChecker({ excludeDates: ['2025-11-27'] });
- * hasExcludedDateInRange(new Date('2025-11-26'), new Date('2025-11-28'), isExcluded);
- * // => true (11/27이 제외되어 있음)
+ * hasExcludedDateInRange(
+ *   new Date('2025-11-26'),
+ *   new Date('2025-11-28'),
+ *   ['2025-11-27'],
+ *   []
+ * ); // => true (11/27이 제외되어 있음)
  */
 export const hasExcludedDateInRange = (
   start: Date,
   end: Date,
-  isExcludedChecker: (date: Date) => boolean,
+  excludedDates: (string | [string, string])[],
+  excludedDays: number[],
 ): boolean => {
-  let current = dayjs(start);
+  const startDay = dayjs(start);
   const endDay = dayjs(end);
 
-  while (current.isBefore(endDay, 'day') || current.isSame(endDay, 'day')) {
-    if (isExcludedChecker(current.toDate())) {
-      return true;
+  // 1. 제외된 범위와 겹침 검사 (범위 겹침 알고리즘)
+  for (const item of excludedDates) {
+    if (Array.isArray(item)) {
+      const exStart = dayjs(item[0]);
+      const exEnd = dayjs(item[1]);
+
+      if (!exStart.isValid() || !exEnd.isValid()) continue;
+
+      // 범위가 겹치지 않는 경우: end < exStart || start > exEnd
+      // 따라서 겹치는 경우: !(end < exStart || start > exEnd)
+      if (!(endDay.isBefore(exStart, 'day') || startDay.isAfter(exEnd, 'day'))) {
+        return true; // 범위 겹침 발견!
+      }
     }
-    current = current.add(1, 'day');
+  }
+
+  // 2. 단일 제외 날짜 검사
+  for (const item of excludedDates) {
+    if (typeof item === 'string') {
+      const excludedDate = dayjs(item);
+      if (!excludedDate.isValid()) continue;
+
+      // 제외 날짜가 범위 내에 있는지 확인
+      if (
+        (excludedDate.isSame(startDay, 'day') || excludedDate.isAfter(startDay, 'day')) &&
+        (excludedDate.isSame(endDay, 'day') || excludedDate.isBefore(endDay, 'day'))
+      ) {
+        return true;
+      }
+    }
+  }
+
+  // 3. 제외된 요일 검사 (범위 내에 해당 요일이 있는지)
+  if (excludedDays.length > 0) {
+    let current = startDay;
+    while (current.isBefore(endDay, 'day') || current.isSame(endDay, 'day')) {
+      if (excludedDays.includes(current.day())) {
+        return true;
+      }
+      current = current.add(1, 'day');
+    }
   }
 
   return false;
@@ -94,6 +140,17 @@ export const hasExcludedDateInRange = (
 
 /**
  * 타입에 따른 빈 값 반환
+ *
+ * @param type - CalendarDatePicker의 타입 ('default' | 'multiple' | 'range')
+ * @returns 타입에 맞는 초기 빈 값
+ *   - 'default': null
+ *   - 'multiple': []
+ *   - 'range': [null, null]
+ *
+ * @example
+ * getEmptyValueForType('default');  // => null
+ * getEmptyValueForType('multiple'); // => []
+ * getEmptyValueForType('range');    // => [null, null]
  */
 export const getEmptyValueForType = (type: TCalendarDatePickerType = 'default'): DateValue => {
   switch (type) {
@@ -108,6 +165,17 @@ export const getEmptyValueForType = (type: TCalendarDatePickerType = 'default'):
 
 /**
  * 타입에 맞게 값 정규화
+ *
+ * @param type - CalendarDatePicker의 타입
+ * @param value - 정규화할 DateValue
+ * @returns 타입에 맞게 정규화된 DateValue
+ *   - value가 null/undefined인 경우 타입에 맞는 빈 값 반환
+ *   - 타입과 값의 형태가 맞지 않으면 빈 값 반환
+ *
+ * @example
+ * normalizeValueForType('range', someDate);     // => [null, null] (타입 불일치)
+ * normalizeValueForType('range', [date1, date2]); // => [date1, date2]
+ * normalizeValueForType('default', [date1]);      // => date1 (첫 번째 요소 추출)
  */
 export const normalizeValueForType = (
   type: TCalendarDatePickerType = 'default',
@@ -130,6 +198,24 @@ export const normalizeValueForType = (
 
 /**
  * 외부/내부 값을 타입에 맞게 해석하여 반환
+ *
+ * Controlled/Uncontrolled 모드를 지원하기 위한 값 해석 함수
+ *
+ * @param params - 파라미터 객체
+ * @param params.type - CalendarDatePicker의 타입
+ * @param params.externalValue - 외부에서 전달된 value prop (controlled)
+ * @param params.internalValue - 내부 상태 값 (uncontrolled)
+ * @returns 타입에 맞게 정규화된 최종 DateValue
+ *   - externalValue가 있으면 우선 사용 (controlled 모드)
+ *   - 없으면 internalValue 사용 (uncontrolled 모드)
+ *   - 둘 다 없으면 타입에 맞는 빈 값 반환
+ *
+ * @example
+ * // Controlled 모드
+ * resolveDatePickerValue({ type: 'default', externalValue: date1, internalValue: date2 }); // => date1
+ *
+ * // Uncontrolled 모드
+ * resolveDatePickerValue({ type: 'default', externalValue: undefined, internalValue: date2 }); // => date2
  */
 export const resolveDatePickerValue = ({
   type,

@@ -4,7 +4,7 @@ import { DatePicker } from '@mantine/dates';
 import { IconChevronLeft, IconChevronRight } from '@pop-ui/foundation';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ko';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import styles from './styles.module.scss';
 import {
@@ -47,11 +47,9 @@ export const CalendarDatePicker = ({
     [excludedDays, excludedDates],
   );
 
-  const handleExcludeDate = (date: Date | string | number) => isExcluded(date);
-
   const safeOnChange = (newValue: DateValue) => {
     if (onChange) {
-      onChange(newValue as unknown as Parameters<typeof onChange>[0]);
+      onChange(newValue);
     }
   };
 
@@ -59,7 +57,7 @@ export const CalendarDatePicker = ({
     if (type === 'range' && Array.isArray(newValue)) {
       const [start, end] = newValue as unknown as [Date | null, Date | null];
 
-      if (start && end && hasExcludedDateInRange(start, end, isExcluded)) {
+      if (start && end && hasExcludedDateInRange(start, end, excludedDates, excludedDays)) {
         const emptyRange: [Date | null, Date | null] = [null, null];
         setInternalValue(emptyRange as unknown as DateValue);
         safeOnChange(emptyRange as unknown as DateValue);
@@ -76,27 +74,30 @@ export const CalendarDatePicker = ({
     externalValue: value,
     internalValue,
   });
-  const renderDay = (date: DateStringValue) => {
-    const current = dayjs(date);
-    const day = current.date();
+  const renderDay = useCallback(
+    (date: DateStringValue) => {
+      const current = dayjs(date);
+      const day = current.date();
 
-    const isToday = current.isSame(dayjs(), 'day');
-    const isExcludedToday = isToday && isExcluded(date);
+      const isToday = current.isSame(dayjs(), 'day');
+      const isExcludedToday = isToday && isExcluded(date);
 
-    const shouldShowIndicator = isToday && showTodayIndicator;
+      const shouldShowIndicator = isToday && showTodayIndicator;
 
-    return (
-      <div className={styles.dayWrapper}>
-        <span>{day}</span>
+      return (
+        <div className={styles.dayWrapper}>
+          <span>{day}</span>
 
-        {shouldShowIndicator && (
-          <span className={styles.todayIndicator} data-disabled={isExcludedToday || undefined}>
-            오늘
-          </span>
-        )}
-      </div>
-    );
-  };
+          {shouldShowIndicator && (
+            <span className={styles.todayIndicator} data-disabled={isExcludedToday || undefined}>
+              오늘
+            </span>
+          )}
+        </div>
+      );
+    },
+    [isExcluded, showTodayIndicator],
+  );
 
   const { classNames, ...restProps } = props;
 
@@ -122,7 +123,7 @@ export const CalendarDatePicker = ({
       size="lg"
       onChange={handleChange}
       {...restProps}
-      excludeDate={handleExcludeDate}
+      excludeDate={isExcluded}
       renderDay={renderDay}
       weekendDays={[0]}
       previousIcon={<IconChevronLeft />}
@@ -130,5 +131,3 @@ export const CalendarDatePicker = ({
     />
   );
 };
-
-export default CalendarDatePicker;

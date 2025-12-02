@@ -59,10 +59,10 @@ export default {
   title: 'Core/CalendarDatePicker',
   component: CalendarDatePicker,
   args: {
+    showTodayIndicator: true,
     type: 'default',
     excludedDays: [],
     excludedDates: [],
-    showTodayIndicator: true,
   },
   argTypes: {
     value: { control: false },

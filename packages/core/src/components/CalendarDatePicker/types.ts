@@ -1,17 +1,22 @@
-import type { DatePickerProps } from '@mantine/dates';
+import type { DatePickerProps, DateValue } from '@mantine/dates';
 
 /**
  * CalendarDatePickerProps
- * - 기본 Mantine DatePickerProps에서 excludeDate만 제거하고(우리가 재정의할 예정),
- *   추가적인 excludedDates/excludedDays/excludedRanges 옵션을 받는다.
+ * - 기본 Mantine DatePickerProps에서 excludeDate를 제거하고,
+ *   커스터마이즈한 excludedDates/excludedDays 옵션을 받는다.
  *
- * excludedDates: ['2025-11-25', '2025-12-01'] 형태 (YYYY-MM-DD 문자열)
  * excludedDays: [0,1,2,...,6] (0=일요일, 5=금요일 등)
- * excludedRanges: [['2025-12-24','2025-12-26'], ...] (각 요소는 [start, end] 문자열, YYYY-MM-DD 권장)
+ * excludedDates: ['2025-12-01', ['2025-12-24','2025-12-26'], ...] (각 요소는 [start, end] 문자열, YYYY-MM-DD 권장)
  */
-export interface ICalendarDatePickerProps extends Omit<DatePickerProps, 'excludeDate'> {
+export interface ICalendarDatePickerProps
+  extends Omit<DatePickerProps, 'excludeDate' | 'onChange'> {
   type?: 'default' | 'multiple' | 'range';
   showTodayIndicator?: boolean;
+  /**
+   * onChange callback
+   * - Receives DateValue which can be Date, Date[], or [Date, Date] depending on the type prop
+   */
+  onChange?: (value: DateValue) => void;
   /**
    * 제외할 날짜 배열
    * - 단일 날짜: 'YYYY-MM-DD' 형식의 문자열
