@@ -2,7 +2,7 @@ import { ColorGray900 } from '../tokens/colors';
 
 import type { IIconProps } from '../types/icon';
 
-export default function IconCalendar({ size = 24, color = ColorGray900, ...props }: IIconProps) {
+export default function IconNote({ size = 24, color = ColorGray900, ...props }: IIconProps) {
   return (
     <svg
       width={size}
