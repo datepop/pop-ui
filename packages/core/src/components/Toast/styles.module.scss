@@ -26,7 +26,7 @@
 /* stylelint-enable selector-class-pattern */
 
 .Toast {
-  background-color: $color-gray-0;
+  background-color: rgba(0, 0, 0, 0.6);
   border-radius: 16px;
   box-shadow: 0 4px 16px rgb(0 0 0 / 8%);
   height: 48px;
@@ -65,7 +65,7 @@
 }
 
 .Toast__Message {
-  color: $color-gray-900;
+  color: $color-gray-0;
   font-family: Pretendard;
   font-size: 14px;
   font-weight: 700;
