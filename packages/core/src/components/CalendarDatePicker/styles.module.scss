@@ -1,0 +1,129 @@
+@use '../shared/variables.scss' as *;
+
+// 오늘 날짜 표시를 위한 wrapper 스타일
+.datePickerWrapper {
+  justify-content: center;
+  max-width: 375px !important;
+}
+.dayWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  line-height: 1;
+
+  .todayIndicator {
+    font-size: 10px;
+    line-height: 13px;
+    font-weight: 500;
+  }
+}
+.withoutTodayIndicator {
+  .day[data-today] {
+    color: inherit;
+    font-weight: inherit;
+  }
+
+  .todayIndicator {
+    display: none !important;
+  }
+}
+
+.day {
+  border-radius: 100%;
+  height: #{$spacing-1100}px;
+  width: #{$spacing-1100}px;
+  font-size: #{$font-size-500}px;
+  font-weight: 400;
+  color: $color-gray-900;
+  // 기본 hover 상태
+  &:hover:not([data-disabled]):not([data-selected]) {
+    background-color: $color-aqua-50;
+    border-color: $color-aqua-300;
+  }
+
+  // 오늘 날짜
+  &[data-today] {
+    font-weight: 600;
+    color: $color-aqua-500;
+  }
+  // 주말 스타일
+  &[data-weekend]:not([data-disabled]):not([data-selected]):not([data-in-range]) {
+    color: $color-red-500;
+  }
+  // 비활성화된 날짜
+  &[data-disabled] {
+    color: $color-gray-200;
+    cursor: not-allowed;
+    text-decoration: line-through;
+
+    &:hover {
+      background-color: $color-gray-100;
+      border-color: transparent;
+    }
+  }
+  // 범위 선택 시 범위 내 날짜
+  &[data-in-range] {
+    background-color: $color-gray-50;
+    font-weight: 500;
+    color: $color-gray-900;
+  }
+  // 선택된 날짜
+  &[data-selected] {
+    background-color: $color-aqua-500;
+    color: $color-gray-0 !important;
+    font-weight: 600 !important;
+  }
+  // 현재 월이 아닌 날짜 (비활성 표시)
+  &[data-outside] {
+    color: $color-gray-300;
+    text-decoration: line-through;
+  }
+}
+
+.calendarHeader {
+  justify-content: center !important;
+  width: 100%;
+  gap: #{$spacing-600}px;
+  padding: #{$spacing-600}px #{$spacing-400}px;
+  margin: 0;
+}
+.calendarHeaderLevel {
+  white-space: nowrap;
+  flex-grow: 0;
+  font-size: #{$font-size-500}px;
+  height: auto;
+}
+.calendarHeaderControl {
+  width: #{$spacing-500}px;
+  height: auto;
+}
+.month {
+  box-sizing: border-box;
+  table-layout: fixed;
+  width: 100%;
+  text-align: center;
+  margin: 0;
+  border: hidden;
+  font-size: #{$font-size-500}px !important;
+  border-bottom: 11px solid transparent;
+  th {
+    font-size: #{$font-size-500}px;
+    height: #{$spacing-1200}px;
+    padding: 0;
+  }
+  td {
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+  tbody {
+    tr {
+      height: #{$spacing-1200}px;
+      border-bottom: #{$spacing-150}px solid transparent;
+      border-left: #{$spacing-400}px solid transparent;
+      border-right: #{$spacing-400}px solid transparent;
+    }
+  }
+}
