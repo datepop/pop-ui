@@ -236,3 +236,42 @@ export const resolveDatePickerValue = ({
 
   return getEmptyValueForType(type);
 };
+
+/**
+ * CSS 클래스명 병합 함수
+ *
+ * 기본 classNames와 커스텀 classNames를 병합하여 반환합니다.
+ * 각 키에 대해 기본 클래스와 커스텀 클래스를 공백으로 연결하므로,
+ * 두 스타일이 모두 적용되며 커스텀 클래스가 우선순위를 가집니다.
+ *
+ * @param defaultClassNames - 기본 클래스명 객체
+ * @param customClassNames - 사용자 제공 커스텀 클래스명 객체 (선택적)
+ * @returns 병합된 클래스명 객체
+ *
+ * @example
+ * const merged = mergeClassNames(
+ *   { day: 'default-day', header: 'default-header' },
+ *   { day: 'custom-day' }
+ * );
+ * // => { day: 'default-day custom-day', header: 'default-header' }
+ */
+export const mergeClassNames = <T extends Record<string, string>>(
+  defaultClassNames: T,
+  customClassNames?: Partial<Record<keyof T, string>> | null,
+): T => {
+  if (!customClassNames || typeof customClassNames !== 'object') {
+    return defaultClassNames;
+  }
+
+  return Object.keys(defaultClassNames).reduce((acc, key) => {
+    const typedKey = key as keyof T;
+    const defaultClass = defaultClassNames[typedKey];
+    const customClass = customClassNames[typedKey];
+
+    acc[typedKey] = (
+      customClass ? `${defaultClass} ${customClass}`.trim() : defaultClass
+    ) as T[keyof T];
+
+    return acc;
+  }, {} as T);
+};

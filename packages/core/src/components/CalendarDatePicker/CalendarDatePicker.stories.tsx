@@ -59,7 +59,7 @@ export default {
   title: 'Core/CalendarDatePicker',
   component: CalendarDatePicker,
   args: {
-    showTodayIndicator: true,
+    showTodayIndicator: false,
     type: 'default',
     excludedDays: [],
     excludedDates: [],
@@ -76,6 +76,7 @@ export const DefaultDatePicker: StoryObj<typeof CalendarDatePicker> = {
     type: 'default',
     excludedDays: [],
     excludedDates: [],
+    showTodayIndicator: false,
   },
 };
 
