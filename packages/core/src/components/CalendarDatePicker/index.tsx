@@ -11,6 +11,7 @@ import {
   createExcludedDateChecker,
   getEmptyValueForType,
   hasExcludedDateInRange,
+  mergeClassNames,
   resolveDatePickerValue,
 } from './utils';
 
@@ -99,21 +100,34 @@ export const CalendarDatePicker = ({
     [isExcluded, showTodayIndicator],
   );
 
-  const { classNames, ...restProps } = props;
+  const { classNames, className, ...restProps } = props;
+
+  // Merge default classNames with user-provided classNames
+  const defaultClassNames = {
+    levelsGroup: styles.datePickerWrapper,
+    calendarHeader: styles.calendarHeader,
+    calendarHeaderLevel: styles.calendarHeaderLevel,
+    calendarHeaderControl: styles.calendarHeaderControl,
+    month: styles.month,
+    day: styles.day,
+    monthCell: styles.monthCell,
+  };
+
+  // classNames가 객체인 경우에만 병합, 함수인 경우 그대로 전달
+  const mergedClassNames =
+    typeof classNames === 'object' && classNames !== null && !Array.isArray(classNames)
+      ? mergeClassNames(defaultClassNames, classNames)
+      : (classNames ?? defaultClassNames);
+
+  // Merge className (single string) with default className
+  const defaultClassName = showTodayIndicator ? undefined : styles.withoutTodayIndicator;
+  const mergedClassName =
+    [defaultClassName, className].filter(Boolean).join(' ').trim() || undefined;
 
   return (
     <DatePicker
-      className={showTodayIndicator ? undefined : styles.withoutTodayIndicator}
-      classNames={{
-        levelsGroup: styles.datePickerWrapper,
-        calendarHeader: styles.calendarHeader,
-        calendarHeaderLevel: styles.calendarHeaderLevel,
-        calendarHeaderControl: styles.calendarHeaderControl,
-        month: styles.month,
-        day: styles.day,
-        monthCell: styles.monthCell,
-        ...(typeof classNames === 'object' && classNames ? classNames : {}),
-      }}
+      className={mergedClassName}
+      classNames={mergedClassNames}
       locale="ko"
       firstDayOfWeek={0}
       monthLabelFormat={'YYYY년 M월'}
@@ -122,12 +136,15 @@ export const CalendarDatePicker = ({
       value={resolvedValue}
       size="lg"
       onChange={handleChange}
+      previousIcon={<IconChevronLeft />}
+      nextIcon={<IconChevronRight />}
+      weekendDays={[0]}
       {...restProps}
       excludeDate={isExcluded}
       renderDay={renderDay}
-      weekendDays={[0]}
-      previousIcon={<IconChevronLeft />}
-      nextIcon={<IconChevronRight />}
     />
   );
 };
+
+// Export types for external use
+export type { ICalendarDatePickerProps, TDayOfWeek } from './types';
