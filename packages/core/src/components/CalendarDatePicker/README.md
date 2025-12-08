@@ -7,17 +7,7 @@ Mantine DatePicker 기반의 인라인 캘린더 컴포넌트로, 날짜 선택 
 - ✅ **날짜 제외**: 특정 날짜 또는 날짜 범위를 비활성화
 - ✅ **요일 제외**: 주말이나 특정 요일을 비활성화
 - ✅ **유연한 API**: 단일 날짜와 범위를 하나의 배열에서 혼합 사용 가능
-
-## 📋 Props
-
-| Prop                 | Type                                 | Default     | Description                                                    |
-| -------------------- | ------------------------------------ | ----------- | -------------------------------------------------------------- |
-| `type`               | `'default' \| 'multiple' \| 'range'` | `'default'` | 캘린더 선택 모드                                               |
-| `excludedDates`      | `(string \| [string, string])[]`     | `[]`        | 제외할 날짜 또는 날짜 범위 배열                                |
-| `excludedDays`       | `number[]`                           | `[]`        | 제외할 요일 배열 (0: 일요일 ~ 6: 토요일)                       |
-| `showTodayIndicator` | `boolean`                            | `false`     | 오늘 날짜 하단에 '오늘' 텍스트 표시 여부                       |
-| `onChange`           | `(value: DateValue) => void`         | -           | 날짜 선택 시 호출되는 콜백                                     |
-| `...props`           | `DatePickerProps`                    | -           | Mantine DatePicker의 나머지 Props (커스텀한 excludeDate 제외) |
+- ✅ **외부 날짜 제어**: 현재 월에 포함되지 않는 날짜(이전/다음 달)의 선택 방지
 
 ## 🚀 Usage
 
@@ -63,6 +53,17 @@ function App() {
   ]}
 />
 ```
+
+## 📋 Props
+
+| Prop             | Type                                 | Default     | Description                                                   |
+| ---------------- | ------------------------------------ | ----------- | ------------------------------------------------------------- |
+| `type`           | `'default' \| 'multiple' \| 'range'` | `'default'` | 캘린더 선택 모드                                              |
+| `excludedDates`  | `(string \| [string, string])[]`     | `[]`        | 제외할 날짜 또는 날짜 범위 배열                               |
+| `excludedDays`   | `number[]`                           | `[]`        | 제외할 요일 배열 (0: 일요일 ~ 6: 토요일)                      |
+| `highlightToday` | `boolean`                            | `false`     | 오늘 날짜 강조 및 날짜 하단에 '오늘' 텍스트 표시 여부         |
+| `onChange`       | `(value: DateValue) => void`         | -           | 날짜 선택 시 호출되는 콜백                                    |
+| `...props`       | `DatePickerProps`                    | -           | Mantine DatePicker의 나머지 Props (커스텀한 excludeDate 제외) |
 
 ## 🔍 Detailed Props
 
@@ -133,65 +134,161 @@ DatePicker 타입을 지정합니다.
 />
 ```
 
-### `showTodayIndicator`
+### `highlightToday`
 
-오늘 날짜에 "오늘" 텍스트를 표시합니다.
+오늘 날짜에 "오늘" 텍스트를 표시하고 강조합니다.
 
 - **타입**: `boolean`
 - **기본값**: `false`
+- **설명**: Mantine의 `highlightToday` prop과 동일합니다. `true`로 설정하면 오늘 날짜가 강조되고 하단에 "오늘" 텍스트가 표시됩니다.
 
 **예시:**
 
 ```tsx
-<CalendarDatePicker showTodayIndicator={true} />
+<CalendarDatePicker highlightToday />
 ```
 
 ### 기타 Props
 
-Mantine의 `DatePicker` 컴포넌트의 모든 props를 지원합니다.
+Mantine의 `DatePicker` 컴포넌트의 나머지 props를 지원합니다.
+
+> **주의**: `excludeDate` prop은 지원하지 않습니다. 날짜 제외 기능을 사용하려면 `excludedDates` 또는 `excludedDays` prop을 사용하세요.
+
 자세한 내용은 [Mantine DatePicker 문서](https://mantine.dev/dates/date-picker/)를 참고하세요.
 
 ## 🎨 Styling
 
 컴포넌트는 `styles.module.scss`를 통해 스타일링됩니다.
 
-### 지원하는 상태
+### classNames prop 사용법
+
+`classNames` prop을 사용하여 Mantine DatePicker의 모든 스타일 키를 커스터마이징할 수 있습니다. 기본 클래스와 커스텀 클래스가 자동으로 병합되며, 커스텀 클래스가 우선순위를 가집니다.
+
+**특징:**
+
+- `DatePickerStylesNames`(Mantine DatePicker Styles API의 selectors)에 속하는 키만 허용됩니다 (타입 안전성 보장)
+- 기본 클래스와 커스텀 클래스가 공백으로 연결되어 병합됩니다
+- `DEFAULT_CLASS_NAMES`에 없는 키도 `DatePickerStylesNames`에 속하면 확장 가능합니다
+
+**예시:**
+
+```tsx
+<CalendarDatePicker
+  classNames={{
+    day: 'my-custom-day',
+    calendarHeaderLevel: 'my-custom-header-level',
+    // DatePickerStylesNames에 속하는 모든 키 사용 가능
+  }}
+/>
+```
+
+### 스타일 오버라이딩 가이드
+
+라이브러리 기본 스타일은 CSS `:where()`를 사용하여 **중요도(Specificity)가 0**으로 설정되어 있습니다. 따라서 `!important`나 복잡한 선택자 없이도 커스텀 클래스만으로 쉽게 스타일을 덮어쓸 수 있습니다. 또한, `[data-outside]` 속성이 있는 날짜(현재 월이 아닌 날짜)는 `pointer-events: none`으로 설정되어 클릭이 불가능합니다.
+
+#### 1. 모든 상태 덮어쓰기 (Simple Override)
+
+상태(in-range, selected 등)에 관계없이 스타일을 적용하고 싶다면 평범한 클래스를 사용하세요.
+
+```css
+.myCustomDay {
+  /* in-range, weekend 등 모든 상태를 덮어씁니다 */
+  background-color: pink;
+  border-radius: 4px;
+}
+```
+
+#### 2. 특정 상태만 덮어쓰기 (Conditional Override)
+
+특정 상태일 때만 스타일을 변경하고 싶다면 `data` 속성을 사용하세요. (Mantine UI의 data 속성 참조)
+
+```css
+.myCustomDay {
+  /* 기본 스타일 */
+  background-color: white;
+
+  /* 범위 내 날짜일 때만 적용 */
+  &[data-in-range] {
+    background-color: lightblue;
+  }
+
+  /* 선택된 날짜일 때만 적용 */
+  &[data-selected] {
+    background-color: blue;
+    color: white;
+  }
+}
+```
+
+### 지원하는 데이터 속성 (Data Attributes)
 
 - `[data-selected]`: 선택된 날짜
 - `[data-disabled]`: 비활성화된 날짜
 - `[data-in-range]`: 범위 선택 시 범위 내 날짜
 - `[data-weekend]`: 주말
 - `[data-outside]`: 현재 월 외부의 날짜
-- `[data-today]`: 오늘 날짜
+- `[data-today]`: 오늘 날짜 (하이라이트 스타일링을 위해서는 `[data-today][data-highlight-today]` 방식으로 속성을 선택해야 함)
+- 이외에도 Mantine DatePicker의 data attributes를 지원합니다.
 
-### 오늘 날짜 표시 스타일
+## 💡 Tips
 
-- `.todayIndicator`: 오늘 날짜 하단의 "오늘" 텍스트
-  - `[data-disabled]` 속성으로 비활성화 상태 구분
-- `.withoutTodayIndicator`: `showTodayIndicator={false}` 일 때 적용되는 래퍼 클래스
+### 1. 날짜 형식 일관성 유지
 
-### 커스텀 스타일 예시
+`YYYY-MM-DD` 형식 사용을 권장합니다. 다른 형식도 dayjs가 파싱하지만, 일관성과 명확성을 위해 표준 형식을 사용하세요:
 
-```scss
-.day {
-  &[data-selected] {
-    background-color: $color-aqua-500;
-    color: $color-gray-0 !important;
-    font-weight: 600;
-  }
+```tsx
+// ✅ Good - 권장
+excludedDates={['2025-11-24']}
+excludedDates={['2025-11-24T00:00:00']}
 
-  &[data-disabled] {
-    color: $color-gray-200;
-    cursor: not-allowed;
-    text-decoration: line-through;
-  }
-
-  &[data-today] {
-    font-weight: 600;
-    color: $color-aqua-500;
-  }
-}
+// ⚠️ 작동하지만 권장하지 않음
+excludedDates={['11/24/2025']}        // 로케일에 따라 해석이 다를 수 있음
 ```
+
+### 2. 범위 사용 시 주의사항
+
+범위는 시작일과 종료일을 **포함**합니다:
+
+```tsx
+// 12/24, 12/25, 12/26 모두 제외됨
+excludedDates={[['2025-12-24', '2025-12-26']]}
+```
+
+### 3. 성능 최적화
+
+많은 날짜를 제외해야 한다면 범위를 사용하는 것이 효율적입니다:
+
+```tsx
+// ✅ Good - 범위 사용
+excludedDates={[['2025-12-01', '2025-12-31']]}
+
+// ❌ Bad - 개별 날짜 나열
+excludedDates={[
+  '2025-12-01', '2025-12-02', '2025-12-03', /* ... */ '2025-12-31'
+]}
+```
+
+### 4. 요일과 날짜 조합
+
+`excludedDays`와 `excludedDates`를 함께 사용하면 더 세밀한 제어가 가능합니다:
+
+```tsx
+<CalendarDatePicker
+  excludedDays={[0, 6]} // 기본적으로 주말 제외
+  excludedDates={['2025-11-27']}
+/>
+```
+
+## 🧪 Storybook
+
+Storybook에서 다양한 사용 예시를 확인할 수 있습니다.
+
+### 스토리 목록
+
+- **DefaultDatePicker**: 기본 캘린더
+- **WithExcludedDays**: 요일 제외 (라디오 버튼으로 선택)
+- **WithExcludedDates**: 날짜/범위 제외
+- **WithCustomStyles**: 스타일 커스터마이징 및 오버라이딩 테스트
 
 ## 🏗️ Architecture
 
@@ -273,69 +370,7 @@ for (const [exStart, exEnd] of excludedRanges) {
 2. 단일 제외 날짜가 범위 내에 있는지 확인
 3. 제외된 요일이 범위 내에 있는지 순회 검사
 
-## 🧪 Storybook
-
-Storybook에서 다양한 사용 예시를 확인할 수 있습니다.
-
-### 스토리 목록
-
-- **DefaultDatePicker**: 기본 캘린더
-- **WithExcludedDays**: 요일 제외 (라디오 버튼으로 선택)
-- **WithExcludedDates**: 날짜/범위 제외
-
-## 💡 Tips
-
-### 1. 날짜 형식 일관성 유지
-
-`YYYY-MM-DD` 형식 사용을 권장합니다. 다른 형식도 dayjs가 파싱하지만, 일관성과 명확성을 위해 표준 형식을 사용하세요:
-
-```tsx
-// ✅ Good - 권장
-excludedDates={['2025-11-24']}
-
-// ⚠️ 작동하지만 권장하지 않음
-excludedDates={['11/24/2025']}        // 로케일에 따라 해석이 다를 수 있음
-excludedDates={['2025-11-24T00:00:00']} // 불필요하게 복잡함
-```
-
-### 2. 범위 사용 시 주의사항
-
-범위는 시작일과 종료일을 **포함**합니다:
-
-```tsx
-// 12/24, 12/25, 12/26 모두 제외됨
-excludedDates={[['2025-12-24', '2025-12-26']]}
-```
-
-### 3. 성능 최적화
-
-많은 날짜를 제외해야 한다면 범위를 사용하는 것이 효율적입니다:
-
-```tsx
-// ✅ Good - 범위 사용
-excludedDates={[['2025-12-01', '2025-12-31']]}
-
-// ❌ Bad - 개별 날짜 나열
-excludedDates={[
-  '2025-12-01', '2025-12-02', '2025-12-03', /* ... */ '2025-12-31'
-]}
-```
-
-### 4. 요일과 날짜 조합
-
-`excludedDays`와 `excludedDates`를 함께 사용하면 더 세밀한 제어가 가능합니다:
-
-```tsx
-<CalendarDatePicker
-  excludedDays={[0, 6]} // 기본적으로 주말 제외
-  excludedDates={[
-    '2025-11-27', // 평일이지만 제외 (공휴일)
-  ]}
-/>
-```
-
 ## 📚 Related
 
 - [Mantine DatePicker](https://mantine.dev/dates/date-picker/)
 - [dayjs](https://day.js.org/)
-- [POP-UI DatePicker](../DatePicker/README.md)

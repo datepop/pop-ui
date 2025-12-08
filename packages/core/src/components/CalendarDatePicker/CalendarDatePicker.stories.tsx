@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import { CalendarDatePicker } from '.';
+import customStyles from './CustomStyles.module.scss';
 import { getEmptyValueForType, normalizeValueForType } from './utils';
 
 import type { TCalendarDatePickerType } from './types';
@@ -59,7 +60,7 @@ export default {
   title: 'Core/CalendarDatePicker',
   component: CalendarDatePicker,
   args: {
-    showTodayIndicator: false,
+    highlightToday: false,
     type: 'default',
     excludedDays: [],
     excludedDates: [],
@@ -76,7 +77,7 @@ export const DefaultDatePicker: StoryObj<typeof CalendarDatePicker> = {
     type: 'default',
     excludedDays: [],
     excludedDates: [],
-    showTodayIndicator: false,
+    highlightToday: false,
   },
 };
 
@@ -118,6 +119,34 @@ export const WithExcludedDates: StoryObj<typeof CalendarDatePicker> = {
   parameters: {
     controls: {
       exclude: ['excludedDays'],
+    },
+  },
+};
+
+export const WithCustomStyles: StoryObj<typeof CalendarDatePicker> = {
+  args: {
+    type: 'range',
+    highlightToday: false,
+    className: customStyles.customWrapper,
+    classNames: {
+      day: customStyles.customDay,
+      weekday: customStyles.customWeekday,
+    },
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: `
+**스타일 커스터마이징 테스트**
+
+\`className\`과 \`classNames\`가 모두 주어졌을 때 기본 스타일과 올바르게 병합되는지 확인합니다.
+
+- **Wrapper**: 커스텀 테두리 + 배경 적용 (className)
+- **Header**: 커스텀 배경색 적용 (classNames)
+- **Day**: 커스텀 배경색 + 글자색 적용 (classNames)
+- **Override**: \`data-weekend\` 등의 상태 스타일도 커스텀 클래스가 정상적으로 덮어써야 함
+        `,
+      },
     },
   },
 };

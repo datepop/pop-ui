@@ -1,0 +1,30 @@
+@use '../shared/variables.scss' as *;
+
+// 커스텀 클래스 병합 스토리북용 스타일
+.customWrapper {
+  padding: 24px;
+}
+.customWeekday,
+.customDay {
+  font-weight: 700;
+}
+
+.customWeekday {
+  color: $color-blue-400;
+}
+.customDay {
+  &:hover {
+    background-color: $color-blue-100;
+  }
+
+  &[data-today][data-highlight-today] {
+    color: $color-blue-500;
+  }
+  &[data-weekend] {
+    color: $color-blue-400;
+  }
+
+  &[data-selected] {
+    background-color: $color-blue-400;
+  }
+}

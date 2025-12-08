@@ -1,12 +1,21 @@
 import dayjs from 'dayjs';
 
 import type { TCalendarDatePickerType, TExcludeCheckerOptions } from './types';
-import type { DateValue } from '@mantine/dates';
+import type { DateValue, DatePickerStylesNames } from '@mantine/dates';
 
 /**
  * 날짜 제외 체크 함수 생성
  *
- * @see README.md - Architecture 섹션 참고
+ * @param excludedDays - 제외할 요일 배열 (0=일요일 ~ 6=토요일)
+ * @param excludedDates - 제외할 날짜 배열 (단일 날짜 또는 범위)
+ * @returns 날짜가 제외되었는지 확인하는 함수
+ *
+ * @example
+ * const isExcluded = createExcludedDateChecker({
+ *   excludedDays: [0, 6],
+ *   excludedDates: ['2025-12-25', ['2025-12-24', '2025-12-26']]
+ * });
+ * isExcluded(new Date('2025-12-25')); // => true
  */
 export const createExcludedDateChecker = ({
   excludedDays = [],
@@ -66,13 +75,12 @@ export const createExcludedDateChecker = ({
 /**
  * 날짜 범위 내에 제외된 날짜가 있는지 확인
  *
- * 범위 겹침 알고리즘을 사용하여 O(n) 대신 O(m) 복잡도로 최적화
- * (n = 범위 내 일수, m = 제외 범위 개수)
+ * 범위 겹침 알고리즘을 사용하여 O(n) 대신 O(m) 복잡도로 최적화합니다.
  *
  * @param start - 시작 날짜
  * @param end - 종료 날짜
  * @param excludedDates - 제외할 날짜 배열 (단일 날짜 또는 범위)
- * @param excludedDays - 제외할 요일 배열 (0=일요일)
+ * @param excludedDays - 제외할 요일 배열 (0=일요일 ~ 6=토요일)
  * @returns 범위 내에 제외된 날짜가 있으면 true
  *
  * @example
@@ -81,7 +89,7 @@ export const createExcludedDateChecker = ({
  *   new Date('2025-11-28'),
  *   ['2025-11-27'],
  *   []
- * ); // => true (11/27이 제외되어 있음)
+ * ); // => true
  */
 export const hasExcludedDateInRange = (
   start: Date,
@@ -141,11 +149,8 @@ export const hasExcludedDateInRange = (
 /**
  * 타입에 따른 빈 값 반환
  *
- * @param type - CalendarDatePicker의 타입 ('default' | 'multiple' | 'range')
+ * @param type - CalendarDatePicker의 타입
  * @returns 타입에 맞는 초기 빈 값
- *   - 'default': null
- *   - 'multiple': []
- *   - 'range': [null, null]
  *
  * @example
  * getEmptyValueForType('default');  // => null
@@ -169,13 +174,11 @@ export const getEmptyValueForType = (type: TCalendarDatePickerType = 'default'):
  * @param type - CalendarDatePicker의 타입
  * @param value - 정규화할 DateValue
  * @returns 타입에 맞게 정규화된 DateValue
- *   - value가 null/undefined인 경우 타입에 맞는 빈 값 반환
- *   - 타입과 값의 형태가 맞지 않으면 빈 값 반환
  *
  * @example
- * normalizeValueForType('range', someDate);     // => [null, null] (타입 불일치)
+ * normalizeValueForType('range', someDate);     // => [null, null]
  * normalizeValueForType('range', [date1, date2]); // => [date1, date2]
- * normalizeValueForType('default', [date1]);      // => date1 (첫 번째 요소 추출)
+ * normalizeValueForType('default', [date1]);      // => date1
  */
 export const normalizeValueForType = (
   type: TCalendarDatePickerType = 'default',
@@ -199,22 +202,15 @@ export const normalizeValueForType = (
 /**
  * 외부/내부 값을 타입에 맞게 해석하여 반환
  *
- * Controlled/Uncontrolled 모드를 지원하기 위한 값 해석 함수
+ * Controlled/Uncontrolled 모드를 지원합니다.
  *
- * @param params - 파라미터 객체
- * @param params.type - CalendarDatePicker의 타입
- * @param params.externalValue - 외부에서 전달된 value prop (controlled)
- * @param params.internalValue - 내부 상태 값 (uncontrolled)
+ * @param type - CalendarDatePicker의 타입
+ * @param externalValue - 외부에서 전달된 value prop (controlled)
+ * @param internalValue - 내부 상태 값 (uncontrolled)
  * @returns 타입에 맞게 정규화된 최종 DateValue
- *   - externalValue가 있으면 우선 사용 (controlled 모드)
- *   - 없으면 internalValue 사용 (uncontrolled 모드)
- *   - 둘 다 없으면 타입에 맞는 빈 값 반환
  *
  * @example
- * // Controlled 모드
  * resolveDatePickerValue({ type: 'default', externalValue: date1, internalValue: date2 }); // => date1
- *
- * // Uncontrolled 모드
  * resolveDatePickerValue({ type: 'default', externalValue: undefined, internalValue: date2 }); // => date2
  */
 export const resolveDatePickerValue = ({
@@ -237,41 +233,56 @@ export const resolveDatePickerValue = ({
   return getEmptyValueForType(type);
 };
 
+type TMantineClassNames = Partial<Record<DatePickerStylesNames, string>>;
+
 /**
  * CSS 클래스명 병합 함수
  *
  * 기본 classNames와 커스텀 classNames를 병합하여 반환합니다.
  * 각 키에 대해 기본 클래스와 커스텀 클래스를 공백으로 연결하므로,
  * 두 스타일이 모두 적용되며 커스텀 클래스가 우선순위를 가집니다.
+ * customClassNames에 defaultClassNames에 없는 키가 있어도 결과에 포함됩니다.
+ * DatePickerStylesNames에 속하는 키만 허용됩니다.
  *
  * @param defaultClassNames - 기본 클래스명 객체
- * @param customClassNames - 사용자 제공 커스텀 클래스명 객체 (선택적)
+ * @param customClassNames - 사용자 제공 커스텀 클래스명 객체 (optional)
  * @returns 병합된 클래스명 객체
  *
  * @example
  * const merged = mergeClassNames(
  *   { day: 'default-day', header: 'default-header' },
- *   { day: 'custom-day' }
+ *   { day: 'custom-day', calendarHeaderLevel: 'custom-level' }
  * );
- * // => { day: 'default-day custom-day', header: 'default-header' }
+ * // => { day: 'default-day custom-day', header: 'default-header', calendarHeaderLevel: 'custom-level' }
  */
-export const mergeClassNames = <T extends Record<string, string>>(
-  defaultClassNames: T,
-  customClassNames?: Partial<Record<keyof T, string>> | null,
-): T => {
+export const mergeClassNames = (
+  defaultClassNames: TMantineClassNames,
+  customClassNames?: TMantineClassNames | null,
+): TMantineClassNames => {
   if (!customClassNames || typeof customClassNames !== 'object') {
     return defaultClassNames;
   }
 
-  return Object.keys(defaultClassNames).reduce((acc, key) => {
-    const typedKey = key as keyof T;
+  // 1. defaultClassNames의 모든 키를 순회하여 병합
+  const merged: TMantineClassNames = Object.keys(defaultClassNames).reduce((acc, key) => {
+    const typedKey = key as DatePickerStylesNames;
     const defaultClass = defaultClassNames[typedKey];
     const customClass = customClassNames[typedKey];
 
-    acc[typedKey] = (
-      customClass ? `${defaultClass} ${customClass}`.trim() : defaultClass
-    ) as T[keyof T];
+    if (defaultClass) {
+      acc[typedKey] = customClass ? `${defaultClass} ${customClass}`.trim() : defaultClass;
+    }
 
     return acc;
-  }, {} as T);
+  }, {} as TMantineClassNames);
+
+  // 2. customClassNames에만 있는 키를 추가 (DatePickerStylesNames에 속하는 키만)
+  Object.keys(customClassNames).forEach((key) => {
+    const typedKey = key as DatePickerStylesNames;
+    if (!(typedKey in defaultClassNames) && customClassNames[typedKey]) {
+      merged[typedKey] = customClassNames[typedKey]!;
+    }
+  });
+
+  return merged;
 };

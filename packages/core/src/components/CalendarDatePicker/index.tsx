@@ -16,7 +16,20 @@ import {
 } from './utils';
 
 import type { ICalendarDatePickerProps } from './types';
-import type { DateStringValue, DateValue } from '@mantine/dates';
+import type { DateStringValue, DateValue, DatePickerStylesNames } from '@mantine/dates';
+
+type TMantineClassNames = Partial<Record<DatePickerStylesNames, string>>;
+
+const DEFAULT_CLASS_NAMES: Partial<TMantineClassNames> = {
+  levelsGroup: styles.datePickerWrapper,
+  calendarHeader: styles.calendarHeader,
+  calendarHeaderLevel: styles.calendarHeaderLevel,
+  calendarHeaderControl: styles.calendarHeaderControl,
+  month: styles.month,
+  day: styles.day,
+  monthRow: styles.monthRow,
+  weekday: styles.weekday,
+};
 
 /**
  * CalendarDatePicker
@@ -32,7 +45,7 @@ export const CalendarDatePicker = ({
   type = 'default',
   value,
   onChange,
-  showTodayIndicator = false,
+  highlightToday = false,
   ...props
 }: ICalendarDatePickerProps) => {
   const [internalValue, setInternalValue] = useState<DateValue | undefined>(
@@ -48,13 +61,12 @@ export const CalendarDatePicker = ({
     [excludedDays, excludedDates],
   );
 
-  const safeOnChange = (newValue: DateValue) => {
-    if (onChange) {
-      onChange(newValue);
-    }
+  const safeOnChange = (v: DateValue) => {
+    onChange?.(v);
   };
 
   const handleChange = (newValue: DateValue) => {
+    // Range 모드에서 제외 날짜 포함된 경우 선택 취소
     if (type === 'range' && Array.isArray(newValue)) {
       const [start, end] = newValue as unknown as [Date | null, Date | null];
 
@@ -75,58 +87,32 @@ export const CalendarDatePicker = ({
     externalValue: value,
     internalValue,
   });
+
+  //TodayIndicator 처리
   const renderDay = useCallback(
     (date: DateStringValue) => {
-      const current = dayjs(date);
-      const day = current.date();
-
-      const isToday = current.isSame(dayjs(), 'day');
-      const isExcludedToday = isToday && isExcluded(date);
-
-      const shouldShowIndicator = isToday && showTodayIndicator;
-
+      const day = dayjs(date).date();
+      const isToday = dayjs(date).isSame(dayjs(), 'day');
+      const shouldShowIndicator = isToday && highlightToday;
       return (
-        <div className={styles.dayWrapper}>
-          <span>{day}</span>
-
-          {shouldShowIndicator && (
-            <span className={styles.todayIndicator} data-disabled={isExcludedToday || undefined}>
-              오늘
-            </span>
-          )}
-        </div>
+        <>
+          {day}
+          {shouldShowIndicator && <span className={styles.todayIndicator}>오늘</span>}
+        </>
       );
     },
-    [isExcluded, showTodayIndicator],
+    [highlightToday],
   );
 
-  const { classNames, className, ...restProps } = props;
+  const { classNames, ...restProps } = props;
 
-  // Merge default classNames with user-provided classNames
-  const defaultClassNames = {
-    levelsGroup: styles.datePickerWrapper,
-    calendarHeader: styles.calendarHeader,
-    calendarHeaderLevel: styles.calendarHeaderLevel,
-    calendarHeaderControl: styles.calendarHeaderControl,
-    month: styles.month,
-    day: styles.day,
-    monthCell: styles.monthCell,
-  };
-
-  // classNames가 객체인 경우에만 병합, 함수인 경우 그대로 전달
   const mergedClassNames =
     typeof classNames === 'object' && classNames !== null && !Array.isArray(classNames)
-      ? mergeClassNames(defaultClassNames, classNames)
-      : (classNames ?? defaultClassNames);
-
-  // Merge className (single string) with default className
-  const defaultClassName = showTodayIndicator ? undefined : styles.withoutTodayIndicator;
-  const mergedClassName =
-    [defaultClassName, className].filter(Boolean).join(' ').trim() || undefined;
+      ? mergeClassNames(DEFAULT_CLASS_NAMES, classNames)
+      : (classNames ?? DEFAULT_CLASS_NAMES);
 
   return (
     <DatePicker
-      className={mergedClassName}
       classNames={mergedClassNames}
       locale="ko"
       firstDayOfWeek={0}
@@ -139,6 +125,7 @@ export const CalendarDatePicker = ({
       previousIcon={<IconChevronLeft />}
       nextIcon={<IconChevronRight />}
       weekendDays={[0]}
+      highlightToday={highlightToday}
       {...restProps}
       excludeDate={isExcluded}
       renderDay={renderDay}
@@ -146,5 +133,4 @@ export const CalendarDatePicker = ({
   );
 };
 
-// Export types for external use
 export type { ICalendarDatePickerProps, TDayOfWeek } from './types';

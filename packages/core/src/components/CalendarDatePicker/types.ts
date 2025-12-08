@@ -12,7 +12,6 @@ export type TDayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 export interface ICalendarDatePickerProps
   extends Omit<DatePickerProps, 'excludeDate' | 'onChange'> {
   type?: 'default' | 'multiple' | 'range';
-  showTodayIndicator?: boolean;
   /**
    * onChange callback
    * - Receives DateValue which can be Date, Date[], or [Date, Date] depending on the type prop
