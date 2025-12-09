@@ -11,7 +11,7 @@ import {
   createExcludedDateChecker,
   getEmptyValueForType,
   hasExcludedDateInRange,
-  mergeClassNames,
+  mergeClassNamesWithDefault,
   resolveDatePickerValue,
 } from './utils';
 
@@ -106,10 +106,7 @@ export const CalendarDatePicker = ({
 
   const { classNames, ...restProps } = props;
 
-  const mergedClassNames =
-    typeof classNames === 'object' && classNames !== null && !Array.isArray(classNames)
-      ? mergeClassNames(DEFAULT_CLASS_NAMES, classNames)
-      : (classNames ?? DEFAULT_CLASS_NAMES);
+  const mergedClassNames = mergeClassNamesWithDefault(DEFAULT_CLASS_NAMES, classNames);
 
   return (
     <DatePicker

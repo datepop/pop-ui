@@ -169,8 +169,9 @@ Mantine의 `DatePicker` 컴포넌트의 나머지 props를 지원합니다.
 - `DatePickerStylesNames`(Mantine DatePicker Styles API의 selectors)에 속하는 키만 허용됩니다 (타입 안전성 보장)
 - 기본 클래스와 커스텀 클래스가 공백으로 연결되어 병합됩니다
 - `DEFAULT_CLASS_NAMES`에 없는 키도 `DatePickerStylesNames`에 속하면 확장 가능합니다
+- 객체형과 함수형 모두 지원합니다
 
-**예시:**
+**객체형 예시:**
 
 ```tsx
 <CalendarDatePicker
@@ -181,6 +182,19 @@ Mantine의 `DatePicker` 컴포넌트의 나머지 props를 지원합니다.
   }}
 />
 ```
+
+**함수형 예시:**
+
+```tsx
+<CalendarDatePicker
+  classNames={(theme, props, ctx) => ({
+    day: theme.colorScheme === 'dark' ? 'dark-day' : 'light-day',
+    calendarHeader: 'custom-header',
+  })}
+/>
+```
+
+함수형 `classNames`를 사용하면 테마나 props에 따라 동적으로 스타일을 적용할 수 있습니다. 함수형 `classNames`도 기본 `DEFAULT_CLASS_NAMES`와 자동으로 병합됩니다.
 
 ### 스타일 오버라이딩 가이드
 
