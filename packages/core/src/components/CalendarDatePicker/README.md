@@ -152,7 +152,26 @@ DatePicker 타입을 지정합니다.
 
 Mantine의 `DatePicker` 컴포넌트의 나머지 props를 지원합니다.
 
-> **주의**: `excludeDate` prop은 지원하지 않습니다. 날짜 제외 기능을 사용하려면 `excludedDates` 또는 `excludedDays` prop을 사용하세요.
+> **주의**:
+>
+> - `excludeDate` prop은 지원하지 않습니다. 날짜 제외 기능을 사용하려면 `excludedDates` 또는 `excludedDays` prop을 사용하세요.
+> - `type`, `locale`, `firstDayOfWeek` 등의 props는 `...props`로 전달하면 덮어쓸 수 있습니다. 컴포넌트의 기본 동작을 변경하려면 명시적으로 prop을 전달하세요.
+
+**예시:**
+
+```tsx
+// type prop을 덮어쓰기
+<CalendarDatePicker
+  type="default"  // 기본값
+  {...{ type: 'range' }}  // range로 덮어써짐
+/>
+
+// locale prop을 덮어쓰기
+<CalendarDatePicker
+  locale="ko"  // 기본값
+  {...{ locale: 'en' }}  // en으로 덮어써짐
+/>
+```
 
 자세한 내용은 [Mantine DatePicker 문서](https://mantine.dev/dates/date-picker/)를 참고하세요.
 

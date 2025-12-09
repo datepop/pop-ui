@@ -108,6 +108,7 @@ export const CalendarDatePicker = ({
       firstDayOfWeek={0}
       monthLabelFormat={'YYYY년 M월'}
       maxLevel="month"
+      type={type}
       previousIcon={<IconChevronLeft />}
       nextIcon={<IconChevronRight />}
       {...restProps}
