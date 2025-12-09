@@ -296,8 +296,9 @@ export const mergeClassNamesWithDefault = (
     // 2. customClassNames에만 있는 키를 추가 (DatePickerStylesNames에 속하는 키만)
     Object.keys(customClassNames).forEach((key) => {
       const typedKey = key as DatePickerStylesNames;
-      if (!(typedKey in defaultClassNames) && customClassNames[typedKey]) {
-        merged[typedKey] = customClassNames[typedKey]!;
+      const customClass = customClassNames[typedKey];
+      if (!(typedKey in defaultClassNames) && customClass) {
+        merged[typedKey] = customClass;
       }
     });
 
