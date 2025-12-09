@@ -44,6 +44,7 @@ export { default as IconMap } from './icons/IconMap';
 export { default as IconMapMarker } from './icons/IconMapMarker';
 export { default as IconMenu } from './icons/IconMenu';
 export { default as IconMetaBall } from './icons/IconMetaBall';
+export { default as IconMinus } from './icons/IconMinus';
 export { default as IconMoney } from './icons/IconMoney';
 export { default as IconNote } from './icons/IconNote';
 export { default as IconNotification } from './icons/IconNotification';
