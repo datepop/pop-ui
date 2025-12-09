@@ -1,6 +1,8 @@
-import type { DatePickerProps, DateValue } from '@mantine/dates';
+import type { DatePickerProps, DateValue, DatePickerStylesNames } from '@mantine/dates';
 
-type TDayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+export type TDayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
+export type TMantineClassNames = Partial<Record<DatePickerStylesNames, string>>;
 /**
  * CalendarDatePickerProps
  * - 기본 Mantine DatePickerProps에서 excludeDate를 제거하고,
@@ -12,7 +14,6 @@ type TDayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 export interface ICalendarDatePickerProps
   extends Omit<DatePickerProps, 'excludeDate' | 'onChange'> {
   type?: 'default' | 'multiple' | 'range';
-  showTodayIndicator?: boolean;
   /**
    * onChange callback
    * - Receives DateValue which can be Date, Date[], or [Date, Date] depending on the type prop

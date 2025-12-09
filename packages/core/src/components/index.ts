@@ -1,6 +1,7 @@
 export { default as Button } from './Button';
 export { Checkbox } from './Checkbox';
 export { CalendarDatePicker } from './CalendarDatePicker';
+export type { ICalendarDatePickerProps, TDayOfWeek } from './CalendarDatePicker';
 export { DatePicker } from './DatePicker';
 export { Dropdown } from './Dropdown';
 export { ImageUploader } from './ImageUploader';
