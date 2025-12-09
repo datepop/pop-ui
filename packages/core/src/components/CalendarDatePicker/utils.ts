@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-import type { TCalendarDatePickerType, TExcludeCheckerOptions } from './types';
+import type { TCalendarDatePickerType, TExcludeCheckerOptions, TMantineClassNames } from './types';
 import type { MantineTheme } from '@mantine/core';
 import type { DateValue, DatePickerStylesNames, DatePickerProps } from '@mantine/dates';
 
@@ -233,8 +233,6 @@ export const resolveDatePickerValue = ({
 
   return getEmptyValueForType(type);
 };
-
-type TMantineClassNames = Partial<Record<DatePickerStylesNames, string>>;
 
 /**
  * 기본 classNames와 사용자 제공 classNames를 병합

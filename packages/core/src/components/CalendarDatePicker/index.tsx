@@ -15,10 +15,8 @@ import {
   resolveDatePickerValue,
 } from './utils';
 
-import type { ICalendarDatePickerProps } from './types';
-import type { DateStringValue, DateValue, DatePickerStylesNames } from '@mantine/dates';
-
-type TMantineClassNames = Partial<Record<DatePickerStylesNames, string>>;
+import type { ICalendarDatePickerProps, TMantineClassNames } from './types';
+import type { DateStringValue, DateValue } from '@mantine/dates';
 
 const DEFAULT_CLASS_NAMES: Partial<TMantineClassNames> = {
   levelsGroup: styles.datePickerWrapper,
@@ -61,25 +59,21 @@ export const CalendarDatePicker = ({
     [excludedDays, excludedDates],
   );
 
-  const safeOnChange = (v: DateValue) => {
-    onChange?.(v);
-  };
-
   const handleChange = (newValue: DateValue) => {
     // Range 모드에서 제외 날짜 포함된 경우 선택 취소
-    if (type === 'range' && Array.isArray(newValue)) {
+    if (type === 'range' && Array.isArray(newValue) && newValue.length === 2) {
       const [start, end] = newValue as unknown as [Date | null, Date | null];
 
       if (start && end && hasExcludedDateInRange(start, end, excludedDates, excludedDays)) {
-        const emptyRange: [Date | null, Date | null] = [null, null];
-        setInternalValue(emptyRange as unknown as DateValue);
-        safeOnChange(emptyRange as unknown as DateValue);
+        const emptyValue = getEmptyValueForType('range');
+        setInternalValue(emptyValue);
+        onChange?.(emptyValue);
         return;
       }
     }
 
     setInternalValue(newValue);
-    safeOnChange(newValue);
+    onChange?.(newValue);
   };
 
   const resolvedValue = resolveDatePickerValue({
@@ -88,7 +82,7 @@ export const CalendarDatePicker = ({
     internalValue,
   });
 
-  //TodayIndicator 처리
+  // TodayIndicator 처리
   const renderDay = useCallback(
     (date: DateStringValue) => {
       const day = dayjs(date).date();
@@ -110,20 +104,19 @@ export const CalendarDatePicker = ({
 
   return (
     <DatePicker
-      classNames={mergedClassNames}
       locale="ko"
       firstDayOfWeek={0}
       monthLabelFormat={'YYYY년 M월'}
       maxLevel="month"
-      type={type}
-      value={resolvedValue}
-      size="lg"
-      onChange={handleChange}
       previousIcon={<IconChevronLeft />}
       nextIcon={<IconChevronRight />}
+      {...restProps}
+      size="lg"
+      onChange={handleChange}
       weekendDays={[0]}
       highlightToday={highlightToday}
-      {...restProps}
+      classNames={mergedClassNames}
+      value={resolvedValue}
       excludeDate={isExcluded}
       renderDay={renderDay}
     />

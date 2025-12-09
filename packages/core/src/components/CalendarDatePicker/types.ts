@@ -1,6 +1,8 @@
-import type { DatePickerProps, DateValue } from '@mantine/dates';
+import type { DatePickerProps, DateValue, DatePickerStylesNames } from '@mantine/dates';
 
 export type TDayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6;
+
+export type TMantineClassNames = Partial<Record<DatePickerStylesNames, string>>;
 /**
  * CalendarDatePickerProps
  * - 기본 Mantine DatePickerProps에서 excludeDate를 제거하고,
