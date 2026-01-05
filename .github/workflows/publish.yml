@@ -1,65 +1,41 @@
-name: Publish changed packages to NPM
+name: Publish to NPM
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+  id-token: write
 
 jobs:
   publish:
     runs-on: ubuntu-latest
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Set github account
-        run: |
-          git config --global user.name datepop
-          git config --global user.email datepop@gmail.com
-
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
-          always-auth: true
 
-      - name: Install dependencies(Yarn)
+      - name: Install dependencies
         run: yarn install
-
-      - name: Update lockfile if needed
-        run: |
-          if ! git diff --quiet yarn.lock; then
-            git add yarn.lock
-            git commit -m "chore: update yarn.lock [skip ci]"
-            git push origin main
-          fi
 
       - name: Generate design tokens
         run: |
           yarn token-transform
           yarn token-build
 
-      - name: Lerna build
+      - name: Build
         run: yarn build
 
-      - name: Drop uncommitted changes
-        run: |
-          git add .
-          git stash || true
-          git stash drop || true
-
-      - name: Lerna publish all changed packages
-        run: |
-          npx lerna publish patch \
-            --yes \
-            --no-push \
-            --no-private \
-            --registry=https://registry.npmjs.org/
-
-      - name: Push version changes and tags
-        run: git push --follow-tags origin main
+      - name: Publish with provenance
+        run: npx lerna publish from-git --yes --no-private
+        env:
+          NPM_CONFIG_PROVENANCE: true
