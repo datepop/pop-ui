@@ -1,7 +1,7 @@
 {
   "name": "@pop-ui/core",
   "type": "module",
-  "version": "0.0.38",
+  "version": "0.0.37",
   "main": "./dist/core.umd.cjs",
   "module": "./dist/core.js",
   "types": "./dist/types/index.d.ts",
@@ -49,7 +49,7 @@
     "@mantine/dropzone": "^8.3.6",
     "@mantine/hooks": "^8.3.6",
     "@mantine/notifications": "^8.3.6",
-    "@pop-ui/foundation": "workspace:*",
+    "@pop-ui/foundation": "0.0.31",
     "dayjs": "^1.11.18"
   },
   "peerDependencies": {
@@ -96,5 +96,6 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "vite": "^7.1.12"
-  }
+  },
+  "gitHead": "9a120a33dbe9dfaffabb94219c301d5834968fae"
 }
