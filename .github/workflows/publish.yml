@@ -53,6 +53,11 @@ jobs:
           git stash || true
           git stash drop || true
 
+      - name: Configure npm auth
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" >> ~/.npmrc
+          echo "@pop-ui:registry=https://registry.npmjs.org/" >> ~/.npmrc
+
       - name: Lerna publish all changed packages
         run: |
           npx lerna publish patch \
