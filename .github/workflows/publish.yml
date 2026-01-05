@@ -53,10 +53,10 @@ jobs:
           git stash || true
           git stash drop || true
 
-      - name: Configure npm auth
+      - name: Verify npm auth
         run: |
-          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" >> ~/.npmrc
-          echo "@pop-ui:registry=https://registry.npmjs.org/" >> ~/.npmrc
+          cat $NPM_CONFIG_USERCONFIG || echo "No npm config file"
+          npm whoami --registry=https://registry.npmjs.org/ || echo "Not authenticated"
 
       - name: Lerna publish all changed packages
         run: |
