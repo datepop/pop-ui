@@ -21,11 +21,18 @@ interface IThemeContextValue {
   toggleTheme: () => void;
 }
 
+interface IPopUIConfigValue {
+  naverClientId?: string;
+}
+
 const ThemeContext = createContext<IThemeContextValue | undefined>(undefined);
+const PopUIConfigContext = createContext<IPopUIConfigValue>({});
 
 export interface IPopUiProviderProps {
   children: React.ReactNode;
   defaultTheme?: TThemeMode;
+  /** Naver Cloud Platform Client ID for Map components */
+  naverClientId?: string;
   /** Notifications 표시 위치 */
   notificationPosition?: NotificationsProps['position'];
   /** 동시에 표시되는 최대 알림 수 */
@@ -39,6 +46,7 @@ export interface IPopUiProviderProps {
 export const PopUiProvider: React.FC<IPopUiProviderProps> = ({
   children,
   defaultTheme = 'light',
+  naverClientId,
   notificationPosition = 'bottom-center',
   notificationLimit = 5,
   notificationAutoClose,
@@ -57,15 +65,17 @@ export const PopUiProvider: React.FC<IPopUiProviderProps> = ({
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme, toggleTheme }}>
-      <MantineProvider theme={mantineTheme}>
-        <Notifications
-          position={notificationPosition}
-          limit={notificationLimit}
-          autoClose={notificationAutoClose}
-          zIndex={notificationZIndex}
-        />
-        {children}
-      </MantineProvider>
+      <PopUIConfigContext.Provider value={{ naverClientId }}>
+        <MantineProvider theme={mantineTheme}>
+          <Notifications
+            position={notificationPosition}
+            limit={notificationLimit}
+            autoClose={notificationAutoClose}
+            zIndex={notificationZIndex}
+          />
+          {children}
+        </MantineProvider>
+      </PopUIConfigContext.Provider>
     </ThemeContext.Provider>
   );
 };
@@ -76,4 +86,8 @@ export const useTheme = (): IThemeContextValue => {
     throw new Error('useTheme must be used within ThemeProvider');
   }
   return context;
+};
+
+export const usePopUIConfig = (): IPopUIConfigValue => {
+  return useContext(PopUIConfigContext);
 };
