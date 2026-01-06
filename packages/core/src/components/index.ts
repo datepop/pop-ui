@@ -48,4 +48,10 @@ export type {
 
 // MapInfo component
 export { MapInfo } from './MapInfo';
-export type { IMapInfoProps } from './MapInfo/types';
+export type {
+  IMapInfoProps,
+  IMapLocation,
+  IMapMarker,
+  IMapDirection,
+  IMapToast,
+} from './MapInfo/types';

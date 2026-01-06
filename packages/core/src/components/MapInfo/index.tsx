@@ -15,21 +15,24 @@ import type { IMapRef, TMarkerData, TMarkerType } from '../Map/types';
 const ADDRESS_BAR_HEIGHT = 60;
 
 export const MapInfo = ({
-  onClickMap: onClickMapArea,
-  address,
-  markerImageUrl,
-  shopTitle,
-  directionUrl,
-  latitude,
-  longitude,
+  location,
+  marker,
+  direction,
+  toast: toastConfig,
   naverClientId: naverClientIdProp,
   onExpandRequest,
+  onClick,
   height = 200,
-  directionLabel = '길찾기',
-  addressCopiedMessage = '주소 복사 완료',
 }: IMapInfoProps) => {
   const config = usePopUIConfig();
   const naverClientId = naverClientIdProp || config.naverClientId;
+
+  // Destructure location for convenience
+  const { title, address, latitude, longitude } = location;
+
+  // Default values
+  const directionLabel = direction?.label ?? '길찾기';
+  const addressCopiedMessage = toastConfig?.addressCopied ?? '주소 복사 완료';
 
   const [mapPreviewRef, setMapPreviewRef] = useState<IMapRef | null>(null);
 
@@ -60,19 +63,19 @@ export const MapInfo = ({
     [latitude, longitude],
   );
 
-  const createShopMapMarker = useCallback(
+  const createLocationMarker = useCallback(
     (mapRef: IMapRef | null, type: Extract<TMarkerType, 'pi' | 'pi-expanded'>) => {
       if (mapRef && mapRef.map && latitude && longitude) {
         mapRef.clearMarkers();
         createMapMarker(
           mapRef,
           {
-            id: `shop-marker-${shopTitle}`,
+            id: `location-marker-${title}`,
             type,
             position: { latitude, longitude },
-            title: shopTitle,
-            icon: markerImageUrl ?? undefined,
-            address: address ?? undefined,
+            title,
+            icon: marker?.imageUrl,
+            address,
           },
           () => {
             mapRef.panTo({ latitude, longitude });
@@ -80,15 +83,15 @@ export const MapInfo = ({
         );
       }
     },
-    [latitude, longitude, shopTitle, markerImageUrl, address, createMapMarker],
+    [latitude, longitude, title, marker?.imageUrl, address, createMapMarker],
   );
 
-  // Create shop marker on preview map
+  // Create marker on preview map
   useEffect(() => {
     if (latitude && longitude && mapPreviewRef) {
-      createShopMapMarker(mapPreviewRef, 'pi');
+      createLocationMarker(mapPreviewRef, 'pi');
     }
-  }, [mapPreviewRef, latitude, longitude, createShopMapMarker]);
+  }, [mapPreviewRef, latitude, longitude, createLocationMarker]);
 
   // Clean up on unmount
   useEffect(() => {
@@ -105,9 +108,9 @@ export const MapInfo = ({
   }, [address, addressCopiedMessage]);
 
   const directionHref = useMemo(() => {
-    if (directionUrl) return directionUrl;
-    return `https://map.naver.com/p/search/${encodeURIComponent(shopTitle)}`;
-  }, [directionUrl, shopTitle]);
+    if (direction?.url) return direction.url;
+    return `https://map.naver.com/p/search/${encodeURIComponent(title)}`;
+  }, [direction?.url, title]);
 
   // Early return after all hooks
   if (!naverClientId) {
@@ -121,7 +124,7 @@ export const MapInfo = ({
   }
 
   return (
-    <div className={styles.MapInfo} style={{ height }} onClick={onClickMapArea}>
+    <div className={styles.MapInfo} style={{ height }} onClick={onClick}>
       <NaverMapProvider clientId={naverClientId}>
         <div className={styles.MapInfo__Preview} onClick={handleExpandClick}>
           <Map
