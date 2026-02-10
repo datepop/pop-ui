@@ -29,7 +29,7 @@
     "lint:style": "stylelint \"packages/**/*.scss\"",
     "lint:style:fix": "stylelint \"packages/**/*.scss\" --fix",
     "typecheck": "lerna run typecheck --stream",
-    "prepare": "husky"
+    "prepare": "husky || true"
   },
   "devDependencies": {
     "@storybook/addon-links": "^10.0.4",
