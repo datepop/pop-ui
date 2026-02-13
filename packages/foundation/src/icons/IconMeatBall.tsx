@@ -5,6 +5,7 @@ import type { IIconProps } from '../types/icon';
 export default function IconMeatBall({
   size = 24,
   color = ColorGray900,
+  variant = 'line',
   ...props
 }: IIconProps) {
   return (
