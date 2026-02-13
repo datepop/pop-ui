@@ -5,6 +5,7 @@ import type { IIconProps } from '../types/icon';
 export default function IconCaretDown({
   size = 24,
   color = ColorGray900,
+  variant = 'filled',
   ...props
 }: IIconProps) {
   return (

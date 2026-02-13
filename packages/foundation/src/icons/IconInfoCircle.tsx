@@ -1,10 +1,11 @@
-import { ColorGray900 } from "../tokens/colors";
+import { ColorGray900 } from '../tokens/colors';
 
-import type { IIconProps } from "../types/icon";
+import type { IIconProps } from '../types/icon';
 
 export default function IconInfoCircle({
   size = 24,
   color = ColorGray900,
+  variant = 'filled',
   ...props
 }: IIconProps) {
   return (
@@ -16,14 +17,7 @@ export default function IconInfoCircle({
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <rect
-        x="0"
-        y="0"
-        width="16"
-        height="16"
-        fill="transparent"
-        strokeWidth={0}
-      />
+      <rect x="0" y="0" width="16" height="16" fill="transparent" strokeWidth={0} />
       <g>
         <path
           fillRule="evenodd"

@@ -66,12 +66,12 @@ const IconCard: React.FC<{
   defaultSize: number;
   size?: number;
   color?: string;
-  filled?: boolean;
-}> = ({ name, Icon, defaultSize, size, color, filled }) => {
+  variant?: 'line' | 'filled';
+}> = ({ name, Icon, defaultSize, size, color, variant }) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
-    const code = `import { ${name} } from '@pop-ui/foundation';\n\n<${name} ${size && size !== defaultSize ? `size={${size}} ` : ''}${color && color !== ColorGray900 ? `color="${color}" ` : ''}${filled ? `filled={${filled}} ` : ''}/>`;
+    const code = `import { ${name} } from '@pop-ui/foundation';\n\n<${name} ${size && size !== defaultSize ? `size={${size}} ` : ''}${color && color !== ColorGray900 ? `color="${color}" ` : ''}${variant && variant !== 'line' ? `variant="${variant}" ` : ''}/>`;
     try {
       await navigator.clipboard.writeText(code);
       setCopied(true);
@@ -115,7 +115,7 @@ const IconCard: React.FC<{
             borderRadius: '8px',
           }}
         >
-          <Icon size={size || defaultSize} color={color || ColorGray900} filled={filled} />
+          <Icon size={size || defaultSize} color={color || ColorGray900} variant={variant} />
         </Box>
         <Stack gap="xs" align="center">
           <Text size="sm" fw={600}>
@@ -143,12 +143,12 @@ const IconCard: React.FC<{
 export const AllIcons: StoryObj<{
   size: number;
   color: string;
-  filled?: boolean;
+  variant?: 'line' | 'filled';
 }> = {
   args: {
     size: 24,
-    color: ColorGray900,
-    filled: false,
+    color: '#333',
+    variant: 'line',
   },
   argTypes: {
     size: {
@@ -162,9 +162,10 @@ export const AllIcons: StoryObj<{
       },
       description: 'Icon fill color',
     },
-    filled: {
-      control: { type: 'boolean' },
-      description: 'Whether the icon should be filled (for icons that support this)',
+    variant: {
+      control: { type: 'select' },
+      options: ['line', 'filled'],
+      description: 'Icon variant style',
     },
   },
   render: (args) => {
@@ -221,7 +222,7 @@ export const AllIcons: StoryObj<{
                 defaultSize={icon.defaultSize}
                 size={args.size}
                 color={args.color}
-                filled={args.filled}
+                variant={args.variant}
               />
             ))}
           </div>
@@ -240,16 +241,16 @@ export const AllIcons: StoryObj<{
               fontSize: '13px',
             }}
           >
-            {`import { IconChevronDown, IconStar } from '@pop-ui/foundation';
+            {`import { IconChevronDown, IconAnalytics } from '@pop-ui/foundation';
 
 // Basic usage
 <IconChevronDown />
 <IconChevronDown size={32} />
 <IconChevronDown color="#1971C2" />
 
-// With filled (for icons that support it)
-<IconStar filled={true} color="#FFD700" />
-<IconStar filled={false} />`}
+// With variant (for icons that support it)
+<IconAnalytics variant="line" />
+<IconAnalytics variant="filled" color="#FFD700" />`}
           </pre>
         </Paper>
       </Stack>

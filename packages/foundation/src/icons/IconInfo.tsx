@@ -2,7 +2,12 @@ import { ColorGray900 } from '../tokens/colors';
 
 import type { IIconProps } from '../types/icon';
 
-export default function IconInfo({ size = 24, color = ColorGray900, ...props }: IIconProps) {
+export default function IconInfo({
+  size = 24,
+  color = ColorGray900,
+  variant = 'line',
+  ...props
+}: IIconProps) {
   return (
     <svg
       width={size}
@@ -21,19 +26,8 @@ export default function IconInfo({ size = 24, color = ColorGray900, ...props }: 
         strokeMiterlimit="10"
         strokeLinecap="round"
       />
-      <path
-        d="M10 5.75L10 7"
-        stroke={color}
-        strokeWidth="1.25"
-        strokeMiterlimit="10"
-      />
-      <path
-        d="M10 8L10 14"
-        stroke={color}
-        strokeWidth="1.25"
-        strokeMiterlimit="10"
-      />
+      <path d="M10 5.75L10 7" stroke={color} strokeWidth="1.25" strokeMiterlimit="10" />
+      <path d="M10 8L10 14" stroke={color} strokeWidth="1.25" strokeMiterlimit="10" />
     </svg>
-  )
+  );
 }
-
