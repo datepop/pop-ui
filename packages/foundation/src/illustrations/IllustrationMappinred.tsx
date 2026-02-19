@@ -7,7 +7,7 @@ export default function IllustrationMappinred({ size = 24, ...props }: IIllustra
       width={size}
       height={size}
       fill="none"
-      viewBox="0 0 31 32"
+      viewBox="0 0 32 32"
       {...props}
     >
       <g clipPath="url(#clip0_33_2521)">
