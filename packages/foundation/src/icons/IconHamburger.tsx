@@ -2,7 +2,7 @@ import { ColorGray900 } from "../tokens/colors";
 
 import type { IIconProps } from "../types/icon";
 
-export default function IconListMenu({
+export default function IconHamburger({
   size = 24,
   color = ColorGray900,
   ...props

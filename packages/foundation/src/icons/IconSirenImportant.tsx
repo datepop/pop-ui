@@ -2,7 +2,7 @@ import { ColorGray900 } from "../tokens/colors";
 
 import type { IIconProps } from "../types/icon";
 
-export default function IconReport({
+export default function IconSirenImportant({
   size = 24,
   color = ColorGray900,
   ...props

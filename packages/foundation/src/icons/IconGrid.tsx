@@ -2,7 +2,7 @@ import { ColorGray900 } from "../tokens/colors";
 
 import type { IIconProps } from "../types/icon";
 
-export default function IconBrowse({
+export default function IconGrid({
   size = 24,
   color = ColorGray900,
   filled = false,
