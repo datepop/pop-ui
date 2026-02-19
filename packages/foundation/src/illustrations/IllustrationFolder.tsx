@@ -1,6 +1,6 @@
 import { IIllustrationProps } from '../types/illustration';
 
-export default function IllustrationCalendar({ size = 24, ...props }: IIllustrationProps) {
+export default function IllustrationFolder({ size = 24, ...props }: IIllustrationProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
