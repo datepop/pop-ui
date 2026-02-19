@@ -37,7 +37,6 @@ export { default as IconLike } from './IconLike';
 export { default as IconLink } from './IconLink';
 export { default as IconListMenu } from './IconListMenu';
 export { default as IconLocation } from './IconLocation';
-export { default as IconLocationTarget } from './IconLocationTarget';
 export { default as IconMap } from './IconMap';
 export { default as IconMapMarker } from './IconMapMarker';
 export { default as IconMeatBall } from './IconMeatBall';
