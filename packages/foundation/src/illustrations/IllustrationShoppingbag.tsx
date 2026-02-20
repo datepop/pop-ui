@@ -7,27 +7,27 @@ export default function IllustrationShoppingbag({ size = 24, ...props }: IIllust
       width={size}
       height={size}
       fill="none"
-      viewBox="0 0 32 32"
+      viewBox="0 0 24 24"
       {...props}
     >
       <path
-        stroke="#D0BFFF"
+        stroke="#E5DBFF"
         strokeLinecap="round"
         strokeMiterlimit="10"
-        strokeWidth="2.133"
-        d="M11.515 8.581v-1.94c0-2.457 2-4.457 4.458-4.457 2.457 0 4.457 2 4.457 4.458v1.94"
+        strokeWidth="1.6"
+        d="M8.636 6.436V4.98c0-1.843 1.5-3.343 3.343-3.343 1.844 0 3.343 1.5 3.343 3.343v1.455"
       ></path>
       <path
         fill="#B197FC"
-        d="M3.999 26.745c0 1.587 1.24 2.867 2.773 2.867l18.4-.013c1.533 0 2.773-1.28 2.773-2.867L26.56 9.52c0-1.587-1.24-2.867-2.774-2.867H8.16c-1.534 0-2.774 1.28-2.774 2.867z"
+        d="M2.999 20.06c0 1.19.93 2.15 2.08 2.15l13.8-.01c1.15 0 2.08-.96 2.08-2.15l-1.04-12.91c0-1.19-.93-2.15-2.08-2.15H6.119c-1.15 0-2.08.96-2.08 2.15z"
       ></path>
-      <rect width="21.106" height="3.858" x="5.417" y="6.652" fill="#9775FA" rx="1.929"></rect>
+      <rect width="15.83" height="2.893" x="4.063" y="4.989" fill="#9775FA" rx="1.447"></rect>
       <path
-        stroke="#D0BFFF"
+        stroke="#E5DBFF"
         strokeLinecap="round"
         strokeMiterlimit="10"
-        strokeWidth="2.133"
-        d="M11.04 12.682v-2.147a4.94 4.94 0 0 1 4.933-4.933 4.94 4.94 0 0 1 4.933 4.933v2.147"
+        strokeWidth="1.6"
+        d="M8.28 9.511v-1.61c0-2.04 1.66-3.7 3.7-3.7s3.7 1.66 3.7 3.7v1.61"
       ></path>
     </svg>
   );

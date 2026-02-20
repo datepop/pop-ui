@@ -1,9 +1,6 @@
-import type { IIllustrationProps } from "../types/illustration";
+import type { IIllustrationProps } from '../types/illustration';
 
-export default function IllustrationClapperboard({
-  size = 24,
-  ...props
-}: IIllustrationProps) {
+export default function IllustrationClapperboard({ size = 24, ...props }: IIllustrationProps) {
   return (
     <svg
       width={size}
@@ -13,106 +10,96 @@ export default function IllustrationClapperboard({
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <g clipPath="url(#clip0_clapperboard)">
+      <g clipPath="url(#clip0_371_2261)">
         <path
-          d="M21.3201 19.3889C21.3201 20.55 20.38 21.5 19.231 21.5H5.65174C4.50273 21.5 3.56262 20.55 3.56262 19.3889V12.5278C3.56262 11.3667 4.50273 10.4167 5.65174 10.4167H19.231C20.38 10.4167 21.3201 11.3667 21.3201 12.5278V19.3889Z"
-          fill="url(#paint0_clapperboard)"
-          strokeWidth={0}
-        />
+          fill="url(#paint0_linear_371_2261)"
+          d="M21.32 19.389c0 1.161-.94 2.111-2.089 2.111H5.651c-1.148 0-2.088-.95-2.088-2.111v-6.861c0-1.161.94-2.111 2.089-2.111H19.23c1.149 0 2.09.95 2.09 2.11z"
+        ></path>
         <path
-          d="M3.56262 11.25C3.56262 10.7898 3.93572 10.4167 4.39596 10.4167H20.4868C20.947 10.4167 21.3201 10.7898 21.3201 11.25V14.1111H3.56262V11.25Z"
-          fill="white"
-          strokeWidth={0}
-        />
+          fill="#fff"
+          d="M3.563 11.25c0-.46.373-.833.833-.833h16.09c.461 0 .834.373.834.833v2.861H3.563z"
+        ></path>
         <mask
-          id="mask0_clapperboard"
-          style={{ maskType: "alpha" }}
-          maskUnits="userSpaceOnUse"
-          x="3"
-          y="10"
+          id="mask0_371_2261"
           width="19"
           height="5"
+          x="3"
+          y="10"
+          maskUnits="userSpaceOnUse"
+          style={{ maskType: 'alpha' }}
         >
           <path
-            d="M3.56262 11.25C3.56262 10.7898 3.93572 10.4167 4.39596 10.4167H20.4868C20.947 10.4167 21.3201 10.7898 21.3201 11.25V14.1111H3.56262V11.25Z"
             fill="#DFE2F6"
-          />
+            d="M3.563 11.25c0-.46.373-.833.833-.833h16.09c.461 0 .834.373.834.833v2.861H3.563z"
+          ></path>
         </mask>
-        <g mask="url(#mask0_clapperboard)">
+        <g mask="url(#mask0_371_2261)">
           <path
-            d="M3.56262 10.4167H5.65174L3.56262 14.1111V10.4167ZM9.3077 10.4167L7.21858 14.1111H10.8745L12.9637 10.4167H9.3077ZM16.6196 10.4167L14.5305 14.1111H18.1865L20.2756 10.4167H16.6196Z"
-            fill="url(#paint1_clapperboard)"
-            strokeWidth={0}
-          />
+            fill="url(#paint1_linear_371_2261)"
+            d="M3.563 10.417h2.089l-2.09 3.694zm5.745 0-2.09 3.694h3.656l2.09-3.694zm7.312 0-2.09 3.694h3.656l2.09-3.694z"
+          ></path>
         </g>
         <path
-          d="M2.87818 7.63671C2.76853 7.19136 3.03938 6.74112 3.48419 6.62931L19.0994 2.70414C19.5473 2.59156 20.0013 2.86467 20.1117 3.31309L20.5959 5.27943C20.7056 5.72478 20.4347 6.17503 19.9899 6.28686L4.37474 10.2125C3.92684 10.3251 3.4728 10.052 3.36239 9.60352L2.87818 7.63671Z"
-          fill="white"
-          strokeWidth={0}
-        />
+          fill="#fff"
+          d="M2.878 7.637a.833.833 0 0 1 .606-1.008L19.1 2.704a.833.833 0 0 1 1.013.61l.484 1.965a.833.833 0 0 1-.606 1.008L4.375 10.213a.833.833 0 0 1-1.013-.61z"
+        ></path>
         <mask
-          id="mask1_clapperboard"
-          style={{ maskType: "alpha" }}
-          maskUnits="userSpaceOnUse"
-          x="2"
-          y="2"
+          id="mask1_371_2261"
           width="19"
           height="9"
+          x="2"
+          y="2"
+          maskUnits="userSpaceOnUse"
+          style={{ maskType: 'alpha' }}
         >
           <path
-            d="M2.87818 7.63671C2.76853 7.19136 3.03938 6.74112 3.48419 6.62931L19.0994 2.70414C19.5473 2.59156 20.0013 2.86467 20.1117 3.31309L20.5959 5.27943C20.7056 5.72478 20.4347 6.17503 19.9899 6.28686L4.37474 10.2125C3.92684 10.3251 3.4728 10.052 3.36239 9.60352L2.87818 7.63671Z"
             fill="#DFE2F6"
-          />
+            d="M2.878 7.637a.833.833 0 0 1 .606-1.008L19.1 2.704a.833.833 0 0 1 1.013.61l.484 1.965a.833.833 0 0 1-.606 1.008L4.375 10.213a.833.833 0 0 1-1.013-.61z"
+          ></path>
         </mask>
-        <g mask="url(#mask1_clapperboard)">
+        <g mask="url(#mask1_371_2261)">
           <path
-            d="M2.67993 6.83145L5.59008 9.90681L3.56258 10.4166L2.67993 6.83145ZM12.6858 8.12345L9.77563 5.04756L6.22778 5.93951L9.13792 9.01539L12.6858 8.12345ZM19.7815 6.33956L16.8713 3.26367L13.3235 4.15562L16.2336 7.23098L19.7815 6.33956Z"
-            fill="url(#paint2_clapperboard)"
-            strokeWidth={0}
-          />
+            fill="url(#paint2_linear_371_2261)"
+            d="m2.68 6.831 2.91 3.076-2.027.51zm10.006 1.292-2.91-3.075-3.548.892 2.91 3.075zm7.096-1.783-2.91-3.076-3.549.892 2.91 3.075z"
+          ></path>
         </g>
       </g>
       <defs>
         <linearGradient
-          id="paint0_clapperboard"
-          x1="5.32921"
-          y1="10.4167"
-          x2="8.72999"
-          y2="24.1753"
+          id="paint0_linear_371_2261"
+          x1="5.329"
+          x2="8.73"
+          y1="10.417"
+          y2="24.175"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.0192308" stopColor="#FF9E9E" />
-          <stop offset="1" stopColor="#C09AFF" />
+          <stop offset="0.019" stopColor="#FF9E9E"></stop>
+          <stop offset="1" stopColor="#C09AFF"></stop>
         </linearGradient>
         <linearGradient
-          id="paint1_clapperboard"
-          x1="5.2253"
-          y1="10.4167"
-          x2="5.64807"
-          y2="15.2461"
+          id="paint1_linear_371_2261"
+          x1="5.225"
+          x2="5.648"
+          y1="10.417"
+          y2="15.246"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.0192308" stopColor="#FF9E9E" />
-          <stop offset="1" stopColor="#C09AFF" />
+          <stop offset="0.019" stopColor="#FF9E9E"></stop>
+          <stop offset="1" stopColor="#C09AFF"></stop>
         </linearGradient>
         <linearGradient
-          id="paint2_clapperboard"
-          x1="4.38126"
-          y1="3.26367"
-          x2="5.90026"
-          y2="12.4341"
+          id="paint2_linear_371_2261"
+          x1="4.381"
+          x2="5.9"
+          y1="3.264"
+          y2="12.434"
           gradientUnits="userSpaceOnUse"
         >
-          <stop offset="0.0192308" stopColor="#FF9E9E" />
-          <stop offset="1" stopColor="#C09AFF" />
+          <stop offset="0.019" stopColor="#FF9E9E"></stop>
+          <stop offset="1" stopColor="#C09AFF"></stop>
         </linearGradient>
-        <clipPath id="clip0_clapperboard">
-          <rect
-            width="18.8021"
-            height="19"
-            fill="white"
-            transform="translate(2.599 2.5)"
-          />
+        <clipPath id="clip0_371_2261">
+          <path fill="#fff" d="M2.599 2.5h18.802v19H2.599z"></path>
         </clipPath>
       </defs>
     </svg>
