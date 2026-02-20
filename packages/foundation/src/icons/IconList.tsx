@@ -1,8 +1,8 @@
-import { ColorGray900 } from '../tokens/colors';
+import { ColorGray900 } from "../tokens/colors";
 
-import type { IIconProps } from '../types/icon';
+import type { IIconProps } from "../types/icon";
 
-export default function IconLink({
+export default function IconList({
   size = 24,
   color = ColorGray900,
   variant = 'line',
@@ -18,25 +18,43 @@ export default function IconLink({
       {...props}
     >
       <path
-        d="M14.1138 7.99707H19.0016C21.2117 7.99707 23 9.78532 23 11.9954C23 14.2055 21.2117 15.9937 19.0016 15.9937H14.1138"
+        d="M7.84924 11.627H16.1508"
         stroke={color}
         strokeWidth="1.5"
         strokeMiterlimit="10"
         strokeLinecap="round"
       />
       <path
-        d="M10.1155 16.003H4.99832C2.78823 16.003 1 14.2148 1 12.0047C1 9.79459 2.78823 8.00635 4.99832 8.00635H10.1155"
+        d="M7.84924 14.7368H16.1508"
         stroke={color}
         strokeWidth="1.5"
         strokeMiterlimit="10"
         strokeLinecap="round"
       />
       <path
-        d="M6.99756 11.9954H17.0026"
+        d="M7.84924 17.8569H12.0949"
         stroke={color}
         strokeWidth="1.5"
         strokeMiterlimit="10"
         strokeLinecap="round"
+      />
+      <rect
+        x="3.96826"
+        y="2.29883"
+        width="16.0635"
+        height="19.4025"
+        rx="2"
+        stroke={color}
+        strokeWidth="1.5"
+      />
+      <rect
+        x="6.58997"
+        y="4.93408"
+        width="10.8199"
+        height="3.46565"
+        rx="0.5"
+        stroke={color}
+        strokeWidth="1.5"
       />
     </svg>
   );
