@@ -68,4 +68,7 @@ export { default as IconTrash } from './IconTrash';
 export { default as IconUser } from './IconUser';
 export { default as IconWarning } from './IconWarning';
 export { default as IconWarningCircle } from './IconWarningCircle';
-
+export { default as IconCheckBadge } from './IconCheckBadge';
+export { default as IconPlayCircle } from './IconPlayCircle';
+export { default as IconPercentBadge } from './IconPercentBadge';
+export { default as IconMail } from './IconMail';
