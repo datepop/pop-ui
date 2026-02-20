@@ -14,6 +14,7 @@ export { default as IconCheck } from './IconCheck';
 export { default as IconCheckCircle } from './IconCheckCircle';
 export { default as IconChevronDown } from './IconChevronDown';
 export { default as IconChevronLeft } from './IconChevronLeft';
+export { default as IconChevronLeftDouble } from './IconChevronLeftDouble';
 export { default as IconChevronRight } from './IconChevronRight';
 export { default as IconChevronRightDouble } from './IconChevronRightDouble';
 export { default as IconChevronUp } from './IconChevronUp';
