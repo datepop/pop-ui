@@ -1,4 +1,4 @@
-import { Stack, Text, Paper, Box, TextInput, Button, Group } from '@mantine/core';
+import { Stack, Text, Paper, Box, TextInput, Button, Group, Select } from '@mantine/core';
 import React, { useState } from 'react';
 import type { IIllustrationProps } from '../types/illustration';
 import type { Meta, StoryObj } from '@storybook/react-vite';
@@ -30,9 +30,17 @@ const IllustrationCard: React.FC<{
   size?: number;
 }> = ({ name, Illustration, size = 48 }) => {
   const [copied, setCopied] = useState(false);
+  const colorOptions = (Illustration as any).colorOptions as string[] | undefined;
+  const [selectedColor, setSelectedColor] = useState(colorOptions?.[0]);
 
   const handleCopy = async () => {
-    const code = `import { ${name} } from '@pop-ui/foundation';\n\n<${name} ${size !== 48 ? `size={${size}} ` : ''}/>`;
+    const props = [
+      size !== 48 ? `size={${size}}` : '',
+      selectedColor ? `color="${selectedColor}"` : '',
+    ]
+      .filter(Boolean)
+      .join(' ');
+    const code = `import { ${name} } from '@pop-ui/foundation';\n\n<${name} ${props}/>`;
     try {
       await navigator.clipboard.writeText(code);
       setCopied(true);
@@ -76,12 +84,22 @@ const IllustrationCard: React.FC<{
             borderRadius: '8px',
           }}
         >
-          <Illustration size={size} />
+          <Illustration size={size} color={selectedColor} />
         </Box>
         <Stack gap="xs" align="center">
           <Text size="sm" fw={600}>
             {name}
           </Text>
+          {colorOptions && (
+            <Select
+              size="xs"
+              data={colorOptions}
+              value={selectedColor}
+              onChange={(value) => value && setSelectedColor(value)}
+              onClick={(e) => e.stopPropagation()}
+              style={{ width: '100px' }}
+            />
+          )}
           <Text size="xs" c="dimmed">
             {copied ? 'Copied!' : 'Click to copy'}
           </Text>
@@ -92,7 +110,7 @@ const IllustrationCard: React.FC<{
 };
 
 export const AllIllustrations: StoryObj<{ size: number }> = {
-  args: { size: 48 },
+  args: { size: 24 },
   argTypes: {
     size: {
       control: { type: 'range', min: 16, max: 64, step: 4 },
