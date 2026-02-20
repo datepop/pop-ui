@@ -119,6 +119,10 @@ export const iconMetadata = {
     categories: [IconCategory.CONTENT],
     variants: ['line'],
   },
+  IconCoffee: {
+    categories: [IconCategory.CONTENT],
+    variants: ['line'],
+  },
   IconCopy: {
     categories: [IconCategory.ACTION],
     variants: ['line'],
@@ -199,6 +203,18 @@ export const iconMetadata = {
     categories: [IconCategory.ACTION],
     variants: ['line'],
   },
+  IconList: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
+  IconListBullet: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
+  IconListNumber: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
   IconLocation: {
     categories: [IconCategory.CONTENT],
     variants: ['line'],
@@ -263,23 +279,27 @@ export const iconMetadata = {
     categories: [IconCategory.BRAND],
     variants: ['line'],
   },
+  IconPoppass: {
+    categories: [IconCategory.CONTENT],
+    variants: ['line'],
+  },
   IconPrinter: {
     categories: [IconCategory.ACTION],
     variants: ['line'],
   },
-  IconPoppass: {
-    categories: [IconCategory.CONTENT],
+  IconQuestionCircle: {
+    categories: [IconCategory.SYSTEM],
     variants: ['line'],
   },
   IconQuote: {
     categories: [IconCategory.ACTION],
     variants: ['line', 'filled'],
   },
-  IconQuestionCircle: {
-    categories: [IconCategory.SYSTEM],
+  IconRefresh: {
+    categories: [IconCategory.ACTION],
     variants: ['line'],
   },
-  IconRefresh: {
+  IconReset: {
     categories: [IconCategory.ACTION],
     variants: ['line'],
   },
@@ -329,6 +349,10 @@ export const iconMetadata = {
   },
   IconSwapVertical: {
     categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
+  IconTicket: {
+    categories: [IconCategory.CONTENT],
     variants: ['line'],
   },
   IconTicketPlay: {
