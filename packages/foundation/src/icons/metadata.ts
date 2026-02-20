@@ -19,11 +19,19 @@ export const iconMetadata = {
     categories: [IconCategory.SYSTEM],
     variants: ['line', 'filled'],
   },
+  IconArrowDown: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
   IconArrowLeft: {
     categories: [IconCategory.ACTION],
     variants: ['line'],
   },
   IconArrowRight: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
+  IconArrowUp: {
     categories: [IconCategory.ACTION],
     variants: ['line'],
   },
@@ -33,6 +41,10 @@ export const iconMetadata = {
   },
   IconBrowse: {
     categories: [IconCategory.ACTION],
+    variants: ['line', 'filled'],
+  },
+  IconCafe: {
+    categories: [IconCategory.CONTENT],
     variants: ['line', 'filled'],
   },
   IconCalendar: {
@@ -46,6 +58,14 @@ export const iconMetadata = {
   IconCamera: {
     categories: [IconCategory.CONTENT],
     variants: ['line'],
+  },
+  IconCameraSwitch: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
+  IconCard: {
+    categories: [IconCategory.CONTENT],
+    variants: ['line', 'filled'],
   },
   IconCards: {
     categories: [IconCategory.CONTENT],
@@ -103,6 +123,10 @@ export const iconMetadata = {
     categories: [IconCategory.STATUS],
     variants: ['filled'],
   },
+  IconCoffee: {
+    categories: [IconCategory.CONTENT],
+    variants: ['line'],
+  },
   IconCopy: {
     categories: [IconCategory.ACTION],
     variants: ['line'],
@@ -123,12 +147,20 @@ export const iconMetadata = {
     categories: [IconCategory.ACTION],
     variants: ['line'],
   },
+  IconEditNote: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
   IconExport: {
     categories: [IconCategory.ACTION],
     variants: ['line'],
   },
   IconFilter: {
     categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
+  IconGift: {
+    categories: [IconCategory.CONTENT],
     variants: ['line'],
   },
   IconHeart: {
@@ -163,7 +195,19 @@ export const iconMetadata = {
     categories: [IconCategory.ACTION],
     variants: ['line'],
   },
+  IconList: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
+  IconListBullet: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
   IconListMenu: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
+  IconListNumber: {
     categories: [IconCategory.ACTION],
     variants: ['line'],
   },
@@ -190,6 +234,10 @@ export const iconMetadata = {
   IconMenu: {
     categories: [IconCategory.ACTION],
     variants: ['line'],
+  },
+  IconMessage: {
+    categories: [IconCategory.CONTENT],
+    variants: ['line', 'filled'],
   },
   IconMinus: {
     categories: [IconCategory.ACTION],
@@ -227,13 +275,25 @@ export const iconMetadata = {
     categories: [IconCategory.ACTION],
     variants: ['line'],
   },
+  IconPopcorn: {
+    categories: [IconCategory.CONTENT],
+    variants: ['line'],
+  },
   IconPopdeal: {
     categories: [IconCategory.BRAND],
+    variants: ['line'],
+  },
+  IconPrinter: {
+    categories: [IconCategory.ACTION],
     variants: ['line'],
   },
   IconQuestionCircle: {
     categories: [IconCategory.SYSTEM],
     variants: ['line'],
+  },
+  IconQuote: {
+    categories: [IconCategory.ACTION],
+    variants: ['line', 'filled'],
   },
   IconReport: {
     categories: [IconCategory.SYSTEM],
@@ -242,6 +302,10 @@ export const iconMetadata = {
   IconReset: {
     categories: [IconCategory.ACTION],
     variants: ['line'],
+  },
+  IconRestaurant: {
+    categories: [IconCategory.CONTENT],
+    variants: ['line', 'filled'],
   },
   IconSales: {
     categories: [IconCategory.SYSTEM],
@@ -259,6 +323,14 @@ export const iconMetadata = {
     categories: [IconCategory.ACTION],
     variants: ['line', 'filled'],
   },
+  IconShoppingBagCheck: {
+    categories: [IconCategory.CONTENT],
+    variants: ['line', 'filled'],
+  },
+  IconSiren: {
+    categories: [IconCategory.STATUS],
+    variants: ['line'],
+  },
   IconSort: {
     categories: [IconCategory.ACTION],
     variants: ['line'],
@@ -275,7 +347,15 @@ export const iconMetadata = {
     categories: [IconCategory.SYSTEM],
     variants: ['line'],
   },
+  IconSwapVertical: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
   IconTicket: {
+    categories: [IconCategory.CONTENT],
+    variants: ['line'],
+  },
+  IconTicketPlay: {
     categories: [IconCategory.CONTENT],
     variants: ['line'],
   },
