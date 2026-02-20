@@ -30,7 +30,6 @@ export { default as IconFilter } from './IconFilter';
 export { default as IconHeart } from './IconHeart';
 export { default as IconHelp } from './IconHelp';
 export { default as IconHome } from './IconHome';
-export { default as IconInfo } from './IconInfo';
 export { default as IconInfoCircle } from './IconInfoCircle';
 export { default as IconKebap } from './IconKebap';
 export { default as IconLike } from './IconLike';
