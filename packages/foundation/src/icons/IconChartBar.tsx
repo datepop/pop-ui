@@ -5,9 +5,11 @@ import type { IIconProps } from '../types/icon';
 export default function IconChartBar({
   size = 24,
   color = ColorGray900,
-  filled = false,
+  variant = 'line',
   ...props
 }: IIconProps) {
+  const isFilled = variant === 'filled';
+
   return (
     <svg
       width={size}
@@ -24,8 +26,8 @@ export default function IconChartBar({
         height="6.61111"
         rx="1"
         stroke={color}
-        strokeWidth={filled ? 0 : 1.5}
-        fill={filled ? color : undefined}
+        strokeWidth={isFilled ? 0 : 1.5}
+        fill={isFilled ? color : undefined}
       />
       <rect
         x="10.1113"
@@ -34,8 +36,8 @@ export default function IconChartBar({
         height="17"
         rx="1"
         stroke={color}
-        strokeWidth={filled ? 0 : 1.5}
-        fill={filled ? color : undefined}
+        strokeWidth={isFilled ? 0 : 1.5}
+        fill={isFilled ? color : undefined}
       />
       <rect
         x="16.7222"
@@ -44,8 +46,8 @@ export default function IconChartBar({
         height="11.3333"
         rx="1"
         stroke={color}
-        strokeWidth={filled ? 0 : 1.5}
-        fill={filled ? color : undefined}
+        strokeWidth={isFilled ? 0 : 1.5}
+        fill={isFilled ? color : undefined}
       />
     </svg>
   );
