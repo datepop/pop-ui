@@ -4,7 +4,7 @@ import { IIconProps } from '../types/icon';
 export default function IconCheckBadge({
   size = 24,
   color = ColorGray900,
-  variant = 'line',
+  variant = 'filled',
   ...props
 }: IIconProps) {
   return (

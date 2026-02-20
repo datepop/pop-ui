@@ -4,6 +4,7 @@ import type { IIconProps } from '../types/icon';
 export default function IconPercentBadge({
   size = 24,
   color = ColorGray900,
+  variant = 'filled',
   ...props
 }: IIconProps) {
   return (
