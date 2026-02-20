@@ -2,7 +2,7 @@ import { ColorGray900, SemanticColorBgWhite } from '../tokens/colors';
 
 import type { IIconProps } from '../types/icon';
 
-export default function IconCloseCircle({
+export default function IconXCircle({
   size = 24,
   color = ColorGray900,
   variant = 'filled',
