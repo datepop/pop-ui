@@ -21,6 +21,7 @@ export { default as IconClock } from './IconClock';
 export { default as IconClose } from './IconClose';
 export { default as IconCloseCircle } from './IconCloseCircle';
 export { default as IconCopy } from './IconCopy';
+export { default as IconCreditcard } from './IconCreditcard';
 export { default as IconDev } from './IconDev';
 export { default as IconDirection } from './IconDirection';
 export { default as IconDragMenu } from './IconDragMenu';
