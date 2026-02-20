@@ -65,6 +65,7 @@ export { default as IconSort } from './IconSort';
 export { default as IconSound } from './IconSound';
 export { default as IconStar } from './IconStar';
 export { default as IconStore } from './IconStore';
+export { default as IconText } from './IconText';
 export { default as IconTicket } from './IconTicket';
 export { default as IconTrash } from './IconTrash';
 export { default as IconUser } from './IconUser';
