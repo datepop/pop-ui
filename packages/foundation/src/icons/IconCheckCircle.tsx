@@ -5,7 +5,7 @@ import type { IIconProps } from '../types/icon';
 export default function IconCheckCircle({
   size = 24,
   color = ColorGray900,
-  variant = 'filled',
+  variant = 'line',
   ...props
 }: IIconProps) {
   const isFilled = variant === 'filled';
