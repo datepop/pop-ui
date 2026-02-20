@@ -52,6 +52,7 @@ export { default as IconPhoto } from './IconPhoto';
 export { default as IconPlus } from './IconPlus';
 export { default as IconPlusCircle } from './IconPlusCircle';
 export { default as IconPopdeal } from './IconPopdeal';
+export { default as IconQuestion } from './IconQuestion';
 export { default as IconQuestionCircle } from './IconQuestionCircle';
 export { default as IconReport } from './IconReport';
 export { default as IconReset } from './IconReset';
@@ -68,4 +69,3 @@ export { default as IconTrash } from './IconTrash';
 export { default as IconUser } from './IconUser';
 export { default as IconWarning } from './IconWarning';
 export { default as IconWarningCircle } from './IconWarningCircle';
-
