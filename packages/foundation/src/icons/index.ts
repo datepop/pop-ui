@@ -66,6 +66,6 @@ export { default as IconStore } from './IconStore';
 export { default as IconTicket } from './IconTicket';
 export { default as IconTrash } from './IconTrash';
 export { default as IconUser } from './IconUser';
+export { default as IconVisibility } from './IconVisibility';
 export { default as IconWarning } from './IconWarning';
 export { default as IconWarningCircle } from './IconWarningCircle';
-
