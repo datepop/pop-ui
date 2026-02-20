@@ -1,46 +1,44 @@
-import { ColorGray900, SemanticColorBgWhite } from '../tokens/colors';
+import { ColorGray900 } from "../tokens/colors";
 
-import type { IIconProps } from '../types/icon';
+import type { IIconProps } from "../types/icon";
 
 export default function IconInfoCircle({
   size = 24,
   color = ColorGray900,
-  variant = 'line',
   ...props
 }: IIconProps) {
-  const isFilled = variant === 'filled';
-
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 20 20"
+      viewBox="0 0 16 16"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <circle
-        cx="10"
-        cy="10"
-        r="7.5"
-        fill={isFilled ? color : 'none'}
-        stroke={isFilled ? undefined : color}
-        strokeWidth={isFilled ? 0 : 1.25}
-        strokeMiterlimit="10"
-        strokeLinecap="round"
+      <rect
+        x="0"
+        y="0"
+        width="16"
+        height="16"
+        fill="transparent"
+        strokeWidth={0}
       />
-      <path
-        d="M10 5.75L10 7"
-        stroke={isFilled ? SemanticColorBgWhite : color}
-        strokeWidth="1.25"
-        strokeMiterlimit="10"
-      />
-      <path
-        d="M10 8L10 14"
-        stroke={isFilled ? SemanticColorBgWhite : color}
-        strokeWidth="1.25"
-        strokeMiterlimit="10"
-      />
+      <g>
+        <path
+          fillRule="evenodd"
+          clipRule="evenodd"
+          d="M8 0C3.58871 0 0 3.58871 0 8C0 12.4113 3.58871 16 8 16C12.4113 16 16 12.4113 16 8C16 3.58871 12.4113 0 8 0ZM8.00367 10.6314C8.52414 10.6314 8.94485 11.0521 8.94485 11.5726C8.94485 12.0931 8.52414 12.5138 8.00367 12.5138C7.4832 12.5138 7.05779 12.0931 7.05779 11.5726C7.05779 11.0521 7.47473 10.6314 7.99426 10.6314H8.00367ZM7.99445 3.72141C8.38409 3.72141 8.70033 4.03765 8.70033 4.42729V8.58635C8.70033 8.976 8.38409 9.29224 7.99445 9.29224C7.6048 9.29224 7.28856 8.976 7.28856 8.58635V4.42729C7.28856 4.03765 7.6048 3.72141 7.99445 3.72141Z"
+          fill={color}
+          strokeWidth={0}
+        />
+        <circle cx="8" cy="8" r="5" fill={color} strokeWidth={0} />
+        <path
+          d="M9.28096 6.55625L7.01296 6.8405L6.93196 7.217L7.37821 7.298C7.66846 7.36775 7.72621 7.472 7.66321 7.76225L6.93196 11.195C6.74071 12.0823 7.03696 12.5 7.73221 12.5C8.27221 12.5 8.89771 12.251 9.18196 11.9083L9.26896 11.4965C9.07171 11.6705 8.78146 11.7403 8.59021 11.7403C8.31796 11.7403 8.21971 11.549 8.28871 11.2122L9.28096 6.55625ZM9.34921 4.49C9.34921 4.75256 9.2449 5.00437 9.05924 5.19004C8.87358 5.3757 8.62177 5.48 8.35921 5.48C8.09664 5.48 7.84483 5.3757 7.65917 5.19004C7.47351 5.00437 7.36921 4.75256 7.36921 4.49C7.36921 4.22744 7.47351 3.97563 7.65917 3.78996C7.84483 3.6043 8.09664 3.5 8.35921 3.5C8.62177 3.5 8.87358 3.6043 9.05924 3.78996C9.2449 3.97563 9.34921 4.22744 9.34921 4.49Z"
+          fill="white"
+          strokeWidth={0}
+        />
+      </g>
     </svg>
   );
 }
