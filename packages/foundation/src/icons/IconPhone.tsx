@@ -1,10 +1,11 @@
-import { ColorGray900 } from "../tokens/colors";
+import { ColorGray900 } from '../tokens/colors';
 
-import type { IIconProps } from "../types/icon";
+import type { IIconProps } from '../types/icon';
 
 export default function IconPhone({
   size = 24,
   color = ColorGray900,
+  variant = 'line',
   ...props
 }: IIconProps) {
   return (
@@ -25,12 +26,7 @@ export default function IconPhone({
         stroke={color}
         strokeWidth="1.5"
       />
-      <path
-        d="M9.79688 4.54102H14.2482"
-        stroke={color}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
+      <path d="M9.79688 4.54102H14.2482" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   );
 }
