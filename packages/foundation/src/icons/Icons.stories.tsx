@@ -1,4 +1,4 @@
-import { Stack, Text, Paper, Group, TextInput, Button, Box } from '@mantine/core';
+import { Stack, Text, Paper, Group, TextInput, Button, Box, Select } from '@mantine/core';
 import React, { useState } from 'react';
 
 import {
@@ -18,6 +18,7 @@ import {
 
 import type { IIconProps } from '../types/icon';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { iconMetadata, IconCategory } from './metadata';
 
 const iconModules = import.meta.glob<{ default: React.FC<IIconProps> }>('./Icon*.tsx', {
   eager: true,
@@ -41,14 +42,22 @@ const colorPalette = {
 const iconList = Object.entries(iconModules)
   .map(([path, module]) => {
     const name = path.replace('./', '').replace('.tsx', '');
+    const meta = name in iconMetadata ? iconMetadata[name as keyof typeof iconMetadata] : null;
     return {
       name,
       component: module.default,
       defaultSize: 24,
+      categories: meta?.categories ?? [],
+      variants: (meta?.variants ?? ['line']) as ('line' | 'filled')[],
     };
   })
   .filter((icon) => !icon.name.includes('.stories'))
   .sort((a, b) => a.name.localeCompare(b.name));
+
+const categoryOptions: { value: string; label: string }[] = [
+  { value: '', label: 'All' },
+  ...Object.entries(IconCategory).map(([key, value]) => ({ value, label: key })),
+];
 
 const meta: Meta = {
   title: 'Foundation/Icons',
@@ -67,11 +76,14 @@ const IconCard: React.FC<{
   size?: number;
   color?: string;
   variant?: 'line' | 'filled';
-}> = ({ name, Icon, defaultSize, size, color, variant }) => {
+  variants: ('line' | 'filled')[];
+  categories: IconCategory[];
+}> = ({ name, Icon, defaultSize, size, color, variant, variants, categories }) => {
   const [copied, setCopied] = useState(false);
+  const effectiveVariant = variant && variants.includes(variant) ? variant : variants[0];
 
   const handleCopy = async () => {
-    const code = `import { ${name} } from '@pop-ui/foundation';\n\n<${name} ${size && size !== defaultSize ? `size={${size}} ` : ''}${color && color !== ColorGray900 ? `color="${color}" ` : ''}${variant && variant !== 'line' ? `variant="${variant}" ` : ''}/>`;
+    const code = `import { ${name} } from '@pop-ui/foundation';\n\n<${name} ${size && size !== defaultSize ? `size={${size}} ` : ''}${color && color !== ColorGray900 ? `color="${color}" ` : ''}${effectiveVariant && effectiveVariant !== 'line' ? `variant="${effectiveVariant}" ` : ''}/>`;
     try {
       await navigator.clipboard.writeText(code);
       setCopied(true);
@@ -115,12 +127,26 @@ const IconCard: React.FC<{
             borderRadius: '8px',
           }}
         >
-          <Icon size={size || defaultSize} color={color || ColorGray900} variant={variant} />
+          <Icon size={size || defaultSize} color={color || ColorGray900} variant={effectiveVariant} />
         </Box>
         <Stack gap="xs" align="center">
           <Text size="sm" fw={600}>
             {name}
           </Text>
+          {(categories.length > 0 || variants.length > 1) && (
+            <Group gap={4} justify="center">
+              {categories.map((c) => (
+                <Text key={c} size="xs" c="dimmed" style={{ textTransform: 'capitalize' }}>
+                  {c}
+                </Text>
+              ))}
+              {variants.length > 1 && (
+                <Text size="xs" c="dimmed">
+                  {variants.join(' / ')}
+                </Text>
+              )}
+            </Group>
+          )}
           <Text size="xs" c="dimmed">
             {copied ? 'Copied!' : 'Click to copy'}
           </Text>
@@ -170,10 +196,14 @@ export const AllIcons: StoryObj<{
   },
   render: (args) => {
     const [searchTerm, setSearchTerm] = useState('');
+    const [categoryFilter, setCategoryFilter] = useState('');
 
-    const filteredIcons = iconList.filter((icon) =>
-      icon.name.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
+    const filteredIcons = iconList.filter((icon) => {
+      const matchesSearch = icon.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesCategory =
+        !categoryFilter || icon.categories.includes(categoryFilter as IconCategory);
+      return matchesSearch && matchesCategory;
+    });
 
     return (
       <Stack gap="xl" p="md">
@@ -185,12 +215,20 @@ export const AllIcons: StoryObj<{
             Click any icon card to copy its import code. Use the controls panel to adjust size and
             color.
           </Text>
-          <Group gap="md">
+          <Group gap="md" wrap="wrap">
             <TextInput
               placeholder="Search icons..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={{ flex: 1, maxWidth: '400px' }}
+              style={{ flex: 1, minWidth: '200px', maxWidth: '400px' }}
+            />
+            <Select
+              placeholder="Category"
+              value={categoryFilter}
+              onChange={(v) => setCategoryFilter(v ?? '')}
+              data={categoryOptions}
+              style={{ minWidth: '140px' }}
+              aria-label="Filter by category"
             />
             {searchTerm && (
               <Button variant="subtle" onClick={() => setSearchTerm('')}>
@@ -223,6 +261,8 @@ export const AllIcons: StoryObj<{
                 size={args.size}
                 color={args.color}
                 variant={args.variant}
+                variants={icon.variants}
+                categories={icon.categories}
               />
             ))}
           </div>
