@@ -1,7 +1,7 @@
 'use client';
 
 import { Input, Textarea, Tooltip } from '@mantine/core';
-import { IconInfoCircle, IconClose } from '@pop-ui/foundation';
+import { IconInfoCircle, IconX } from '@pop-ui/foundation';
 import { useCallback, useState } from 'react';
 
 import styles from './styles.module.scss';
@@ -123,7 +123,7 @@ export const TextField = (allProps: TTextFieldProps) => {
               rightSection={
                 onClear && textCount > 0 ? (
                   <div className={styles['TextField__ClearButton']} onClick={onClear}>
-                    <IconClose size={size === 'sm' ? 16 : size === 'lg' ? 24 : 20} />
+                    <IconX size={size === 'sm' ? 16 : size === 'lg' ? 24 : 20} />
                   </div>
                 ) : undefined
               }
