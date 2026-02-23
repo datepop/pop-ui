@@ -1,7 +1,7 @@
 'use client';
 
 import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
-import { IconPhoto, IconCloseCircle } from '@pop-ui/foundation';
+import { IconPhoto, IconXCircle } from '@pop-ui/foundation';
 import { useCallback, useState } from 'react';
 
 import styles from './styles.module.scss';
@@ -41,7 +41,7 @@ export const ImageUploader = ({
     <div className={styles['ImageUploader__Wrapper']}>
       {showClearButton && fileData ? (
         <div className={styles['ImageUploader__FileClearButton']} onClick={handleFileDataClear}>
-          <IconCloseCircle size={24} />
+          <IconXCircle size={24} />
         </div>
       ) : null}
       <Dropzone

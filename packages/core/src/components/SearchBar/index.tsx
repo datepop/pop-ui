@@ -1,7 +1,7 @@
 'use client';
 
 import { Autocomplete, Input, Tooltip } from '@mantine/core';
-import { IconInfoCircle, IconClose, IconSearch } from '@pop-ui/foundation';
+import { IconInfoCircle, IconX, IconSearch } from '@pop-ui/foundation';
 import { useCallback, useState } from 'react';
 
 import styles from './styles.module.scss';
@@ -90,7 +90,7 @@ export const SearchBar = ({
             rightSection={
               onClear && textCount > 0 ? (
                 <div className={styles['SearchBar__ClearButton']} onClick={onClear}>
-                  <IconClose size={size === 'sm' ? 16 : size === 'lg' ? 24 : 20} />
+                  <IconX size={size === 'sm' ? 16 : size === 'lg' ? 24 : 20} />
                 </div>
               ) : undefined
             }
