@@ -24,8 +24,8 @@ export default function IconWarningCircle({
         cy="30"
         r="25"
         fill={isFilled ? color : 'none'}
-        stroke={isFilled ? undefined : color}
-        strokeWidth={isFilled ? 0 : 3.75}
+        stroke={color}
+        strokeWidth="3.75"
         strokeMiterlimit="10"
         strokeLinecap="round"
       />

@@ -257,7 +257,7 @@ export const iconMetadata = {
   },
   IconMoneyCircle: {
     categories: [IconCategory.SYSTEM],
-    variants: ['line'],
+    variants: ['line', 'filled'],
   },
   IconNote: {
     categories: [IconCategory.CONTENT],
@@ -281,7 +281,7 @@ export const iconMetadata = {
   },
   IconPlayCircle: {
     categories: [IconCategory.CONTENT],
-    variants: ['filled'],
+    variants: ['line', 'filled'],
   },
   IconPlus: {
     categories: [IconCategory.ACTION],
@@ -289,7 +289,7 @@ export const iconMetadata = {
   },
   IconPlusCircle: {
     categories: [IconCategory.ACTION],
-    variants: ['line'],
+    variants: ['line', 'filled'],
   },
   IconPopcorn: {
     categories: [IconCategory.CONTENT],
@@ -313,7 +313,7 @@ export const iconMetadata = {
   },
   IconQuestionCircle: {
     categories: [IconCategory.SYSTEM],
-    variants: ['line'],
+    variants: ['line', 'filled'],
   },
   IconQuote: {
     categories: [IconCategory.ACTION],
@@ -405,7 +405,7 @@ export const iconMetadata = {
   },
   IconWarningTriangle: {
     categories: [IconCategory.STATUS],
-    variants: ['line'],
+    variants: ['line', 'filled'],
   },
   IconX: {
     categories: [IconCategory.ACTION],
@@ -413,6 +413,6 @@ export const iconMetadata = {
   },
   IconXCircle: {
     categories: [IconCategory.STATUS],
-    variants: ['filled'],
+    variants: ['line', 'filled'],
   },
 } as const;

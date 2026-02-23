@@ -24,8 +24,8 @@ export default function IconCheckCircle({
         cy="12"
         r="9"
         fill={isFilled ? color : 'none'}
-        stroke={isFilled ? undefined : color}
-        strokeWidth={isFilled ? 0 : 1.5}
+        stroke={color}
+        strokeWidth="1.5"
       />
       <path
         d="M8.24878 12L11.2488 15L16.5 9.5"
