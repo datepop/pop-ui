@@ -87,15 +87,23 @@ export const iconMetadata = {
     categories: [IconCategory.STATUS],
     variants: ['line'],
   },
-  IconCheckCircle: {
+  IconCheckBadge: {
     categories: [IconCategory.STATUS],
     variants: ['filled'],
+  },
+  IconCheckCircle: {
+    categories: [IconCategory.STATUS],
+    variants: ['line', 'filled'],
   },
   IconChevronDown: {
     categories: [IconCategory.ACTION],
     variants: ['line'],
   },
   IconChevronLeft: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
+  IconChevronLeftDouble: {
     categories: [IconCategory.ACTION],
     variants: ['line'],
   },
@@ -125,6 +133,10 @@ export const iconMetadata = {
   },
   IconCopy: {
     categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
+  IconCreditCard: {
+    categories: [IconCategory.CONTENT],
     variants: ['line'],
   },
   IconDev: {
@@ -183,13 +195,9 @@ export const iconMetadata = {
     categories: [IconCategory.ACTION],
     variants: ['line'],
   },
-  IconInfo: {
-    categories: [IconCategory.STATUS],
-    variants: ['line'],
-  },
   IconInfoCircle: {
     categories: [IconCategory.STATUS],
-    variants: ['filled'],
+    variants: ['line', 'filled'],
   },
   IconKebap: {
     categories: [IconCategory.ACTION],
@@ -218,6 +226,10 @@ export const iconMetadata = {
   IconLocation: {
     categories: [IconCategory.CONTENT],
     variants: ['line'],
+  },
+  IconMail: {
+    categories: [IconCategory.CONTENT],
+    variants: ['filled'],
   },
   IconMap: {
     categories: [IconCategory.CONTENT],
@@ -255,6 +267,10 @@ export const iconMetadata = {
     categories: [IconCategory.STATUS],
     variants: ['line', 'filled'],
   },
+  IconPercentBadge: {
+    categories: [IconCategory.SYSTEM],
+    variants: ['filled'],
+  },
   IconPhoneClock: {
     categories: [IconCategory.SYSTEM],
     variants: ['line'],
@@ -262,6 +278,10 @@ export const iconMetadata = {
   IconPhoto: {
     categories: [IconCategory.CONTENT],
     variants: ['line'],
+  },
+  IconPlayCircle: {
+    categories: [IconCategory.CONTENT],
+    variants: ['filled'],
   },
   IconPlus: {
     categories: [IconCategory.ACTION],
@@ -285,6 +305,10 @@ export const iconMetadata = {
   },
   IconPrinter: {
     categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
+  IconQuestion: {
+    categories: [IconCategory.SYSTEM],
     variants: ['line'],
   },
   IconQuestionCircle: {
@@ -351,6 +375,10 @@ export const iconMetadata = {
     categories: [IconCategory.ACTION],
     variants: ['line'],
   },
+  IconText: {
+    categories: [IconCategory.CONTENT],
+    variants: ['line'],
+  },
   IconTicket: {
     categories: [IconCategory.CONTENT],
     variants: ['line'],
@@ -367,9 +395,13 @@ export const iconMetadata = {
     categories: [IconCategory.SYSTEM],
     variants: ['line', 'filled'],
   },
+  IconVisibility: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
   IconWarningCircle: {
     categories: [IconCategory.STATUS],
-    variants: ['filled'],
+    variants: ['line', 'filled'],
   },
   IconWarningTriangle: {
     categories: [IconCategory.STATUS],
