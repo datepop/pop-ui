@@ -69,6 +69,7 @@ function MyComponent() {
 
 - `size?: number` - 아이콘 크기 (기본값: 원본 크기)
 - `color?: string` - 아이콘 색상 (기본값: ColorGray900 = #333333)
+- `variant?: 'line' | 'filled'` - 스타일 변형 (기본값: `'line'`. 일부 아이콘만 `filled` 지원)
 - `className?: string` - CSS 클래스
 - `style?: CSSProperties` - 인라인 스타일
 - 기타 표준 SVG 속성들
@@ -95,6 +96,10 @@ import { IcChevronDown, ColorGray900 } from '@pop-ui/foundation';
 
 // 색상 변경
 <IcChevronDown color="#1971C2" />
+
+// variant (line | filled, 일부 아이콘만 filled 지원)
+<IcChevronDown variant="line" />
+<IcChevronDown variant="filled" />
 
 // CSS 클래스 사용
 <IcChevronDown className="my-icon" />
