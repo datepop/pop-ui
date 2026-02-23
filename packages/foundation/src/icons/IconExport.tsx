@@ -5,7 +5,7 @@ import type { IIconProps } from '../types/icon';
 export default function IconExport({
   size = 24,
   color = ColorGray900,
-  filled: _filled = false,
+  variant = 'line',
   ...props
 }: IIconProps) {
   return (

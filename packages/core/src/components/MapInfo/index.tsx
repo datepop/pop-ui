@@ -158,7 +158,7 @@ export const MapInfo = ({
 
       <div className={styles.MapInfo__AddressBar}>
         <div className={styles.MapInfo__AddressContent}>
-          <IconMapMarker color={ColorAqua500} size={24} filled />
+          <IconMapMarker color={ColorAqua500} size={24} variant="filled" />
           <span
             className={styles.MapInfo__Address}
             onClick={handleAddressCopy}
