@@ -241,7 +241,7 @@ export const AllIcons: StoryObj<{
               fontSize: '13px',
             }}
           >
-            {`import { IconChevronDown, IconAnalytics } from '@pop-ui/foundation';
+            {`import { IconChevronDown, IconChartBar } from '@pop-ui/foundation';
 
 // Basic usage
 <IconChevronDown />
@@ -249,8 +249,8 @@ export const AllIcons: StoryObj<{
 <IconChevronDown color="#1971C2" />
 
 // With variant (for icons that support it)
-<IconAnalytics variant="line" />
-<IconAnalytics variant="filled" color="#FFD700" />`}
+<IconChartBar variant="line" />
+<IconChartBar variant="filled" color="#FFD700" />`}
           </pre>
         </Paper>
       </Stack>
