@@ -8,6 +8,8 @@ export default function IconXCircle({
   variant = 'filled',
   ...props
 }: IIconProps) {
+  const isFilled = variant === 'filled';
+
   return (
     <svg
       width={size}
@@ -17,7 +19,14 @@ export default function IconXCircle({
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <circle cx="12" cy="12" r="9" fill={color} strokeWidth={0} />
+      <circle
+        cx="12"
+        cy="12"
+        r="9"
+        fill={isFilled ? color : 'none'}
+        stroke={color}
+        strokeWidth="1.5"
+      />
       <rect
         x="14.8284"
         y="7.75781"
@@ -25,7 +34,7 @@ export default function IconXCircle({
         height="10"
         rx="1"
         transform="rotate(45 14.8284 7.75781)"
-        fill={SemanticColorBgWhite}
+        fill={isFilled ? SemanticColorBgWhite : color}
         strokeWidth={0}
       />
       <rect
@@ -33,7 +42,7 @@ export default function IconXCircle({
         height="10"
         rx="1"
         transform="matrix(-0.707107 0.707107 0.707107 0.707107 9.17139 7.75781)"
-        fill={SemanticColorBgWhite}
+        fill={isFilled ? SemanticColorBgWhite : color}
         strokeWidth={0}
       />
     </svg>
