@@ -24,8 +24,8 @@ export default function IconInfoCircle({
         cy="10"
         r="7.5"
         fill={isFilled ? color : 'none'}
-        stroke={isFilled ? undefined : color}
-        strokeWidth={isFilled ? 0 : 1.25}
+        stroke={color}
+        strokeWidth="1.25"
         strokeMiterlimit="10"
         strokeLinecap="round"
       />
