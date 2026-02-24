@@ -42,7 +42,7 @@ const MyComponent = () => {
 import {
   SemanticColorPrimary,
   SemanticColorWarning,
-  BgColorButtonBgPrimaryDefault
+  BgColorButtonBgPrimaryDefault,
 } from '@pop-ui/foundation';
 ```
 
@@ -137,6 +137,26 @@ const cssVar = getCSSVariableRef('gray', '900'); // "var(--color-gray-900)"
 console.log(colorNames); // ['gray', 'aqua', 'red', ...]
 ```
 
+### 4. Illustrations아이콘
+
+2색 이상의 다중 색상을 포함하는 일러스트레이션 아이콘입니다. 색상이 고정되어 있어 color prop 없이 size만 제어합니다.
+
+일러스트레이션 vs 아이콘
+구분아이콘 (Icon)일러스트레이션 (Illustration)색상단색, color prop으로 변경 가능다중 색상 고정variantline / filled 지원색상별 별도 컴포넌트
+
+```tsx
+import { IllustrationPopcorn, IllustrationDiscounttagMint } from '@pop-ui/foundation';
+
+function MyComponent() {
+  return (
+    <div>
+      <IllustrationPopcorn size={48} />
+      <IllustrationDiscounttagMint size={32} />
+    </div>
+  );
+}
+```
+
 ## 개발
 
 ### Token 생성
@@ -166,6 +186,17 @@ import type { IIconProps } from '@pop-ui/foundation';
 interface IIconProps extends SVGProps<SVGSVGElement> {
   size?: number;
   color?: string;
+  variant?: 'line' | 'filled';
+}
+```
+
+### IIllustrationProps
+
+```typescript
+import type { IIllustrationProps } from '@pop-ui/foundation';
+
+interface IIllustrationProps extends SVGProps<SVGSVGElement> {
+  size?: number;
 }
 ```
 
