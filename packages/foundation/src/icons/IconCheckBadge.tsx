@@ -1,5 +1,5 @@
 import { ColorGray900 } from '../tokens/colors';
-import { IIconProps } from '../types/icon';
+import type { IIconProps } from '../types/icon';
 
 export default function IconCheckBadge({
   size = 24,
