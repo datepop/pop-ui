@@ -1,6 +1,7 @@
 import { Stack, Text, Paper, Group, TextInput, Button, Box, Select } from '@mantine/core';
 import React, { useState } from 'react';
 
+import { iconMetadata, IconCategory } from './metadata';
 import {
   ColorGray900,
   ColorGray0,
@@ -18,7 +19,6 @@ import {
 
 import type { IIconProps } from '../types/icon';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { iconMetadata, IconCategory } from './metadata';
 
 const iconModules = import.meta.glob<{ default: React.FC<IIconProps> }>('./Icon*.tsx', {
   eager: true,
@@ -77,7 +77,7 @@ const IconCard: React.FC<{
   color?: string;
   variant?: 'line' | 'filled';
   variants: ('line' | 'filled')[];
-  categories: IconCategory[];
+  categories: readonly IconCategory[];
 }> = ({ name, Icon, defaultSize, size, color, variant, variants, categories }) => {
   const [copied, setCopied] = useState(false);
   const effectiveVariant = variant && variants.includes(variant) ? variant : variants[0];
@@ -201,7 +201,7 @@ export const AllIcons: StoryObj<{
     const filteredIcons = iconList.filter((icon) => {
       const matchesSearch = icon.name.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory =
-        !categoryFilter || icon.categories.includes(categoryFilter as IconCategory);
+        !categoryFilter || (icon.categories as readonly IconCategory[]).includes(categoryFilter as IconCategory);
       return matchesSearch && matchesCategory;
     });
 
