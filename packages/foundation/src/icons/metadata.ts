@@ -85,7 +85,7 @@ export const iconMetadata: Record<TIconName, IIconMetadataEntry> = {
   },
   IconCaution: {
     categories: [IconCategory.STATUS],
-    variants: ['line'],
+    variants: ['line', 'filled'],
   },
   IconChartBar: {
     categories: [IconCategory.SYSTEM],

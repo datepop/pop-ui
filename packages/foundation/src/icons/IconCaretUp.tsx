@@ -1,13 +1,13 @@
 import { ColorGray900 } from '../tokens/colors';
 
-import type { IIconProps } from '../types/icon';
+import type { IIconFilledOnlyProps } from '../types/icon';
 
 export default function IconCaretUp({
   size = 24,
   color = ColorGray900,
-  variant = 'filled',
+  variant: _variant = 'filled',
   ...props
-}: IIconProps) {
+}: IIconFilledOnlyProps) {
   return (
     <svg
       width={size}

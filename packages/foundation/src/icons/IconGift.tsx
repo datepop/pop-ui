@@ -1,13 +1,13 @@
-import { ColorGray900 } from "../tokens/colors";
+import { ColorGray900 } from '../tokens/colors';
 
-import type { IIconProps } from "../types/icon";
+import type { IIconLineOnlyProps } from '../types/icon';
 
 export default function IconGift({
   size = 24,
   color = ColorGray900,
-  variant = 'line',
+  variant: _variant = 'line',
   ...props
-}: IIconProps) {
+}: IIconLineOnlyProps) {
   return (
     <svg
       width={size}
@@ -22,14 +22,7 @@ export default function IconGift({
         stroke={color}
         strokeWidth="1.5"
       />
-      <rect
-        x="10"
-        y="7"
-        width="4"
-        height="15"
-        stroke={color}
-        strokeWidth="1.5"
-      />
+      <rect x="10" y="7" width="4" height="15" stroke={color} strokeWidth="1.5" />
       <path
         d="M2 8L2 11C2 11.5523 2.44772 12 3 12L10 12L10 7L3 7C2.44772 7 2 7.44772 2 8Z"
         stroke={color}
