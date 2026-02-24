@@ -6,6 +6,14 @@
  * - BRAND: 브랜드 전용
  * - SYSTEM: 시스템 및 설정 (결제, 상거래, 매장 등)
  */
+import type * as Illustrations from './index';
+
+type TIllustrationName = keyof typeof Illustrations;
+
+interface IIllustrationMetadataEntry {
+  categories: IllustrationCategory[];
+}
+
 export enum IllustrationCategory {
   CONTENT = 'content',
   ACTION = 'action',
@@ -18,7 +26,7 @@ export enum IllustrationCategory {
  * Illustration 메타데이터
  * - categories: 의미 분류 체계
  */
-export const illustrationMetadata = {
+export const illustrationMetadata: Record<TIllustrationName, IIllustrationMetadataEntry> = {
   IllustrationAgeAll: { categories: [IllustrationCategory.CONTENT] },
   IllustrationAge12: { categories: [IllustrationCategory.CONTENT] },
   IllustrationAge15: { categories: [IllustrationCategory.CONTENT] },
@@ -45,4 +53,4 @@ export const illustrationMetadata = {
   IllustrationShop: { categories: [IllustrationCategory.CONTENT] },
   IllustrationShoppingbag: { categories: [IllustrationCategory.CONTENT] },
   IllustrationVendingmachine: { categories: [IllustrationCategory.CONTENT] },
-} as const;
+};

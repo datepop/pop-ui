@@ -6,6 +6,8 @@
  * - BRAND: 브랜드 전용 (pop-ui 및 관련 브랜드 아이콘)
  * - SYSTEM: 시스템 및 설정 (시스템 기능, 사용자, 분석 등)
  */
+import type * as Icons from './index';
+
 export enum IconCategory {
   CONTENT = 'content',
   ACTION = 'action',
@@ -13,8 +15,14 @@ export enum IconCategory {
   BRAND = 'brand',
   SYSTEM = 'system',
 }
+type TIconName = keyof typeof Icons;
 
-export const iconMetadata = {
+interface IIconMetadataEntry {
+  categories: IconCategory[];
+  variants: ('line' | 'filled')[];
+}
+
+export const iconMetadata: Record<TIconName, IIconMetadataEntry> = {
   IconArrowDown: {
     categories: [IconCategory.ACTION],
     variants: ['line'],
@@ -419,4 +427,4 @@ export const iconMetadata = {
     categories: [IconCategory.STATUS],
     variants: ['line', 'filled'],
   },
-} as const;
+};
