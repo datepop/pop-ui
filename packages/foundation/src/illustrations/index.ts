@@ -6,7 +6,7 @@ export { default as IllustrationCreditcard } from './IllustrationCreditcard';
 export { default as IllustrationDiscountcoupon } from './IllustrationDiscountcoupon';
 export { default as IllustrationDiscounttagMint } from './IllustrationDiscounttagMint';
 export { default as IllustrationDiscounttagPurple } from './IllustrationDiscounttagPurple';
-export { default as IllustrationDiscouttagRed } from './IllustrationDiscouttagRed';
+export { default as IllustrationDiscounttagRed } from './IllustrationDiscounttagRed';
 export { default as IllustrationExel } from './IllustrationExel';
 export { default as IllustrationFolder } from './IllustrationFolder';
 export { default as IllustrationLink } from './IllustrationLink';
