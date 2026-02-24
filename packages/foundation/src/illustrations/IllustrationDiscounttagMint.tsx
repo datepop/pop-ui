@@ -1,16 +1,9 @@
 import type { IIllustrationProps } from '../types/illustration';
 
-const DISCOUNTTAG_COLOR_MAP = {
-  mint: { main: '#0FD3D8', light: '#72EEF1' },
-  red: { main: '#FF8A8A', light: '#FECDCA' },
-  purple: { main: '#9775FA', light: '#B197FC' },
-} as const;
-
-type ColorVariant = keyof typeof DISCOUNTTAG_COLOR_MAP;
-
-function IllustrationDiscounttag({ size = 24, color = 'mint', ...props }: IIllustrationProps) {
-  const { main, light } = DISCOUNTTAG_COLOR_MAP[color as ColorVariant] ?? DISCOUNTTAG_COLOR_MAP.mint;
-
+export default function IllustrationDiscounttagMint({
+  size = 24,
+  ...props
+}: IIllustrationProps) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -24,14 +17,14 @@ function IllustrationDiscounttag({ size = 24, color = 'mint', ...props }: IIllus
         fillRule="evenodd"
         clipRule="evenodd"
         d="M12.094 4.602a1.94 1.94 0 0 0-2.348.937l-2.417 4.699a1.9 1.9 0 0 0-.06 1.611l3.87 9.221a1.985 1.985 0 0 0 2.556 1.072l7.52-2.998a1.9 1.9 0 0 0 1.053-2.51l-3.87-9.222a1.98 1.98 0 0 0-1.2-1.109zm.162 3.653a.875.875 0 0 1 1.126.473.837.837 0 0 1-.463 1.105.874.874 0 0 1-1.126-.472.84.84 0 0 1 .463-1.106"
-        fill={light}
+        fill="#72EEF1"
         strokeWidth={0}
       />
       <path
         fillRule="evenodd"
         clipRule="evenodd"
         d="M9.816 5.042a1.98 1.98 0 0 1 2.58 0l4.132 3.542c.44.377.692.927.692 1.506v10.207a1.983 1.983 0 0 1-1.982 1.982H6.974a1.983 1.983 0 0 1-1.982-1.982V10.09c0-.579.253-1.129.692-1.506zm1.29 3.525a.874.874 0 1 0 .001 1.748.874.874 0 0 0 0-1.748"
-        fill={main}
+        fill="#0FD3D8"
         strokeWidth={0}
       />
       <path
@@ -50,7 +43,7 @@ function IllustrationDiscounttag({ size = 24, color = 'mint', ...props }: IIllus
       />
       <path
         d="M13.93 6.353c-.026 1.456-.66 2.709-1.8 3.247l-.172.074-.007.001a.87.87 0 0 0-.15-.77l-.026-.055c.58-.273 1.032-.867 1.212-1.743.096-.467.107-.993.02-1.545z"
-        fill={main}
+        fill="#0FD3D8"
         strokeWidth={0}
       />
       <path
@@ -61,7 +54,3 @@ function IllustrationDiscounttag({ size = 24, color = 'mint', ...props }: IIllus
     </svg>
   );
 }
-
-IllustrationDiscounttag.colorOptions = ['mint', 'red', 'purple'];
-
-export default IllustrationDiscounttag;
