@@ -371,6 +371,10 @@ export const iconMetadata = {
     categories: [IconCategory.SYSTEM],
     variants: ['line'],
   },
+  IconSwapHorizontal: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
   IconSwapVertical: {
     categories: [IconCategory.ACTION],
     variants: ['line'],
