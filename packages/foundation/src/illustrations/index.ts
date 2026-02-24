@@ -10,7 +10,7 @@ export { default as IllustrationDiscounttagRed } from './IllustrationDiscounttag
 export { default as IllustrationExel } from './IllustrationExel';
 export { default as IllustrationFolder } from './IllustrationFolder';
 export { default as IllustrationLink } from './IllustrationLink';
-export {default as IllustrationMappinMint} from './IllustrationMappinMint';
+export { default as IllustrationMappinMint } from './IllustrationMappinMint';
 export { default as IllustrationMappinRed } from './IllustrationMappinRed';
 export { default as IllustrationMoneybag } from './IllustrationMoneybag';
 export { default as IllustrationPopcorn } from './IllustrationPopcorn';
