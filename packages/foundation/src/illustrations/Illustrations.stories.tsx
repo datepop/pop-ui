@@ -2,6 +2,7 @@ import { Stack, Text, Paper, Box, TextInput, Button, Group, Select } from '@mant
 import React, { useState } from 'react';
 import type { IIllustrationProps } from '../types/illustration';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { illustrationMetadata, IllustrationCategory } from './metadata';
 
 const illustrationModules = import.meta.glob<{ default: React.FC<IIllustrationProps> }>(
   './Illustration*.tsx',
@@ -11,10 +12,20 @@ const illustrationModules = import.meta.glob<{ default: React.FC<IIllustrationPr
 const illustrationList = Object.entries(illustrationModules)
   .map(([path, module]) => {
     const name = path.replace('./', '').replace('.tsx', '');
-    return { name, component: module.default };
+    const meta = illustrationMetadata[name as keyof typeof illustrationMetadata];
+    return {
+      name,
+      component: module.default,
+      categories: meta?.categories ?? [],
+    };
   })
   .filter((item) => !item.name.includes('.stories'))
   .sort((a, b) => a.name.localeCompare(b.name));
+
+const categoryOptions: { value: string; label: string }[] = [
+  { value: '', label: 'All' },
+  ...Object.entries(IllustrationCategory).map(([key, value]) => ({ value, label: key })),
+];
 
 const meta: Meta = {
   title: 'Foundation/Illustrations',
@@ -28,18 +39,12 @@ const IllustrationCard: React.FC<{
   name: string;
   Illustration: React.FC<IIllustrationProps>;
   size?: number;
-}> = ({ name, Illustration, size = 48 }) => {
+  categories: readonly IllustrationCategory[];
+}> = ({ name, Illustration, size = 48, categories }) => {
   const [copied, setCopied] = useState(false);
-  const colorOptions = (Illustration as any).colorOptions as string[] | undefined;
-  const [selectedColor, setSelectedColor] = useState(colorOptions?.[0]);
 
   const handleCopy = async () => {
-    const props = [
-      size !== 48 ? `size={${size}}` : '',
-      selectedColor ? `color="${selectedColor}"` : '',
-    ]
-      .filter(Boolean)
-      .join(' ');
+    const props = size !== 48 ? `size={${size}} ` : '';
     const code = `import { ${name} } from '@pop-ui/foundation';\n\n<${name} ${props}/>`;
     try {
       await navigator.clipboard.writeText(code);
@@ -84,21 +89,20 @@ const IllustrationCard: React.FC<{
             borderRadius: '8px',
           }}
         >
-          <Illustration size={size} color={selectedColor} />
+          <Illustration size={size} />
         </Box>
         <Stack gap="xs" align="center">
           <Text size="sm" fw={600}>
             {name}
           </Text>
-          {colorOptions && (
-            <Select
-              size="xs"
-              data={colorOptions}
-              value={selectedColor}
-              onChange={(value) => value && setSelectedColor(value)}
-              onClick={(e) => e.stopPropagation()}
-              style={{ width: '100px' }}
-            />
+          {categories.length > 0 && (
+            <Group gap={4} justify="center">
+              {categories.map((c) => (
+                <Text key={c} size="xs" c="dimmed" style={{ textTransform: 'capitalize' }}>
+                  {c}
+                </Text>
+              ))}
+            </Group>
           )}
           <Text size="xs" c="dimmed">
             {copied ? 'Copied!' : 'Click to copy'}
@@ -119,10 +123,15 @@ export const AllIllustrations: StoryObj<{ size: number }> = {
   },
   render: (args) => {
     const [searchTerm, setSearchTerm] = useState('');
+    const [categoryFilter, setCategoryFilter] = useState('');
 
-    const filtered = illustrationList.filter((item) =>
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
+    const filtered = illustrationList.filter((item) => {
+      const matchSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchCategory =
+        !categoryFilter ||
+        (item.categories as readonly string[]).includes(categoryFilter);
+      return matchSearch && matchCategory;
+    });
 
     return (
       <Stack gap="xl" p="md">
@@ -133,12 +142,20 @@ export const AllIllustrations: StoryObj<{ size: number }> = {
           <Text size="sm" c="dimmed" mb="lg">
             Click any card to copy its import code.
           </Text>
-          <Group gap="md">
+          <Group gap="md" wrap="wrap">
             <TextInput
               placeholder="Search illustrations..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              style={{ flex: 1, maxWidth: '400px' }}
+              style={{ flex: 1, minWidth: '200px', maxWidth: '400px' }}
+            />
+            <Select
+              placeholder="Category"
+              value={categoryFilter}
+              onChange={(v) => setCategoryFilter(v ?? '')}
+              data={categoryOptions}
+              style={{ minWidth: '140px' }}
+              aria-label="Filter by category"
             />
             {searchTerm && (
               <Button variant="subtle" onClick={() => setSearchTerm('')}>
@@ -168,6 +185,7 @@ export const AllIllustrations: StoryObj<{ size: number }> = {
                 name={item.name}
                 Illustration={item.component}
                 size={args.size}
+                categories={item.categories}
               />
             ))}
           </div>
