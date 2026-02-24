@@ -1,13 +1,13 @@
-import { ColorGray900 } from "../tokens/colors";
+import { ColorGray900 } from '../tokens/colors';
 
-import type { IIconProps } from "../types/icon";
+import type { IIconLineOnlyProps } from '../types/icon';
 
 export default function IconCameraSwitch({
   size = 24,
   color = ColorGray900,
-  variant = 'line',
+  variant: _variant = 'line',
   ...props
-}: IIconProps) {
+}: IIconLineOnlyProps) {
   return (
     <svg
       width={size}
@@ -25,13 +25,7 @@ export default function IconCameraSwitch({
         d="M13.6875 10.25C13.6875 9.31802 12.932 8.5625 12 8.5625C11.068 8.5625 10.3125 9.31802 10.3125 10.25C10.3125 11.182 11.068 11.9375 12 11.9375C12.932 11.9375 13.6875 11.182 13.6875 10.25ZM14.8125 10.25C14.8125 11.8033 13.5533 13.0625 12 13.0625C10.4467 13.0625 9.1875 11.8033 9.1875 10.25C9.1875 8.6967 10.4467 7.4375 12 7.4375C13.5533 7.4375 14.8125 8.6967 14.8125 10.25Z"
         fill={color}
       />
-      <ellipse
-        cx="15.3908"
-        cy="7.6585"
-        rx="0.565117"
-        ry="0.554492"
-        fill={color}
-      />
+      <ellipse cx="15.3908" cy="7.6585" rx="0.565117" ry="0.554492" fill={color} />
       <path
         d="M9.40971 20.5309C7.92734 20.2755 6.57185 19.8068 5.4452 19.1716C4.31722 18.5357 3.46698 17.7607 2.92973 16.9269C2.39613 16.0988 2.18221 15.232 2.26861 14.3846C2.35535 13.5339 2.74795 12.6742 3.46473 11.8761"
         stroke={color}

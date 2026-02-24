@@ -1,4 +1,4 @@
-import { IIllustrationProps } from '../types/illustration';
+import type { IIllustrationProps } from '../types/illustration';
 
 export default function IllustrationMegaphone({ size = 24, ...props }: IIllustrationProps) {
   return (
