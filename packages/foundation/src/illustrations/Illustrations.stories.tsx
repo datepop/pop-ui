@@ -1,8 +1,8 @@
 import { Stack, Text, Paper, Box, TextInput, Button, Group, Select } from '@mantine/core';
 import React, { useState } from 'react';
+import { illustrationMetadata, IllustrationCategory } from './metadata';
 import type { IIllustrationProps } from '../types/illustration';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { illustrationMetadata, IllustrationCategory } from './metadata';
 
 const illustrationModules = import.meta.glob<{ default: React.FC<IIllustrationProps> }>(
   './Illustration*.tsx',
