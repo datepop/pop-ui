@@ -87,6 +87,7 @@ export { default as IconSmartphone } from './IconSmartphone';
 export { default as IconSound } from './IconSound';
 export { default as IconStar } from './IconStar';
 export { default as IconStore } from './IconStore';
+export { default as IconSwapHorizontal } from './IconSwapHorizontal';
 export { default as IconSwapVertical } from './IconSwapVertical';
 export { default as IconText } from './IconText';
 export { default as IconTicket } from './IconTicket';
