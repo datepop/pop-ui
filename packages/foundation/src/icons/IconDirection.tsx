@@ -1,8 +1,13 @@
 import { ColorGray900 } from '../tokens/colors';
 
-import type { IIconProps } from '../types/icon';
+import type { IIconLineOnlyProps } from '../types/icon';
 
-export default function IconDirection({ size = 24, color = ColorGray900, ...props }: IIconProps) {
+export default function IconDirection({
+  size = 24,
+  color = ColorGray900,
+  variant: _variant = 'line',
+  ...props
+}: IIconLineOnlyProps) {
   return (
     <svg
       width={size}

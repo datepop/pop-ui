@@ -1,4 +1,4 @@
-import { ColorAqua500, ColorRed400, IconCheckCircle, IconWarning } from '@pop-ui/foundation';
+import { ColorAqua500, ColorRed400, IconCheckCircle, IconWarningTriangle } from '@pop-ui/foundation';
 
 import { toast } from '.';
 import { PopUiProvider } from '../../theme';
@@ -150,7 +150,7 @@ export const WithIcon: StoryObj = {
         case 'success':
           return <IconCheckCircle size={24} color={ColorAqua500} />;
         case 'error':
-          return <IconWarning size={22} color={ColorRed400} />;
+          return <IconWarningTriangle size={22} color={ColorRed400} />;
         default:
           return undefined;
       }

@@ -1,7 +1,18 @@
-import type { SVGProps } from "react";
+import type { SVGProps } from 'react';
 
-export interface IIconProps extends SVGProps<SVGSVGElement> {
+interface IIconBaseProps extends SVGProps<SVGSVGElement> {
   size?: number;
   color?: string;
-  filled?: boolean;
+}
+
+export interface IIconProps extends IIconBaseProps {
+  variant?: 'line' | 'filled';
+}
+
+export interface IIconFilledOnlyProps extends IIconBaseProps {
+  variant?: 'filled';
+}
+
+export interface IIconLineOnlyProps extends IIconBaseProps {
+  variant?: 'line';
 }

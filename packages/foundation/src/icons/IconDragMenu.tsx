@@ -1,12 +1,13 @@
-import { ColorGray900 } from "../tokens/colors";
+import { ColorGray900 } from '../tokens/colors';
 
-import type { IIconProps } from "../types/icon";
+import type { IIconLineOnlyProps } from '../types/icon';
 
 export default function IconDragMenu({
   size = 24,
   color = ColorGray900,
+  variant: _variant = 'line',
   ...props
-}: IIconProps) {
+}: IIconLineOnlyProps) {
   return (
     <svg
       width={size}

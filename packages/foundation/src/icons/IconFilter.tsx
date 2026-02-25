@@ -1,12 +1,13 @@
-import { ColorGray900 } from "../tokens/colors";
+import { ColorGray900 } from '../tokens/colors';
 
-import type { IIconProps } from "../types/icon";
+import type { IIconLineOnlyProps } from '../types/icon';
 
 export default function IconFilter({
   size = 24,
   color = ColorGray900,
+  variant: _variant = 'line',
   ...props
-}: IIconProps) {
+}: IIconLineOnlyProps) {
   return (
     <svg
       width={size}
@@ -28,20 +29,8 @@ export default function IconFilter({
         strokeWidth="2.5"
         strokeLinecap="round"
       />
-      <circle
-        cx="26.6667"
-        cy="13.3333"
-        r="4.58333"
-        stroke={color}
-        strokeWidth="2.5"
-      />
-      <circle
-        cx="13.3333"
-        cy="26.6667"
-        r="4.58333"
-        stroke={color}
-        strokeWidth="2.5"
-      />
+      <circle cx="26.6667" cy="13.3333" r="4.58333" stroke={color} strokeWidth="2.5" />
+      <circle cx="13.3333" cy="26.6667" r="4.58333" stroke={color} strokeWidth="2.5" />
     </svg>
   );
 }

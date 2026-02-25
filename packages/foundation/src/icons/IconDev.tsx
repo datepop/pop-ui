@@ -1,12 +1,13 @@
-import { ColorGray900 } from "../tokens/colors";
+import { ColorGray900 } from '../tokens/colors';
 
-import type { IIconProps } from "../types/icon";
+import type { IIconLineOnlyProps } from '../types/icon';
 
 export default function IconDev({
   size = 24,
   color = ColorGray900,
+  variant: _variant = 'line',
   ...props
-}: IIconProps) {
+}: IIconLineOnlyProps) {
   return (
     <svg
       width={size}
@@ -37,14 +38,7 @@ export default function IconDev({
         strokeWidth="2.5"
         strokeLinecap="round"
       />
-      <rect
-        x="13.3333"
-        y="32.6345"
-        width="13.3333"
-        height="2.36546"
-        rx="1.18273"
-        fill={color}
-      />
+      <rect x="13.3333" y="32.6345" width="13.3333" height="2.36546" rx="1.18273" fill={color} />
     </svg>
   );
 }

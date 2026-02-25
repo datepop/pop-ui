@@ -42,7 +42,7 @@ const MyComponent = () => {
 import {
   SemanticColorPrimary,
   SemanticColorWarning,
-  BgColorButtonBgPrimaryDefault
+  BgColorButtonBgPrimaryDefault,
 } from '@pop-ui/foundation';
 ```
 
@@ -69,6 +69,7 @@ function MyComponent() {
 
 - `size?: number` - 아이콘 크기 (기본값: 원본 크기)
 - `color?: string` - 아이콘 색상 (기본값: ColorGray900 = #333333)
+- `variant?: 'line' | 'filled'` - 스타일 변형 (기본값: `'line'`. 일부 아이콘만 `filled` 지원)
 - `className?: string` - CSS 클래스
 - `style?: CSSProperties` - 인라인 스타일
 - 기타 표준 SVG 속성들
@@ -95,6 +96,10 @@ import { IcChevronDown, ColorGray900 } from '@pop-ui/foundation';
 
 // 색상 변경
 <IcChevronDown color="#1971C2" />
+
+// variant (line | filled, 일부 아이콘만 filled 지원)
+<IcChevronDown variant="line" />
+<IcChevronDown variant="filled" />
 
 // CSS 클래스 사용
 <IcChevronDown className="my-icon" />
@@ -132,6 +137,54 @@ const cssVar = getCSSVariableRef('gray', '900'); // "var(--color-gray-900)"
 console.log(colorNames); // ['gray', 'aqua', 'red', ...]
 ```
 
+### 4. Illustrations 아이콘
+
+2색 이상의 다중 색상을 포함하는 일러스트레이션 아이콘입니다. 색상이 고정되어 있어 color prop 없이 size만 제어합니다.
+
+일러스트레이션 vs 아이콘
+구분아이콘 (Icon)일러스트레이션 (Illustration)색상단색, color prop으로 변경 가능다중 색상 고정variantline / filled 지원색상별 별도 컴포넌트
+
+```tsx
+import { IllustrationPopcorn, IllustrationDiscounttagMint } from '@pop-ui/foundation';
+
+function MyComponent() {
+  return (
+    <div>
+      <IllustrationPopcorn size={48} />
+      <IllustrationDiscounttagMint size={32} />
+    </div>
+  );
+}
+```
+
+### 5. 메타데이터 및 카테고리 분류
+
+아이콘과 일러스트레이션은 공통 카테고리 분류 체계로 관리됩니다.
+
+#### 카테고리
+
+| 카테고리    | 설명                           
+| --------- | -------------------------------- 
+| `CONTENT` | 콘텐츠, 미디어, 문서, 위치, 등급 
+| `ACTION`  | 동작 및 사용자 인터랙션          
+| `STATUS`  | 상태 및 알림                    
+| `BRAND`   | 브랜드 전용                   
+| `SYSTEM`  | 시스템 및 설정                
+
+#### 메타데이터 사용
+
+```tsx
+import { iconMetadata, IconCategory } from '@pop-ui/foundation';
+import { illustrationMetadata, IllustrationCategory } from '@pop-ui/foundation';
+
+// 아이콘 메타데이터 조회
+iconMetadata.IconBookmark.categories; // [IconCategory.ACTION]
+iconMetadata.IconBookmark.variants; // ['line', 'filled']
+
+// 일러스트레이션 메타데이터 조회
+illustrationMetadata.IllustrationPopcorn.categories; // [IllustrationCategory.CONTENT]
+```
+
 ## 개발
 
 ### Token 생성
@@ -151,6 +204,13 @@ yarn build
 
 **참고**: Token 파일을 수정한 후에는 반드시 위 과정을 거쳐 재생성해야 합니다.
 
+### 아이콘/일러스트레이션 추가 방법
+
+1. Figma에서 SVG export
+2. SVG → TSX 변환 (JSX 속성 변환, `viewBox` 유지, `width={size}` / `height={size}` 적용)
+3. 해당 메타데이터 파일에 카테고리 등록
+4. `index.ts` 배럴 파일에 export 추가
+
 ## 타입 정의
 
 ### IIconProps
@@ -161,6 +221,17 @@ import type { IIconProps } from '@pop-ui/foundation';
 interface IIconProps extends SVGProps<SVGSVGElement> {
   size?: number;
   color?: string;
+  variant?: 'line' | 'filled';
+}
+```
+
+### IIllustrationProps
+
+```typescript
+import type { IIllustrationProps } from '@pop-ui/foundation';
+
+interface IIllustrationProps extends SVGProps<SVGSVGElement> {
+  size?: number;
 }
 ```
 
