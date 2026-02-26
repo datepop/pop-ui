@@ -12,14 +12,14 @@ export default function IconKebap({
     <svg
       width={size}
       height={size}
-      viewBox="0 0 40 40"
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <circle cx="20.8333" cy="9.16669" r="2.5" fill={color} strokeWidth={0} />
-      <circle cx="20.8333" cy="19.1667" r="2.5" fill={color} strokeWidth={0} />
-      <circle cx="20.8333" cy="29.1667" r="2.5" fill={color} strokeWidth={0} />
+      <circle cx="12" cy="6" r="1.5" fill={color} strokeWidth={0}></circle>
+      <circle cx="12" cy="12" r="1.5" fill={color} strokeWidth={0}></circle>
+      <circle cx="12" cy="18" r="1.5" fill={color} strokeWidth={0}></circle>
     </svg>
   );
 }
