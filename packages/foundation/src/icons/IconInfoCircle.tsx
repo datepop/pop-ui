@@ -14,31 +14,31 @@ export default function IconInfoCircle({
     <svg
       width={size}
       height={size}
-      viewBox="0 0 20 20"
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <circle
-        cx="10"
-        cy="10"
-        r="7.5"
+        cx="12"
+        cy="12"
+        r="9"
         fill={isFilled ? color : 'none'}
         stroke={color}
-        strokeWidth="1.25"
+        strokeWidth="1.5"
         strokeMiterlimit="10"
         strokeLinecap="round"
       />
       <path
-        d="M10 5.75L10 7"
+        d="M12 6.9L12 8.4"
         stroke={isFilled ? SemanticColorBgWhite : color}
-        strokeWidth="1.25"
+        strokeWidth="1.5"
         strokeMiterlimit="10"
       />
       <path
-        d="M10 8L10 14"
+        d="M12 9.6L12 16.8"
         stroke={isFilled ? SemanticColorBgWhite : color}
-        strokeWidth="1.25"
+        strokeWidth="1.5"
         strokeMiterlimit="10"
       />
     </svg>

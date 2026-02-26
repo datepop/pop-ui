@@ -12,15 +12,15 @@ export default function IconCheck({
     <svg
       width={size}
       height={size}
-      viewBox="0 0 40 40"
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <path
-        d="M5.00403 20L15.5923 30L35.004 10"
+        d="M3.0024 12L9.3554 18L21.0024 6"
         stroke={color}
-        strokeWidth="3.33333"
+        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />

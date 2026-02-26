@@ -14,31 +14,31 @@ export default function IconCaution({
     <svg
       width={size}
       height={size}
-      viewBox="0 0 20 20"
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <circle
-        cx="10"
-        cy="10"
-        r="7.5"
+        cx="12"
+        cy="12"
+        r="9"
         fill={isFilled ? color : 'none'}
         stroke={isFilled ? undefined : color}
-        strokeWidth={isFilled ? 0 : 1.25}
+        strokeWidth={isFilled ? 0 : 1.5}
         strokeMiterlimit="10"
         strokeLinecap="round"
       />
       <path
-        d="M10 14.25L10 13"
+        d="M12 17.1L12 15.6"
         stroke={isFilled ? SemanticColorBgWhite : color}
-        strokeWidth="1.25"
+        strokeWidth="1.5"
         strokeMiterlimit="10"
       />
       <path
-        d="M10 12V6"
+        d="M12 14.4V7.2"
         stroke={isFilled ? SemanticColorBgWhite : color}
-        strokeWidth="1.25"
+        strokeWidth="1.5"
         strokeMiterlimit="10"
       />
     </svg>

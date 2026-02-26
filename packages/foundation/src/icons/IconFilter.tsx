@@ -12,25 +12,25 @@ export default function IconFilter({
     <svg
       width={size}
       height={size}
-      viewBox="0 0 40 40"
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <path
-        d="M5 13.3333H21.7757M35 13.3333H31.6056"
+        d="M3 8H13.0654M21 8H18.9634"
         stroke={color}
-        strokeWidth="2.5"
+        strokeWidth="1.5"
         strokeLinecap="round"
       />
       <path
-        d="M35 26.6667H18.2261M5 26.6667H8.39618"
+        d="M21 16H10.9357M3 16H5.0377"
         stroke={color}
-        strokeWidth="2.5"
+        strokeWidth="1.5"
         strokeLinecap="round"
       />
-      <circle cx="26.6667" cy="13.3333" r="4.58333" stroke={color} strokeWidth="2.5" />
-      <circle cx="13.3333" cy="26.6667" r="4.58333" stroke={color} strokeWidth="2.5" />
+      <circle cx="16" cy="8" r="2.75" stroke={color} strokeWidth="1.5" />
+      <circle cx="8" cy="16" r="2.75" stroke={color} strokeWidth="1.5" />
     </svg>
   );
 }

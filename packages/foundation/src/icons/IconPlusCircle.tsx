@@ -14,27 +14,25 @@ export default function IconPlusCircle({
     <svg
       width={size}
       height={size}
-      viewBox="0 0 22 22"
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <g transform="translate(1 1)" fill="none" fillRule="evenodd">
-        <circle
-          cx="10"
-          cy="10"
-          r="10"
-          fill={isFilled ? color : 'none'}
-          stroke={color}
-          strokeWidth="1"
-        />
-        <path
-          strokeLinecap="round"
-          d="M10 5v10M15 10H5"
-          stroke={isFilled ? SemanticColorBgWhite : color}
-          strokeWidth="1"
-        />
-      </g>
+      <circle
+        cx="12"
+        cy="12"
+        r="10.9091"
+        fill={isFilled ? color : 'none'}
+        stroke={color}
+        strokeWidth="1.5"
+      />
+      <path
+        strokeLinecap="round"
+        d="M12 6.5455V17.4545M17.4545 12H6.5455"
+        stroke={isFilled ? SemanticColorBgWhite : color}
+        strokeWidth="1.5"
+      />
     </svg>
   );
 }

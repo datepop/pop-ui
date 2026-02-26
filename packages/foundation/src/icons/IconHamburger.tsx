@@ -12,14 +12,14 @@ export default function IconHamburger({
     <svg
       width={size}
       height={size}
-      viewBox="0 0 40 40"
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <rect x="5" y="6.66663" width="30" height="2.5" rx="1.25" fill={color} strokeWidth={0} />
-      <rect x="5" y="19.1666" width="30" height="2.5" rx="1.25" fill={color} strokeWidth={0} />
-      <rect x="5" y="31.6666" width="30" height="2.5" rx="1.25" fill={color} strokeWidth={0} />
+      <rect width="18" height="1.5" x="3" y="4" fill={color} rx="0.75" strokeWidth={0}></rect>
+      <rect width="18" height="1.5" x="3" y="11.5" fill={color} rx="0.75" strokeWidth={0}></rect>
+      <rect width="18" height="1.5" x="3" y="19" fill={color} rx="0.75" strokeWidth={0}></rect>
     </svg>
   );
 }

@@ -12,43 +12,43 @@ export default function IconLocation({
     <svg
       width={size}
       height={size}
-      viewBox="0 0 40 40"
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <path
-        d="M20 35C28.2843 35 35 28.2843 35 20C35 11.7157 28.2843 5 20 5C11.7157 5 5 11.7157 5 20C5 28.2843 11.7157 35 20 35Z"
+        d="M12 21C16.9706 21 21 16.9706 21 12C21 7.0294 16.9706 3 12 3C7.0294 3 3 7.0294 3 12C3 16.9706 7.0294 21 12 21Z"
         stroke={color}
-        strokeWidth="2.5"
+        strokeWidth="1.5"
         strokeMiterlimit="10"
         strokeLinecap="round"
       />
       <path
-        d="M35 20H26.95"
+        d="M21 12H16.17"
         stroke={color}
-        strokeWidth="2.5"
+        strokeWidth="1.5"
         strokeMiterlimit="10"
         strokeLinecap="round"
       />
       <path
-        d="M13.05 20H5"
+        d="M7.83 12H3"
         stroke={color}
-        strokeWidth="2.5"
+        strokeWidth="1.5"
         strokeMiterlimit="10"
         strokeLinecap="round"
       />
       <path
-        d="M20 35V26.95"
+        d="M12 21V16.17"
         stroke={color}
-        strokeWidth="2.5"
+        strokeWidth="1.5"
         strokeMiterlimit="10"
         strokeLinecap="round"
       />
       <path
-        d="M20 13.05V5"
+        d="M12 7.83V3"
         stroke={color}
-        strokeWidth="2.5"
+        strokeWidth="1.5"
         strokeMiterlimit="10"
         strokeLinecap="round"
       />

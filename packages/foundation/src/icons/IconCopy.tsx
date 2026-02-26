@@ -12,24 +12,24 @@ export default function IconCopy({
     <svg
       width={size}
       height={size}
-      viewBox="0 0 40 40"
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <path
-        d="M26.6667 11.6665V8.33321C26.6667 6.49226 25.1743 4.99988 23.3334 4.99988H10C8.15907 4.99988 6.66669 6.49226 6.66669 8.33321V26.6665C6.66669 28.5075 8.15907 29.9999 10 29.9999H13.3334"
+        d="M16 6.9999V4.9999C16 3.8954 15.1046 2.9999 14 2.9999H6C4.8954 2.9999 4 3.8954 4 4.9999V15.9999C4 17.1045 4.8954 17.9999 6 17.9999H8"
         stroke={color}
-        strokeWidth="2.5"
+        strokeWidth="1.5"
       />
       <rect
-        x="13.3334"
-        y="11.6665"
-        width="20"
-        height="23.3333"
-        rx="3.33333"
+        x="8"
+        y="7"
+        width="12"
+        height="14"
+        rx="2"
         stroke={color}
-        strokeWidth="2.5"
+        strokeWidth="1.5"
       />
     </svg>
   );
