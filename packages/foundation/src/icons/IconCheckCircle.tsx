@@ -30,7 +30,7 @@ export default function IconCheckCircle({
       <path
         d="M8.24878 12L11.2488 15L16.5 9.5"
         stroke={isFilled ? SemanticColorBgWhite : color}
-        strokeWidth="2"
+        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
