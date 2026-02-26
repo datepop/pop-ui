@@ -12,28 +12,28 @@ export default function IconClock({
     <svg
       width={size}
       height={size}
-      viewBox="0 0 40 40"
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <path
-        d="M20 35C28.2843 35 35 28.2843 35 20C35 11.7157 28.2843 5 20 5C11.7157 5 5 11.7157 5 20C5 28.2843 11.7157 35 20 35Z"
+        d="M12 21C16.9706 21 21 16.9706 21 12C21 7.0294 16.9706 3 12 3C7.0294 3 3 7.0294 3 12C3 16.9706 7.0294 21 12 21Z"
         stroke={color}
-        strokeWidth="2.5"
+        strokeWidth="1.5"
         strokeMiterlimit="10"
       />
       <path
-        d="M20.2 20V11.75"
+        d="M12.12 12V7.05"
         stroke={color}
-        strokeWidth="2.5"
+        strokeWidth="1.5"
         strokeMiterlimit="10"
         strokeLinecap="round"
       />
       <path
-        d="M26.95 20H20.2"
+        d="M16.17 12H12.12"
         stroke={color}
-        strokeWidth="2.5"
+        strokeWidth="1.5"
         strokeMiterlimit="10"
         strokeLinecap="round"
       />
