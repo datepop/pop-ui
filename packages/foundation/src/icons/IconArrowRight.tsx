@@ -12,22 +12,22 @@ export default function IconArrowRight({
     <svg
       width={size}
       height={size}
-      viewBox="0 0 40 40"
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <path
-        d="M24.7222 10.8334L34.1667 20.8334L24.7222 30.8334"
+        d="M14.8333 6.5L20.5 12.5L14.8333 18.5"
         stroke={color}
-        strokeWidth="3.33333"
+        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
-        d="M34.1667 20.8342L5.83335 20.8342"
+        d="M20.5 12.5005L3.5 12.5005"
         stroke={color}
-        strokeWidth="3.33333"
+        strokeWidth="1.5"
         strokeLinecap="round"
       />
     </svg>
