@@ -305,7 +305,7 @@ export const iconMetadata: Record<TIconName, IIconMetadataEntry> = {
   },
   IconPopdeal: {
     categories: [IconCategory.BRAND],
-    variants: ['line'],
+    variants: ['line', 'filled'],
   },
   IconPoppass: {
     categories: [IconCategory.CONTENT],
