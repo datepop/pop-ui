@@ -7,6 +7,10 @@
   "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
+      "react-native": {
+        "types": "./dist/types-native/index.native.d.ts",
+        "default": "./dist/native/index.native.js"
+      },
       "import": {
         "types": "./dist/types/index.d.ts",
         "default": "./dist/foundation.js"
@@ -31,18 +35,30 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && yarn build:native",
+    "build:native": "tsc -p tsconfig.native.json",
+    "generate:native": "tsx scripts/generate-native.ts",
     "typecheck": "tsc",
     "token-transform": "token-transformer token.json transformed-token.json --expandTypography --expandShadow --expandCompotision --expandBorder",
     "token-build": "style-dictionary build --config config.json"
   },
   "peerDependencies": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
-  },
-  "dependencies": {
     "@mantine/core": "^8.3.6",
-    "@mantine/hooks": "^8.3.6"
+    "@mantine/hooks": "^8.3.6",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-native-svg": ">=13.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@mantine/core": {
+      "optional": true
+    },
+    "@mantine/hooks": {
+      "optional": true
+    },
+    "react-native-svg": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@mantine/core": "^8.3.6",
@@ -53,8 +69,10 @@
     "@vitejs/plugin-react": "^5.1.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-native-svg": "^15.0.0",
     "style-dictionary": "^5.1.1",
     "token-transformer": "^0.0.33",
+    "tsx": "^4.19.1",
     "typescript": "^5.9.3",
     "vite": "^7.1.12",
     "vite-plugin-dts": "^4.5.4"

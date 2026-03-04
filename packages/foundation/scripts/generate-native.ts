@@ -1,0 +1,168 @@
+import { readFileSync, writeFileSync, mkdirSync, readdirSync } from 'fs';
+import { join, dirname, basename } from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const ROOT = join(__dirname, '..');
+const ICONS_SRC = join(ROOT, 'src/icons');
+const ICONS_NATIVE_DST = join(ROOT, 'src/icons/native');
+const ILLUSTRATIONS_SRC = join(ROOT, 'src/illustrations');
+const ILLUSTRATIONS_NATIVE_DST = join(ROOT, 'src/illustrations/native');
+
+// 웹 SVG 엘리먼트 → React Native SVG 컴포넌트 매핑
+const SVG_ELEMENT_MAP: Record<string, string> = {
+  linearGradient: 'LinearGradient',
+  clipPath: 'ClipPath',
+  polyline: 'Polyline',
+  polygon: 'Polygon',
+  ellipse: 'Ellipse',
+  circle: 'Circle',
+  path: 'Path',
+  rect: 'Rect',
+  mask: 'Mask',
+  defs: 'Defs',
+  stop: 'Stop',
+  line: 'Line',
+  svg: 'Svg',
+  g: 'G',
+};
+
+// 긴 이름을 먼저 처리해 부분 일치 오치환 방지 (예: linearGradient가 g보다 먼저)
+const SVG_ELEMENTS = Object.keys(SVG_ELEMENT_MAP).sort((a, b) => b.length - a.length);
+
+function detectUsedComponents(content: string): string[] {
+  const used = new Set<string>();
+  for (const svgEl of SVG_ELEMENTS) {
+    const rnComponent = SVG_ELEMENT_MAP[svgEl];
+    if (
+      new RegExp(`<${svgEl}[\\s>\/]`).test(content) ||
+      new RegExp(`<\\/${svgEl}>`).test(content)
+    ) {
+      used.add(rnComponent);
+    }
+  }
+  return [...used].sort();
+}
+
+// 변환 후 잔존하는 미변환 import 경로 패턴 검증
+function validateConvertedFile(content: string, fileName: string): void {
+  const residualPatterns = [
+    { pattern: /from ['"]\.\.\/types\/icon['"]/, label: "from '../types/icon'" },
+    { pattern: /from ['"]\.\.\/types\/illustration['"]/, label: "from '../types/illustration'" },
+    { pattern: /from ['"]\.\.\/tokens\/colors['"]/, label: "from '../tokens/colors'" },
+  ];
+  for (const { pattern, label } of residualPatterns) {
+    if (pattern.test(content)) {
+      console.warn(`  ⚠ ${fileName}: 미변환 import 경로 잔존 → ${label}`);
+    }
+  }
+}
+
+function convertFile(content: string, isIllustration: boolean): string {
+  // 변환 전 원본 소스에서 사용된 컴포넌트 목록 추출
+  const usedComponents = detectUsedComponents(content);
+
+  let result = content;
+
+  // 1. React Native SVG에서 불필요한 xmlns 속성 제거
+  result = result.replace(/\s*xmlns="[^"]*"/g, '');
+  result = result.replace(/\s*xmlns:xlink="[^"]*"/g, '');
+  result = result.replace(/\s*xmlnsXlink="[^"]*"/g, '');
+
+  // 2. SVG 엘리먼트를 React Native SVG 컴포넌트로 치환 (긴 이름 우선)
+  for (const svgEl of SVG_ELEMENTS) {
+    const rnComp = SVG_ELEMENT_MAP[svgEl];
+    // 여는 태그: <svgEl 뒤에 공백·>·/ 중 하나가 오는 패턴
+    result = result.replace(new RegExp(`<${svgEl}([\\s>\/])`, 'g'), `<${rnComp}$1`);
+    // 닫는 태그: </svgEl>
+    result = result.replace(new RegExp(`<\\/${svgEl}>`, 'g'), `</${rnComp}>`);
+  }
+
+  // 3. import 경로 수정 (single/double quote 모두 대응)
+  if (isIllustration) {
+    result = result.replace(
+      /from ['"]\.\.\/types\/illustration['"]/g,
+      "from '../../types/illustration.native'",
+    );
+  } else {
+    result = result.replace(/from ['"]\.\.\/types\/icon['"]/g, "from '../../types/icon.native'");
+  }
+  result = result.replace(/from ['"]\.\.\/tokens\/colors['"]/g, "from '../../tokens/colors'");
+
+  // 4. react-native-svg import를 eslint import/order 규칙에 맞게 삽입
+  //    그룹 순서: external → internal/sibling → type (newlines-between: always)
+  const importLine = `import { ${usedComponents.join(', ')} } from 'react-native-svg';`;
+  const lines = result.split('\n');
+
+  // 패키지 import(external)와 경로 import(internal)를 구분
+  const isExternalImport = (line: string): boolean => {
+    const match = line.match(/^import\s+.*\s+from\s+['"]([^'"]+)['"]/);
+    return !!match && !match[1].startsWith('.');
+  };
+
+  // 기존 external import 중 마지막 위치 탐색 → 같은 그룹에 붙여 삽입
+  let lastExternalIdx = -1;
+  for (let i = 0; i < lines.length; i++) {
+    if (isExternalImport(lines[i])) lastExternalIdx = i;
+  }
+
+  if (lastExternalIdx >= 0) {
+    // 다른 external import가 있으면 바로 뒤에 삽입 (그룹 내 빈 줄 불필요)
+    lines.splice(lastExternalIdx + 1, 0, importLine);
+  } else {
+    // external import가 없으면 첫 번째 import 앞에 삽입하고,
+    // 다음 그룹(internal/type)과 빈 줄로 구분
+    const firstImportIdx = lines.findIndex((l) => l.startsWith('import'));
+    if (firstImportIdx >= 0) {
+      lines.splice(firstImportIdx, 0, importLine, '');
+    } else {
+      lines.unshift(importLine);
+    }
+  }
+
+  return lines.join('\n');
+}
+
+function processDirectory(srcDir: string, dstDir: string, isIllustration: boolean): number {
+  mkdirSync(dstDir, { recursive: true });
+
+  // stories 파일과 index 파일은 변환 대상에서 제외
+  const files = readdirSync(srcDir).filter(
+    (f) =>
+      f.endsWith('.tsx') &&
+      !f.endsWith('.stories.tsx') &&
+      f !== 'index.ts' &&
+      !f.startsWith('index'),
+  );
+
+  const exports: string[] = [];
+  for (const file of files) {
+    const srcPath = join(srcDir, file);
+    const dstPath = join(dstDir, file);
+    const content = readFileSync(srcPath, 'utf-8');
+    const converted = convertFile(content, isIllustration);
+    validateConvertedFile(converted, file);
+    writeFileSync(dstPath, converted, 'utf-8');
+
+    const componentName = basename(file, '.tsx');
+    exports.push(`export { default as ${componentName} } from './${componentName}';`);
+    console.log(`  ✓ ${file}`);
+  }
+
+  // 변환된 컴포넌트를 모두 re-export하는 index.ts 자동 생성
+  const indexPath = join(dstDir, 'index.ts');
+  writeFileSync(indexPath, exports.join('\n') + '\n', 'utf-8');
+  console.log(`  ✓ index.ts (${exports.length} exports)`);
+
+  return files.length;
+}
+
+console.log('Generating React Native icons...');
+const iconCount = processDirectory(ICONS_SRC, ICONS_NATIVE_DST, false);
+console.log(`Done! ${iconCount} icons generated.\n`);
+
+console.log('Generating React Native illustrations...');
+const illustrationCount = processDirectory(ILLUSTRATIONS_SRC, ILLUSTRATIONS_NATIVE_DST, true);
+console.log(`Done! ${illustrationCount} illustrations generated.`);
