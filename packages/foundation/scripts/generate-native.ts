@@ -14,6 +14,7 @@ const ILLUSTRATIONS_NATIVE_DST = join(ROOT, 'src/illustrations/native');
 // 웹 SVG 엘리먼트 → React Native SVG 컴포넌트 매핑
 const SVG_ELEMENT_MAP: Record<string, string> = {
   linearGradient: 'LinearGradient',
+  radialGradient: 'RadialGradient',
   clipPath: 'ClipPath',
   polyline: 'Polyline',
   polygon: 'Polygon',
@@ -25,6 +26,9 @@ const SVG_ELEMENT_MAP: Record<string, string> = {
   defs: 'Defs',
   stop: 'Stop',
   line: 'Line',
+  text: 'Text',
+  tspan: 'TSpan',
+  image: 'Image',
   svg: 'Svg',
   g: 'G',
 };
