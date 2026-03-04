@@ -255,6 +255,10 @@ export const iconMetadata: Record<TIconName, IIconMetadataEntry> = {
     categories: [IconCategory.ACTION],
     variants: ['line'],
   },
+  IconMenuCheck: {
+    categories: [IconCategory.ACTION],
+    variants: ['line', 'filled'],
+  },
   IconMessage: {
     categories: [IconCategory.CONTENT],
     variants: ['line', 'filled'],
@@ -305,7 +309,7 @@ export const iconMetadata: Record<TIconName, IIconMetadataEntry> = {
   },
   IconPopdeal: {
     categories: [IconCategory.BRAND],
-    variants: ['line'],
+    variants: ['line', 'filled'],
   },
   IconPoppass: {
     categories: [IconCategory.CONTENT],
@@ -375,6 +379,10 @@ export const iconMetadata: Record<TIconName, IIconMetadataEntry> = {
     categories: [IconCategory.ACTION],
     variants: ['line', 'filled'],
   },
+  IconShop: {
+    categories: [IconCategory.SYSTEM],
+    variants: ['line', 'filled'],
+  },
   IconStore: {
     categories: [IconCategory.SYSTEM],
     variants: ['line'],
@@ -404,6 +412,14 @@ export const iconMetadata: Record<TIconName, IIconMetadataEntry> = {
     variants: ['line'],
   },
   IconUser: {
+    categories: [IconCategory.SYSTEM],
+    variants: ['line', 'filled'],
+  },
+  IconUserDouble: {
+    categories: [IconCategory.SYSTEM],
+    variants: ['line', 'filled'],
+  },
+  IconUserSearch: {
     categories: [IconCategory.SYSTEM],
     variants: ['line', 'filled'],
   },

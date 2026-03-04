@@ -127,7 +127,11 @@ const IconCard: React.FC<{
             borderRadius: '8px',
           }}
         >
-          <Icon size={size || defaultSize} color={color || ColorGray900} variant={effectiveVariant} />
+          <Icon
+            size={size || defaultSize}
+            color={color || ColorGray900}
+            variant={effectiveVariant}
+          />
         </Box>
         <Stack gap="xs" align="center">
           <Text size="sm" fw={600}>
@@ -201,7 +205,8 @@ export const AllIcons: StoryObj<{
     const filteredIcons = iconList.filter((icon) => {
       const matchesSearch = icon.name.toLowerCase().includes(searchTerm.toLowerCase());
       const matchesCategory =
-        !categoryFilter || (icon.categories as readonly IconCategory[]).includes(categoryFilter as IconCategory);
+        !categoryFilter ||
+        (icon.categories as readonly IconCategory[]).includes(categoryFilter as IconCategory);
       return matchesSearch && matchesCategory;
     });
 
@@ -281,12 +286,13 @@ export const AllIcons: StoryObj<{
               fontSize: '13px',
             }}
           >
-            {`import { IconChevronDown, IconChartBar } from '@pop-ui/foundation';
+            {`import { IconChevronDown, IconChartBar, ColorAqua500 } from '@pop-ui/foundation';
 
 // Basic usage
 <IconChevronDown />
 <IconChevronDown size={32} />
 <IconChevronDown color="#1971C2" />
+<IconChevronDown color={ColorAqua500} />
 
 // With variant (for icons that support it)
 <IconChartBar variant="line" />
