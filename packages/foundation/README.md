@@ -1,14 +1,57 @@
 # @pop-ui/foundation
 
-Pop UI의 디자인 토큰, 아이콘, 이미지 등 기본 요소를 제공하는 패키지입니다.
+Pop UI의 디자인 토큰, 아이콘, 일러스트레이션 등 기본 요소를 제공하는 패키지입니다.
+React(웹)와 React Native를 모두 지원합니다.
 
 ## 설치
+
+### React (웹)
 
 ```bash
 npm install @pop-ui/foundation
 # or
 yarn add @pop-ui/foundation
 ```
+
+### React Native
+
+react-native-svg가 필요합니다 (>=13.0.0):
+
+```bash
+npm install @pop-ui/foundation react-native-svg
+# or
+yarn add @pop-ui/foundation react-native-svg
+```
+
+> iOS: `cd ios && pod install`
+
+## React Native 지원
+
+`package.json`의 `exports` 조건부로 번들러가 자동으로 RN 빌드를 선택합니다.
+**import 코드를 바꿀 필요 없습니다** — 웹과 동일한 import 경로를 사용하세요.
+
+```tsx
+// 웹과 완전히 동일한 코드로 React Native에서도 동작
+import { IconBookmark, IllustrationPopcorn } from '@pop-ui/foundation';
+
+<IconBookmark size={24} color="#333" />
+<IllustrationPopcorn size={48} />
+```
+
+### 웹과의 차이점
+
+| 항목 | 웹 (React) | React Native |
+|------|-----------|--------------|
+| 렌더링 | HTML `<svg>` | `react-native-svg` 컴포넌트 |
+| Props 타입 | `SVGProps<SVGSVGElement>` | `SvgProps` (react-native-svg) |
+| `className` | ✅ 지원 | ❌ 미지원 |
+| `style` | CSS 객체 | RN StyleSheet 객체 |
+| 색상·크기 | 동일 (`size`, `color`) | 동일 (`size`, `color`) |
+
+### 사전 요구사항
+
+- `react-native-svg` >= 13.0.0
+- Metro bundler >= 0.72 (React Native >= 0.71) — `exports` 조건부 지원 버전
 
 ## 구성 요소
 
@@ -67,12 +110,12 @@ function MyComponent() {
 
 모든 아이콘은 다음 props를 지원합니다:
 
-- `size?: number` - 아이콘 크기 (기본값: 원본 크기)
-- `color?: string` - 아이콘 색상 (기본값: ColorGray900 = #333333)
-- `variant?: 'line' | 'filled'` - 스타일 변형 (기본값: `'line'`. 일부 아이콘만 `filled` 지원)
-- `className?: string` - CSS 클래스
-- `style?: CSSProperties` - 인라인 스타일
-- 기타 표준 SVG 속성들
+- `size?: number` - 아이콘 크기 (기본값: 24)
+- `color?: string` - 아이콘 색상 (기본값: ColorGray900)
+- `variant?: 'line' | 'filled'` - 스타일 변형 (일부 아이콘만 `filled` 지원)
+- `className?: string` - CSS 클래스 **(웹 전용)**
+- `style?: CSSProperties` - 인라인 스타일 **(웹: CSS 객체 / RN: StyleSheet 객체)**
+- 기타 표준 SVG 속성 (웹) / SvgProps 속성 (RN)
 
 #### 현재 제공되는 아이콘
 
@@ -204,16 +247,32 @@ yarn build
 
 **참고**: Token 파일을 수정한 후에는 반드시 위 과정을 거쳐 재생성해야 합니다.
 
+### 스크립트
+
+| 명령어 | 설명 |
+|--------|------|
+| `yarn build` | 웹 + React Native 전체 빌드 |
+| `yarn build:native` | React Native 빌드만 실행 (tsc) |
+| `yarn generate:native` | 아이콘/일러스트를 RN 컴포넌트로 변환 |
+| `yarn token-transform` | token.json → transformed-token.json 변환 |
+| `yarn token-build` | style-dictionary로 TypeScript/SCSS 생성 |
+
 ### 아이콘/일러스트레이션 추가 방법
 
 1. Figma에서 SVG export
 2. SVG → TSX 변환 (JSX 속성 변환, `viewBox` 유지, `width={size}` / `height={size}` 적용)
 3. 해당 메타데이터 파일에 카테고리 등록
-4. `index.ts` 배럴 파일에 export 추가
+4. `src/icons/index.ts` (또는 `src/illustrations/index.ts`) 배럴 파일에 export 추가
+5. **React Native 파일 자동 생성**:
+   ```bash
+   yarn workspace @pop-ui/foundation generate:native
+   ```
+   > `src/icons/native/`, `src/illustrations/native/` 안의 파일은 자동 생성물입니다.
+   > 직접 수정하지 말고, 원본(`src/icons/*.tsx`)을 수정한 후 스크립트를 재실행하세요.
 
 ## 타입 정의
 
-### IIconProps
+### IIconProps (React / 웹)
 
 ```typescript
 import type { IIconProps } from '@pop-ui/foundation';
@@ -225,12 +284,35 @@ interface IIconProps extends SVGProps<SVGSVGElement> {
 }
 ```
 
-### IIllustrationProps
+### IIconProps (React Native)
+
+```typescript
+import type { IIconProps } from '@pop-ui/foundation';
+// react-native-svg의 SvgProps를 확장
+
+interface IIconProps extends SvgProps {
+  size?: number;
+  color?: string;
+  variant?: 'line' | 'filled';
+}
+```
+
+### IIllustrationProps (React / 웹)
 
 ```typescript
 import type { IIllustrationProps } from '@pop-ui/foundation';
 
 interface IIllustrationProps extends SVGProps<SVGSVGElement> {
+  size?: number;
+}
+```
+
+### IIllustrationProps (React Native)
+
+```typescript
+import type { IIllustrationProps } from '@pop-ui/foundation';
+
+interface IIllustrationProps extends SvgProps {
   size?: number;
 }
 ```

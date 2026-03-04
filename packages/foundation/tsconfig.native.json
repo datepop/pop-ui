@@ -1,0 +1,21 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist/native",
+    "declarationDir": "./dist/types-native",
+    "declaration": true,
+    "lib": ["ESNext"],
+    "moduleResolution": "node",
+    "jsx": "react-jsx"
+  },
+  "include": [
+    "src/index.native.ts",
+    "src/tokens/**/*.ts",
+    "src/theme/colors/tokens.ts",
+    "src/types/*.native.ts",
+    "src/icons/native/**/*.tsx",
+    "src/illustrations/native/**/*.tsx"
+  ],
+  "exclude": ["**/*.test.ts", "**/*.test.tsx", "**/*.stories.tsx"]
+}
