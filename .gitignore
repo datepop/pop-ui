@@ -7,6 +7,11 @@ dist
 .yarn/install-state.gz
 .vscode/
 
+# Auto-generated React Native components (scripts/generate-native.ts)
+# Do not edit manually — run `yarn build` to regenerate
+packages/foundation/src/icons/native/
+packages/foundation/src/illustrations/native/
+
 # General
 .DS_Store
 .AppleDouble
