@@ -263,12 +263,11 @@ yarn build
 2. SVG → TSX 변환 (JSX 속성 변환, `viewBox` 유지, `width={size}` / `height={size}` 적용)
 3. 해당 메타데이터 파일에 카테고리 등록
 4. `src/icons/index.ts` (또는 `src/illustrations/index.ts`) 배럴 파일에 export 추가
-5. **React Native 파일 자동 생성**:
-   ```bash
-   yarn workspace @pop-ui/foundation generate:native
-   ```
-   > `src/icons/native/`, `src/illustrations/native/` 안의 파일은 자동 생성물입니다.
-   > 직접 수정하지 말고, 원본(`src/icons/*.tsx`)을 수정한 후 스크립트를 재실행하세요.
+5. `yarn build` 실행 — React Native 파일 자동 생성 포함
+
+> **주의**: `src/icons/native/`, `src/illustrations/native/`는 빌드 시 자동 생성되는 파일입니다.
+> `.gitignore`로 추적되지 않으며, 직접 수정해도 다음 빌드에 덮어씌워집니다.
+> 아이콘을 수정할 때는 반드시 원본(`src/icons/*.tsx`, `src/illustrations/*.tsx`)을 수정하세요.
 
 ## 타입 정의
 

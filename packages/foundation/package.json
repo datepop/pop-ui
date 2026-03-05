@@ -1,7 +1,7 @@
 {
   "name": "@pop-ui/foundation",
   "type": "module",
-  "version": "1.1.1-beta",
+  "version": "1.1.2-beta",
   "main": "./dist/foundation.umd.cjs",
   "module": "./dist/foundation.js",
   "types": "./dist/types/index.d.ts",
@@ -35,7 +35,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build && yarn build:native",
+    "build": "yarn generate:native && vite build && yarn build:native",
     "build:native": "tsc -p tsconfig.native.json",
     "generate:native": "tsx scripts/generate-native.ts",
     "typecheck": "tsc",
