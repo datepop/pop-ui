@@ -23,8 +23,8 @@ export default function IllustrationCheckCircle({ size = 24, ...props }: IIllust
           y2="24"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stopColor="#33DAE8" />
-          <stop offset="1" stopColor="#00C8C0" />
+          <stop stopColor="#0FD3D8" />
+          <stop offset="1" stopColor="#6FCCFF" />
         </linearGradient>
       </defs>
       <circle cx="12" cy="12" r="12" fill={`url(#${gradientId})`} />
