@@ -22,8 +22,8 @@ export default function IconCartAdd({
         strokeWidth="1.5"
         strokeLinecap="round"
       />
-      <path d="M12.6 4.8V10.8" stroke={color} strokeWidth="1.2" strokeLinecap="round" />
-      <path d="M9.6 7.8H15.6" stroke={color} strokeWidth="1.2" strokeLinecap="round" />
+      <path d="M12.6 4.8V10.8" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M9.6 7.8H15.6" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
       <circle cx="18" cy="19" r="2.25" stroke={color} strokeWidth="1.5" />
       <circle cx="7.5" cy="19" r="2.25" stroke={color} strokeWidth="1.5" />
     </svg>
