@@ -56,4 +56,5 @@ export const illustrationMetadata: Record<TIllustrationName, IIllustrationMetada
   IllustrationShop: { categories: [IllustrationCategory.CONTENT] },
   IllustrationShoppingbag: { categories: [IllustrationCategory.CONTENT] },
   IllustrationVendingmachine: { categories: [IllustrationCategory.CONTENT] },
+  IllustrationCheckCircle: { categories: [IllustrationCategory.STATUS] },
 };
