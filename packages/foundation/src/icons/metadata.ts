@@ -83,6 +83,18 @@ export const iconMetadata: Record<TIconName, IIconMetadataEntry> = {
     categories: [IconCategory.ACTION],
     variants: ['filled'],
   },
+  IconCart: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
+  IconCartAdd: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
+  IconCartCheck: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
   IconCaution: {
     categories: [IconCategory.STATUS],
     variants: ['line', 'filled'],
