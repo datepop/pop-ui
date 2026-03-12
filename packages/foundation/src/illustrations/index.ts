@@ -27,3 +27,4 @@ export { default as IllustrationAge12 } from './IllustrationAge12';
 export { default as IllustrationAge15 } from './IllustrationAge15';
 export { default as IllustrationAge19 } from './IllustrationAge19';
 export { default as IllustrationAgeAll } from './IllustrationAgeAll';
+export { default as IllustrationCheckCircle } from './IllustrationCheckCircle';
