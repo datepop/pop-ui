@@ -37,6 +37,8 @@ const textToHtml = (node: ICustomText): string => {
 
   if (node.bold) html = `<strong>${html}</strong>`;
   if (node.italic) html = `<em>${html}</em>`;
+  if (node.underline) html = `<u>${html}</u>`;
+  if (node.color) html = `<span style="color:${node.color}">${html}</span>`;
   if (node.href) html = `<a href="${node.href}">${html}</a>`;
 
   return html;

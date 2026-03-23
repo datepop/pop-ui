@@ -16,7 +16,6 @@ import type {
   TEditorElement,
 } from '../types';
 
-
 /** 지원하는 블록 레벨 HTML 태그 */
 const BLOCK_TAGS = [
   'P',
@@ -49,6 +48,7 @@ const BLOCK_TAGS = [
 const INLINE_TAGS = {
   BOLD: ['STRONG', 'B'],
   ITALIC: ['EM', 'I'],
+  UNDERLINE: ['U', 'INS'],
   LINK: ['A'],
 };
 
@@ -136,6 +136,8 @@ const createEmptyParagraph = (): IPElement => ({
 interface IInlineContext {
   bold?: boolean;
   italic?: boolean;
+  underline?: boolean;
+  color?: string;
   href?: string;
 }
 
@@ -148,6 +150,8 @@ const extractInlineContent = (node: Node, context: IInlineContext = {}): ICustom
       const textNode: ICustomText = { text };
       if (context.bold) textNode.bold = true;
       if (context.italic) textNode.italic = true;
+      if (context.underline) textNode.underline = true;
+      if (context.color) textNode.color = context.color;
       if (context.href) textNode.href = context.href;
       results.push(textNode);
     }
@@ -176,6 +180,15 @@ const extractInlineContent = (node: Node, context: IInlineContext = {}): ICustom
   }
   if (INLINE_TAGS.ITALIC.includes(tagName)) {
     newContext.italic = true;
+  }
+  if (INLINE_TAGS.UNDERLINE.includes(tagName)) {
+    newContext.underline = true;
+  }
+  if (tagName === 'SPAN') {
+    const color = (element as HTMLElement).style?.color;
+    if (color) {
+      newContext.color = color;
+    }
   }
   if (tagName === 'A') {
     const href = sanitizeHref(element.getAttribute('href'));

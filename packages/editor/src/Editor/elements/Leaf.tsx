@@ -24,14 +24,16 @@ export const Leaf = ({ attributes, children, leaf }: RenderLeafProps) => {
     style.color = customLeaf.color;
   }
 
+  // 시맨틱 태그로 마크 래핑 (복사/붙여넣기 시 마크 보존)
+  let content = children;
   if (customLeaf.bold) {
-    style.fontWeight = 'bold';
+    content = <strong>{content}</strong>;
   }
   if (customLeaf.italic) {
-    style.fontStyle = 'italic';
+    content = <em>{content}</em>;
   }
   if (customLeaf.underline) {
-    style.textDecoration = 'underline';
+    content = <u>{content}</u>;
   }
 
   if (customLeaf.href) {
@@ -48,14 +50,14 @@ export const Leaf = ({ attributes, children, leaf }: RenderLeafProps) => {
           opacity: 0.6,
         }}
       >
-        {children}
+        {content}
       </a>
     );
   }
 
   return (
     <span {...attributes} style={style}>
-      {children}
+      {content}
     </span>
   );
 };
