@@ -10,6 +10,7 @@ import {
 import { ReactEditor } from 'slate-react';
 
 import { insertNodesWithFocus, prepareInsertPosition } from './insertUtils';
+import { sanitizeHref } from '../../utils/sanitizeHref';
 import { createEmptyParagraph } from '../../utils/transforms';
 
 import type {
@@ -180,7 +181,9 @@ export const useEditorMethods = ({ editor, ref }: IUseEditorMethodsProps) => {
         ReactEditor.focus(editor);
       },
 
-      insertLink: (href: string) => {
+      insertLink: (rawHref: string) => {
+        const href = sanitizeHref(rawHref);
+        if (!href) return;
         const linkBlock: IAElement = { type: 'a', href, children: [{ text: href }] };
         const { insertAt, needsTrailingTextBlock } = prepareInsert();
         const nodes: TEditorElement[] = [linkBlock];

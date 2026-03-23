@@ -167,9 +167,11 @@ export const EditorToolbar = ({
   };
 
   const handleLink = async () => {
-    const href = config.onInsertLink
+    const rawHref = config.onInsertLink
       ? await config.onInsertLink()
       : window.prompt('URL을 입력하세요');
+    if (!rawHref) return;
+    const href = sanitizeHref(rawHref);
     if (!href) return;
     insertBlock(editor, { type: 'a', href, children: [{ text: href }] } as IAElement);
   };
@@ -455,7 +457,7 @@ export const EditorToolbar = ({
           zIndex: 10,
           backgroundColor: '#ffffff',
           borderBottom: `1px solid ${ColorGray100}`,
-          padding: '8px',
+          padding: horizontalPadding != null ? `8px ${horizontalPadding}px` : '8px',
           display: 'flex',
           flexWrap: 'wrap',
           alignItems: 'center',

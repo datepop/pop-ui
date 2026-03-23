@@ -231,9 +231,13 @@ function renderImg(
 }
 
 function renderA(el: IAElement, classNames: IBlockClassNames): React.ReactNode {
+  const href = sanitizeHref(el.href);
+  if (!href) {
+    return <span className={classNames.link}>{el.href}</span>;
+  }
   return (
-    <a href={el.href} target="_blank" rel="noopener noreferrer" className={classNames.link}>
-      {el.href}
+    <a href={href} target="_blank" rel="noopener noreferrer" className={classNames.link}>
+      {href}
     </a>
   );
 }
