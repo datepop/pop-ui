@@ -12,67 +12,64 @@ export interface ICustomText {
 
 // ============ 블록 엘리먼트 ============
 
-export interface IPElement {
+export interface IBaseElement {
+  type: string;
+}
+export interface IBaseTextElement extends IBaseElement {
+  children: ICustomText[];
+}
+export interface IBaseListElement extends IBaseElement {
+  children: ILiElement[];
+}
+export interface IPElement extends IBaseTextElement {
   type: 'p';
-  children: ICustomText[];
 }
-export interface IH1Element {
+export interface IH1Element extends IBaseTextElement {
   type: 'h1';
-  children: ICustomText[];
 }
-export interface IH2Element {
+export interface IH2Element extends IBaseTextElement {
   type: 'h2';
-  children: ICustomText[];
 }
-export interface IH3Element {
+export interface IH3Element extends IBaseTextElement {
   type: 'h3';
-  children: ICustomText[];
 }
-export interface IUlElement {
+export interface IUlElement extends IBaseListElement {
   type: 'ul';
-  children: ILiElement[];
 }
-export interface IOlElement {
+export interface IOlElement extends IBaseListElement {
   type: 'ol';
-  children: ILiElement[];
 }
-export interface ILiElement {
+export interface ILiElement extends IBaseTextElement {
   type: 'li';
-  children: ICustomText[];
 }
-export interface IHrElement {
+export interface IHrElement extends IBaseTextElement {
   type: 'hr';
   variant?: 'default' | 'short';
-  children: ICustomText[];
 }
-export interface IBlockquoteElement {
+export interface IBlockquoteElement extends IBaseTextElement {
   type: 'blockquote';
   variant?: 'default' | 'solid';
-  children: ICustomText[];
 }
 
 // void — children은 Slate 내부용
-export interface IImgElement {
+export interface IImgElement extends IBaseTextElement {
   type: 'img';
   src: string;
   alt?: string;
   caption?: string;
-  children: ICustomText[];
 }
 
-export interface IAElement {
+export interface IAElement extends IBaseTextElement {
   type: 'a';
   href: string;
-  children: ICustomText[];
 }
 
-export interface ISpotElement {
+export interface ISpotElement extends IBaseTextElement {
   type: 'spot';
   spotId: number;
   spotName?: string;
   spotAddress?: string;
   spotThumbnail?: string;
-  children: ICustomText[];
 }
 
 export type TEditorElement =
