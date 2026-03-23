@@ -1,4 +1,4 @@
-import { Editor, Point, Range, Transforms } from 'slate';
+import { Editor, Element as SlateElement, Point, Range, Transforms } from 'slate';
 
 import { createEmptyParagraph } from '../../utils/transforms';
 
@@ -59,9 +59,18 @@ export const handleBackspaceAtFirstBlock = (ctx: IBlockHandlerContext): IHandler
   if (currentPath === 0 && onNavigateToTitle) {
     const atStart = Editor.isStart(editor, selection.anchor, selection);
     if (atStart) {
-      if (editor.children.length > 1) {
+      const firstNode = editor.children[0];
+      const isEmptyFirstParagraph =
+        SlateElement.isElement(firstNode) &&
+        firstNode.type === 'p' &&
+        firstNode.children.length === 1 &&
+        'text' in firstNode.children[0] &&
+        firstNode.children[0].text === '';
+
+      if (isEmptyFirstParagraph && editor.children.length > 1) {
         Transforms.removeNodes(editor, { at: [0] });
       }
+
       onNavigateToTitle();
       return { handled: true };
     }
