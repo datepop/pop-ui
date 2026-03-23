@@ -1,62 +1,8 @@
 import { BlockRenderer } from './index';
+import { ALL_BLOCKS_SAMPLE } from '../__fixtures__/sampleContent';
 
 import type { IBlockClassNames } from './index';
-import type { TEditorElement } from '../types';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-
-// ============ 샘플 콘텐츠 ============
-
-const SAMPLE_CONTENT: TEditorElement[] = [
-  {
-    type: 'p',
-    children: [
-      { text: '일반 단락입니다. ' },
-      { text: '굵게', bold: true },
-      { text: '와 ' },
-      { text: '기울임', italic: true },
-      { text: '을 지원합니다.' },
-    ],
-  },
-  { type: 'h1', children: [{ text: 'H1 제목' }] },
-  { type: 'h2', children: [{ text: 'H2 소제목' }] },
-  { type: 'h3', children: [{ text: 'H3 소소제목' }] },
-  { type: 'p', children: [{ text: '#해시태그1 와 #해시태그2 가 포함된 단락입니다.' }] },
-  {
-    type: 'ul',
-    children: [
-      { type: 'li', children: [{ text: '순서 없는 목록 1' }] },
-      { type: 'li', children: [{ text: '순서 없는 목록 2' }] },
-      { type: 'li', children: [{ text: '순서 없는 목록 3' }] },
-    ],
-  },
-  {
-    type: 'ol',
-    children: [
-      { type: 'li', children: [{ text: '순서 있는 목록 1' }] },
-      { type: 'li', children: [{ text: '순서 있는 목록 2' }] },
-    ],
-  },
-  { type: 'blockquote', variant: 'default', children: [{ text: '기본 인용구 (default)' }] },
-  { type: 'blockquote', variant: 'solid', children: [{ text: '강조 인용구 (solid)' }] },
-  { type: 'hr', variant: 'default', children: [{ text: '' }] },
-  { type: 'hr', variant: 'short', children: [{ text: '' }] },
-  {
-    type: 'img',
-    src: 'https://picsum.photos/600/300',
-    alt: '샘플 이미지',
-    caption: '이미지 캡션',
-    children: [{ text: '' }],
-  },
-  { type: 'a', href: 'https://example.com', children: [{ text: 'https://example.com' }] },
-  {
-    type: 'spot',
-    spotId: 1,
-    spotName: '경복궁',
-    spotAddress: '서울특별시 종로구 사직로 161',
-    spotThumbnail: 'https://picsum.photos/80/80',
-    children: [{ text: '' }],
-  },
-];
 
 // ============ 커스텀 클래스 프리셋 ============
 
@@ -157,7 +103,7 @@ export const Default: StoryObj<typeof BlockRenderer> = {
   },
   render: (args) => (
     <BlockRenderer
-      content={SAMPLE_CONTENT}
+      content={ALL_BLOCKS_SAMPLE}
       onHashtagClick={args.onHashtagClick}
       onSpotClick={args.onSpotClick}
       onImageClick={args.onImageClick}
@@ -178,7 +124,7 @@ export const CustomClassNames: StoryObj<typeof BlockRenderer> = {
   render: () => (
     <>
       <style>{CUSTOM_STYLES}</style>
-      <BlockRenderer content={SAMPLE_CONTENT} classNames={CUSTOM_CLASS_NAMES} />
+      <BlockRenderer content={ALL_BLOCKS_SAMPLE} classNames={CUSTOM_CLASS_NAMES} />
     </>
   ),
 };
