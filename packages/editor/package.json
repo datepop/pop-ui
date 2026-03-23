@@ -1,0 +1,64 @@
+{
+  "name": "@pop-ui/editor",
+  "type": "module",
+  "version": "0.0.1",
+  "main": "./dist/editor.umd.cjs",
+  "module": "./dist/editor.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/editor.js"
+      },
+      "require": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/editor.umd.cjs"
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/datepop/pop-ui"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src --max-warnings 0",
+    "lint:fix": "eslint src --fix",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@pop-ui/editor-core": "workspace:*",
+    "@pop-ui/foundation": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "^19.2.0",
+    "slate": "^0.120.0",
+    "slate-dom": "^0.119.0",
+    "slate-history": "^0.113.1",
+    "slate-react": "^0.120.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.2",
+    "@types/react": "^19.2.2",
+    "@vitejs/plugin-react": "^5.1.0",
+    "react": "^19.2.0",
+    "slate": "^0.120.0",
+    "slate-dom": "^0.119.0",
+    "slate-history": "^0.113.1",
+    "slate-react": "^0.120.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.12",
+    "vite-plugin-dts": "^4.5.4"
+  }
+}
