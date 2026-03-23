@@ -40,7 +40,7 @@ export const handleNavigateToTitleOnUp = (ctx: IBlockHandlerContext): IHandlerRe
   const { editor, selection, currentPath, onNavigateToTitle } = ctx;
 
   if (currentPath === 0 && onNavigateToTitle) {
-    const atStart = Editor.isStart(editor, selection.anchor, selection);
+    const atStart = Editor.isStart(editor, selection.anchor, [currentPath]);
     if (atStart) {
       onNavigateToTitle();
       return { handled: true };
@@ -57,7 +57,7 @@ export const handleBackspaceAtFirstBlock = (ctx: IBlockHandlerContext): IHandler
   const { editor, selection, currentPath, onNavigateToTitle } = ctx;
 
   if (currentPath === 0 && onNavigateToTitle) {
-    const atStart = Editor.isStart(editor, selection.anchor, selection);
+    const atStart = Editor.isStart(editor, selection.anchor, [currentPath]);
     if (atStart) {
       const firstNode = editor.children[0];
       const isEmptyFirstParagraph =
