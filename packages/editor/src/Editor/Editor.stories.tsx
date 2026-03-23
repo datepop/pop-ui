@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 
 import { EditorComponent } from './index';
-import { ALL_BLOCKS_SAMPLE, EMPTY_CONTENT } from '../__fixtures__/sampleContent';
+import { ALL_BLOCKS_SAMPLE, EMPTY_CONTENT } from '../__mocks__';
 
 import type { IEditorRef, IInlineToolbarConfig, IToolbarConfig } from './index';
 import type { TEditorElement } from '../types';

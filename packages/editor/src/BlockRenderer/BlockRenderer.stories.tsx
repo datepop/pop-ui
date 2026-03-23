@@ -1,5 +1,5 @@
 import { BlockRenderer } from './index';
-import { ALL_BLOCKS_SAMPLE } from '../__fixtures__/sampleContent';
+import { ALL_BLOCKS_SAMPLE } from '../__mocks__';
 
 import type { IBlockClassNames } from './index';
 import type { Meta, StoryObj } from '@storybook/react-vite';
