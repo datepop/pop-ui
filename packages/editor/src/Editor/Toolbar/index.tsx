@@ -123,9 +123,30 @@ export const EditorToolbar = ({
       ? ['h1', 'h2', 'h3']
       : [];
   const showHeading = allowedHeadings.length > 0;
-  const showList = enabledBlocks.list !== false;
-  const showHr = enabledBlocks.hr !== false;
-  const showBlockquote = enabledBlocks.blockquote !== false;
+
+  const listCfg = enabledBlocks.list;
+  const allowedLists: ('ul' | 'ol')[] = Array.isArray(listCfg)
+    ? listCfg
+    : listCfg !== false
+      ? ['ul', 'ol']
+      : [];
+  const showList = allowedLists.length > 0;
+
+  const hrCfg = enabledBlocks.hr;
+  const allowedHr: ('default' | 'short')[] = Array.isArray(hrCfg)
+    ? hrCfg
+    : hrCfg !== false
+      ? ['default', 'short']
+      : [];
+  const showHr = allowedHr.length > 0;
+
+  const blockquoteCfg = enabledBlocks.blockquote;
+  const allowedBlockquotes: ('default' | 'solid')[] = Array.isArray(blockquoteCfg)
+    ? blockquoteCfg
+    : blockquoteCfg !== false
+      ? ['default', 'solid']
+      : [];
+  const showBlockquote = allowedBlockquotes.length > 0;
   const showLink = enabledBlocks.link !== false;
   const showImage =
     enabledBlocks.image !== false && (!!onProcessImageFiles || !!config.onInsertImage);
@@ -337,20 +358,29 @@ export const EditorToolbar = ({
   if (showList) {
     if (iconOnly) {
       toolbarGroups.push([
-        <ToolbarButton
-          key="list-ul"
-          icon={<IconListBullet size={20} color={ColorGray900} />}
-          label="순서 없는 리스트"
-          onClick={() => handleList('ul')}
-        />,
-        <ToolbarButton
-          key="list-ol"
-          icon={<IconListNumber size={20} color={ColorGray900} />}
-          label="순서 있는 리스트"
-          onClick={() => handleList('ol')}
-        />,
+        ...(allowedLists.includes('ul')
+          ? [
+              <ToolbarButton
+                key="list-ul"
+                icon={<IconListBullet size={20} color={ColorGray900} />}
+                label="순서 없는 리스트"
+                onClick={() => handleList('ul')}
+              />,
+            ]
+          : []),
+        ...(allowedLists.includes('ol')
+          ? [
+              <ToolbarButton
+                key="list-ol"
+                icon={<IconListNumber size={20} color={ColorGray900} />}
+                label="순서 있는 리스트"
+                onClick={() => handleList('ol')}
+              />,
+            ]
+          : []),
       ]);
     } else {
+      const defaultListType = allowedLists[0];
       toolbarGroups.push([
         <ToolbarDropdownButton
           key="list"
@@ -358,19 +388,23 @@ export const EditorToolbar = ({
           label="리스트"
           ariaLabel="리스트 옵션"
           isOpen={openDropdownId === 'list'}
-          onMainClick={() => handleList('ul')}
+          onMainClick={() => handleList(defaultListType)}
           onChevronClick={() => toggleDropdown('list')}
         >
-          <DropdownItem
-            icon={<IconListBullet size={20} color={ColorGray900} />}
-            label="순서 없는 리스트"
-            onClick={() => handleList('ul')}
-          />
-          <DropdownItem
-            icon={<IconListNumber size={20} color={ColorGray900} />}
-            label="순서 있는 리스트"
-            onClick={() => handleList('ol')}
-          />
+          {allowedLists.includes('ul') && (
+            <DropdownItem
+              icon={<IconListBullet size={20} color={ColorGray900} />}
+              label="순서 없는 리스트"
+              onClick={() => handleList('ul')}
+            />
+          )}
+          {allowedLists.includes('ol') && (
+            <DropdownItem
+              icon={<IconListNumber size={20} color={ColorGray900} />}
+              label="순서 있는 리스트"
+              onClick={() => handleList('ol')}
+            />
+          )}
         </ToolbarDropdownButton>,
       ]);
     }
@@ -388,6 +422,7 @@ export const EditorToolbar = ({
   }
 
   if (showHr) {
+    const defaultHrVariant = allowedHr[0];
     toolbarGroups.push(
       iconOnly
         ? [
@@ -395,7 +430,7 @@ export const EditorToolbar = ({
               key="hr"
               icon={<IconMinus size={20} color={ColorGray900} />}
               label="구분선"
-              onClick={() => handleHr('default')}
+              onClick={() => handleHr(defaultHrVariant)}
             />,
           ]
         : [
@@ -405,21 +440,26 @@ export const EditorToolbar = ({
               label="구분선"
               ariaLabel="구분선 옵션"
               isOpen={openDropdownId === 'hr'}
-              onMainClick={() => handleHr('default')}
+              onMainClick={() => handleHr(defaultHrVariant)}
               onChevronClick={() => toggleDropdown('hr')}
             >
-              <DropdownItem
-                icon={HR_ICON_DEFAULT}
-                label="기본"
-                onClick={() => handleHr('default')}
-              />
-              <DropdownItem icon={HR_ICON_SHORT} label="짧게" onClick={() => handleHr('short')} />
+              {allowedHr.includes('default') && (
+                <DropdownItem
+                  icon={HR_ICON_DEFAULT}
+                  label="기본"
+                  onClick={() => handleHr('default')}
+                />
+              )}
+              {allowedHr.includes('short') && (
+                <DropdownItem icon={HR_ICON_SHORT} label="짧게" onClick={() => handleHr('short')} />
+              )}
             </ToolbarDropdownButton>,
           ],
     );
   }
 
   if (showBlockquote) {
+    const defaultBlockquoteVariant = allowedBlockquotes[0];
     toolbarGroups.push([
       <ToolbarDropdownButton
         key="blockquote"
@@ -427,19 +467,23 @@ export const EditorToolbar = ({
         label="인용구"
         ariaLabel="인용구 옵션"
         isOpen={openDropdownId === 'blockquote'}
-        onMainClick={() => handleBlockquote('default')}
+        onMainClick={() => handleBlockquote(defaultBlockquoteVariant)}
         onChevronClick={() => toggleDropdown('blockquote')}
       >
-        <DropdownItem
-          icon={<IconQuote size={20} color={ColorGray900} />}
-          label="기본"
-          onClick={() => handleBlockquote('default')}
-        />
-        <DropdownItem
-          icon={BLOCKQUOTE_ICON_SOLID}
-          label="강조"
-          onClick={() => handleBlockquote('solid')}
-        />
+        {allowedBlockquotes.includes('default') && (
+          <DropdownItem
+            icon={<IconQuote size={20} color={ColorGray900} />}
+            label="기본"
+            onClick={() => handleBlockquote('default')}
+          />
+        )}
+        {allowedBlockquotes.includes('solid') && (
+          <DropdownItem
+            icon={BLOCKQUOTE_ICON_SOLID}
+            label="강조"
+            onClick={() => handleBlockquote('solid')}
+          />
+        )}
       </ToolbarDropdownButton>,
     ]);
   }

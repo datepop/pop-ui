@@ -24,13 +24,23 @@ interface IUseKeyboardHandlerOptions {
  */
 const getHandler = (type: string, enabledBlocks: IBlocksConfig): IBlockKeyHandler | undefined => {
   if (type === 'h1' || type === 'h2' || type === 'h3') {
-    if (!enabledBlocks.heading) return undefined;
+    if (enabledBlocks.heading === false) return undefined;
+    if (Array.isArray(enabledBlocks.heading) && !enabledBlocks.heading.includes(type as 'h1')) {
+      return undefined;
+    }
   }
   if (type === 'ul' || type === 'ol' || type === 'li') {
-    if (!enabledBlocks.list) return undefined;
+    if (enabledBlocks.list === false) return undefined;
+    if (
+      type !== 'li' &&
+      Array.isArray(enabledBlocks.list) &&
+      !enabledBlocks.list.includes(type as 'ul')
+    ) {
+      return undefined;
+    }
   }
   if (type === 'blockquote') {
-    if (!enabledBlocks.blockquote) return undefined;
+    if (enabledBlocks.blockquote === false) return undefined;
   }
   return blockHandlers[type];
 };
