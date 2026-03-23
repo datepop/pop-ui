@@ -138,8 +138,11 @@ interface IToolbarConfig {
 interface IInlineToolbarConfig {
   color?: boolean;         // 색상 버튼 표시 (기본 true)
   colorPalette?: string[]; // 커스텀 색상 배열 (hex)
+  boundaryRef?: React.RefObject<HTMLElement | null>; // 툴바 위치 제한 영역 (기본: 에디터 wrapper)
 }
 ```
+
+`boundaryRef`를 지정하면 해당 요소의 좌우 경계를 기준으로 InlineToolbar가 잘리지 않도록 clamp된다. 미지정 시 에디터 wrapper 영역이 기본 boundary로 사용된다.
 
 ---
 

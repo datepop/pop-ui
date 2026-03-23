@@ -68,6 +68,8 @@ export interface IEditorProps {
   toolbar?: boolean | IToolbarConfig;
   /** 텍스트 선택 시 플로팅 인라인 툴바 활성화. true이면 기본 설정, IInlineToolbarConfig 객체로 커스텀 가능 */
   inlineToolbar?: boolean | IInlineToolbarConfig;
+  /** 에디터 내부 패딩 (px, 기본값: 16) */
+  padding?: number;
   /** 블록 간 marginBottom (px, 기본값: 16) */
   blockSpacing?: number;
   /** 텍스트 줄간격 (기본값: '175%') */
@@ -97,6 +99,7 @@ const EditorInner = forwardRef<IEditorRef, IEditorProps>(
       insertTrigger,
       toolbar,
       inlineToolbar,
+      padding = 16,
       blockSpacing,
       lineHeight,
     },
@@ -341,12 +344,13 @@ const EditorInner = forwardRef<IEditorRef, IEditorProps>(
             enabledBlocks={enabledBlocks}
             config={toolbarConfig}
             onProcessImageFiles={onProcessImageFiles}
+            horizontalPadding={padding / 2}
           />
         )}
         <div
           style={
             {
-              padding: '16px',
+              padding: `${padding}px`,
               '--editor-block-spacing': `${blockSpacing ?? 16}px`,
               '--editor-list-gap': `${Math.round((blockSpacing ?? 16) * 0.625 * 2) / 2}px`,
               '--editor-hr-padding': `${Math.round((blockSpacing ?? 16) * 1.875 * 2) / 2}px`,
@@ -355,7 +359,15 @@ const EditorInner = forwardRef<IEditorRef, IEditorProps>(
           }
         >
           <Slate editor={editor} initialValue={value} onChange={handleChange}>
-            {inlineToolbarConfig !== null && <InlineToolbar config={inlineToolbarConfig} />}
+            {inlineToolbarConfig !== null && (
+              <InlineToolbar
+                config={{
+                  boundaryRef: editorWrapperRef,
+                  boundaryPadding: padding / 2,
+                  ...inlineToolbarConfig,
+                }}
+              />
+            )}
             <Editable
               renderElement={renderElement}
               renderLeaf={renderLeaf}

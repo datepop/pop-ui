@@ -111,15 +111,17 @@ export const Default: StoryObj<typeof EditorComponent> = {
     placeholder: '내용을 입력해주세요',
     toolbar: true,
     inlineToolbar: true,
+    padding: 16,
     blockSpacing: 16,
     lineHeight: '175%',
   },
-  render: ({ toolbar, inlineToolbar, placeholder, blockSpacing, lineHeight }) => (
+  render: ({ toolbar, inlineToolbar, placeholder, padding, blockSpacing, lineHeight }) => (
     <EditorWithState
       initialValue={EMPTY_VALUE}
       toolbar={toolbar}
       inlineToolbar={inlineToolbar}
       placeholder={placeholder}
+      padding={padding}
       blockSpacing={blockSpacing}
       lineHeight={lineHeight}
       onProcessImageFiles={async (files) =>
@@ -252,6 +254,7 @@ export const EditorRef: StoryObj<typeof EditorComponent> = {
 
 type TPlaygroundArgs = {
   placeholder: string;
+  padding: number;
   blockSpacing: number;
   lineHeight: string;
   iconOnly: boolean;
@@ -269,6 +272,7 @@ type TPlaygroundArgs = {
 
 const PlaygroundWrapper = ({
   placeholder,
+  padding,
   blockSpacing,
   lineHeight,
   iconOnly,
@@ -307,6 +311,7 @@ const PlaygroundWrapper = ({
       value={value}
       onChange={setValue}
       placeholder={placeholder}
+      padding={padding}
       blockSpacing={blockSpacing}
       lineHeight={lineHeight}
       toolbar={toolbarConfig}
@@ -332,6 +337,11 @@ export const Playground: StoryObj<TPlaygroundArgs> = {
     placeholder: {
       control: 'text',
       description: '에디터 내용이 비어있을 때 표시되는 안내 텍스트',
+      table: { category: '에디터 기본' },
+    },
+    padding: {
+      control: { type: 'range', min: 0, max: 48, step: 4 },
+      description: '에디터 내부 패딩 (px). 콘텐츠 영역과 툴바의 좌우 여백을 조절합니다.',
       table: { category: '에디터 기본' },
     },
     blockSpacing: {
@@ -403,6 +413,7 @@ export const Playground: StoryObj<TPlaygroundArgs> = {
   },
   args: {
     placeholder: '내용을 입력해주세요',
+    padding: 16,
     blockSpacing: 16,
     lineHeight: '175%',
     iconOnly: false,

@@ -1,5 +1,5 @@
 import { ColorGray100, ColorGray900 } from '@pop-ui/foundation';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { Editor, Element as SlateElement, Range, Transforms } from 'slate';
 import { ReactEditor, useSlate } from 'slate-react';
 
@@ -45,10 +45,16 @@ export interface IInlineToolbarConfig {
   color?: boolean;
   /** 커스텀 컬러 팔레트 (hex 문자열 배열). 미지정 시 기본 팔레트 사용 */
   colorPalette?: string[];
+  /** InlineToolbar 위치 제한 영역. 기본값: 에디터 wrapper */
+  boundaryRef?: React.RefObject<HTMLElement | null>;
+  /** boundary 좌우 안쪽 여백 (px). 기본값: 에디터 padding / 2 */
+  boundaryPadding?: number;
 }
 
 export const InlineToolbar = ({ config }: { config?: IInlineToolbarConfig }) => {
   const colorEnabled = config?.color !== false;
+  const boundaryRef = config?.boundaryRef;
+  const boundaryPadding = config?.boundaryPadding ?? 0;
   const editor = useSlate();
   const { selection } = editor;
 
@@ -56,8 +62,10 @@ export const InlineToolbar = ({ config }: { config?: IInlineToolbarConfig }) => 
     null,
   );
   const [linkUrl, setLinkUrl] = useState('');
+  const [clampedLeft, setClampedLeft] = useState<number | null>(null);
   const savedSelRef = useRef<BaseSelection>(null);
   const linkInputRef = useRef<HTMLInputElement>(null);
+  const toolbarRef = useRef<HTMLDivElement>(null);
 
   // 선택 영역 기반 위치 계산 (렌더 중 DOM 읽기)
   const position = useMemo(() => {
@@ -82,6 +90,29 @@ export const InlineToolbar = ({ config }: { config?: IInlineToolbarConfig }) => 
 
     return { top, left: rect.left + rect.width / 2 };
   }, [selection, editor]);
+
+  // boundary 기준 좌우 clamp
+  useLayoutEffect(() => {
+    if (!toolbarRef.current || !position) {
+      requestAnimationFrame(() => setClampedLeft(null));
+      return;
+    }
+
+    const toolbarWidth = toolbarRef.current.offsetWidth;
+    const boundary = boundaryRef?.current?.getBoundingClientRect();
+
+    if (!boundary) {
+      requestAnimationFrame(() => setClampedLeft(null));
+      return;
+    }
+
+    const idealLeft = position.left - toolbarWidth / 2;
+    const minLeft = boundary.left + boundaryPadding;
+    const maxLeft = boundary.right - toolbarWidth - boundaryPadding;
+    const clamped = Math.max(minLeft, Math.min(idealLeft, maxLeft));
+
+    setClampedLeft(clamped);
+  }, [position, boundaryRef]);
 
   // 패널을 연 시점의 selection key — 다른 곳 선택 시 자동 숨김
   const selKey = selection
@@ -165,11 +196,12 @@ export const InlineToolbar = ({ config }: { config?: IInlineToolbarConfig }) => 
 
   return (
     <div
+      ref={toolbarRef}
       style={{
         position: 'fixed',
         top: `${position.top}px`,
-        left: `${position.left}px`,
-        transform: 'translateX(-50%)',
+        left: `${clampedLeft ?? position.left}px`,
+        transform: clampedLeft == null ? 'translateX(-50%)' : undefined,
         zIndex: 1000,
         display: 'flex',
         flexDirection: 'column',

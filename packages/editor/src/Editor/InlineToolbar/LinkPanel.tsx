@@ -1,4 +1,4 @@
-import { ColorGray100, ColorGray900 } from '@pop-ui/foundation';
+import { ColorAqua500, ColorGray50, ColorGray100, ColorGray900 } from '@pop-ui/foundation';
 import React from 'react';
 
 interface ILinkPanelProps {
@@ -38,8 +38,8 @@ export const LinkPanel = ({
       placeholder="https://"
       style={{
         flex: 1,
-        background: ColorGray100,
-        border: `1px solid ${ColorGray100}`,
+        background: ColorGray50,
+        border: `1px solid ${ColorGray50}`,
         borderRadius: '5px',
         color: ColorGray900,
         fontSize: '12px',
@@ -50,10 +50,10 @@ export const LinkPanel = ({
     <button
       type="submit"
       style={{
-        background: '#3182CE',
+        background: ColorAqua500,
         border: 'none',
         borderRadius: '5px',
-        color: '#ffffff',
+        color: 'white',
         fontSize: '12px',
         padding: '4px 10px',
         cursor: 'pointer',

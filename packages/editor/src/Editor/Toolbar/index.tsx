@@ -29,6 +29,7 @@ import {
 } from './ToolbarComponents';
 import { HEADING_FACTORY, insertBlock, insertImageUrls } from './toolbarInsertHelpers';
 import { TOOLBAR_CSS } from './toolbarStyles';
+import { sanitizeHref } from '../../utils/sanitizeHref';
 import { insertNodesWithFocus, prepareInsertPosition } from '../hooks/insertUtils';
 
 import type {
@@ -70,6 +71,8 @@ interface IEditorToolbarProps {
   enabledBlocks: IBlocksConfig;
   config: IToolbarConfig;
   onProcessImageFiles?: IEditorProps['onProcessImageFiles'];
+  /** 좌우 패딩 (px). Editor의 padding 값이 전달된다 */
+  horizontalPadding?: number;
 }
 
 export const EditorToolbar = ({
@@ -77,6 +80,7 @@ export const EditorToolbar = ({
   enabledBlocks,
   config,
   onProcessImageFiles,
+  horizontalPadding,
 }: IEditorToolbarProps) => {
   const [openDropdownId, setOpenDropdownId] = useState<TDropdownId | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
