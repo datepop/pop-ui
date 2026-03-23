@@ -32,20 +32,26 @@ npm install slate
 
 ### 블록 엘리먼트 — `TEditorElement`
 
-모든 블록 타입의 유니온.
+모든 블록 타입의 유니온. 베이스 인터페이스(`IBaseElement` → `IBaseTextElement` / `IBaseListElement`)를 상속한다.
 
-| 타입 | 인터페이스 | 주요 필드 |
-|------|-----------|----------|
-| `p` | `IPElement` | `children: ICustomText[]` |
-| `h1` `h2` `h3` | `IH1Element` `IH2Element` `IH3Element` | `children: ICustomText[]` |
-| `ul` | `IUlElement` | `children: ILiElement[]` |
-| `ol` | `IOlElement` | `children: ILiElement[]` |
-| `li` | `ILiElement` | `children: ICustomText[]` |
-| `img` | `IImgElement` | `src`, `alt?`, `caption?` |
-| `a` | `IAElement` | `href` |
-| `hr` | `IHrElement` | `variant?: 'default' \| 'short'` |
-| `blockquote` | `IBlockquoteElement` | `variant?: 'default' \| 'solid'` |
-| `spot` | `ISpotElement` | `spotId`, `spotName?`, `spotAddress?`, `spotThumbnail?` |
+```
+IBaseElement { type }
+├─ IBaseTextElement { children: ICustomText[] }
+└─ IBaseListElement { children: ILiElement[] }
+```
+
+| 타입 | 인터페이스 | 베이스 | 주요 필드 |
+|------|-----------|--------|----------|
+| `p` | `IPElement` | `IBaseTextElement` | |
+| `h1` `h2` `h3` | `IH1Element` `IH2Element` `IH3Element` | `IBaseTextElement` | |
+| `ul` | `IUlElement` | `IBaseListElement` | |
+| `ol` | `IOlElement` | `IBaseListElement` | |
+| `li` | `ILiElement` | `IBaseTextElement` | |
+| `img` | `IImgElement` | `IBaseTextElement` | `src`, `alt?`, `caption?` |
+| `a` | `IAElement` | `IBaseTextElement` | `href` |
+| `hr` | `IHrElement` | `IBaseTextElement` | `variant?: 'default' \| 'short'` |
+| `blockquote` | `IBlockquoteElement` | `IBaseTextElement` | `variant?: 'default' \| 'solid'` |
+| `spot` | `ISpotElement` | `IBaseTextElement` | `spotId`, `spotName?`, `spotAddress?`, `spotThumbnail?` |
 
 ### 인라인 텍스트 — `ICustomText`
 

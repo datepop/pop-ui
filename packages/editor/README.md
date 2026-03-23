@@ -164,11 +164,14 @@ import { BlockRenderer } from '@pop-ui/editor';
 interface IBlockRendererProps {
   content: TEditorElement[];
   classNames?: IBlockClassNames;
+  headingOffset?: number;  // heading 레벨 오프셋 (기본 0). 1이면 h1→h2, h2→h3
   onHashtagClick?: (hashtag: string) => void;
   onSpotClick?: (spotId: number) => void;
   onImageClick?: (src: string) => void;
 }
 ```
+
+> 페이지에 별도 `<h1>` 제목이 있을 경우 `headingOffset={1}`로 콘텐츠 heading을 한 단계 내린다.
 
 ### `IBlockClassNames`
 
@@ -216,6 +219,15 @@ const isHtml = hasHtmlContent(html: string): boolean;
 ```
 
 HTML 문자열을 Slate 블록 배열로 변환한다. 외부 HTML 붙여넣기 처리에 사용된다.
+`javascript:`, `data:` 등 위험한 프로토콜의 href는 자동으로 제거된다.
+
+### `sanitizeHref`
+
+```ts
+sanitizeHref(href: string | null | undefined): string | undefined
+```
+
+href 값을 검증하여 `http:`/`https:` 프로토콜만 허용한다. 내부적으로 parseHtmlToSlate, Leaf, BlockRenderer, AElement에서 사용된다.
 
 ### 클립보드 유틸
 
