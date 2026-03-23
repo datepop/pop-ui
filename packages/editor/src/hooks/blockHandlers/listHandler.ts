@@ -1,10 +1,10 @@
 import { findLiEntry, findListEntry } from '@pop-ui/editor-core';
 import { Editor, Path, Transforms } from 'slate';
 
-import { createEmptyParagraph, insertBlockAndFocus } from '../../utils/transforms';
+import { createEmptyParagraph } from '../../utils/transforms';
 
 import type { IBlockKeyHandler, IBlockHandlerContext, IHandlerResult } from './types';
-import type { ICustomText, IPElement } from '../../types';
+import type { ICustomText, IPElement, TEditorElement } from '../../types';
 
 /**
  * Li 블록에서 Enter 키 처리
@@ -25,9 +25,25 @@ const handleEnter = (ctx: IBlockHandlerContext): IHandlerResult => {
   if (isLiEmpty) {
     const listEntry = findListEntry(editor);
     if (listEntry) {
-      const [, listPath] = listEntry;
-      Transforms.removeNodes(editor, { at: liPath });
-      insertBlockAndFocus(editor, createEmptyParagraph(), listPath[0] + 1);
+      const [listNode, listPath] = listEntry;
+      const liIndex = liPath[liPath.length - 1];
+      const beforeItems = listNode.children.slice(0, liIndex);
+      const afterItems = listNode.children.slice(liIndex + 1);
+
+      Transforms.removeNodes(editor, { at: listPath });
+
+      const nodes: TEditorElement[] = [];
+      if (beforeItems.length > 0)
+        nodes.push({ ...listNode, children: beforeItems } as TEditorElement);
+      nodes.push(createEmptyParagraph());
+      if (afterItems.length > 0)
+        nodes.push({ ...listNode, children: afterItems } as TEditorElement);
+
+      Transforms.insertNodes(editor, nodes, { at: listPath });
+
+      // 삽입된 빈 p의 위치: beforeItems가 있으면 listPath[0]+1, 없으면 listPath[0]
+      const pIndex = listPath[0] + (beforeItems.length > 0 ? 1 : 0);
+      Transforms.select(editor, Editor.start(editor, [pIndex]));
     }
   } else {
     Transforms.splitNodes(editor, { always: true });

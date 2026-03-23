@@ -20,7 +20,6 @@ const handleEnter = (ctx: IBlockHandlerContext): IHandlerResult => {
   if (isAtStart) {
     Transforms.insertNodes(editor, createEmptyParagraph(), { at: [currentPath] });
     Transforms.select(editor, Editor.start(editor, [currentPath]));
-    Transforms.select(editor, Editor.start(editor, [currentPath + 1]));
     ReactEditor.focus(editor);
   } else if (isAtEnd) {
     Transforms.insertNodes(editor, createEmptyParagraph(), { at: [currentPath + 1] });
