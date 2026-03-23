@@ -136,10 +136,10 @@ export interface ISpotData {
   thumbnail?: string;
 }
 
-export interface IProcessedImage {
+export interface IProcessedImage<TFile = unknown> {
   originalSrc: string;
   newSrc: string;
-  file?: File;
+  file?: TFile;
 }
 
 // ============ 통계/파서 결과 타입 ============
