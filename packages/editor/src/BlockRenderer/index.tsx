@@ -45,6 +45,8 @@ export interface IBlockClassNames {
 export interface IBlockRendererProps {
   content: TEditorElement[];
   classNames?: IBlockClassNames;
+  /** heading 레벨 오프셋. 0(기본)이면 h1→h1, 1이면 h1→h2. 최대 h6까지. */
+  headingOffset?: number;
   onHashtagClick?: (hashtag: string) => void;
   onSpotClick?: (spotId: number) => void;
   onImageClick?: (src: string) => void;
@@ -159,39 +161,21 @@ function renderParagraph(
   );
 }
 
-function renderH1(
-  el: IH1Element,
+function renderHeading(
+  el: IH1Element | IH2Element | IH3Element,
   classNames: IBlockClassNames,
   onHashtagClick?: (h: string) => void,
+  headingOffset = 0,
 ): React.ReactNode {
-  return (
-    <h2 className={classNames.heading1}>
-      {renderChildren(el.children, classNames, onHashtagClick)}
-    </h2>
-  );
-}
+  const baseLevel = Number(el.type[1]) as 1 | 2 | 3;
+  const level = Math.min(baseLevel + headingOffset, 6) as 1 | 2 | 3 | 4 | 5 | 6;
+  const Tag = `h${level}` as const;
+  const classMap = { h1: classNames.heading1, h2: classNames.heading2, h3: classNames.heading3 };
 
-function renderH2(
-  el: IH2Element,
-  classNames: IBlockClassNames,
-  onHashtagClick?: (h: string) => void,
-): React.ReactNode {
   return (
-    <h3 className={classNames.heading2}>
+    <Tag className={classMap[el.type]}>
       {renderChildren(el.children, classNames, onHashtagClick)}
-    </h3>
-  );
-}
-
-function renderH3(
-  el: IH3Element,
-  classNames: IBlockClassNames,
-  onHashtagClick?: (h: string) => void,
-): React.ReactNode {
-  return (
-    <h4 className={classNames.heading3}>
-      {renderChildren(el.children, classNames, onHashtagClick)}
-    </h4>
+    </Tag>
   );
 }
 
@@ -300,6 +284,7 @@ function renderSpot(
 export const BlockRenderer = ({
   content,
   classNames = {},
+  headingOffset = 0,
   onHashtagClick,
   onSpotClick,
   onImageClick,
@@ -315,21 +300,16 @@ export const BlockRenderer = ({
               </React.Fragment>
             );
           case 'h1':
-            return (
-              <React.Fragment key={i}>
-                {renderH1(block as IH1Element, classNames, onHashtagClick)}
-              </React.Fragment>
-            );
           case 'h2':
-            return (
-              <React.Fragment key={i}>
-                {renderH2(block as IH2Element, classNames, onHashtagClick)}
-              </React.Fragment>
-            );
           case 'h3':
             return (
               <React.Fragment key={i}>
-                {renderH3(block as IH3Element, classNames, onHashtagClick)}
+                {renderHeading(
+                  block as IH1Element | IH2Element | IH3Element,
+                  classNames,
+                  onHashtagClick,
+                  headingOffset,
+                )}
               </React.Fragment>
             );
           case 'ul':
