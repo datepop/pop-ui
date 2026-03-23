@@ -19,4 +19,6 @@ export type {
 } from './Editor';
 export { BlockRenderer } from './BlockRenderer';
 export type { IBlockRendererProps, IBlockClassNames } from './BlockRenderer';
+export { createBlockStyles } from './styles/editorStyles';
+export type { IBlockStyles, IBlockStyleOptions } from './styles/editorStyles';
 export { CompositionProvider, useComposition } from './contexts/CompositionContext';

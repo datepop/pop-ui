@@ -1,6 +1,7 @@
-import { IllustrationMappinMint } from '@pop-ui/foundation';
-import React from 'react';
+import { ColorAqua500, IconLink, IconQuote, IllustrationMappinMint } from '@pop-ui/foundation';
+import React, { useMemo } from 'react';
 
+import { createBlockStyles, type IBlockStyles } from '../styles/editorStyles';
 import { sanitizeHref } from '../utils/sanitizeHref';
 
 import type {
@@ -47,6 +48,12 @@ export interface IBlockRendererProps {
   classNames?: IBlockClassNames;
   /** heading 레벨 오프셋. 0(기본)이면 h1→h1, 1이면 h1→h2. 최대 h6까지. */
   headingOffset?: number;
+  /** 기본 인라인 스타일 적용 여부 (기본 true). false이면 완전 unstyled → classNames로 커스텀 */
+  styled?: boolean;
+  /** 블록 간 간격 (px, 기본 16). styled=true일 때만 적용 */
+  blockSpacing?: number;
+  /** 줄간격 (기본 '175%'). styled=true일 때만 적용 */
+  lineHeight?: number | string;
   onHashtagClick?: (hashtag: string) => void;
   onSpotClick?: (spotId: number) => void;
   onImageClick?: (src: string) => void;
@@ -86,6 +93,7 @@ function renderInlineText(
   node: ICustomText,
   index: number,
   classNames: IBlockClassNames,
+  s: IBlockStyles | null,
   onHashtagClick?: (hashtag: string) => void,
 ): React.ReactNode {
   const segments = splitHashtags(node.text);
@@ -97,7 +105,10 @@ function renderInlineText(
           key={i}
           className={classNames.hashtag}
           onClick={onHashtagClick ? () => onHashtagClick(seg.hashtag!) : undefined}
-          style={onHashtagClick ? { cursor: 'pointer' } : undefined}
+          style={{
+            ...(onHashtagClick ? { cursor: 'pointer' } : undefined),
+            ...(!classNames.hashtag && s ? { color: ColorAqua500 } : undefined),
+          }}
         >
           {seg.text}
         </span>
@@ -130,6 +141,7 @@ function renderInlineText(
         target="_blank"
         rel="noopener noreferrer"
         className={classNames.link}
+        style={!classNames.link ? s?.inlineLink : undefined}
       >
         {el}
       </a>
@@ -142,9 +154,10 @@ function renderInlineText(
 function renderChildren(
   children: ICustomText[],
   classNames: IBlockClassNames,
+  s: IBlockStyles | null,
   onHashtagClick?: (hashtag: string) => void,
 ): React.ReactNode[] {
-  return children.map((child, i) => renderInlineText(child, i, classNames, onHashtagClick));
+  return children.map((child, i) => renderInlineText(child, i, classNames, s, onHashtagClick));
 }
 
 // ============ Block renderers ============
@@ -152,11 +165,12 @@ function renderChildren(
 function renderParagraph(
   el: IPElement,
   classNames: IBlockClassNames,
+  s: IBlockStyles | null,
   onHashtagClick?: (h: string) => void,
 ): React.ReactNode {
   return (
-    <p className={classNames.paragraph}>
-      {renderChildren(el.children, classNames, onHashtagClick)}
+    <p className={classNames.paragraph} style={!classNames.paragraph ? s?.paragraph : undefined}>
+      {renderChildren(el.children, classNames, s, onHashtagClick)}
     </p>
   );
 }
@@ -164,6 +178,7 @@ function renderParagraph(
 function renderHeading(
   el: IH1Element | IH2Element | IH3Element,
   classNames: IBlockClassNames,
+  s: IBlockStyles | null,
   onHashtagClick?: (h: string) => void,
   headingOffset = 0,
 ): React.ReactNode {
@@ -171,13 +186,15 @@ function renderHeading(
   const level = Math.min(baseLevel + headingOffset, 6) as 1 | 2 | 3 | 4 | 5 | 6;
   const Tag = `h${level}` as const;
   const classMap = { h1: classNames.heading1, h2: classNames.heading2, h3: classNames.heading3 };
+  const styleMap = { h1: s?.heading1, h2: s?.heading2, h3: s?.heading3 };
 
   return (
     <Tag
       className={classMap[el.type]}
+      style={!classMap[el.type] ? styleMap[el.type] : undefined}
       {...(headingOffset > 0 ? { 'data-original-type': el.type } : {})}
     >
-      {renderChildren(el.children, classNames, onHashtagClick)}
+      {renderChildren(el.children, classNames, s, onHashtagClick)}
     </Tag>
   );
 }
@@ -185,13 +202,18 @@ function renderHeading(
 function renderUl(
   el: IUlElement,
   classNames: IBlockClassNames,
+  s: IBlockStyles | null,
   onHashtagClick?: (h: string) => void,
 ): React.ReactNode {
   return (
-    <ul className={classNames.list}>
+    <ul className={classNames.list} style={!classNames.list ? s?.ulList : undefined}>
       {el.children.map((li, i) => (
-        <li key={i} className={classNames.listItem}>
-          {renderChildren(li.children, classNames, onHashtagClick)}
+        <li
+          key={i}
+          className={classNames.listItem}
+          style={!classNames.listItem ? s?.listItem : undefined}
+        >
+          {renderChildren(li.children, classNames, s, onHashtagClick)}
         </li>
       ))}
     </ul>
@@ -201,13 +223,18 @@ function renderUl(
 function renderOl(
   el: IOlElement,
   classNames: IBlockClassNames,
+  s: IBlockStyles | null,
   onHashtagClick?: (h: string) => void,
 ): React.ReactNode {
   return (
-    <ol className={classNames.list}>
+    <ol className={classNames.list} style={!classNames.list ? s?.olList : undefined}>
       {el.children.map((li, i) => (
-        <li key={i} className={classNames.listItem}>
-          {renderChildren(li.children, classNames, onHashtagClick)}
+        <li
+          key={i}
+          className={classNames.listItem}
+          style={!classNames.listItem ? s?.listItem : undefined}
+        >
+          {renderChildren(li.children, classNames, s, onHashtagClick)}
         </li>
       ))}
     </ol>
@@ -217,8 +244,25 @@ function renderOl(
 function renderImg(
   el: IImgElement,
   classNames: IBlockClassNames,
+  s: IBlockStyles | null,
   onImageClick?: (src: string) => void,
 ): React.ReactNode {
+  if (s && !classNames.image) {
+    return (
+      <figure style={s.imageWrapper}>
+        <img
+          src={el.src}
+          alt={el.alt ?? ''}
+          style={{
+            ...s.image,
+            ...(onImageClick ? { cursor: 'pointer' } : undefined),
+          }}
+          onClick={onImageClick ? () => onImageClick(el.src) : undefined}
+        />
+        {el.caption && <figcaption style={s.imageCaption}>{el.caption}</figcaption>}
+      </figure>
+    );
+  }
   return (
     <figure>
       <img
@@ -233,8 +277,35 @@ function renderImg(
   );
 }
 
-function renderA(el: IAElement, classNames: IBlockClassNames): React.ReactNode {
+function renderA(
+  el: IAElement,
+  classNames: IBlockClassNames,
+  s: IBlockStyles | null,
+): React.ReactNode {
   const href = sanitizeHref(el.href);
+
+  if (s && !classNames.link) {
+    return (
+      <div style={s.card}>
+        <div style={s.cardIconContainer}>
+          <IconLink size={20} color={ColorAqua500} />
+        </div>
+        {href ? (
+          <a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ textDecoration: 'none', flex: 1, minWidth: 0 }}
+          >
+            <span style={s.cardLinkText}>{el.href}</span>
+          </a>
+        ) : (
+          <span style={s.cardLinkText}>{el.href}</span>
+        )}
+      </div>
+    );
+  }
+
   if (!href) {
     return <span className={classNames.link}>{el.href}</span>;
   }
@@ -245,18 +316,53 @@ function renderA(el: IAElement, classNames: IBlockClassNames): React.ReactNode {
   );
 }
 
-function renderHr(el: IHrElement, classNames: IBlockClassNames): React.ReactNode {
+function renderHr(
+  el: IHrElement,
+  classNames: IBlockClassNames,
+  s: IBlockStyles | null,
+): React.ReactNode {
+  if (s && !classNames.hr) {
+    const variant = el.variant ?? 'default';
+    return (
+      <div style={s.hrWrapper}>
+        <hr style={variant === 'short' ? s.hrShort : s.hrDefault} />
+      </div>
+    );
+  }
   return <hr className={classNames.hr} data-variant={el.variant ?? 'default'} />;
 }
 
 function renderBlockquote(
   el: IBlockquoteElement,
   classNames: IBlockClassNames,
+  s: IBlockStyles | null,
   onHashtagClick?: (h: string) => void,
 ): React.ReactNode {
+  if (s && !classNames.blockquote) {
+    const variant = el.variant ?? 'default';
+    if (variant === 'solid') {
+      return (
+        <div style={s.blockquoteSolidContainer}>
+          <blockquote style={s.blockquoteText}>
+            {renderChildren(el.children, classNames, s, onHashtagClick)}
+          </blockquote>
+        </div>
+      );
+    }
+    // default variant
+    return (
+      <div style={s.blockquoteDefaultContainer}>
+        <IconQuote size={16} color="#9CA3AF" />
+        <blockquote style={s.blockquoteDefaultText}>
+          {renderChildren(el.children, classNames, s, onHashtagClick)}
+        </blockquote>
+        <IconQuote size={16} color="#9CA3AF" style={{ transform: 'rotate(180deg)' }} />
+      </div>
+    );
+  }
   return (
     <blockquote className={classNames.blockquote} data-variant={el.variant ?? 'default'}>
-      {renderChildren(el.children, classNames, onHashtagClick)}
+      {renderChildren(el.children, classNames, s, onHashtagClick)}
     </blockquote>
   );
 }
@@ -264,8 +370,29 @@ function renderBlockquote(
 function renderSpot(
   el: ISpotElement,
   classNames: IBlockClassNames,
+  s: IBlockStyles | null,
   onSpotClick?: (id: number) => void,
 ): React.ReactNode {
+  if (s && !classNames.spot) {
+    return (
+      <div
+        style={{
+          ...s.card,
+          ...(onSpotClick ? { cursor: 'pointer' } : undefined),
+        }}
+        onClick={onSpotClick ? () => onSpotClick(el.spotId) : undefined}
+        data-spot-id={el.spotId}
+      >
+        <div style={s.cardIconContainer}>
+          <IllustrationMappinMint size={32} />
+        </div>
+        <div style={s.cardInfo}>
+          {el.spotName && <span style={s.cardName}>{el.spotName}</span>}
+          {el.spotAddress && <span style={s.cardAddress}>{el.spotAddress}</span>}
+        </div>
+      </div>
+    );
+  }
   return (
     <div
       className={classNames.spot}
@@ -273,11 +400,7 @@ function renderSpot(
       style={onSpotClick ? { cursor: 'pointer' } : undefined}
       data-spot-id={el.spotId}
     >
-      {el.spotThumbnail ? (
-        <img src={el.spotThumbnail} alt={el.spotName ?? ''} />
-      ) : (
-        <IllustrationMappinMint size={32} />
-      )}
+      <IllustrationMappinMint size={32} />
       <div>
         {el.spotName && <span>{el.spotName}</span>}
         {el.spotAddress && <span>{el.spotAddress}</span>}
@@ -292,10 +415,18 @@ export const BlockRenderer = ({
   content,
   classNames = {},
   headingOffset = 0,
+  styled = true,
+  blockSpacing,
+  lineHeight,
   onHashtagClick,
   onSpotClick,
   onImageClick,
 }: IBlockRendererProps) => {
+  const s = useMemo(
+    () => (styled ? createBlockStyles({ blockSpacing, lineHeight }) : null),
+    [styled, blockSpacing, lineHeight],
+  );
+
   return (
     <div className={classNames.wrapper}>
       {content.map((block, i) => {
@@ -303,7 +434,7 @@ export const BlockRenderer = ({
           case 'p':
             return (
               <React.Fragment key={i}>
-                {renderParagraph(block as IPElement, classNames, onHashtagClick)}
+                {renderParagraph(block as IPElement, classNames, s, onHashtagClick)}
               </React.Fragment>
             );
           case 'h1':
@@ -314,6 +445,7 @@ export const BlockRenderer = ({
                 {renderHeading(
                   block as IH1Element | IH2Element | IH3Element,
                   classNames,
+                  s,
                   onHashtagClick,
                   headingOffset,
                 )}
@@ -322,39 +454,41 @@ export const BlockRenderer = ({
           case 'ul':
             return (
               <React.Fragment key={i}>
-                {renderUl(block as IUlElement, classNames, onHashtagClick)}
+                {renderUl(block as IUlElement, classNames, s, onHashtagClick)}
               </React.Fragment>
             );
           case 'ol':
             return (
               <React.Fragment key={i}>
-                {renderOl(block as IOlElement, classNames, onHashtagClick)}
+                {renderOl(block as IOlElement, classNames, s, onHashtagClick)}
               </React.Fragment>
             );
           case 'img':
             return (
               <React.Fragment key={i}>
-                {renderImg(block as IImgElement, classNames, onImageClick)}
+                {renderImg(block as IImgElement, classNames, s, onImageClick)}
               </React.Fragment>
             );
           case 'a':
             return (
-              <React.Fragment key={i}>{renderA(block as IAElement, classNames)}</React.Fragment>
+              <React.Fragment key={i}>{renderA(block as IAElement, classNames, s)}</React.Fragment>
             );
           case 'hr':
             return (
-              <React.Fragment key={i}>{renderHr(block as IHrElement, classNames)}</React.Fragment>
+              <React.Fragment key={i}>
+                {renderHr(block as IHrElement, classNames, s)}
+              </React.Fragment>
             );
           case 'blockquote':
             return (
               <React.Fragment key={i}>
-                {renderBlockquote(block as IBlockquoteElement, classNames, onHashtagClick)}
+                {renderBlockquote(block as IBlockquoteElement, classNames, s, onHashtagClick)}
               </React.Fragment>
             );
           case 'spot':
             return (
               <React.Fragment key={i}>
-                {renderSpot(block as ISpotElement, classNames, onSpotClick)}
+                {renderSpot(block as ISpotElement, classNames, s, onSpotClick)}
               </React.Fragment>
             );
           default:
