@@ -274,23 +274,20 @@ const parseElement = (
     } as IHrElement;
   }
 
-  if (tagName === 'H1') {
+  if (/^H[1-6]$/.test(tagName)) {
+    const originalType = element.getAttribute('data-original-type');
+    const type =
+      originalType === 'h1' || originalType === 'h2' || originalType === 'h3'
+        ? originalType
+        : tagName === 'H1'
+          ? 'h1'
+          : tagName === 'H2'
+            ? 'h2'
+            : 'h3';
     return {
-      type: 'h1',
+      type,
       children: normalizeTextChildren(extractInlineContent(element)),
-    } as IH1Element;
-  }
-  if (tagName === 'H2') {
-    return {
-      type: 'h2',
-      children: normalizeTextChildren(extractInlineContent(element)),
-    } as IH2Element;
-  }
-  if (tagName === 'H3' || tagName === 'H4' || tagName === 'H5' || tagName === 'H6') {
-    return {
-      type: 'h3',
-      children: normalizeTextChildren(extractInlineContent(element)),
-    } as IH3Element;
+    } as IH1Element | IH2Element | IH3Element;
   }
 
   if (tagName === 'BLOCKQUOTE') {

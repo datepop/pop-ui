@@ -4,15 +4,15 @@ import { useFocused } from 'slate-react';
 import type { RenderElementProps } from 'slate-react';
 
 interface IHeadingConfig {
-  tag: 'h2' | 'h3' | 'h4';
+  tag: 'h1' | 'h2' | 'h3';
   fontSize: string;
   placeholder: string;
 }
 
 const HEADING_CONFIGS: Record<'h1' | 'h2' | 'h3', IHeadingConfig> = {
-  h1: { tag: 'h2', fontSize: '20px', placeholder: '소제목' },
-  h2: { tag: 'h3', fontSize: '18px', placeholder: '소제목' },
-  h3: { tag: 'h4', fontSize: '16px', placeholder: '소제목' },
+  h1: { tag: 'h1', fontSize: '20px', placeholder: '소제목' },
+  h2: { tag: 'h2', fontSize: '18px', placeholder: '소제목' },
+  h3: { tag: 'h3', fontSize: '16px', placeholder: '소제목' },
 };
 
 const HeadingElementBase = ({

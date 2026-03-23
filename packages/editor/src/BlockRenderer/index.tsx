@@ -173,7 +173,10 @@ function renderHeading(
   const classMap = { h1: classNames.heading1, h2: classNames.heading2, h3: classNames.heading3 };
 
   return (
-    <Tag className={classMap[el.type]}>
+    <Tag
+      className={classMap[el.type]}
+      {...(headingOffset > 0 ? { 'data-original-type': el.type } : {})}
+    >
       {renderChildren(el.children, classNames, onHashtagClick)}
     </Tag>
   );
