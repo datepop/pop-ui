@@ -1,3 +1,5 @@
+import { sanitizeHref } from './sanitizeHref';
+
 import type {
   ICustomText,
   IParseHtmlToSlateResult,
@@ -13,6 +15,7 @@ import type {
   ILiElement,
   TEditorElement,
 } from '../types';
+
 
 /** 지원하는 블록 레벨 HTML 태그 */
 const BLOCK_TAGS = [
@@ -175,7 +178,7 @@ const extractInlineContent = (node: Node, context: IInlineContext = {}): ICustom
     newContext.italic = true;
   }
   if (tagName === 'A') {
-    const href = element.getAttribute('href');
+    const href = sanitizeHref(element.getAttribute('href'));
     if (href) {
       newContext.href = href;
     }

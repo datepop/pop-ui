@@ -1,6 +1,8 @@
 import { ColorAqua500 } from '@pop-ui/foundation';
 import React from 'react';
 
+import { sanitizeHref } from '../../utils/sanitizeHref';
+
 import type { ICustomText } from '../../types';
 import type { RenderLeafProps } from 'slate-react';
 
@@ -36,7 +38,7 @@ export const Leaf = ({ attributes, children, leaf }: RenderLeafProps) => {
     return (
       <a
         {...attributes}
-        href={customLeaf.href}
+        href={sanitizeHref(customLeaf.href) ?? '#'}
         target="_blank"
         rel="noopener noreferrer"
         style={{

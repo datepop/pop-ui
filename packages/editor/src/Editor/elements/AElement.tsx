@@ -3,6 +3,7 @@ import { Transforms } from 'slate';
 import { ReactEditor, useSelected, useSlateStatic } from 'slate-react';
 
 import { DeleteButton } from './DeleteButton';
+import { sanitizeHref } from '../../utils/sanitizeHref';
 
 import type { IAElement } from '../../types';
 import type { RenderElementProps } from 'slate-react';
@@ -26,7 +27,7 @@ export const AElement = ({ attributes, children, element }: RenderElementProps) 
         style={{ width: '100%', marginBottom: 'var(--editor-block-spacing)', borderRadius: '8px' }}
       >
         <a
-          href={aElement.href}
+          href={sanitizeHref(aElement.href) ?? '#'}
           target="_blank"
           rel="noopener noreferrer"
           style={{ textDecoration: 'none' }}

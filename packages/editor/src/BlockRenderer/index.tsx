@@ -1,6 +1,8 @@
 import { IllustrationMappinMint } from '@pop-ui/foundation';
 import React from 'react';
 
+import { sanitizeHref } from '../utils/sanitizeHref';
+
 import type {
   TEditorElement,
   ICustomText,
@@ -102,61 +104,32 @@ function renderInlineText(
     return seg.text;
   });
 
-  let el: React.ReactNode = <React.Fragment key={index}>{content}</React.Fragment>;
+  const textStyle: React.CSSProperties = {
+    color: node.color,
+    textDecoration: node.underline ? 'underline' : undefined,
+  };
 
+  let el: React.ReactNode = (
+    <span key={index} style={textStyle}>
+      {content}
+    </span>
+  );
+
+  if (node.bold) {
+    el = <strong className={classNames.bold}>{el}</strong>;
+  }
+  if (node.italic) {
+    el = <em className={classNames.italic}>{el}</em>;
+  }
   if (node.href) {
     el = (
       <a
-        key={index}
-        href={node.href}
+        href={sanitizeHref(node.href) ?? '#'}
         target="_blank"
         rel="noopener noreferrer"
         className={classNames.link}
       >
-        {content}
-      </a>
-    );
-  }
-
-  if (node.bold && node.italic) {
-    el = (
-      <strong key={index} className={classNames.bold}>
-        <em className={classNames.italic}>{content}</em>
-      </strong>
-    );
-  } else if (node.bold) {
-    el = (
-      <strong key={index} className={classNames.bold}>
-        {content}
-      </strong>
-    );
-  } else if (node.italic) {
-    el = (
-      <em key={index} className={classNames.italic}>
-        {content}
-      </em>
-    );
-  }
-
-  // wrap href over bold/italic if needed
-  if (node.href && (node.bold || node.italic)) {
-    el = (
-      <a
-        key={index}
-        href={node.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={classNames.link}
-      >
-        {node.bold && node.italic ? (
-          <strong className={classNames.bold}>
-            <em className={classNames.italic}>{content}</em>
-          </strong>
-        ) : node.bold ? (
-          <strong className={classNames.bold}>{content}</strong>
-        ) : (
-          <em className={classNames.italic}>{content}</em>
-        )}
+        {el}
       </a>
     );
   }
