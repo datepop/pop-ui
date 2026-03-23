@@ -153,6 +153,11 @@ export function createBlockStyles(options?: IBlockStyleOptions): IBlockStyles {
       whiteSpace: 'nowrap',
       display: 'block',
     },
-    inlineLink: { textDecoration: 'underline', opacity: 0.6 },
+    inlineLink: {
+      textDecoration: 'underline',
+      textUnderlinePosition: 'from-font',
+      color: 'inherit',
+      opacity: 0.5,
+    },
   };
 }

@@ -120,6 +120,7 @@ function renderInlineText(
   const textStyle: React.CSSProperties = {
     color: node.color,
     textDecoration: node.underline ? 'underline' : undefined,
+    textUnderlinePosition: node.underline ? 'from-font' : undefined,
   };
 
   let el: React.ReactNode = (

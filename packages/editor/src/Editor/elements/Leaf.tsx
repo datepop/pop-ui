@@ -33,7 +33,7 @@ export const Leaf = ({ attributes, children, leaf }: RenderLeafProps) => {
     content = <em>{content}</em>;
   }
   if (customLeaf.underline) {
-    content = <u>{content}</u>;
+    content = <u style={{ textUnderlinePosition: 'from-font' }}>{content}</u>;
   }
 
   if (customLeaf.href) {
@@ -46,8 +46,9 @@ export const Leaf = ({ attributes, children, leaf }: RenderLeafProps) => {
         style={{
           ...style,
           textDecoration: 'underline',
+          textUnderlinePosition: 'from-font',
           color: style.color ?? 'inherit',
-          opacity: 0.6,
+          opacity: 0.5,
         }}
       >
         {content}
