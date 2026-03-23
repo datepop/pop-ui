@@ -6,7 +6,7 @@ export const sanitizeHref = (href: string | null | undefined): string | undefine
   if (!href) return undefined;
 
   try {
-    const url = new URL(href, window.location.origin);
+    const url = new URL(href);
     if (url.protocol === 'http:' || url.protocol === 'https:') {
       return url.toString();
     }
