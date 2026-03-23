@@ -19,6 +19,8 @@ const config: StorybookConfig = {
       '@pop-ui/foundation': path.resolve(__dirname, '../packages/foundation/src/index.ts'),
       '@pop-ui/core': path.resolve(__dirname, '../packages/core/src/index.ts'),
       '@pop-ui/chart': path.resolve(__dirname, '../packages/chart/src/index.ts'),
+      '@pop-ui/editor-core': path.resolve(__dirname, '../packages/editor-core/src/index.ts'),
+      '@pop-ui/editor': path.resolve(__dirname, '../packages/editor/src/index.ts'),
     };
     return config;
   },

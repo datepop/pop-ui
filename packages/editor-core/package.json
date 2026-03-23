@@ -1,0 +1,46 @@
+{
+  "name": "@pop-ui/editor-core",
+  "type": "module",
+  "version": "0.0.1",
+  "main": "./dist/editor-core.umd.cjs",
+  "module": "./dist/editor-core.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/editor-core.js"
+      },
+      "require": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/editor-core.umd.cjs"
+      }
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/datepop/pop-ui"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "vite build",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "slate": "^0.120.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.2",
+    "slate": "^0.120.0",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.12",
+    "vite-plugin-dts": "^4.5.4"
+  }
+}
