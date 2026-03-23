@@ -67,15 +67,7 @@ export const SpotElement = ({ attributes, children, element }: RenderElementProp
               overflow: 'hidden',
             }}
           >
-            {spotElement.spotThumbnail ? (
-              <img
-                src={spotElement.spotThumbnail}
-                alt={spotElement.spotName || '스팟'}
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              />
-            ) : (
-              <IllustrationMappinMint size={32} />
-            )}
+            <IllustrationMappinMint size={32} />
           </div>
 
           {/* 스팟 정보 */}
