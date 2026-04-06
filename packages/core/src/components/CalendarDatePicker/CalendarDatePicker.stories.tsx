@@ -8,6 +8,65 @@ import type { TCalendarDatePickerType } from './types';
 import type { DateValue } from '@mantine/dates';
 import type { Decorator, Meta, StoryObj } from '@storybook/react-vite';
 
+const stackStyle = {
+  display: 'grid',
+  gap: '24px',
+  padding: '24px',
+  maxWidth: '980px',
+} as const;
+
+const surfaceGridStyle = {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+  gap: '16px',
+} as const;
+
+const surfaceStyle = {
+  display: 'grid',
+  gap: '12px',
+  padding: '16px',
+  border: '1px solid #d8d8d8',
+  borderRadius: '12px',
+  background: '#fbfbfb',
+} as const;
+
+const headingStyle = {
+  margin: 0,
+  fontSize: '16px',
+  fontWeight: 600,
+} as const;
+
+const bodyStyle = {
+  margin: 0,
+  fontSize: '14px',
+  lineHeight: 1.5,
+  color: '#666666',
+} as const;
+
+const november2025 = new Date(2025, 10, 1);
+const november18 = new Date(2025, 10, 18);
+const november21 = new Date(2025, 10, 21);
+const today = new Date();
+const novemberRangeArgs = {
+  type: 'range' as const,
+  value: [november18, november21] as [Date | null, Date | null],
+};
+
+const SHARED_VISUAL_CONTRACT = `
+This story set records the aligned inline calendar shell after visual language work landed.
+
+### Shared alignment target for both picker surfaces
+
+- **Spacing scale:** the inline shell now follows the same 12 / 16px rhythm as adjacent form controls, with tighter 40px calendar cells and a more compact header/weekday cadence.
+- **Border and radius language:** the inline shell is now flat and borderless, with plain chevrons and circular date states sitting directly on the white surface.
+- **Typography:** header and day labels stay in the shared 16px Pretendard body scale, while the today marker stays as plain text nested inside the day cell.
+- **State targets to compare:** selected endpoints stay bright aqua, in-range dates read as separate soft-gray circles, and disabled/outside dates fade back to pale gray text.
+
+This task aligns the shell visually only; it does not change exclusion, range reset, or value-model semantics.
+
+CalendarDatePicker stays inline and exclusion-capable in this phase. The behavior split from DatePicker remains intentional.
+`;
+
 const TypeResetWrapper = ({
   StoryComponent,
   context,
@@ -70,21 +129,84 @@ export default {
     onChange: { action: 'change' },
   },
   decorators: [withTypeResetDecorator],
+  parameters: {
+    docs: {
+      description: {
+        component: SHARED_VISUAL_CONTRACT,
+        story:
+          'Confirms the inline CalendarDatePicker shell is visually aligned while keeping excluded days, excluded dates, range reset, and min/max behavior intact.',
+      },
+    },
+  },
 } satisfies Meta<typeof CalendarDatePicker>;
 
-export const DefaultDatePicker: StoryObj<typeof CalendarDatePicker> = {
-  args: {
-    type: 'default',
-    excludedDays: [],
-    excludedDates: [],
-    highlightToday: false,
+export const Playground: StoryObj<typeof CalendarDatePicker> = {};
+
+export const VisualContract_SelectedTodayDisabledAndInRange: StoryObj<typeof CalendarDatePicker> = {
+  render: () => (
+    <div style={stackStyle}>
+      <div style={surfaceGridStyle}>
+        <div style={surfaceStyle}>
+          <h4 style={headingStyle}>Selected day baseline</h4>
+          <p style={bodyStyle}>
+            Shows the aligned selected-day fill with the circular highlight treatment and shared
+            16px type scale.
+          </p>
+          <CalendarDatePicker defaultDate={november2025} value={november18} />
+        </div>
+
+        <div style={surfaceStyle}>
+          <h4 style={headingStyle}>Range baseline with in-range fill</h4>
+          <p style={bodyStyle}>
+            Shows the preserved range logic with discrete light-gray in-range circles between the
+            aqua endpoints.
+          </p>
+          <CalendarDatePicker
+            {...(novemberRangeArgs as unknown as React.ComponentProps<typeof CalendarDatePicker>)}
+            defaultDate={november2025}
+          />
+        </div>
+
+        <div style={surfaceStyle}>
+          <h4 style={headingStyle}>Today baseline with today indicator</h4>
+          <p style={bodyStyle}>
+            Shows the updated today treatment with the plain-text 오늘 indicator.
+          </p>
+          <CalendarDatePicker defaultDate={today} highlightToday value={today} />
+        </div>
+
+        <div style={surfaceStyle}>
+          <h4 style={headingStyle}>Disabled and bounded dates baseline</h4>
+          <p style={bodyStyle}>
+            Shows excluded days, excluded dates, and min/max bounds with the aligned disabled
+            styling.
+          </p>
+          <CalendarDatePicker
+            defaultDate={november2025}
+            excludedDates={['2025-11-14', ['2025-11-18', '2025-11-19']]}
+            excludedDays={[0]}
+            minDate="2025-11-10"
+            maxDate="2025-11-20"
+          />
+        </div>
+      </div>
+    </div>
+  ),
+  parameters: {
+    controls: { disable: true },
+    docs: {
+      description: {
+        story:
+          'Shows the aligned selected, today, disabled, and in-range states on the inline calendar surface while keeping its exclusion behavior and range reset intact.',
+      },
+    },
   },
 };
 
-export const WithExcludedDays: StoryObj<typeof CalendarDatePicker> = {
+export const BehaviorPreserved_ExcludedDays: StoryObj<typeof CalendarDatePicker> = {
   args: {
     type: 'default',
-    excludedDays: [0, 6], // 주말 제외
+    excludedDays: [0, 6],
   },
   argTypes: {
     excludedDays: {
@@ -106,10 +228,16 @@ export const WithExcludedDays: StoryObj<typeof CalendarDatePicker> = {
     controls: {
       exclude: ['type', 'excludedDates'],
     },
+    docs: {
+      description: {
+        story:
+          'Keeps the excludedDays behavior reviewable while alignment work is still blocked to stories/tests only.',
+      },
+    },
   },
 };
 
-export const WithExcludedDates: StoryObj<typeof CalendarDatePicker> = {
+export const BehaviorPreserved_ExcludedDatesAndBounds: StoryObj<typeof CalendarDatePicker> = {
   args: {
     type: 'range',
     excludedDates: ['2025-11-28', '2025-12-25', ['2025-12-28', '2026-01-03']],
@@ -120,10 +248,16 @@ export const WithExcludedDates: StoryObj<typeof CalendarDatePicker> = {
     controls: {
       exclude: ['excludedDays'],
     },
+    docs: {
+      description: {
+        story:
+          'Preserves the current range, exclusion, and min/max behavior contract while the aligned shell stays visual only.',
+      },
+    },
   },
 };
 
-export const WithCustomStyles: StoryObj<typeof CalendarDatePicker> = {
+export const BehaviorPreserved_CustomClassNameMerging: StoryObj<typeof CalendarDatePicker> = {
   args: {
     type: 'range',
     highlightToday: false,
@@ -137,14 +271,11 @@ export const WithCustomStyles: StoryObj<typeof CalendarDatePicker> = {
     docs: {
       description: {
         story: `
-**스타일 커스터마이징 테스트**
+Confirms the existing className/classNames merge behavior remains intact while the aligned visual baseline is being documented.
 
-\`className\`과 \`classNames\`가 모두 주어졌을 때 기본 스타일과 올바르게 병합되는지 확인합니다.
-
-- **Wrapper**: 커스텀 테두리 + 배경 적용 (className)
-- **Header**: 커스텀 배경색 적용 (classNames)
-- **Day**: 커스텀 배경색 + 글자색 적용 (classNames)
-- **Override**: \`data-weekend\` 등의 상태 스타일도 커스텀 클래스가 정상적으로 덮어써야 함
+- **Wrapper:** custom wrapper class still applies
+- **Day:** custom day class still merges with default state classes
+- **Weekday:** custom weekday class still merges with the default typography and spacing
         `,
       },
     },
