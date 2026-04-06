@@ -31,6 +31,22 @@ export type TTextFieldProps = ICommonTextFieldProps &
       >)
   );
 
+const getTextLength = (value: unknown): number => {
+  if (typeof value === 'string') {
+    return value.length;
+  }
+
+  if (typeof value === 'number') {
+    return String(value).length;
+  }
+
+  if (Array.isArray(value)) {
+    return value.join('').length;
+  }
+
+  return 0;
+};
+
 export const TextField = (allProps: TTextFieldProps) => {
   const {
     label,
@@ -49,7 +65,12 @@ export const TextField = (allProps: TTextFieldProps) => {
   } = allProps;
 
   const minRows = 'minRows' in allProps ? allProps.minRows : undefined;
-  const [textCount, setTextCount] = useState<number>(0);
+  const valueProps = otherProps as { value?: unknown; defaultValue?: unknown };
+  const [uncontrolledTextCount, setUncontrolledTextCount] = useState<number>(() =>
+    getTextLength(valueProps.value ?? valueProps.defaultValue),
+  );
+  const isControlled = valueProps.value !== undefined;
+  const textCount = isControlled ? getTextLength(valueProps.value) : uncontrolledTextCount;
 
   let labelStyle = styles['TextField__Label--Medium'];
   let textfieldStyle = styles['TextField--Medium'];
@@ -66,21 +87,21 @@ export const TextField = (allProps: TTextFieldProps) => {
 
   const onChangeHandler = useCallback(
     (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      if (maxTextCount) {
-        if (event.currentTarget?.value?.length > maxTextCount) {
-          return;
-        }
-        setTextCount(event.currentTarget?.value?.length);
-        if (onChange) {
-          onChange(event);
-        }
+      const nextTextCount = event.currentTarget.value.length;
+
+      if (maxTextCount && nextTextCount > maxTextCount) {
+        return;
       }
+
+      if (!isControlled) {
+        setUncontrolledTextCount(nextTextCount);
+      }
+
       if (onChange) {
-        setTextCount(event.currentTarget?.value?.length);
         onChange(event);
       }
     },
-    [maxTextCount, onChange],
+    [isControlled, maxTextCount, onChange],
   );
 
   return (
