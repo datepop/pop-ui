@@ -1,47 +1,126 @@
-"use client";
+'use client';
 
-import { Button as MantineButton, Loader } from "@mantine/core";
-import { useMemo } from "react";
+import { Button as MantineButton, Loader } from '@mantine/core';
 
-import { getButtonStyles, LOADER_COLOR_MAP } from "./style";
+import { BUTTON_LOADER_SIZES } from './style';
+import styles from './styles.module.scss';
 
-import type { IButtonProps } from "./type";
+import type { IButtonProps } from './type';
+import type {
+  ButtonProps as MantineButtonProps,
+  ButtonStylesNames,
+  MantineTheme,
+} from '@mantine/core';
+
+type TButtonClassNameRecord = Partial<Record<ButtonStylesNames, string>>;
+type TButtonClassNamesResolver =
+  | TButtonClassNameRecord
+  | ((theme: MantineTheme, props: MantineButtonProps, ctx: unknown) => TButtonClassNameRecord)
+  | null;
+
+const DEFAULT_CLASS_NAMES = {
+  inner: styles.Button__Inner,
+  label: styles.Button__Label,
+  section: styles.Button__Section,
+  loader: styles.Button__Loader,
+} satisfies TButtonClassNameRecord;
+
+const BUTTON_SIZE_CLASS_NAMES = {
+  sm: styles['Button--Small'],
+  md: styles['Button--Medium'],
+  lg: styles['Button--Large'],
+} as const;
+
+const BUTTON_VARIANT_CLASS_NAMES = {
+  primary: styles['Button--Primary'],
+  primaryLine: styles['Button--PrimaryLine'],
+  basic: styles['Button--Basic'],
+  danger: styles['Button--Warning'],
+  setting: styles['Button--Setting'],
+  warning: styles['Button--Warning'],
+} as const;
+
+const joinClassNames = (...values: Array<string | undefined>) =>
+  values.filter(Boolean).join(' ') || undefined;
+
+const mergeClassNamesWithDefault = (
+  classNames?: TButtonClassNamesResolver,
+):
+  | TButtonClassNameRecord
+  | ((theme: MantineTheme, props: MantineButtonProps, ctx: unknown) => TButtonClassNameRecord) => {
+  const mergeObjects = (
+    defaults: TButtonClassNameRecord,
+    custom: TButtonClassNameRecord,
+  ): TButtonClassNameRecord => {
+    const merged: TButtonClassNameRecord = Object.keys(defaults).reduce((acc, key) => {
+      const typedKey = key as ButtonStylesNames;
+      const mergedClassName = [defaults[typedKey], custom[typedKey]].filter(Boolean).join(' ');
+
+      if (mergedClassName) {
+        acc[typedKey] = mergedClassName;
+      }
+
+      return acc;
+    }, {} as TButtonClassNameRecord);
+
+    Object.keys(custom).forEach((key) => {
+      const typedKey = key as ButtonStylesNames;
+
+      if (!(typedKey in defaults) && custom[typedKey]) {
+        merged[typedKey] = custom[typedKey];
+      }
+    });
+
+    return merged;
+  };
+
+  if (typeof classNames === 'function') {
+    return (theme: MantineTheme, props: MantineButtonProps, ctx: unknown) =>
+      mergeObjects(DEFAULT_CLASS_NAMES, classNames(theme, props, ctx));
+  }
+
+  if (typeof classNames === 'object' && classNames !== null && !Array.isArray(classNames)) {
+    return mergeObjects(DEFAULT_CLASS_NAMES, classNames);
+  }
+
+  return DEFAULT_CLASS_NAMES;
+};
 
 export function Button({
   children,
-  size = "md",
-  variant = "primary",
+  size = 'md',
+  variant = 'primary',
   isLoading = false,
+  loading = false,
   disabled = false,
+  className,
+  classNames,
+  loaderProps,
   ...props
 }: IButtonProps) {
-  const buttonStyles = useMemo(
-    () => getButtonStyles(variant, size),
-    [variant, size]
-  );
-
-  const loaderColor = LOADER_COLOR_MAP[variant];
-
-  const loaderSize = useMemo(() => {
-    switch (size) {
-      case "lg":
-        return 18;
-      case "sm":
-        return 14;
-      case "md":
-      default:
-        return 16;
-    }
-  }, [size]);
+  const loaderSize = BUTTON_LOADER_SIZES[size];
+  const isButtonLoading = isLoading || loading;
+  const isDisabled = disabled || isButtonLoading;
 
   return (
     <MantineButton
       type="button"
-      styles={buttonStyles}
-      disabled={disabled || isLoading}
+      unstyled
+      className={joinClassNames(
+        styles.Button,
+        BUTTON_SIZE_CLASS_NAMES[size],
+        BUTTON_VARIANT_CLASS_NAMES[variant],
+        className,
+      )}
+      classNames={mergeClassNamesWithDefault(classNames)}
       {...props}
+      disabled={isDisabled}
     >
-      {isLoading ? <Loader color={loaderColor} size={loaderSize} /> : children}
+      {isButtonLoading ? (
+        <Loader color="currentColor" size={loaderSize} {...loaderProps} />
+      ) : (
+        children
+      )}
     </MantineButton>
   );
 }

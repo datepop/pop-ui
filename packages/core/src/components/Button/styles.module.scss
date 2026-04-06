@@ -1,0 +1,319 @@
+@use '../shared/variables.scss' as *;
+
+@function button-font-weight($weight-token) {
+  @if $weight-token == Bold {
+    @return 700;
+  }
+
+  @if $weight-token == SemiBold {
+    @return 600;
+  }
+
+  @if $weight-token == Medium {
+    @return 500;
+  }
+
+  @return 400;
+}
+
+@mixin ButtonSize(
+  $height,
+  $padding-x,
+  $font-family,
+  $font-size,
+  $font-weight,
+  $line-height,
+  $radius,
+  $section-gap
+) {
+  min-height: $height;
+  padding: 0 #{$padding-x}px;
+  border-radius: $radius;
+  font-family: $font-family;
+  font-size: #{$font-size}px;
+  font-weight: button-font-weight($font-weight);
+  line-height: $line-height;
+
+  --button-section-gap: #{$section-gap}px;
+}
+
+@mixin ButtonVariant($bg, $text, $border-color: transparent) {
+  background-color: $bg;
+  color: $text;
+  border: 1px solid $border-color;
+}
+
+.Button {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 0;
+  cursor: pointer;
+  user-select: none;
+  vertical-align: middle;
+  appearance: none;
+  text-decoration: none;
+  text-align: center;
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease,
+    color 120ms ease,
+    opacity 120ms ease;
+
+  &[data-block] {
+    width: 100%;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.Button__Inner {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--button-section-gap, 6px);
+  width: 100%;
+}
+
+.Button__Label {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+}
+
+.Button__Section,
+.Button__Loader {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+}
+
+.Button--Small {
+  @include ButtonSize(
+    $button-size-button-small,
+    $button-spacing-button-small,
+    $button-typo-button-small-font-family,
+    $button-typo-button-small-font-size,
+    $button-typo-button-small-font-weight,
+    $button-typo-button-small-line-height,
+    $button-border-radius-small,
+    $button-spacing-button-small-icon
+  );
+}
+
+.Button--Medium {
+  @include ButtonSize(
+    $button-size-button-medium,
+    $button-spacing-button-medium,
+    $button-typo-button-medium-font-family,
+    $button-typo-button-medium-font-size,
+    $button-typo-button-medium-font-weight,
+    $button-typo-button-medium-line-height,
+    $button-border-radius-medium,
+    $button-spacing-button-medium-icon
+  );
+}
+
+.Button--Large {
+  @include ButtonSize(
+    $button-size-button-large,
+    $button-spacing-button-large,
+    $button-typo-button-large-font-family,
+    $button-typo-button-large-font-size,
+    $button-typo-button-large-font-weight,
+    $button-typo-button-large-line-height,
+    $button-border-radius-large,
+    $button-spacing-button-large-icon
+  );
+}
+
+.Button--Primary {
+  @include ButtonVariant(
+    $bg-color-button-bg-primary-default,
+    $text-color-button-text-primary-default
+  );
+
+  &:hover:not(:disabled) {
+    @include ButtonVariant(
+      $bg-color-button-bg-primary-hover,
+      $text-color-button-text-primary-hover
+    );
+  }
+
+  &:active:not(:disabled) {
+    @include ButtonVariant(
+      $bg-color-button-bg-primary-pressed,
+      $text-color-button-text-primary-pressed
+    );
+  }
+
+  &:focus-visible:not(:disabled) {
+    @include ButtonVariant(
+      $bg-color-button-bg-primary-focused,
+      $text-color-button-text-primary-focused
+    );
+  }
+
+  &:disabled {
+    @include ButtonVariant(
+      $bg-color-button-bg-primary-disabled,
+      $text-color-button-text-primary-disabled
+    );
+  }
+}
+
+.Button--PrimaryLine {
+  @include ButtonVariant(
+    $bg-color-button-bg-primaryline-default,
+    $text-color-button-text-primaryline-default,
+    $border-color-button-border-primaryline-default
+  );
+
+  &:hover:not(:disabled) {
+    @include ButtonVariant(
+      $bg-color-button-bg-primaryline-hover,
+      $text-color-button-text-primaryline-hover,
+      $border-color-button-border-primaryline-hover
+    );
+  }
+
+  &:active:not(:disabled) {
+    @include ButtonVariant(
+      $bg-color-button-bg-primaryline-pressed,
+      $text-color-button-text-primaryline-pressed,
+      $border-color-button-border-primaryline-pressed
+    );
+  }
+
+  &:focus-visible:not(:disabled) {
+    @include ButtonVariant(
+      $bg-color-button-bg-primaryline-focused,
+      $text-color-button-text-primaryline-focused,
+      $border-color-button-border-primaryline-focused
+    );
+  }
+
+  &:disabled {
+    @include ButtonVariant(
+      $bg-color-button-bg-primaryline-disabled,
+      $text-color-button-text-primaryline-disabled,
+      $border-color-button-border-primaryline-default
+    );
+  }
+}
+
+.Button--Basic {
+  @include ButtonVariant(
+    $bg-color-button-bg-basic-default,
+    $text-color-button-text-basic-default,
+    $border-color-button-border-basic-default
+  );
+
+  &:hover:not(:disabled) {
+    @include ButtonVariant(
+      $bg-color-button-bg-basic-hover,
+      $text-color-button-text-basic-hover,
+      $border-color-button-border-basic-hover
+    );
+  }
+
+  &:active:not(:disabled) {
+    @include ButtonVariant(
+      $bg-color-button-bg-basic-preseed,
+      $text-color-button-text-basic-pressed,
+      $border-color-button-border-basic-pressed
+    );
+  }
+
+  &:focus-visible:not(:disabled) {
+    @include ButtonVariant(
+      $bg-color-button-bg-basic-focused,
+      $text-color-button-text-basic-focused,
+      $border-color-button-border-basic-focused
+    );
+  }
+
+  &:disabled {
+    @include ButtonVariant(
+      $bg-color-button-bg-basic-disabled,
+      $text-color-button-text-basic-disabled,
+      $border-color-button-border-basic-default
+    );
+  }
+}
+
+.Button--Warning {
+  @include ButtonVariant(
+    $bg-color-button-bg-warning-default,
+    $text-color-button-text-warning-default
+  );
+
+  &:hover:not(:disabled) {
+    @include ButtonVariant(
+      $bg-color-button-bg-warning-hover,
+      $text-color-button-text-warning-hover
+    );
+  }
+
+  &:active:not(:disabled) {
+    @include ButtonVariant(
+      $bg-color-button-bg-warning-pressed,
+      $text-color-button-text-warning-pressed
+    );
+  }
+
+  &:focus-visible:not(:disabled) {
+    @include ButtonVariant(
+      $bg-color-button-bg-warning-focused,
+      $text-color-button-text-warning-focused
+    );
+  }
+
+  &:disabled {
+    @include ButtonVariant(
+      $bg-color-button-bg-warning-disabled,
+      $text-color-button-text-warning-disabled
+    );
+  }
+}
+
+.Button--Setting {
+  @include ButtonVariant(
+    $bg-color-button-bg-setting-default,
+    $text-color-button-text-setting-default
+  );
+
+  &:hover:not(:disabled) {
+    @include ButtonVariant(
+      $bg-color-button-bg-setting-hover,
+      $text-color-button-text-setting-hover
+    );
+  }
+
+  &:active:not(:disabled) {
+    @include ButtonVariant(
+      $bg-color-button-bg-setting-pressed,
+      $text-color-button-text-setting-pressed
+    );
+  }
+
+  &:focus-visible:not(:disabled) {
+    @include ButtonVariant(
+      $bg-color-button-bg-setting-focused,
+      $text-color-button-text-setting-focused
+    );
+  }
+
+  &:disabled {
+    @include ButtonVariant(
+      $bg-color-button-bg-setting-disabled,
+      $text-color-button-text-setting-disabled
+    );
+  }
+}
