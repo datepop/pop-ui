@@ -1,77 +1,355 @@
-@use "../shared/variables.scss" as *;
+@use '../shared/variables.scss' as *;
 
-@mixin DatePickerFocus {
+@mixin DatePickerShellFocus {
   &:hover {
-    outline: 1.5px solid $color-aqua-300;
+    outline: #{$border-width-37}px solid $color-aqua-300;
     border-color: transparent;
     background-color: $color-gray-0;
   }
 
-  &:focus-within {
-    outline: 1.5px solid $color-aqua-500;
+  &:focus-within,
+  &[data-expanded='true'] {
+    outline: #{$border-width-37}px solid $color-aqua-500;
+    border-color: transparent;
+    background-color: $color-gray-0;
+  }
+}
+
+@mixin DatePickerInteractiveSurface {
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease,
+    color 120ms ease,
+    box-shadow 120ms ease,
+    outline-color 120ms ease;
+}
+
+.DatePickerBase {
+  --date-picker-height: #{$button-size-button-medium};
+  --date-picker-padding-inline: #{$spacing-300}px;
+  --date-picker-font-size: #{$font-size-450}px;
+  --date-picker-line-height: #{$lh-500};
+  --date-picker-radius: #{$border-radius-300};
+  --date-picker-section-width: 42px;
+  --date-picker-icon-shell-size: #{$spacing-700}px;
+  --date-picker-popup-radius: #{$border-radius-300};
+  --date-picker-time-control-height: #{$button-size-button-medium};
+  --date-picker-time-control-radius: #{$border-radius-200};
+}
+
+.DatePickerRoot {
+  display: block;
+}
+
+.DatePicker--Small {
+  --date-picker-height: #{$button-size-button-small};
+  --date-picker-padding-inline: #{$spacing-200}px;
+  --date-picker-font-size: #{$font-size-450}px;
+  --date-picker-radius: #{$border-radius-200};
+  --date-picker-section-width: 34px;
+  --date-picker-icon-shell-size: 22px;
+  --date-picker-time-control-height: #{$button-size-button-small};
+}
+
+.DatePicker--Medium {
+  --date-picker-height: #{$button-size-button-medium};
+  --date-picker-padding-inline: #{$spacing-300}px;
+  --date-picker-font-size: #{$font-size-450}px;
+  --date-picker-radius: #{$border-radius-300};
+  --date-picker-section-width: 42px;
+  --date-picker-icon-shell-size: #{$spacing-700}px;
+  --date-picker-time-control-height: #{$button-size-button-medium};
+}
+
+.DatePicker--Large {
+  --date-picker-height: #{$button-size-button-large};
+  --date-picker-padding-inline: #{$spacing-400}px;
+  --date-picker-font-size: #{$font-size-500}px;
+  --date-picker-radius: #{$border-radius-300};
+  --date-picker-section-width: 50px;
+  --date-picker-icon-shell-size: 34px;
+  --date-picker-time-control-height: #{$button-size-button-large};
+}
+
+.DatePicker__Wrapper {
+  border-radius: var(--date-picker-radius);
+}
+
+.DatePicker__Input {
+  @include DatePickerInteractiveSurface;
+  @include DatePickerShellFocus;
+
+  min-height: calc(var(--date-picker-height) * 1px);
+  height: calc(var(--date-picker-height) * 1px);
+  padding-inline: var(--date-picker-padding-inline);
+  padding-right: calc(var(--date-picker-section-width) + var(--date-picker-padding-inline));
+  border: #{$border-width-25}px solid $color-gray-200;
+  border-radius: var(--date-picker-radius);
+  background-color: $color-gray-0;
+  color: $color-gray-900;
+  font-family: $font-family-pretendard;
+  font-size: var(--date-picker-font-size);
+  font-weight: $font-weight-medium;
+  line-height: var(--date-picker-line-height);
+  letter-spacing: 0;
+  box-shadow: none;
+
+  &[data-disabled='true'],
+  &:disabled {
+    outline: none;
+    border-color: $color-gray-100;
+    background-color: $color-gray-50;
+    color: $color-gray-400;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+}
+
+.DatePicker__Placeholder {
+  color: $color-gray-500;
+}
+
+.DatePicker__Section {
+  width: var(--date-picker-section-width);
+  color: $color-gray-700;
+}
+
+.DatePicker__Icon {
+  @include DatePickerInteractiveSurface;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--date-picker-icon-shell-size);
+  height: var(--date-picker-icon-shell-size);
+  border-radius: #{$border-radius-1000};
+  background: $color-gray-50;
+  box-shadow: inset 0 0 0 #{$border-width-25}px $color-gray-100;
+  color: inherit;
+
+  svg {
+    display: block;
+  }
+}
+
+.DatePicker__Wrapper:hover .DatePicker__Icon,
+.DatePicker__Wrapper:focus-within .DatePicker__Icon,
+.DatePicker__Wrapper[data-expanded='true'] .DatePicker__Icon {
+  background: $color-aqua-50;
+  box-shadow: inset 0 0 0 #{$border-width-25}px $color-aqua-200;
+  color: $color-aqua-700;
+}
+
+.DatePicker__Wrapper[data-disabled='true'] .DatePicker__Icon {
+  background: $color-gray-50;
+  box-shadow: inset 0 0 0 #{$border-width-25}px $color-gray-100;
+  color: $color-gray-400;
+}
+
+.DatePicker__Dropdown {
+  padding: #{$spacing-400}px;
+  border: #{$border-width-25}px solid $color-gray-100;
+  border-radius: var(--date-picker-popup-radius);
+  background: $color-gray-0;
+  box-shadow:
+    #{$shadow-dashboard-card-x}px #{$shadow-dashboard-card-y}px #{$shadow-dashboard-card-blur}
+    #{$shadow-dashboard-card-spread}px $shadow-dashboard-card-color;
+}
+
+.DatePicker__DropdownArrow {
+  background: $color-gray-0;
+  border: #{$border-width-25}px solid $color-gray-100;
+}
+
+.DatePicker__Root {
+  width: 100%;
+}
+
+.DatePicker__LevelsGroup {
+  justify-content: center;
+  max-width: 375px;
+  margin: 0 auto;
+}
+
+.DatePicker__CalendarHeader {
+  justify-content: center;
+  width: 100%;
+  gap: #{$spacing-600}px;
+  padding: 0 0 #{$spacing-400}px;
+  margin: 0;
+}
+
+.DatePicker__CalendarHeaderLevel {
+  flex-grow: 0;
+  height: auto;
+  white-space: nowrap;
+  color: $color-gray-900;
+  font-family: $font-family-pretendard;
+  font-size: #{$font-size-500}px;
+  font-weight: $font-weight-semibold;
+  line-height: $lh-500;
+}
+
+.DatePicker__CalendarHeaderControl {
+  @include DatePickerInteractiveSurface;
+
+  width: #{$spacing-800}px;
+  height: #{$spacing-800}px;
+  min-width: #{$spacing-800}px;
+  border: #{$border-width-25}px solid $color-gray-100;
+  border-radius: #{$border-radius-1000};
+  background: $color-gray-50;
+  color: $color-gray-700;
+
+  &:hover {
+    background: $color-aqua-50;
+    border-color: $color-aqua-200;
+    color: $color-aqua-700;
+  }
+}
+
+.DatePicker__CalendarHeaderControlIcon {
+  width: #{$spacing-400}px;
+  height: #{$spacing-400}px;
+}
+
+.DatePicker__Month {
+  width: 100%;
+  margin: 0;
+  text-align: center;
+}
+
+.DatePicker__WeekdaysRow {
+  height: #{$spacing-1200}px;
+}
+
+.DatePicker__Weekday {
+  height: #{$spacing-1200}px;
+  padding: 0;
+  color: $color-gray-500;
+  font-family: $font-family-pretendard;
+  font-size: #{$font-size-450}px;
+  font-weight: $font-weight-medium;
+  line-height: $lh-500;
+  text-transform: none;
+}
+
+.DatePicker__MonthRow {
+  border-bottom: #{$spacing-150}px solid transparent;
+}
+
+.DatePicker__MonthCell {
+  padding: 0;
+}
+
+.DatePicker__Day {
+  @include DatePickerInteractiveSurface;
+
+  width: #{$spacing-1100}px;
+  height: #{$spacing-1100}px;
+  border-radius: #{$border-radius-1000};
+  color: $color-gray-900;
+  font-family: $font-family-pretendard;
+  font-size: #{$font-size-500}px;
+  font-weight: $font-weight-regular;
+  line-height: $lh-500;
+
+  --day-size-lg: #{$spacing-1100}px;
+
+  &:where(:hover) {
+    background-color: $color-aqua-50;
+    border-color: $color-aqua-300;
+  }
+
+  &:where([data-today]) {
+    color: $color-aqua-500;
+    font-weight: $font-weight-medium;
+    border-color: $color-aqua-200;
+    background-color: transparent;
+  }
+
+  &:where([data-weekend]) {
+    color: $color-red-500;
+  }
+
+  &:where([data-in-range]) {
+    background-color: $color-gray-50;
+    color: $color-gray-900;
+    font-weight: $font-weight-medium;
+  }
+
+  &:where([data-selected]) {
+    background-color: $color-aqua-500;
+    color: $color-gray-0;
     border-color: transparent;
   }
 
-  &[data-in-range] {
-    background-color: $color-aqua-50;
+  &:where([data-selected]:hover) {
+    background-color: $color-aqua-600;
   }
 
-  &[data-selected] {
-    background-color: $color-aqua-500;
+  &:where([data-disabled]),
+  &:where([data-outside]) {
+    color: $color-gray-200;
+    text-decoration: line-through;
+    pointer-events: none;
 
     &:hover {
-      outline: 1.5px solid $color-aqua-300;
-      background-color: $color-aqua-50;
-      color: $color-gray-1000;
+      background-color: transparent;
       border-color: transparent;
     }
   }
 }
 
-.DatePicker--Small {
-  button {
-    height: 30px;
-    min-height: 30px;
-    padding: 8px;
-    font-size: 14px;
-    line-height: 100%;
+.DatePicker__TimeWrapper {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: #{$spacing-300}px;
+  align-items: center;
+  margin-top: #{$spacing-400}px;
+  padding-top: #{$spacing-400}px;
+  border-top: #{$border-width-25}px solid $color-gray-100;
+}
 
-    @include DatePickerFocus;
-  }
+.DatePicker__TimeInput {
+  @include DatePickerInteractiveSurface;
 
-  input {
-    @include DatePickerFocus;
+  min-height: calc(var(--date-picker-time-control-height) * 1px);
+  height: calc(var(--date-picker-time-control-height) * 1px);
+  padding-inline: #{$spacing-300}px;
+  border: #{$border-width-25}px solid $color-gray-200;
+  border-radius: var(--date-picker-time-control-radius);
+  background: $color-gray-0;
+  color: $color-gray-900;
+  font-family: $font-family-pretendard;
+  font-size: #{$font-size-450}px;
+  font-weight: $font-weight-medium;
+  line-height: $lh-500;
+
+  &:focus,
+  &:focus-within {
+    outline: #{$border-width-37}px solid $color-aqua-500;
+    border-color: transparent;
   }
 }
 
-.DatePicker--Medium {
-  button {
-    height: 40px;
-    min-height: 40px;
-    padding: 12px;
-    font-size: 14px;
-    line-height: 100%;
+.DatePicker__SubmitButton {
+  @include DatePickerInteractiveSurface;
 
-    @include DatePickerFocus;
+  width: calc(var(--date-picker-time-control-height) * 1px);
+  min-width: calc(var(--date-picker-time-control-height) * 1px);
+  height: calc(var(--date-picker-time-control-height) * 1px);
+  border: none;
+  border-radius: var(--date-picker-time-control-radius);
+  background: $color-aqua-500;
+  color: $color-gray-0;
+
+  &:hover {
+    background: $color-aqua-600;
   }
 
-  input {
-    @include DatePickerFocus;
-  }
-}
-
-.DatePicker--Large {
-  button {
-    height: 50px;
-    min-height: 50px;
-    padding: 16px;
-    font-size: 16px;
-    line-height: 100%;
-
-    @include DatePickerFocus;
-  }
-
-  input {
-    @include DatePickerFocus;
+  &:disabled {
+    background: $color-gray-300;
+    color: $color-gray-0;
   }
 }
