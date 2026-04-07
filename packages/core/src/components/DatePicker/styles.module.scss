@@ -4,14 +4,14 @@
   &:hover {
     outline: #{$border-width-37}px solid $color-aqua-300;
     border-color: transparent;
-    background-color: $color-gray-0;
+    background-color: $color-white;
   }
 
   &:focus-within,
   &[data-expanded='true'] {
     outline: #{$border-width-37}px solid $color-aqua-500;
     border-color: transparent;
-    background-color: $color-gray-0;
+    background-color: $color-white;
   }
 }
 
@@ -25,7 +25,7 @@
 }
 
 .DatePickerBase {
-  --date-picker-height: #{$button-size-button-medium};
+  --date-picker-height: 40px;
   --date-picker-padding-inline: #{$spacing-300}px;
   --date-picker-font-size: #{$font-size-450}px;
   --date-picker-line-height: #{$lh-500};
@@ -33,7 +33,7 @@
   --date-picker-section-width: 42px;
   --date-picker-icon-shell-size: #{$spacing-700}px;
   --date-picker-popup-radius: #{$border-radius-300};
-  --date-picker-time-control-height: #{$button-size-button-medium};
+  --date-picker-time-control-height: 40px;
   --date-picker-time-control-radius: #{$border-radius-200};
 }
 
@@ -42,33 +42,33 @@
 }
 
 .DatePicker--Small {
-  --date-picker-height: #{$button-size-button-small};
+  --date-picker-height: 30px;
   --date-picker-padding-inline: #{$spacing-200}px;
   --date-picker-font-size: #{$font-size-450}px;
   --date-picker-radius: #{$border-radius-200};
   --date-picker-section-width: 34px;
   --date-picker-icon-shell-size: 22px;
-  --date-picker-time-control-height: #{$button-size-button-small};
+  --date-picker-time-control-height: 30px;
 }
 
 .DatePicker--Medium {
-  --date-picker-height: #{$button-size-button-medium};
+  --date-picker-height: 40px;
   --date-picker-padding-inline: #{$spacing-300}px;
   --date-picker-font-size: #{$font-size-450}px;
   --date-picker-radius: #{$border-radius-300};
   --date-picker-section-width: 42px;
   --date-picker-icon-shell-size: #{$spacing-700}px;
-  --date-picker-time-control-height: #{$button-size-button-medium};
+  --date-picker-time-control-height: 40px;
 }
 
 .DatePicker--Large {
-  --date-picker-height: #{$button-size-button-large};
+  --date-picker-height: 50px;
   --date-picker-padding-inline: #{$spacing-400}px;
   --date-picker-font-size: #{$font-size-500}px;
   --date-picker-radius: #{$border-radius-300};
   --date-picker-section-width: 50px;
   --date-picker-icon-shell-size: 34px;
-  --date-picker-time-control-height: #{$button-size-button-large};
+  --date-picker-time-control-height: 50px;
 }
 
 .DatePicker__Wrapper {
@@ -85,7 +85,7 @@
   padding-right: calc(var(--date-picker-section-width) + var(--date-picker-padding-inline));
   border: #{$border-width-25}px solid $color-gray-200;
   border-radius: var(--date-picker-radius);
-  background-color: $color-gray-0;
+  background-color: $color-white;
   color: $color-gray-900;
   font-family: $font-family-pretendard;
   font-size: var(--date-picker-font-size);
@@ -150,14 +150,13 @@
   padding: #{$spacing-400}px;
   border: #{$border-width-25}px solid $color-gray-100;
   border-radius: var(--date-picker-popup-radius);
-  background: $color-gray-0;
-  box-shadow:
-    #{$shadow-dashboard-card-x}px #{$shadow-dashboard-card-y}px #{$shadow-dashboard-card-blur}
-    #{$shadow-dashboard-card-spread}px $shadow-dashboard-card-color;
+  background: $color-white;
+  box-shadow: #{$shadow-dashboard-card-x}px #{$shadow-dashboard-card-y}px
+    #{$shadow-dashboard-card-blur} #{$shadow-dashboard-card-spread}px $shadow-dashboard-card-color;
 }
 
 .DatePicker__DropdownArrow {
-  background: $color-gray-0;
+  background: $color-white;
   border: #{$border-width-25}px solid $color-gray-100;
 }
 
@@ -280,7 +279,7 @@
 
   &:where([data-selected]) {
     background-color: $color-aqua-500;
-    color: $color-gray-0;
+    color: $color-white;
     border-color: transparent;
   }
 
@@ -319,7 +318,7 @@
   padding-inline: #{$spacing-300}px;
   border: #{$border-width-25}px solid $color-gray-200;
   border-radius: var(--date-picker-time-control-radius);
-  background: $color-gray-0;
+  background: $color-white;
   color: $color-gray-900;
   font-family: $font-family-pretendard;
   font-size: #{$font-size-450}px;
@@ -342,7 +341,7 @@
   border: none;
   border-radius: var(--date-picker-time-control-radius);
   background: $color-aqua-500;
-  color: $color-gray-0;
+  color: $color-white;
 
   &:hover {
     background: $color-aqua-600;
@@ -350,6 +349,6 @@
 
   &:disabled {
     background: $color-gray-300;
-    color: $color-gray-0;
+    color: $color-white;
   }
 }

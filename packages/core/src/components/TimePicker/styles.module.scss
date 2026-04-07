@@ -1,10 +1,41 @@
-@use "../shared/variables.scss" as *;
+@use 'sass:map';
+@use '../shared/variables.scss' as *;
+
+$time-picker-config-small: (
+  height: 30px,
+  min-height: 30px,
+  padding: 8px,
+  font-size: 14px,
+  line-height: 100%,
+);
+$time-picker-config-medium: (
+  height: 40px,
+  min-height: 40px,
+  padding: 12px,
+  font-size: 14px,
+  line-height: 100%,
+);
+$time-picker-config-large: (
+  height: 50px,
+  min-height: 50px,
+  padding: 16px,
+  font-size: 16px,
+  line-height: 100%,
+);
+
+@mixin TimePickerSize($config) {
+  height: map.get($config, height);
+  min-height: map.get($config, min-height);
+  padding: map.get($config, padding);
+  font-size: map.get($config, font-size);
+  line-height: map.get($config, line-height);
+}
 
 @mixin TimePickerFocus {
   &:hover {
     outline: 1.5px solid $color-aqua-300;
     border-color: transparent;
-    background-color: $color-gray-0;
+    background-color: $color-white;
   }
 
   &:focus-within {
@@ -15,36 +46,21 @@
 
 .TimePicker--Small {
   input {
-    height: 30px;
-    min-height: 30px;
-    padding: 8px;
-    font-size: 14px;
-    line-height: 100%;
-
+    @include TimePickerSize($time-picker-config-small);
     @include TimePickerFocus;
   }
 }
 
 .TimePicker--Medium {
   input {
-    height: 40px;
-    min-height: 40px;
-    padding: 12px;
-    font-size: 14px;
-    line-height: 100%;
-
+    @include TimePickerSize($time-picker-config-medium);
     @include TimePickerFocus;
   }
 }
 
 .TimePicker--Large {
   input {
-    height: 50px;
-    min-height: 50px;
-    padding: 16px;
-    font-size: 16px;
-    line-height: 100%;
-
+    @include TimePickerSize($time-picker-config-large);
     @include TimePickerFocus;
   }
 }

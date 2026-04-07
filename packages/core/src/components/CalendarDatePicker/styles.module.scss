@@ -7,7 +7,7 @@
   max-width: 375px;
   margin: 0 auto;
   padding: #{$spacing-300}px 0 0;
-  background-color: $color-gray-0;
+  background-color: $color-white;
   border: none;
   border-radius: 0;
   box-shadow: none;
@@ -46,7 +46,10 @@
   line-height: $lh-500;
   color: $color-gray-900;
   background-color: transparent;
-  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease;
 
   --day-size-lg: #{$spacing-1100}px;
 
@@ -75,22 +78,22 @@
 
   &:where([data-selected]) {
     background-color: $color-aqua-500;
-    color: $color-gray-0;
+    color: $color-white;
     border-color: transparent;
 
     .CalendarDatePicker__TodayIndicator {
-      color: $color-gray-0;
+      color: $color-white;
       background-color: transparent;
     }
   }
 
   &:where([data-selected]:hover) {
     background-color: $color-aqua-600;
-    color: $color-gray-0;
+    color: $color-white;
     border-color: transparent;
 
     .CalendarDatePicker__TodayIndicator {
-      color: $color-gray-0;
+      color: $color-white;
       background-color: transparent;
     }
   }
@@ -156,12 +159,15 @@
   border-radius: #{$border-radius-1000};
   background-color: transparent;
   color: $color-gray-800;
-  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease;
 
   &:where(:hover) {
     background-color: transparent;
     border-color: transparent;
-    color: $color-gray-1000;
+    color: $color-black;
   }
 }
 

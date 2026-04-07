@@ -34,6 +34,7 @@ export const TimePicker = ({ size = 'md', ...props }: ITimePickerProps) => {
       {...props}
       rightSection={
         <ActionIcon
+          bg="transparent"
           onClick={() => {
             if (timeInputRef) {
               timeInputRef?.current?.showPicker();
