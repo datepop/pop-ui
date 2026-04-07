@@ -24,11 +24,7 @@ export const SegmentButton = ({ size = 'md', radius = 6, ...props }: ISegmentBut
       className={sizeStyle}
       size={size}
       radius={radius}
-      styles={{
-        control: {
-          borderWidth: '0 !important',
-        },
-      }}
+      withItemsBorders={false}
       {...props}
     />
   );
