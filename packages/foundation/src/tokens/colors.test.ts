@@ -27,7 +27,7 @@ describe('generated foundation color tokens', () => {
   });
 
   it('keeps generated values normalized and re-exported from the package entrypoint', () => {
-    expect(generatedColors.ColorGray0).toBe('#ffffff');
+    expect(generatedColors.ColorWhite).toBe('#ffffff');
     expect(generatedColors.ColorAqua600).toBe('#11badd');
     expect(generatedColors.ShadowDashboardCardColor).toBe('#0000000a');
 

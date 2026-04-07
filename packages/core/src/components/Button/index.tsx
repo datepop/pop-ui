@@ -35,9 +35,10 @@ const BUTTON_VARIANT_CLASS_NAMES = {
   primary: styles['Button--Primary'],
   primaryLine: styles['Button--PrimaryLine'],
   basic: styles['Button--Basic'],
-  danger: styles['Button--Warning'],
+  danger: styles['Button--Danger'],
   setting: styles['Button--Setting'],
   warning: styles['Button--Warning'],
+  ghost: styles['Button--Ghost'],
 } as const;
 
 const joinClassNames = (...values: Array<string | undefined>) =>
@@ -91,7 +92,7 @@ export function Button({
   size = 'md',
   variant = 'primary',
   isLoading = false,
-  loading = false,
+  hideLabelOnLoading = false,
   disabled = false,
   className,
   classNames,
@@ -99,7 +100,7 @@ export function Button({
   ...props
 }: IButtonProps) {
   const loaderSize = BUTTON_LOADER_SIZES[size];
-  const isButtonLoading = isLoading || loading;
+  const isButtonLoading = isLoading;
   const isDisabled = disabled || isButtonLoading;
 
   return (
@@ -108,6 +109,7 @@ export function Button({
       unstyled
       className={joinClassNames(
         styles.Button,
+        disabled ? styles.Button__Disabled : '',
         BUTTON_SIZE_CLASS_NAMES[size],
         BUTTON_VARIANT_CLASS_NAMES[variant],
         className,
@@ -116,11 +118,10 @@ export function Button({
       {...props}
       disabled={isDisabled}
     >
-      {isButtonLoading ? (
-        <Loader color="currentColor" size={loaderSize} {...loaderProps} />
-      ) : (
-        children
-      )}
+      {isButtonLoading && <Loader color="currentColor" size={loaderSize} {...loaderProps} />}
+      <span className={styles.Button__Label}>
+        {isButtonLoading && hideLabelOnLoading ? null : children}
+      </span>
     </MantineButton>
   );
 }

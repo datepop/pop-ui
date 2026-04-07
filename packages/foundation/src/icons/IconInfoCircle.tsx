@@ -1,4 +1,4 @@
-import { ColorGray900, SemanticColorBgWhite } from '../tokens/colors';
+import { ColorGray900, ColorWhite } from '../tokens/colors';
 
 import type { IIconProps } from '../types/icon';
 
@@ -31,13 +31,13 @@ export default function IconInfoCircle({
       />
       <path
         d="M12 6.9L12 8.4"
-        stroke={isFilled ? SemanticColorBgWhite : color}
+        stroke={isFilled ? ColorWhite : color}
         strokeWidth="1.5"
         strokeMiterlimit="10"
       />
       <path
         d="M12 9.6L12 16.8"
-        stroke={isFilled ? SemanticColorBgWhite : color}
+        stroke={isFilled ? ColorWhite : color}
         strokeWidth="1.5"
         strokeMiterlimit="10"
       />

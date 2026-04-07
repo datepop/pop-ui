@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use '../shared/variables.scss' as *;
 
 @function button-font-weight($weight-token) {
@@ -43,6 +44,315 @@
   border: 1px solid $border-color;
 }
 
+$button-size-layout-map: (
+  sm: (
+    height: 30px,
+    padding-x: $spacing-300,
+    font-family: $font-family-pretendard,
+    font-size: $font-size-450,
+    font-weight: $font-weight-semibold,
+    line-height: $lh-300,
+    radius: $border-radius-100,
+    section-gap: $spacing-100,
+  ),
+  md: (
+    height: 40px,
+    padding-x: $spacing-400,
+    font-family: $font-family-pretendard,
+    font-size: $font-size-500,
+    font-weight: $font-weight-semibold,
+    line-height: $lh-300,
+    radius: $border-radius-150,
+    section-gap: $spacing-150,
+  ),
+  lg: (
+    height: 50px,
+    padding-x: $spacing-500,
+    font-family: $font-family-pretendard,
+    font-size: $font-size-550,
+    font-weight: $font-weight-bold,
+    line-height: $lh-300,
+    radius: $border-radius-150,
+    section-gap: $spacing-200,
+  ),
+);
+
+@function button-size-layout($size, $token) {
+  $size-config: map.get($button-size-layout-map, $size);
+
+  @return map.get($size-config, $token);
+}
+
+@mixin ButtonSizeVariant($size) {
+  @include ButtonSize(
+    button-size-layout($size, height),
+    button-size-layout($size, padding-x),
+    button-size-layout($size, font-family),
+    button-size-layout($size, font-size),
+    button-size-layout($size, font-weight),
+    button-size-layout($size, line-height),
+    button-size-layout($size, radius),
+    button-size-layout($size, section-gap)
+  );
+}
+
+$button-size-class-map: (
+  '.Button--Small': sm,
+  '.Button--Medium': md,
+  '.Button--Large': lg,
+);
+
+@mixin ButtonSizeSelector($class-name, $size) {
+  #{$class-name} {
+    @include ButtonSizeVariant($size);
+  }
+}
+
+$button-variant-color-map: (
+  primary: (
+    default: (
+      bg: $color-aqua-500,
+      text: $color-white,
+      border: transparent,
+    ),
+    hover: (
+      bg: $color-aqua-600,
+      text: $color-white,
+      border: transparent,
+    ),
+    active: (
+      bg: $color-aqua-700,
+      text: $color-white,
+      border: transparent,
+    ),
+    focus: (
+      bg: $color-aqua-700,
+      text: $color-white,
+      border: transparent,
+    ),
+    disabled: (
+      bg: $color-gray-200,
+      text: $color-white,
+      border: transparent,
+    ),
+  ),
+  primaryline: (
+    default: (
+      bg: $color-white,
+      text: $color-aqua-500,
+      border: $color-aqua-500,
+    ),
+    hover: (
+      bg: $color-aqua-50,
+      text: $color-aqua-500,
+      border: $color-aqua-500,
+    ),
+    active: (
+      bg: $color-aqua-75,
+      text: $color-aqua-500,
+      border: $color-aqua-500,
+    ),
+    focus: (
+      bg: $color-aqua-75,
+      text: $color-aqua-500,
+      border: $color-aqua-500,
+    ),
+    disabled: (
+      bg: $color-gray-200,
+      text: $color-white,
+      border: transparent,
+    ),
+  ),
+  basic: (
+    default: (
+      bg: $color-white,
+      text: $color-gray-800,
+      border: $color-gray-100,
+    ),
+    hover: (
+      bg: $color-gray-25,
+      text: $color-gray-800,
+      border: $color-gray-100,
+    ),
+    active: (
+      bg: $color-gray-50,
+      text: $color-gray-800,
+      border: $color-gray-100,
+    ),
+    focus: (
+      bg: $color-gray-50,
+      text: $color-gray-800,
+      border: $color-gray-100,
+    ),
+    disabled: (
+      bg: $color-gray-200,
+      text: $color-white,
+      border: transparent,
+    ),
+  ),
+  danger: (
+    default: (
+      bg: $color-red-500,
+      text: $color-white,
+      border: transparent,
+    ),
+    hover: (
+      bg: $color-red-700,
+      text: $color-white,
+      border: transparent,
+    ),
+    active: (
+      bg: $color-red-800,
+      text: $color-white,
+      border: transparent,
+    ),
+    focus: (
+      bg: $color-red-800,
+      text: $color-white,
+      border: transparent,
+    ),
+    disabled: (
+      bg: $color-gray-200,
+      text: $color-white,
+      border: transparent,
+    ),
+  ),
+  warning: (
+    default: (
+      bg: $color-white,
+      text: $color-red-500,
+      border: $color-red-500,
+    ),
+    hover: (
+      bg: $color-red-50,
+      text: $color-red-500,
+      border: $color-red-500,
+    ),
+    active: (
+      bg: $color-red-100,
+      text: $color-red-500,
+      border: $color-red-500,
+    ),
+    focus: (
+      bg: $color-red-50,
+      text: $color-white,
+      border: $color-red-500,
+    ),
+    disabled: (
+      bg: $color-gray-200,
+      text: $color-white,
+      border: transparent,
+    ),
+  ),
+  setting: (
+    default: (
+      bg: $color-gray-200,
+      text: $color-gray-800,
+      border: transparent,
+    ),
+    hover: (
+      bg: $color-gray-300,
+      text: $color-gray-800,
+      border: transparent,
+    ),
+    active: (
+      bg: $color-gray-400,
+      text: $color-gray-800,
+      border: transparent,
+    ),
+    focus: (
+      bg: $color-gray-400,
+      text: $color-gray-800,
+      border: transparent,
+    ),
+    disabled: (
+      bg: $color-gray-200,
+      text: $color-white,
+      border: transparent,
+    ),
+  ),
+  ghost: (
+    default: (
+      bg: transparent,
+      text: $color-gray-800,
+      border: transparent,
+    ),
+    hover: (
+      bg: $color-gray-50,
+      text: $color-gray-800,
+      border: transparent,
+    ),
+    active: (
+      bg: $color-gray-100,
+      text: $color-gray-800,
+      border: transparent,
+    ),
+    focus: (
+      bg: $color-gray-100,
+      text: $color-gray-800,
+      border: transparent,
+    ),
+    disabled: (
+      bg: $color-gray-200,
+      text: $color-white,
+      border: transparent,
+    ),
+  ),
+);
+
+@function button-variant-color($variant, $state, $token) {
+  $variant-states: map.get($button-variant-color-map, $variant);
+  $state-tokens: map.get($variant-states, $state);
+
+  @return map.get($state-tokens, $token);
+}
+
+@mixin ButtonVariantState($variant, $state) {
+  @include ButtonVariant(
+    button-variant-color($variant, $state, bg),
+    button-variant-color($variant, $state, text),
+    button-variant-color($variant, $state, border)
+  );
+}
+
+$button-variant-class-map: (
+  '.Button--Primary': primary,
+  '.Button--PrimaryLine': primaryline,
+  '.Button--Basic': basic,
+  '.Button--Warning': warning,
+  '.Button--Setting': setting,
+  '.Button--Danger': danger,
+  '.Button--Ghost': ghost,
+);
+
+@mixin ButtonVariantSelector($class-name, $variant) {
+  #{$class-name} {
+    @include ButtonVariantState($variant, default);
+
+    &:hover:not(:disabled) {
+      @include ButtonVariantState($variant, hover);
+    }
+
+    &:active:not(:disabled) {
+      @include ButtonVariantState($variant, active);
+    }
+
+    &:focus-visible:not(:disabled) {
+      @include ButtonVariantState($variant, focus);
+    }
+
+    &:disabled {
+      &.Button__Disabled {
+        @include ButtonVariantState($variant, disabled);
+      }
+
+      &:not(.Button__Disabled) {
+        opacity: 0.6;
+      }
+    }
+  }
+}
+
 .Button {
   box-sizing: border-box;
   display: inline-flex;
@@ -83,6 +393,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 6px;
   white-space: nowrap;
 }
 
@@ -94,226 +405,10 @@
   color: inherit;
 }
 
-.Button--Small {
-  @include ButtonSize(
-    $button-size-button-small,
-    $button-spacing-button-small,
-    $button-typo-button-small-font-family,
-    $button-typo-button-small-font-size,
-    $button-typo-button-small-font-weight,
-    $button-typo-button-small-line-height,
-    $button-border-radius-small,
-    $button-spacing-button-small-icon
-  );
+@each $class-name, $size in $button-size-class-map {
+  @include ButtonSizeSelector($class-name, $size);
 }
 
-.Button--Medium {
-  @include ButtonSize(
-    $button-size-button-medium,
-    $button-spacing-button-medium,
-    $button-typo-button-medium-font-family,
-    $button-typo-button-medium-font-size,
-    $button-typo-button-medium-font-weight,
-    $button-typo-button-medium-line-height,
-    $button-border-radius-medium,
-    $button-spacing-button-medium-icon
-  );
-}
-
-.Button--Large {
-  @include ButtonSize(
-    $button-size-button-large,
-    $button-spacing-button-large,
-    $button-typo-button-large-font-family,
-    $button-typo-button-large-font-size,
-    $button-typo-button-large-font-weight,
-    $button-typo-button-large-line-height,
-    $button-border-radius-large,
-    $button-spacing-button-large-icon
-  );
-}
-
-.Button--Primary {
-  @include ButtonVariant(
-    $bg-color-button-bg-primary-default,
-    $text-color-button-text-primary-default
-  );
-
-  &:hover:not(:disabled) {
-    @include ButtonVariant(
-      $bg-color-button-bg-primary-hover,
-      $text-color-button-text-primary-hover
-    );
-  }
-
-  &:active:not(:disabled) {
-    @include ButtonVariant(
-      $bg-color-button-bg-primary-pressed,
-      $text-color-button-text-primary-pressed
-    );
-  }
-
-  &:focus-visible:not(:disabled) {
-    @include ButtonVariant(
-      $bg-color-button-bg-primary-focused,
-      $text-color-button-text-primary-focused
-    );
-  }
-
-  &:disabled {
-    @include ButtonVariant(
-      $bg-color-button-bg-primary-disabled,
-      $text-color-button-text-primary-disabled
-    );
-  }
-}
-
-.Button--PrimaryLine {
-  @include ButtonVariant(
-    $bg-color-button-bg-primaryline-default,
-    $text-color-button-text-primaryline-default,
-    $border-color-button-border-primaryline-default
-  );
-
-  &:hover:not(:disabled) {
-    @include ButtonVariant(
-      $bg-color-button-bg-primaryline-hover,
-      $text-color-button-text-primaryline-hover,
-      $border-color-button-border-primaryline-hover
-    );
-  }
-
-  &:active:not(:disabled) {
-    @include ButtonVariant(
-      $bg-color-button-bg-primaryline-pressed,
-      $text-color-button-text-primaryline-pressed,
-      $border-color-button-border-primaryline-pressed
-    );
-  }
-
-  &:focus-visible:not(:disabled) {
-    @include ButtonVariant(
-      $bg-color-button-bg-primaryline-focused,
-      $text-color-button-text-primaryline-focused,
-      $border-color-button-border-primaryline-focused
-    );
-  }
-
-  &:disabled {
-    @include ButtonVariant(
-      $bg-color-button-bg-primaryline-disabled,
-      $text-color-button-text-primaryline-disabled,
-      $border-color-button-border-primaryline-default
-    );
-  }
-}
-
-.Button--Basic {
-  @include ButtonVariant(
-    $bg-color-button-bg-basic-default,
-    $text-color-button-text-basic-default,
-    $border-color-button-border-basic-default
-  );
-
-  &:hover:not(:disabled) {
-    @include ButtonVariant(
-      $bg-color-button-bg-basic-hover,
-      $text-color-button-text-basic-hover,
-      $border-color-button-border-basic-hover
-    );
-  }
-
-  &:active:not(:disabled) {
-    @include ButtonVariant(
-      $bg-color-button-bg-basic-preseed,
-      $text-color-button-text-basic-pressed,
-      $border-color-button-border-basic-pressed
-    );
-  }
-
-  &:focus-visible:not(:disabled) {
-    @include ButtonVariant(
-      $bg-color-button-bg-basic-focused,
-      $text-color-button-text-basic-focused,
-      $border-color-button-border-basic-focused
-    );
-  }
-
-  &:disabled {
-    @include ButtonVariant(
-      $bg-color-button-bg-basic-disabled,
-      $text-color-button-text-basic-disabled,
-      $border-color-button-border-basic-default
-    );
-  }
-}
-
-.Button--Warning {
-  @include ButtonVariant(
-    $bg-color-button-bg-warning-default,
-    $text-color-button-text-warning-default
-  );
-
-  &:hover:not(:disabled) {
-    @include ButtonVariant(
-      $bg-color-button-bg-warning-hover,
-      $text-color-button-text-warning-hover
-    );
-  }
-
-  &:active:not(:disabled) {
-    @include ButtonVariant(
-      $bg-color-button-bg-warning-pressed,
-      $text-color-button-text-warning-pressed
-    );
-  }
-
-  &:focus-visible:not(:disabled) {
-    @include ButtonVariant(
-      $bg-color-button-bg-warning-focused,
-      $text-color-button-text-warning-focused
-    );
-  }
-
-  &:disabled {
-    @include ButtonVariant(
-      $bg-color-button-bg-warning-disabled,
-      $text-color-button-text-warning-disabled
-    );
-  }
-}
-
-.Button--Setting {
-  @include ButtonVariant(
-    $bg-color-button-bg-setting-default,
-    $text-color-button-text-setting-default
-  );
-
-  &:hover:not(:disabled) {
-    @include ButtonVariant(
-      $bg-color-button-bg-setting-hover,
-      $text-color-button-text-setting-hover
-    );
-  }
-
-  &:active:not(:disabled) {
-    @include ButtonVariant(
-      $bg-color-button-bg-setting-pressed,
-      $text-color-button-text-setting-pressed
-    );
-  }
-
-  &:focus-visible:not(:disabled) {
-    @include ButtonVariant(
-      $bg-color-button-bg-setting-focused,
-      $text-color-button-text-setting-focused
-    );
-  }
-
-  &:disabled {
-    @include ButtonVariant(
-      $bg-color-button-bg-setting-disabled,
-      $text-color-button-text-setting-disabled
-    );
-  }
+@each $class-name, $variant in $button-variant-class-map {
+  @include ButtonVariantSelector($class-name, $variant);
 }

@@ -11,6 +11,7 @@ const VARIANT_LABELS: Record<TButtonVariant, string> = {
   danger: 'Danger',
   setting: 'Setting',
   warning: 'Warning',
+  ghost: 'Ghost',
 };
 
 const variants: Array<{ label: string; value: TButtonVariant }> = BUTTON_VARIANTS.map((value) => ({
@@ -82,6 +83,7 @@ export const Variants: StoryObj<IButtonProps> = {
   ),
   args: {
     children: 'Button',
+    hideLabelOnLoading: false,
   },
   argTypes: {
     variant: { table: { disable: true } },
