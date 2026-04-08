@@ -23,14 +23,24 @@ interface ITokenValue {
 const rawColors = tokenData.global.color;
 
 export const colors: IColorPaletteType = Object.entries(rawColors).reduce(
-  (acc, [colorName, shades]) => {
-    acc[colorName] = Object.entries(shades as Record<string, ITokenValue>).reduce(
-      (shadeAcc, [shade, tokenValue]) => {
-        shadeAcc[shade] = tokenValue.value;
-        return shadeAcc;
-      },
-      {} as IColorShades,
-    );
+  (acc, [colorName, entry]) => {
+    const entryObj = entry as Record<string, unknown>;
+
+    // Flat token (e.g. white: { value: '#fff', type: 'color' })
+    if (typeof entryObj.value === 'string') {
+      acc[colorName] = { default: entryObj.value };
+    } else {
+      // Nested shades (e.g. gray: { 50: { value: '#...', type: 'color' } })
+      acc[colorName] = Object.entries(entryObj as Record<string, ITokenValue>).reduce(
+        (shadeAcc, [shade, tokenValue]) => {
+          if (tokenValue && typeof tokenValue.value === 'string') {
+            shadeAcc[shade] = tokenValue.value;
+          }
+          return shadeAcc;
+        },
+        {} as IColorShades,
+      );
+    }
     return acc;
   },
   {} as IColorPaletteType,
