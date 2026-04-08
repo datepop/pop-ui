@@ -169,6 +169,7 @@ export const DatePicker = ({
 
   if (withTime) {
     // public value/defaultValue는 string — Mantine DateTimePicker는 Date를 요구하므로 변환
+    const isControlled = value !== undefined;
     const dateTimeValue =
       typeof value === 'string' && value ? dayjs(value, resolvedValueFormat).toDate() : null;
     const dateTimeDefaultValue =
@@ -204,8 +205,8 @@ export const DatePicker = ({
           ...popoverProps,
           classNames: mergedPopoverClassNames,
         }}
-        value={dateTimeValue}
-        defaultValue={dateTimeDefaultValue}
+        value={isControlled ? dateTimeValue : undefined}
+        defaultValue={isControlled ? undefined : dateTimeDefaultValue}
         onChange={(next) => {
           // Mantine 8은 Date 또는 DateStringValue를 emit — 공개 API 형식(string | null)으로 변환
           onChange?.(next ? dayjs(next).format(resolvedValueFormat) : null);
