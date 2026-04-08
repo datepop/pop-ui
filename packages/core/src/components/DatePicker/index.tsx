@@ -4,6 +4,7 @@ import 'dayjs/locale/ko';
 import { Input, Popover } from '@mantine/core';
 import { DateTimePicker } from '@mantine/dates';
 import { IconCalendar, formatDateDisplay, toValueString, parseDateValue } from '@pop-ui/foundation';
+import dayjs from 'dayjs';
 import { useState } from 'react';
 
 import { CalendarDatePicker } from '../CalendarDatePicker';
@@ -165,6 +166,14 @@ export const DatePicker = ({
   );
 
   if (withTime) {
+    // public value/defaultValue는 string — Mantine DateTimePicker는 Date를 요구하므로 변환
+    const dateTimeValue =
+      typeof value === 'string' && value ? dayjs(value, valueFormat).toDate() : null;
+    const dateTimeDefaultValue =
+      typeof defaultValue === 'string' && defaultValue
+        ? dayjs(defaultValue, valueFormat).toDate()
+        : null;
+
     return (
       <DateTimePicker
         className={joinClassNames(
@@ -193,9 +202,12 @@ export const DatePicker = ({
           ...popoverProps,
           classNames: mergedPopoverClassNames,
         }}
-        value={value as Date | null | undefined}
-        defaultValue={defaultValue as Date | null | undefined}
-        onChange={onChange as unknown as ((value: string | null) => void) | undefined}
+        value={dateTimeValue}
+        defaultValue={dateTimeDefaultValue}
+        onChange={(next) => {
+          // Mantine 8은 Date 또는 DateStringValue를 emit — 공개 API 형식(string | null)으로 변환
+          onChange?.(next ? dayjs(next).format(valueFormat) : null);
+        }}
         placeholder={placeholder}
         disabled={disabled}
         minDate={minDate}
