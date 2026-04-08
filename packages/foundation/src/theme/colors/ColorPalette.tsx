@@ -40,7 +40,7 @@ const ColorChip: React.FC<IColorChipProps> = ({ colorName, shade, value }) => {
     }
   };
 
-  const isLight = parseInt(value.replace('#', ''), 16) > 0xffffff / 2;
+  const isLight = value ? parseInt(value.replace('#', ''), 16) > 0xffffff / 2 : true;
 
   return (
     <Tooltip label={copied ? 'Copied!' : 'Click to copy HEX'} position="top" withArrow>

@@ -1,7 +1,7 @@
-@use "../shared/variables.scss" as *;
+@use '../shared/variables.scss' as *;
 
 .Tab__TitleList {
-  border-bottom: 2px solid $color-gray-200;
+  border-bottom: 2px solid $color-gray-100;
 
   button {
     margin-bottom: 7px;
@@ -12,7 +12,7 @@
     font-size: 18px;
     font-style: normal;
     font-weight: 700;
-    height: $button-size-button-large;
+    height: 50px;
     color: $color-gray-400;
     border-radius: 6px;
     border: none;
@@ -32,15 +32,15 @@
 
     &[data-active] {
       position: relative;
-      color: $color-aqua-900;
+      color: $color-aqua-600;
 
       .Tab__BorderBottom {
         position: absolute;
         bottom: -9px;
         left: 0;
         width: 100%;
-        border-bottom: 2px solid $color-aqua-900;
-        border-color: $color-aqua-900;
+        border-bottom: 2px solid $color-aqua-600;
+        border-color: $color-aqua-600;
       }
     }
   }

@@ -1,4 +1,4 @@
-import { ColorGray900, SemanticColorBgWhite } from '../tokens/colors';
+import { ColorGray900, ColorWhite } from '../tokens/colors';
 
 import type { IIconProps } from '../types/icon';
 
@@ -34,7 +34,7 @@ export default function IconXCircle({
         height="10"
         rx="1"
         transform="rotate(45 14.8284 7.75781)"
-        fill={isFilled ? SemanticColorBgWhite : color}
+        fill={isFilled ? ColorWhite : color}
         strokeWidth={0}
       />
       <rect
@@ -42,7 +42,7 @@ export default function IconXCircle({
         height="10"
         rx="1"
         transform="matrix(-0.707107 0.707107 0.707107 0.707107 9.17139 7.75781)"
-        fill={isFilled ? SemanticColorBgWhite : color}
+        fill={isFilled ? ColorWhite : color}
         strokeWidth={0}
       />
     </svg>

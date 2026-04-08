@@ -1,0 +1,45 @@
+@use '../shared/variables.scss' as *;
+
+.Container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+// 이미지 전용
+.TileImage {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+// 편집 버튼 (ImageInput 전용)
+.EditButton {
+  flex-shrink: 0;
+  font-size: 12px;
+  border-radius: 8px;
+  height: 24px;
+  padding: 0 8px;
+}
+
+// PlaceholderText는 shared Dropzone children으로 사용 (ImageInput에서 className으로 전달)
+.PlaceholderText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  word-break: keep-all;
+
+  span {
+    color: $color-aqua-700;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+}
+
+.PlaceholderTextError span {
+  color: $color-red-700;
+}

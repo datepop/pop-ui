@@ -31,6 +31,22 @@ export type TTextFieldProps = ICommonTextFieldProps &
       >)
   );
 
+const getTextLength = (value: unknown): number => {
+  if (typeof value === 'string') {
+    return value.length;
+  }
+
+  if (typeof value === 'number') {
+    return String(value).length;
+  }
+
+  if (Array.isArray(value)) {
+    return value.join('').length;
+  }
+
+  return 0;
+};
+
 export const TextField = (allProps: TTextFieldProps) => {
   const {
     label,
@@ -49,7 +65,21 @@ export const TextField = (allProps: TTextFieldProps) => {
   } = allProps;
 
   const minRows = 'minRows' in allProps ? allProps.minRows : undefined;
-  const [textCount, setTextCount] = useState<number>(0);
+  const {
+    value: valueProp,
+    defaultValue: defaultValueProp,
+    ...restProps
+  } = otherProps as {
+    value?: string;
+    defaultValue?: string;
+    [key: string]: unknown;
+  };
+  const isControlled = valueProp !== undefined;
+  const [uncontrolledValue, setUncontrolledValue] = useState<string>(
+    String(valueProp ?? defaultValueProp ?? ''),
+  );
+  const currentValue = isControlled ? valueProp : uncontrolledValue;
+  const textCount = getTextLength(currentValue);
 
   let labelStyle = styles['TextField__Label--Medium'];
   let textfieldStyle = styles['TextField--Medium'];
@@ -66,22 +96,29 @@ export const TextField = (allProps: TTextFieldProps) => {
 
   const onChangeHandler = useCallback(
     (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      if (maxTextCount) {
-        if (event.currentTarget?.value?.length > maxTextCount) {
-          return;
-        }
-        setTextCount(event.currentTarget?.value?.length);
-        if (onChange) {
-          onChange(event);
-        }
+      const nextValue = event.currentTarget.value;
+
+      if (maxTextCount && nextValue.length > maxTextCount) {
+        return;
       }
+
+      if (!isControlled) {
+        setUncontrolledValue(nextValue);
+      }
+
       if (onChange) {
-        setTextCount(event.currentTarget?.value?.length);
         onChange(event);
       }
     },
-    [maxTextCount, onChange],
+    [isControlled, maxTextCount, onChange],
   );
+
+  const handleClear = useCallback(() => {
+    if (!isControlled) {
+      setUncontrolledValue('');
+    }
+    onClear?.();
+  }, [isControlled, onClear]);
 
   return (
     <div
@@ -112,22 +149,28 @@ export const TextField = (allProps: TTextFieldProps) => {
               minRows={minRows}
               error={errorMsg}
               onChange={onChangeHandler}
-              disabled={otherProps?.disabled}
-              {...(otherProps as Omit<TextareaProps, keyof ICommonTextFieldProps | 'vars'>)}
+              value={currentValue}
+              {...(restProps as Omit<TextareaProps, keyof ICommonTextFieldProps | 'vars'>)}
             />
           ) : (
             <Input
               className={textfieldStyle}
               error={errorMsg}
               onChange={onChangeHandler}
+              value={currentValue}
               rightSection={
                 onClear && textCount > 0 ? (
-                  <div className={styles['TextField__ClearButton']} onClick={onClear}>
+                  <button
+                    type="button"
+                    className={styles['TextField__ClearButton']}
+                    aria-label="입력 내용 지우기"
+                    onClick={handleClear}
+                  >
                     <IconX size={size === 'sm' ? 16 : size === 'lg' ? 24 : 20} />
-                  </div>
+                  </button>
                 ) : undefined
               }
-              {...(otherProps as Omit<InputProps, keyof ICommonTextFieldProps | 'vars'>)}
+              {...(restProps as Omit<InputProps, keyof ICommonTextFieldProps | 'vars'>)}
             />
           )}
           {maxTextCount && maxTextCount > 0 && (

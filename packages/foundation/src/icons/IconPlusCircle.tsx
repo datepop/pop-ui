@@ -1,4 +1,4 @@
-import { ColorGray900, SemanticColorBgWhite } from '../tokens/colors';
+import { ColorGray900, ColorWhite } from '../tokens/colors';
 
 import type { IIconProps } from '../types/icon';
 
@@ -30,7 +30,7 @@ export default function IconPlusCircle({
       <path
         strokeLinecap="round"
         d="M12 6.5455V17.4545M17.4545 12H6.5455"
-        stroke={isFilled ? SemanticColorBgWhite : color}
+        stroke={isFilled ? ColorWhite : color}
         strokeWidth="1.5"
       />
     </svg>

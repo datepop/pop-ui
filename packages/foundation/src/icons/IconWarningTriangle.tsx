@@ -1,4 +1,4 @@
-import { ColorGray900, SemanticColorBgWhite } from '../tokens/colors';
+import { ColorGray900, ColorWhite } from '../tokens/colors';
 
 import type { IIconProps } from '../types/icon';
 
@@ -27,12 +27,12 @@ export default function IconWarningTriangle({
       />
       <path
         d="M11.9923 8.3878C12.4291 8.3878 12.7836 8.7422 12.7836 9.179V13.8411C12.7836 14.2778 12.4291 14.6323 11.9923 14.6323C11.5556 14.6323 11.201 14.2778 11.201 13.8411V9.179C11.201 8.7422 11.5556 8.3878 11.9923 8.3878Z"
-        fill={isFilled ? SemanticColorBgWhite : color}
+        fill={isFilled ? ColorWhite : color}
         strokeWidth={0}
       />
       <path
         d="M12.0026 16.1335C12.5861 16.1335 13.0577 16.6051 13.0577 17.1885C13.0577 17.7719 12.5861 18.2435 12.0026 18.2435C11.4193 18.2435 10.9424 17.7719 10.9424 17.1885C10.9424 16.6051 11.4097 16.1335 11.9921 16.1335H12.0026Z"
-        fill={isFilled ? SemanticColorBgWhite : color}
+        fill={isFilled ? ColorWhite : color}
         strokeWidth={0}
       />
     </svg>

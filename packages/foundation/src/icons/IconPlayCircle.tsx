@@ -1,4 +1,4 @@
-import { ColorGray900, SemanticColorBgWhite } from '../tokens/colors';
+import { ColorGray900, ColorWhite } from '../tokens/colors';
 
 import type { IIconProps } from '../types/icon';
 
@@ -29,7 +29,7 @@ export default function IconPlayCircle({
         strokeWidth="1.5"
       />
       <path
-        fill={isFilled ? SemanticColorBgWhite : color}
+        fill={isFilled ? ColorWhite : color}
         d="M16.368 11.5035c.3218.2528.3218.7403 0 .9938l-5.346 4.2a.6315.6315 0 0 1-1.0223-.4965V7.8a.6315.6315 0 0 1 1.0223-.4973z"
       />
     </svg>

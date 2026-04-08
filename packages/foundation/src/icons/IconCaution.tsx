@@ -1,4 +1,4 @@
-import { ColorGray900, SemanticColorBgWhite } from '../tokens/colors';
+import { ColorGray900, ColorWhite } from '../tokens/colors';
 
 import type { IIconProps } from '../types/icon';
 
@@ -31,13 +31,13 @@ export default function IconCaution({
       />
       <path
         d="M12 17.1L12 15.6"
-        stroke={isFilled ? SemanticColorBgWhite : color}
+        stroke={isFilled ? ColorWhite : color}
         strokeWidth="1.5"
         strokeMiterlimit="10"
       />
       <path
         d="M12 14.4V7.2"
-        stroke={isFilled ? SemanticColorBgWhite : color}
+        stroke={isFilled ? ColorWhite : color}
         strokeWidth="1.5"
         strokeMiterlimit="10"
       />

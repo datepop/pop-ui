@@ -1,8 +1,21 @@
+import type { MantineTheme } from '@mantine/core';
 import type { DatePickerProps, DateValue, DatePickerStylesNames } from '@mantine/dates';
 
 export type TDayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6;
 
-export type TMantineClassNames = Partial<Record<DatePickerStylesNames, string>>;
+export type TMantineClassNameRecord<TStylesNames extends string = DatePickerStylesNames> = Partial<
+  Record<TStylesNames, string>
+>;
+
+export type TMantineClassNamesResolver<
+  TStylesNames extends string = DatePickerStylesNames,
+  TProps = DatePickerProps,
+> =
+  | TMantineClassNameRecord<TStylesNames>
+  | ((theme: MantineTheme, props: TProps, ctx: unknown) => TMantineClassNameRecord<TStylesNames>)
+  | null;
+
+export type TMantineClassNames = TMantineClassNameRecord<DatePickerStylesNames>;
 /**
  * CalendarDatePickerProps
  * - 기본 Mantine DatePickerProps에서 excludeDate를 제거하고,
