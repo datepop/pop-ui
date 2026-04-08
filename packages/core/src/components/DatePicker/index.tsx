@@ -5,7 +5,10 @@ import { Input, Popover } from '@mantine/core';
 import { DateTimePicker } from '@mantine/dates';
 import { IconCalendar, formatDateDisplay, toValueString, parseDateValue } from '@pop-ui/foundation';
 import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { useState } from 'react';
+
+dayjs.extend(customParseFormat);
 
 import { CalendarDatePicker } from '../CalendarDatePicker';
 import styles from './styles.module.scss';
@@ -169,13 +172,15 @@ export const DatePicker = ({
 
   if (withTime) {
     // public value/defaultValue는 string — Mantine DateTimePicker는 Date를 요구하므로 변환
+    const parseDateTimeValue = (raw?: string | null): Date | null => {
+      if (!raw) return null;
+      const parsed = dayjs(raw, resolvedValueFormat, true);
+      return parsed.isValid() ? parsed.toDate() : null;
+    };
+
     const isControlled = value !== undefined;
-    const dateTimeValue =
-      typeof value === 'string' && value ? dayjs(value, resolvedValueFormat).toDate() : null;
-    const dateTimeDefaultValue =
-      typeof defaultValue === 'string' && defaultValue
-        ? dayjs(defaultValue, resolvedValueFormat).toDate()
-        : null;
+    const dateTimeValue = isControlled ? parseDateTimeValue(value as string | null) : null;
+    const dateTimeDefaultValue = parseDateTimeValue(defaultValue as string | null);
 
     return (
       <DateTimePicker
