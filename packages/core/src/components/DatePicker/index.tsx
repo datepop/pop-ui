@@ -5,7 +5,10 @@ import { Input, Popover } from '@mantine/core';
 import { DateTimePicker } from '@mantine/dates';
 import { IconCalendar, formatDateDisplay, toValueString, parseDateValue } from '@pop-ui/foundation';
 import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { useState } from 'react';
+
+dayjs.extend(customParseFormat);
 
 import { CalendarDatePicker } from '../CalendarDatePicker';
 import styles from './styles.module.scss';
@@ -128,15 +131,17 @@ export const DatePicker = ({
   minDate,
   maxDate,
   displayValueFormat = 'YYYY년 MM월 DD일',
-  valueFormat = 'YYYY-MM-DD',
+  valueFormat,
   excludedDates,
   excludedDays,
   highlightToday,
 }: IDatePickerProps) => {
+  const resolvedValueFormat = valueFormat ?? (withTime ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD');
+
   const [opened, setOpened] = useState(false);
   const [internalValue, setInternalValue] = useState<TInternalDateValue>(
     () =>
-      parseDateValue(value ?? defaultValue, type, valueFormat) ??
+      parseDateValue(value ?? defaultValue, type, resolvedValueFormat) ??
       (getEmptyValueForType(type) as TInternalDateValue),
   );
 
@@ -167,12 +172,15 @@ export const DatePicker = ({
 
   if (withTime) {
     // public value/defaultValue는 string — Mantine DateTimePicker는 Date를 요구하므로 변환
-    const dateTimeValue =
-      typeof value === 'string' && value ? dayjs(value, valueFormat).toDate() : null;
-    const dateTimeDefaultValue =
-      typeof defaultValue === 'string' && defaultValue
-        ? dayjs(defaultValue, valueFormat).toDate()
-        : null;
+    const parseDateTimeValue = (raw?: string | null): Date | null => {
+      if (!raw) return null;
+      const parsed = dayjs(raw, resolvedValueFormat, true);
+      return parsed.isValid() ? parsed.toDate() : null;
+    };
+
+    const isControlled = value !== undefined;
+    const dateTimeValue = isControlled ? parseDateTimeValue(value as string | null) : null;
+    const dateTimeDefaultValue = parseDateTimeValue(defaultValue as string | null);
 
     return (
       <DateTimePicker
@@ -202,11 +210,11 @@ export const DatePicker = ({
           ...popoverProps,
           classNames: mergedPopoverClassNames,
         }}
-        value={dateTimeValue}
-        defaultValue={dateTimeDefaultValue}
+        value={isControlled ? dateTimeValue : undefined}
+        defaultValue={isControlled ? undefined : dateTimeDefaultValue}
         onChange={(next) => {
           // Mantine 8은 Date 또는 DateStringValue를 emit — 공개 API 형식(string | null)으로 변환
-          onChange?.(next ? dayjs(next).format(valueFormat) : null);
+          onChange?.(next ? dayjs(next).format(resolvedValueFormat) : null);
         }}
         placeholder={placeholder}
         disabled={disabled}
@@ -217,7 +225,7 @@ export const DatePicker = ({
   }
 
   const parsedExternalValue =
-    value != null ? (parseDateValue(value, type, valueFormat) as DateValue) : undefined;
+    value != null ? (parseDateValue(value, type, resolvedValueFormat) as DateValue) : undefined;
   const resolvedValue = resolveDatePickerValue({
     type,
     externalValue: parsedExternalValue,
@@ -244,7 +252,7 @@ export const DatePicker = ({
     }
 
     setInternalValue(typedNewValue);
-    onChange?.(toValueString(typedNewValue, type, valueFormat));
+    onChange?.(toValueString(typedNewValue, type, resolvedValueFormat));
     if (type === 'default' && typedNewValue != null) {
       setOpened(false);
     }
