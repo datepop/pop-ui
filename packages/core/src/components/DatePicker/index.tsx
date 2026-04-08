@@ -62,6 +62,24 @@ const joinClassNames = (...values: Array<string | undefined>) =>
 /** Mantine의 DateValue(= Date | null)는 multiple/range 런타임 값을 표현하지 못하므로 내부 전용 타입 정의 */
 type TInternalDateValue = Date | null | Date[] | [Date | null, Date | null];
 
+/**
+ * Mantine 8에서 DateValue는 string(DateStringValue) 또는 Date 객체로 올 수 있음.
+ * 내부 처리를 위해 항상 Date 객체로 변환.
+ * Mantine의 DateStringValue 포맷: 'YYYY-MM-DD'
+ */
+const toDateOrNull = (v: DateValue | null | undefined): Date | null => {
+  if (v === null || v === undefined) return null;
+  if (v instanceof Date) return v;
+  if (typeof v === 'string' && v) {
+    // 'YYYY-MM-DD' → local Date (timezone shift 방지)
+    const parts = v.split('-').map(Number);
+    if (parts.length === 3 && parts[0] && parts[1] && parts[2]) {
+      return new Date(parts[0], parts[1] - 1, parts[2]);
+    }
+  }
+  return null;
+};
+
 export interface IDatePickerProps {
   size?: 'sm' | 'md' | 'lg';
   type?: TDateDisplayType;
@@ -200,14 +218,25 @@ export const DatePicker = ({
   );
 
   const handleCalendarChange = (newValue: DateValue) => {
-    // CalendarDatePicker.onChange는 Mantine의 DateValue로 타입됐으나 런타임 값은 TInternalDateValue
-    const typedNewValue = newValue as TInternalDateValue;
+    // Mantine 8은 DateStringValue(string)를 emit할 수 있으므로 Date로 정규화
+    let typedNewValue: TInternalDateValue;
+    if (type === 'range' && Array.isArray(newValue)) {
+      const arr = newValue as unknown as (DateValue | null)[];
+      typedNewValue = [toDateOrNull(arr[0] ?? null), toDateOrNull(arr[1] ?? null)];
+    } else if (type === 'multiple' && Array.isArray(newValue)) {
+      typedNewValue = (newValue as DateValue[])
+        .map((v) => toDateOrNull(v))
+        .filter((d): d is Date => d !== null);
+    } else {
+      typedNewValue = toDateOrNull(newValue as DateValue);
+    }
+
     setInternalValue(typedNewValue);
     onChange?.(toValueString(typedNewValue, type, valueFormat));
-    if (type === 'default' && newValue != null) {
+    if (type === 'default' && typedNewValue != null) {
       setOpened(false);
     }
-    if (type === 'range' && Array.isArray(newValue) && newValue[0] && newValue[1]) {
+    if (type === 'range' && Array.isArray(typedNewValue) && typedNewValue[0] && typedNewValue[1]) {
       setOpened(false);
     }
   };
