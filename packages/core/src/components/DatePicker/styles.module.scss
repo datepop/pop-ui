@@ -25,15 +25,15 @@
 }
 
 .DatePickerBase {
-  --date-picker-height: 40px;
+  --date-picker-height: 44px;
   --date-picker-padding-inline: #{$spacing-300}px;
   --date-picker-font-size: #{$font-size-450}px;
   --date-picker-line-height: #{$lh-500};
   --date-picker-radius: #{$border-radius-300};
   --date-picker-section-width: 42px;
-  --date-picker-icon-shell-size: #{$spacing-700}px;
+  --date-picker-icon-shell-size: #{$spacing-800}px;
   --date-picker-popup-radius: #{$border-radius-300};
-  --date-picker-time-control-height: 40px;
+  --date-picker-time-control-height: 44px;
   --date-picker-time-control-radius: #{$border-radius-200};
 }
 
@@ -42,33 +42,33 @@
 }
 
 .DatePicker--Small {
-  --date-picker-height: 30px;
+  --date-picker-height: 32px;
   --date-picker-padding-inline: #{$spacing-200}px;
   --date-picker-font-size: #{$font-size-450}px;
   --date-picker-radius: #{$border-radius-200};
   --date-picker-section-width: 34px;
-  --date-picker-icon-shell-size: 22px;
-  --date-picker-time-control-height: 30px;
+  --date-picker-icon-shell-size: 24px;
+  --date-picker-time-control-height: 32px;
 }
 
 .DatePicker--Medium {
-  --date-picker-height: 40px;
+  --date-picker-height: 44px;
   --date-picker-padding-inline: #{$spacing-300}px;
   --date-picker-font-size: #{$font-size-450}px;
   --date-picker-radius: #{$border-radius-300};
   --date-picker-section-width: 42px;
-  --date-picker-icon-shell-size: #{$spacing-700}px;
-  --date-picker-time-control-height: 40px;
+  --date-picker-icon-shell-size: #{$spacing-800}px;
+  --date-picker-time-control-height: 44px;
 }
 
 .DatePicker--Large {
-  --date-picker-height: 50px;
+  --date-picker-height: 52px;
   --date-picker-padding-inline: #{$spacing-400}px;
   --date-picker-font-size: #{$font-size-500}px;
   --date-picker-radius: #{$border-radius-300};
   --date-picker-section-width: 50px;
-  --date-picker-icon-shell-size: 34px;
-  --date-picker-time-control-height: 50px;
+  --date-picker-icon-shell-size: 36px;
+  --date-picker-time-control-height: 52px;
 }
 
 .DatePicker__Wrapper {
@@ -79,8 +79,8 @@
   @include DatePickerInteractiveSurface;
   @include DatePickerShellFocus;
 
-  min-height: calc(var(--date-picker-height) * 1px);
-  height: calc(var(--date-picker-height) * 1px);
+  min-height: var(--date-picker-height);
+  height: var(--date-picker-height);
   padding-inline: var(--date-picker-padding-inline);
   padding-right: calc(var(--date-picker-section-width) + var(--date-picker-padding-inline));
   border: #{$border-width-25}px solid $color-gray-200;
@@ -122,10 +122,9 @@
   justify-content: center;
   width: var(--date-picker-icon-shell-size);
   height: var(--date-picker-icon-shell-size);
-  border-radius: #{$border-radius-1000};
-  background: $color-gray-50;
-  box-shadow: inset 0 0 0 #{$border-width-25}px $color-gray-100;
-  color: inherit;
+  border-radius: #{$border-radius-100};
+  background: transparent;
+  color: $color-gray-700;
 
   svg {
     display: block;
@@ -135,14 +134,12 @@
 .DatePicker__Wrapper:hover .DatePicker__Icon,
 .DatePicker__Wrapper:focus-within .DatePicker__Icon,
 .DatePicker__Wrapper[data-expanded='true'] .DatePicker__Icon {
-  background: $color-aqua-50;
-  box-shadow: inset 0 0 0 #{$border-width-25}px $color-aqua-200;
-  color: $color-aqua-700;
+  background: $color-gray-50;
+  color: $color-gray-800;
 }
 
 .DatePicker__Wrapper[data-disabled='true'] .DatePicker__Icon {
-  background: $color-gray-50;
-  box-shadow: inset 0 0 0 #{$border-width-25}px $color-gray-100;
+  background: transparent;
   color: $color-gray-400;
 }
 
@@ -313,8 +310,8 @@
 .DatePicker__TimeInput {
   @include DatePickerInteractiveSurface;
 
-  min-height: calc(var(--date-picker-time-control-height) * 1px);
-  height: calc(var(--date-picker-time-control-height) * 1px);
+  min-height: var(--date-picker-time-control-height);
+  height: var(--date-picker-time-control-height);
   padding-inline: #{$spacing-300}px;
   border: #{$border-width-25}px solid $color-gray-200;
   border-radius: var(--date-picker-time-control-radius);
@@ -335,9 +332,9 @@
 .DatePicker__SubmitButton {
   @include DatePickerInteractiveSurface;
 
-  width: calc(var(--date-picker-time-control-height) * 1px);
-  min-width: calc(var(--date-picker-time-control-height) * 1px);
-  height: calc(var(--date-picker-time-control-height) * 1px);
+  width: var(--date-picker-time-control-height);
+  min-width: var(--date-picker-time-control-height);
+  height: var(--date-picker-time-control-height);
   border: none;
   border-radius: var(--date-picker-time-control-radius);
   background: $color-aqua-500;
