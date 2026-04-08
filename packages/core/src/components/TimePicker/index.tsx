@@ -36,9 +36,7 @@ export const TimePicker = ({ size = 'md', ...props }: ITimePickerProps) => {
         <ActionIcon
           bg="transparent"
           onClick={() => {
-            if (timeInputRef) {
-              timeInputRef?.current?.showPicker();
-            }
+            timeInputRef.current?.showPicker?.();
           }}
         >
           <IconClock size={iconSize} />
