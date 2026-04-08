@@ -143,9 +143,14 @@ export const TextField = (allProps: TTextFieldProps) => {
               onChange={onChangeHandler}
               rightSection={
                 onClear && textCount > 0 ? (
-                  <div className={styles['TextField__ClearButton']} onClick={onClear}>
+                  <button
+                    type="button"
+                    className={styles['TextField__ClearButton']}
+                    aria-label="입력 내용 지우기"
+                    onClick={onClear}
+                  >
                     <IconX size={size === 'sm' ? 16 : size === 'lg' ? 24 : 20} />
-                  </div>
+                  </button>
                 ) : undefined
               }
               {...(otherProps as Omit<InputProps, keyof ICommonTextFieldProps | 'vars'>)}

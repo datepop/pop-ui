@@ -128,15 +128,17 @@ export const DatePicker = ({
   minDate,
   maxDate,
   displayValueFormat = 'YYYY년 MM월 DD일',
-  valueFormat = 'YYYY-MM-DD',
+  valueFormat,
   excludedDates,
   excludedDays,
   highlightToday,
 }: IDatePickerProps) => {
+  const resolvedValueFormat = valueFormat ?? (withTime ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD');
+
   const [opened, setOpened] = useState(false);
   const [internalValue, setInternalValue] = useState<TInternalDateValue>(
     () =>
-      parseDateValue(value ?? defaultValue, type, valueFormat) ??
+      parseDateValue(value ?? defaultValue, type, resolvedValueFormat) ??
       (getEmptyValueForType(type) as TInternalDateValue),
   );
 
@@ -168,10 +170,10 @@ export const DatePicker = ({
   if (withTime) {
     // public value/defaultValue는 string — Mantine DateTimePicker는 Date를 요구하므로 변환
     const dateTimeValue =
-      typeof value === 'string' && value ? dayjs(value, valueFormat).toDate() : null;
+      typeof value === 'string' && value ? dayjs(value, resolvedValueFormat).toDate() : null;
     const dateTimeDefaultValue =
       typeof defaultValue === 'string' && defaultValue
-        ? dayjs(defaultValue, valueFormat).toDate()
+        ? dayjs(defaultValue, resolvedValueFormat).toDate()
         : null;
 
     return (
@@ -206,7 +208,7 @@ export const DatePicker = ({
         defaultValue={dateTimeDefaultValue}
         onChange={(next) => {
           // Mantine 8은 Date 또는 DateStringValue를 emit — 공개 API 형식(string | null)으로 변환
-          onChange?.(next ? dayjs(next).format(valueFormat) : null);
+          onChange?.(next ? dayjs(next).format(resolvedValueFormat) : null);
         }}
         placeholder={placeholder}
         disabled={disabled}
@@ -217,7 +219,7 @@ export const DatePicker = ({
   }
 
   const parsedExternalValue =
-    value != null ? (parseDateValue(value, type, valueFormat) as DateValue) : undefined;
+    value != null ? (parseDateValue(value, type, resolvedValueFormat) as DateValue) : undefined;
   const resolvedValue = resolveDatePickerValue({
     type,
     externalValue: parsedExternalValue,
@@ -244,7 +246,7 @@ export const DatePicker = ({
     }
 
     setInternalValue(typedNewValue);
-    onChange?.(toValueString(typedNewValue, type, valueFormat));
+    onChange?.(toValueString(typedNewValue, type, resolvedValueFormat));
     if (type === 'default' && typedNewValue != null) {
       setOpened(false);
     }
