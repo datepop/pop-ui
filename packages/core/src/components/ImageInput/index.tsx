@@ -1,23 +1,10 @@
 'use client';
 
-import {
-  DndContext,
-  KeyboardSensor,
-  PointerSensor,
-  closestCenter,
-  useSensor,
-  useSensors,
-} from '@dnd-kit/core';
-import {
-  SortableContext,
-  rectSortingStrategy,
-  sortableKeyboardCoordinates,
-  useSortable,
-} from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
-import { Input, Loader } from '@mantine/core';
-import { Dropzone, IMAGE_MIME_TYPE } from '@mantine/dropzone';
-import { ColorAqua500, IconDragMenu, IconPhoto, IconXCircle } from '@pop-ui/foundation';
+import { DndContext, closestCenter } from '@dnd-kit/core';
+import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
+import { Input } from '@mantine/core';
+import { IMAGE_MIME_TYPE } from '@mantine/dropzone';
+import { IconPhoto } from '@pop-ui/foundation';
 import { useEffect, useRef, useState } from 'react';
 
 import { Button } from '../Button';
@@ -32,9 +19,11 @@ import {
 } from './helpers';
 import { ImageInputCropModal } from './ImageInputCropModal';
 import styles from './styles.module.scss';
+import { PlaceholderDropzone } from '../shared/MultiItemInput/Dropzone';
+import { TileShell } from '../shared/MultiItemInput/TileShell';
+import { useSortableGrid } from '../shared/MultiItemInput/useSortableGrid';
 
 import type { ImageInputItem, ImageInputProps } from './types';
-import type { DragEndEvent } from '@dnd-kit/core';
 
 // ─── Sortable image tile ──────────────────────────────────────────────────────
 
@@ -72,103 +61,54 @@ function ImageTile({
   onEdit,
 }: ITileProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
-    id: item.id,
-    disabled: readOnly,
-  });
-
-  const showActionBar = !readOnly || (hasLink && !!onLinkClick && !!item.url);
 
   return (
-    <div
-      ref={setNodeRef}
-      className={styles.ImageContainer}
-      style={{
-        transform: CSS.Transform.toString(transform),
-        transition,
-        opacity: isDragging ? 0.4 : 1,
-      }}
+    <TileShell
+      id={item.id}
+      totalCount={totalCount}
+      width={width}
+      height={height}
+      readOnly={readOnly}
+      isLoading={isLoading}
+      itemIsLoading={item.isLoading}
+      canDelete={canDelete}
+      hasLink={hasLink}
+      linkUrl={item.url}
+      onLinkClick={onLinkClick ? () => onLinkClick(item) : undefined}
+      onDelete={() => onDelete(item.id)}
+      deleteAriaLabel="이미지 삭제"
+      onTileClick={() => fileInputRef.current?.click()}
+      actionBarExtra={
+        !readOnly && hasEdit ? (
+          <Button
+            variant="basic"
+            size="sm"
+            aria-label="이미지 편집"
+            className={styles.EditButton}
+            onClick={() => onEdit(item)}
+          >
+            편집
+          </Button>
+        ) : undefined
+      }
     >
-      {/* 삭제 버튼 — ImageContainer 기준 우상단 */}
-      {!readOnly && canDelete && !isLoading && (
-        <button
-          type="button"
-          className={styles.DeleteButton}
-          onClick={() => onDelete(item.id)}
-          aria-label="이미지 삭제"
-        >
-          <IconXCircle size={24} />
-        </button>
-      )}
-
-      {/* 이미지 영역 — 클릭 시 파일 교체 */}
-      <div
-        className={styles.Tile}
-        style={{
-          width,
-          height,
-          cursor: readOnly || isLoading || item.isLoading ? 'default' : 'pointer',
+      <input
+        ref={fileInputRef}
+        type="file"
+        accept="image/*"
+        style={{ display: 'none' }}
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+          if (file) onReplace(item.id, file);
+          e.target.value = '';
         }}
-        onClick={() => !readOnly && !isLoading && !item.isLoading && fileInputRef.current?.click()}
-      >
-        <input
-          ref={fileInputRef}
-          type="file"
-          accept="image/*"
-          style={{ display: 'none' }}
-          onChange={(e) => {
-            const file = e.target.files?.[0];
-            if (file) onReplace(item.id, file);
-            e.target.value = '';
-          }}
-        />
-        <img
-          src={item.url}
-          alt={item.file?.name ?? `이미지 ${index + 1}`}
-          className={styles.TileImage}
-        />
-        {(isLoading || item.isLoading) && (
-          <div className={styles.LoadingOverlay}>
-            <Loader size={width / 6} color={ColorAqua500} />
-          </div>
-        )}
-      </div>
-
-      {/* 액션바 — 이미지 아래 row (인하우스 ImageItemActionContainer) */}
-      {showActionBar && (
-        <div className={styles.ActionBar}>
-          {!readOnly && totalCount > 1 && (
-            <button
-              type="button"
-              className={styles.DragHandle}
-              {...attributes}
-              {...listeners}
-              aria-label="드래그로 순서 변경"
-            >
-              <IconDragMenu size={20} color="#808080" />
-            </button>
-          )}
-
-          {hasLink && onLinkClick && item.url && (
-            <button type="button" className={styles.LinkButton} onClick={() => onLinkClick(item)}>
-              이미지 링크
-            </button>
-          )}
-
-          {!readOnly && hasEdit && (
-            <Button
-              variant="basic"
-              size="sm"
-              aria-label="이미지 편집"
-              className={styles.EditButton}
-              onClick={() => onEdit(item)}
-            >
-              편집
-            </Button>
-          )}
-        </div>
-      )}
-    </div>
+      />
+      <img
+        src={item.url}
+        alt={item.file?.name ?? `이미지 ${index + 1}`}
+        className={styles.TileImage}
+      />
+    </TileShell>
   );
 }
 
@@ -202,26 +142,20 @@ export const ImageInput = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
-    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
-  );
-
-  const handleDragEnd = (event: DragEndEvent) => {
-    const { active, over } = event;
-    if (!over || active.id === over.id) return;
-    const fromIndex = value.findIndex((i) => i.id === active.id);
-    const toIndex = value.findIndex((i) => i.id === over.id);
-    if (fromIndex === -1 || toIndex === -1) return;
-    const next = reorderItems(value, fromIndex, toIndex);
-    onChange?.(next, {
-      action: 'reorder',
-      itemId: String(active.id),
-      index: toIndex,
-      previousIndex: fromIndex,
-      nextIndex: toIndex,
-    });
-  };
+  const { sensors, handleDragEnd } = useSortableGrid({
+    items: value,
+    onReorder: (fromIndex, toIndex) => {
+      const next = reorderItems(value, fromIndex, toIndex);
+      const active = value[fromIndex];
+      onChange?.(next, {
+        action: 'reorder',
+        itemId: active.id,
+        index: toIndex,
+        previousIndex: fromIndex,
+        nextIndex: toIndex,
+      });
+    },
+  });
 
   const handleDrop = (files: File[]) => {
     if (readOnly) return;
@@ -291,14 +225,15 @@ export const ImageInput = ({
 
             {!readOnly &&
               Array.from({ length: placeholderCount }, (_, i) => (
-                <Dropzone
+                <PlaceholderDropzone
                   key={`placeholder-${i}`}
                   onDrop={handleDrop}
                   accept={IMAGE_MIME_TYPE}
                   multiple={maxLength !== 1}
-                  disabled={isLoading}
-                  className={`${styles.Placeholder}${isError ? ` ${styles.PlaceholderError}` : ''}`}
-                  style={{ width, height }}
+                  isLoading={isLoading}
+                  isError={isError}
+                  width={width}
+                  height={height}
                 >
                   {hasIcon && <IconPhoto size={36} color={isError ? '#e03131' : '#07a3c6'} />}
                   {placeholder && (
@@ -308,7 +243,7 @@ export const ImageInput = ({
                       {resolvedPlaceholder(i)}
                     </div>
                   )}
-                </Dropzone>
+                </PlaceholderDropzone>
               ))}
           </div>
         </SortableContext>

@@ -1,8 +1,12 @@
-import type { ImageInputItem } from './types';
+import {
+  generateItemId,
+  reorderItems,
+  getPlaceholderCount,
+} from '../shared/MultiItemInput/helpers';
 
-export function generateItemId(): string {
-  return crypto.randomUUID();
-}
+export { generateItemId, reorderItems, getPlaceholderCount };
+
+import type { ImageInputItem } from './types';
 
 export function addItems(
   current: ImageInputItem[],
@@ -40,28 +44,6 @@ export function replaceItem(current: ImageInputItem[], id: string, file: File): 
 
 export function cropItem(current: ImageInputItem[], id: string, file: File): ImageInputItem[] {
   return replaceItem(current, id, file);
-}
-
-export function reorderItems(
-  current: ImageInputItem[],
-  fromIndex: number,
-  toIndex: number,
-): ImageInputItem[] {
-  const result = [...current];
-  const [moved] = result.splice(fromIndex, 1);
-  result.splice(toIndex, 0, moved);
-  return result;
-}
-
-export function getPlaceholderCount(
-  items: ImageInputItem[],
-  minLength?: number,
-  maxLength?: number,
-): number {
-  if (minLength) {
-    return Math.max(minLength - items.length, maxLength ? 0 : 1);
-  }
-  return !maxLength || items.length < maxLength ? 1 : 0;
 }
 
 export function revokeItemUrls(items: ImageInputItem[]): void {
