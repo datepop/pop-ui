@@ -184,8 +184,18 @@ describe('getPlaceholderCount', () => {
     expect(getPlaceholderCount([{ id: 'a' }], 3)).toBe(2);
   });
 
-  it('minLength=3, 3 items, maxLength=5 → 0 placeholders', () => {
-    expect(getPlaceholderCount([{ id: 'a' }, { id: 'b' }, { id: 'c' }], 3, 5)).toBe(0);
+  it('minLength=3, 3 items, maxLength=5 → 1 placeholder (minLength 충족, maxLength 미달)', () => {
+    expect(getPlaceholderCount([{ id: 'a' }, { id: 'b' }, { id: 'c' }], 3, 5)).toBe(1);
+  });
+
+  it('minLength=3, 5 items, maxLength=5 → 0 placeholders (maxLength 도달)', () => {
+    expect(
+      getPlaceholderCount([{ id: 'a' }, { id: 'b' }, { id: 'c' }, { id: 'd' }, { id: 'e' }], 3, 5),
+    ).toBe(0);
+  });
+
+  it('minLength=1, 2 items, maxLength=5 → 1 placeholder (흔한 "최소 1, 최대 N" 케이스)', () => {
+    expect(getPlaceholderCount([{ id: 'a' }, { id: 'b' }], 1, 5)).toBe(1);
   });
 
   it('minLength=2, 0 items, no maxLength → at least 1 placeholder', () => {

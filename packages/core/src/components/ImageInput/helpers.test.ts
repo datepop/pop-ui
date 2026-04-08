@@ -218,6 +218,14 @@ describe('getPlaceholderCount', () => {
     expect(getPlaceholderCount([makeItem('a'), makeItem('b'), makeItem('c')], 3, 3)).toBe(0);
   });
 
+  it('minLength=1, 2 items, maxLength=5 → 1 (흔한 "최소 1, 최대 N" 케이스 — minLength 충족 후에도 maxLength까지 추가 가능)', () => {
+    expect(getPlaceholderCount([makeItem('a'), makeItem('b')], 1, 5)).toBe(1);
+  });
+
+  it('minLength=3, 3 items, maxLength=5 → 1 (minLength 충족, maxLength 미달 → 추가 가능)', () => {
+    expect(getPlaceholderCount([makeItem('a'), makeItem('b'), makeItem('c')], 3, 5)).toBe(1);
+  });
+
   it('no minLength, maxLength=3, 2 items → 1', () => {
     expect(getPlaceholderCount([makeItem('a'), makeItem('b')], undefined, 3)).toBe(1);
   });

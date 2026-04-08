@@ -14,8 +14,7 @@ export function getPlaceholderCount(
   minLength?: number,
   maxLength?: number,
 ): number {
-  if (minLength) {
-    return Math.max(minLength - items.length, maxLength ? 0 : 1);
-  }
-  return !maxLength || items.length < maxLength ? 1 : 0;
+  if (maxLength != null && items.length >= maxLength) return 0;
+  if (minLength != null && items.length < minLength) return minLength - items.length;
+  return 1;
 }
