@@ -4,7 +4,13 @@ export { CalendarDatePicker } from './CalendarDatePicker';
 export type { ICalendarDatePickerProps, TDayOfWeek } from './CalendarDatePicker';
 export { DatePicker } from './DatePicker';
 export { Dropdown } from './Dropdown';
-export { ImageUploader } from './ImageUploader';
+export { ImageInput } from './ImageInput';
+export type {
+  ImageInputChangeAction,
+  ImageInputChangeMeta,
+  ImageInputItem,
+  ImageInputProps,
+} from './ImageInput/types';
 export { Modal } from './Modal';
 export { Pagination } from './Pagination';
 export { Radio } from './Radio';
