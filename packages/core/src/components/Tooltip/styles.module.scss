@@ -1,4 +1,4 @@
-@use "../shared/variables.scss" as *;
+@use '../shared/variables.scss' as *;
 
 @mixin TooltipText {
   font-family: Pretendard;
@@ -6,7 +6,7 @@
   font-style: normal;
   font-weight: 500;
   line-height: 150%;
-  color: $color-gray-0;
+  color: $color-white;
 }
 
 .Tooltip__Body {

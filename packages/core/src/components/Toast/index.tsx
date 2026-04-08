@@ -6,6 +6,35 @@ import styles from './styles.module.scss';
 
 import type { IToastOptions, TToastInput } from './type';
 
+interface IToastRuntime {
+  (input: TToastInput): void;
+  update: (id: string, input: TToastInput) => void;
+  hide: (id: string) => void;
+  clean: () => void;
+}
+
+const normalizeToastInput = (input: TToastInput): IToastOptions => {
+  return typeof input === 'string' ? { message: input } : input;
+};
+
+const createToastPayload = (input: TToastInput, id?: string) => {
+  const { autoClose, icon, message } = normalizeToastInput(input);
+
+  return {
+    id,
+    message: <div className={styles.Toast__Message}>{message}</div>,
+    icon,
+    autoClose,
+    classNames: {
+      root: styles.Toast,
+      body: styles.Toast__Body,
+      icon: styles.Toast__Icon,
+    },
+    withCloseButton: false,
+    withBorder: false,
+  };
+};
+
 /**
  * 토스트 알림을 표시합니다
  * @param input - 문자열 메시지 또는 옵션 객체
@@ -26,35 +55,18 @@ import type { IToastOptions, TToastInput } from './type';
  *   message: '저장 중...',
  * });
  *
- * // 같은 id로 다시 호출하면 기존 토스트가 업데이트됩니다
- * toast({
- *   id: 'save-toast',
+ * // 업데이트는 toast.update(id, input)로 수행합니다
+ * toast.update('save-toast', {
  *   message: '저장 완료!',
  * });
+ *
+ * // 런타임에서는 PopUiProvider가 Notifications 경계를 제공합니다
  */
-export const toast = (input: TToastInput): void => {
-  const options: IToastOptions = typeof input === 'string' ? { message: input } : input;
+export const toast = ((input: TToastInput): void => {
+  const options = normalizeToastInput(input);
 
-  const { message, id, icon, autoClose } = options;
-
-  notifications.show({
-    id,
-    message: (
-      <div className={styles.Toast__Message}>
-        {message}
-      </div>
-    ),
-    icon,
-    autoClose,
-    classNames: {
-      root: styles.Toast,
-      body: styles.Toast__Body,
-      icon: styles.Toast__Icon,
-    },
-    withCloseButton: false,
-    withBorder: false,
-  });
-};
+  notifications.show(createToastPayload(input, options.id));
+}) as IToastRuntime;
 
 /**
  * 기존 토스트를 업데이트합니다
@@ -68,29 +80,10 @@ export const toast = (input: TToastInput): void => {
  *   icon: <IconCheck />,
  * });
  *
+ * PopUiProvider가 렌더링한 Notifications 런타임에서 동작합니다.
  */
 toast.update = (id: string, input: TToastInput): void => {
-  const options: IToastOptions = typeof input === 'string' ? { message: input } : input;
-
-  const { message, icon, autoClose } = options;
-
-  notifications.update({
-    id,
-    message: (
-      <div className={styles.Toast__Message}>
-        {message}
-      </div>
-    ),
-    icon,
-    autoClose,
-    classNames: {
-      root: styles.Toast,
-      body: styles.Toast__Body,
-      icon: styles.Toast__Icon,
-    },
-    withCloseButton: false,
-    withBorder: false,
-  });
+  notifications.update(createToastPayload(input, id));
 };
 
 /**

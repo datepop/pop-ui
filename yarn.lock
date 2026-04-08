@@ -436,6 +436,55 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@dnd-kit/accessibility@npm:^3.1.1":
+  version: 3.1.1
+  resolution: "@dnd-kit/accessibility@npm:3.1.1"
+  dependencies:
+    tslib: "npm:^2.0.0"
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: 10/961000456a36700a9cd13be51147a818bc100f7dfabb332b80438d02e06f3b556aa0ff46ddf13bdff3b70bc8f9b63dd5a392cc285597ab1f7026e672660c54b6
+  languageName: node
+  linkType: hard
+
+"@dnd-kit/core@npm:^6.3.1":
+  version: 6.3.1
+  resolution: "@dnd-kit/core@npm:6.3.1"
+  dependencies:
+    "@dnd-kit/accessibility": "npm:^3.1.1"
+    "@dnd-kit/utilities": "npm:^3.2.2"
+    tslib: "npm:^2.0.0"
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 10/a5ae6fa8404765712aa80e308f58cb79bac9a306c274ec8272c405c2a59dd277d24b966348fe8ca6340bb3f0d75f90b8a021fa781edcf65255114d3cf2bef891
+  languageName: node
+  linkType: hard
+
+"@dnd-kit/sortable@npm:^10.0.0":
+  version: 10.0.0
+  resolution: "@dnd-kit/sortable@npm:10.0.0"
+  dependencies:
+    "@dnd-kit/utilities": "npm:^3.2.2"
+    tslib: "npm:^2.0.0"
+  peerDependencies:
+    "@dnd-kit/core": ^6.3.0
+    react: ">=16.8.0"
+  checksum: 10/bc61c25e76905204a53f91294b8116bf106fa27247eebca2c66478450b2051d7177115a384054e7e5639e6c4430083ade63056f79ee45f549da537cf05bc5288
+  languageName: node
+  linkType: hard
+
+"@dnd-kit/utilities@npm:^3.2.2":
+  version: 3.2.2
+  resolution: "@dnd-kit/utilities@npm:3.2.2"
+  dependencies:
+    tslib: "npm:^2.0.0"
+  peerDependencies:
+    react: ">=16.8.0"
+  checksum: 10/6cfe46a5fcdaced943982e7ae66b08b89235493e106eb5bc833737c25905e13375c6ecc3aa0c357d136cb21dae3966213dba063f19b7a60b1235a29a7b05ff84
+  languageName: node
+  linkType: hard
+
 "@dual-bundle/import-meta-resolve@npm:^4.2.1":
   version: 4.2.1
   resolution: "@dual-bundle/import-meta-resolve@npm:4.2.1"
@@ -2521,6 +2570,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@pop-ui/core@workspace:packages/core"
   dependencies:
+    "@dnd-kit/core": "npm:^6.3.1"
+    "@dnd-kit/sortable": "npm:^10.0.0"
+    "@dnd-kit/utilities": "npm:^3.2.2"
     "@mantine/carousel": "npm:^8.3.6"
     "@mantine/core": "npm:^8.3.6"
     "@mantine/dates": "npm:^8.3.6"
@@ -2552,12 +2604,14 @@ __metadata:
     eslint-plugin-react-hooks: "npm:^7.0.1"
     eslint-plugin-react-refresh: "npm:^0.4.24"
     eslint-plugin-storybook: "npm:^10.0.4"
+    lottie-react: "npm:^2.4.1"
     polished: "npm:^4.3.1"
     postcss: "npm:^8.5.6"
     postcss-nesting: "npm:^13.0.2"
     prettier: "npm:^3.6.2"
     react: "npm:^19.2.0"
     react-dom: "npm:^19.2.0"
+    react-easy-crop: "npm:^5.5.3"
     sass: "npm:^1.93.2"
     ts-node: "npm:^10.9.2"
     typescript: "npm:^5.9.3"
@@ -3776,6 +3830,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/node@npm:>=20.0.0":
+  version: 25.5.0
+  resolution: "@types/node@npm:25.5.0"
+  dependencies:
+    undici-types: "npm:~7.18.0"
+  checksum: 10/b1e8116bd8c9ff62e458b76d28a59cf7631537bb17e8961464bf754dd5b07b46f1620f568b2f89970505af9eef478dd74c614651b454c1ea95949ec472c64fcb
+  languageName: node
+  linkType: hard
+
 "@types/normalize-package-data@npm:^2.4.0":
   version: 2.4.4
   resolution: "@types/normalize-package-data@npm:2.4.4"
@@ -3819,6 +3882,22 @@ __metadata:
   version: 0.0.6
   resolution: "@types/use-sync-external-store@npm:0.0.6"
   checksum: 10/a95ce330668501ad9b1c5b7f2b14872ad201e552a0e567787b8f1588b22c7040c7c3d80f142cbb9f92d13c4ea41c46af57a20f2af4edf27f224d352abcfe4049
+  languageName: node
+  linkType: hard
+
+"@types/whatwg-mimetype@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "@types/whatwg-mimetype@npm:3.0.2"
+  checksum: 10/609607beeaa8b50b9e00541d8f571880d651b26b6b006103370099aba00784037de54433627c9fe775a5558e3d1fc09c2a48f54c8af91988e9bebeaf6a698eeb
+  languageName: node
+  linkType: hard
+
+"@types/ws@npm:^8.18.1":
+  version: 8.18.1
+  resolution: "@types/ws@npm:8.18.1"
+  dependencies:
+    "@types/node": "npm:*"
+  checksum: 10/1ce05e3174dcacf28dae0e9b854ef1c9a12da44c7ed73617ab6897c5cbe4fccbb155a20be5508ae9a7dde2f83bd80f5cf3baa386b934fc4b40889ec963e94f3a
   languageName: node
   linkType: hard
 
@@ -6186,6 +6265,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"entities@npm:^7.0.1":
+  version: 7.0.1
+  resolution: "entities@npm:7.0.1"
+  checksum: 10/3c0c58d869c45148463e96d21dee2d1b801bd3fe4cf47aa470cd26dfe81d59e9e0a9be92ae083fa02fa441283c883a471486e94538dcfb8544428aa80a55271b
+  languageName: node
+  linkType: hard
+
 "env-paths@npm:^2.2.0, env-paths@npm:^2.2.1":
   version: 2.2.1
   resolution: "env-paths@npm:2.2.1"
@@ -7611,6 +7697,20 @@ __metadata:
   bin:
     handlebars: bin/handlebars
   checksum: 10/bd528f4dd150adf67f3f857118ef0fa43ff79a153b1d943fa0a770f2599e38b25a7a0dbac1a3611a4ec86970fd2325a81310fb788b5c892308c9f8743bd02e11
+  languageName: node
+  linkType: hard
+
+"happy-dom@npm:^20.0.10":
+  version: 20.8.9
+  resolution: "happy-dom@npm:20.8.9"
+  dependencies:
+    "@types/node": "npm:>=20.0.0"
+    "@types/whatwg-mimetype": "npm:^3.0.2"
+    "@types/ws": "npm:^8.18.1"
+    entities: "npm:^7.0.1"
+    whatwg-mimetype: "npm:^3.0.0"
+    ws: "npm:^8.18.3"
+  checksum: 10/81fabd8c630c2165eedd57b72f38b58e8891ff2ff543302c5bdf88860fc3b45b16decd27dabfc72739af6a927d711b04008c61b7e8090893da1fe5feba2dc80e
   languageName: node
   linkType: hard
 
@@ -9137,6 +9237,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lottie-react@npm:^2.4.1":
+  version: 2.4.1
+  resolution: "lottie-react@npm:2.4.1"
+  dependencies:
+    lottie-web: "npm:^5.10.2"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10/d1c54c3d90e322db988ea1dc92900a122e699e1d833368b8a817f4bd2ccc6d5600ab3cd0f34aa6e0bcbab28425f6de514b6d567e13164693cbde2c82af08fa06
+  languageName: node
+  linkType: hard
+
+"lottie-web@npm:^5.10.2":
+  version: 5.13.0
+  resolution: "lottie-web@npm:5.13.0"
+  checksum: 10/ccc65b91ddc569c874de265252ef41cb546798515dd63c5ee366844efd1e10335c080c483ce4305faba0cebd54c4afd6bb918fd0d6f4394dcc284fc0c3944941
+  languageName: node
+  linkType: hard
+
 "loupe@npm:^3.1.0, loupe@npm:^3.1.4":
   version: 3.2.1
   resolution: "loupe@npm:3.2.1"
@@ -9892,6 +10011,13 @@ __metadata:
   version: 3.0.0
   resolution: "normalize-path@npm:3.0.0"
   checksum: 10/88eeb4da891e10b1318c4b2476b6e2ecbeb5ff97d946815ffea7794c31a89017c70d7f34b3c2ebf23ef4e9fc9fb99f7dffe36da22011b5b5c6ffa34f4873ec20
+  languageName: node
+  linkType: hard
+
+"normalize-wheel@npm:^1.0.1":
+  version: 1.0.1
+  resolution: "normalize-wheel@npm:1.0.1"
+  checksum: 10/7a10d4026e64549654c7ec4c08b99e73f857c6f39b9d864e1c5c1fb2c9708e48d6eb388350dbec08407d82828a602ab5366d6cf4d766d70c2aadfadec9d31f78
   languageName: node
   linkType: hard
 
@@ -11339,6 +11465,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-easy-crop@npm:^5.5.3":
+  version: 5.5.7
+  resolution: "react-easy-crop@npm:5.5.7"
+  dependencies:
+    normalize-wheel: "npm:^1.0.1"
+    tslib: "npm:^2.0.1"
+  peerDependencies:
+    react: ">=16.4.0"
+    react-dom: ">=16.4.0"
+  checksum: 10/05f90561b8c81e59a0b72a4e008bb1e7454e483ca4acaf6e083accbbae4345124b33625044efd754d1cef0e08baae9c2c5b123a0ea8284eceb73d447928dd3c4
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.13.1":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
@@ -11898,6 +12037,7 @@ __metadata:
     eslint-plugin-react: "npm:^7.37.5"
     eslint-plugin-react-hooks: "npm:^7.0.1"
     eslint-plugin-storybook: "npm:^10.0.4"
+    happy-dom: "npm:^20.0.10"
     husky: "npm:^9.1.7"
     jsdom: "npm:^27.1.0"
     lerna: "npm:^9.0.0"
@@ -13501,6 +13641,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"undici-types@npm:~7.18.0":
+  version: 7.18.2
+  resolution: "undici-types@npm:7.18.2"
+  checksum: 10/e61a5918f624d68420c3ca9d301e9f15b61cba6e97be39fe2ce266dd6151e4afe424d679372638826cb506be33952774e0424141200111a9857e464216c009af
+  languageName: node
+  linkType: hard
+
 "unique-filename@npm:^3.0.0":
   version: 3.0.0
   resolution: "unique-filename@npm:3.0.0"
@@ -13946,6 +14093,13 @@ __metadata:
   dependencies:
     iconv-lite: "npm:0.6.3"
   checksum: 10/bbef815eb67f91487c7f2ef96329743f5fd8357d7d62b1119237d25d41c7e452dff8197235b2d3c031365a17f61d3bb73ca49d0ed1582475aa4a670815e79534
+  languageName: node
+  linkType: hard
+
+"whatwg-mimetype@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "whatwg-mimetype@npm:3.0.0"
+  checksum: 10/96f9f628c663c2ae05412c185ca81b3df54bcb921ab52fe9ebc0081c1720f25d770665401eb2338ab7f48c71568133845638e18a81ed52ab5d4dcef7d22b40ef
   languageName: node
   linkType: hard
 

@@ -1,4 +1,32 @@
-@use "../shared/variables.scss" as *;
+@use 'sass:map';
+@use '../shared/variables.scss' as *;
+
+$radio-config-small: (
+  size: 18px,
+  label-font-size: 16px,
+  label-font-weight: 500,
+  description-font-size: 12px,
+  description-font-weight: 500,
+);
+$radio-config-medium: (
+  size: 24px,
+  label-font-size: 18px,
+  label-font-weight: 600,
+  description-font-size: 14px,
+  description-font-weight: 500,
+);
+$radio-config-large: (
+  size: 32px,
+  label-font-size: 24px,
+  label-font-weight: 700,
+  description-font-size: 16px,
+  description-font-weight: 500,
+);
+
+@mixin RadioSize($size) {
+  width: $size;
+  height: $size;
+}
 
 @mixin RadioColor {
   &:hover {
@@ -19,86 +47,54 @@
   }
 }
 
-.Radio--Small {
+@mixin RadioLabel($size, $font-size, $font-weight) {
+  line-height: $size;
+  color: $color-gray-900;
+  font-family: Pretendard;
+  font-size: $font-size;
+  font-style: normal;
+  font-weight: $font-weight;
+  display: flex;
+  align-items: center;
+}
+
+@mixin RadioDescription($font-size, $font-weight) {
+  color: $color-gray-600;
+  font-family: Pretendard;
+  font-size: $font-size;
+  font-style: normal;
+  font-weight: $font-weight;
+}
+
+@mixin RadioStyles($config) {
+  $size: map.get($config, size);
+  $label-font-size: map.get($config, label-font-size);
+  $label-font-weight: map.get($config, label-font-weight);
+  $description-font-size: map.get($config, description-font-size);
+  $description-font-weight: map.get($config, description-font-weight);
+
   input {
     @include RadioColor;
-
-    width: 18px;
-    height: 18px;
+    @include RadioSize($size);
   }
 
   label {
-    height: 18px;
-    color: $color-gray-900;
-    font-family: Pretendard;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
+    @include RadioLabel($size, $label-font-size, $label-font-weight);
   }
 
   div {
-    color: $color-gray-600;
-    font-family: Pretendard;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 500;
+    @include RadioDescription($description-font-size, $description-font-weight);
   }
+}
+
+.Radio--Small {
+  @include RadioStyles($radio-config-small);
 }
 
 .Radio--Medium {
-  input {
-    @include RadioColor;
-
-    width: 24px;
-    height: 24px;
-  }
-
-  label {
-    height: 24px;
-    color: $color-gray-900;
-    font-family: Pretendard;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-  }
-
-  div {
-    color: $color-gray-600;
-    font-family: Pretendard;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-  }
+  @include RadioStyles($radio-config-medium);
 }
 
 .Radio--Large {
-  input {
-    @include RadioColor;
-
-    width: 32px;
-    height: 32px;
-  }
-
-  label {
-    height: 32px;
-    color: $color-gray-900;
-    font-family: Pretendard;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-  }
-
-  div {
-    color: $color-gray-600;
-    font-family: Pretendard;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-  }
+  @include RadioStyles($radio-config-large);
 }

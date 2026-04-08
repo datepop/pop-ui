@@ -1,184 +1,82 @@
 # @pop-ui/core
 
-사내 디자인 시스템을 위한 React UI 컴포넌트 라이브러리입니다.
+Pop UI의 공용 React 컴포넌트 패키지입니다.
+
+## 요구 사항
+
+- React `19.2.x`
+- `react-dom` `19.2.x`
+
+패키지는 `@pop-ui/core/styles.css`를 export 하므로, 앱 엔트리에서 한 번만 로드해야 합니다.
 
 ## 설치
 
-### 기본 설치
-
-모든 컴포넌트를 사용하기 위한 필수 패키지를 설치합니다.
-
 ```bash
-yarn add @pop-ui/core react react-dom @mantine/core @mantine/hooks @emotion/react @emotion/cache @emotion/serialize @emotion/utils
-```
-
-### 컴포넌트별 추가 패키지
-
-일부 컴포넌트는 추가 패키지가 필요합니다. 사용하는 컴포넌트에 따라 필요한 패키지를 설치하세요.
-
-#### Button, TextField, SearchBar, Dropdown, Checkbox, Radio, Toggle
-
-추가 패키지 불필요 (기본 설치만으로 사용 가능)
-
-#### DatePicker, TimePicker
-
-```bash
-yarn add @mantine/dates dayjs
-```
-
-#### ImageUploader
-
-```bash
-yarn add @mantine/dropzone
-```
-
-#### Table
-
-```bash
-yarn add react-beautiful-dnd @tabler/icons-react
-```
-
-#### Pagination
-
-```bash
-yarn add @tabler/icons-react
-```
-
-#### Modal
-
-```bash
-yarn add @mantine/modals
-```
-
-#### Alert, Tooltip
-
-```bash
-yarn add @mantine/notifications
-```
-
-#### 에디터 컴포넌트
-
-```bash
-yarn add @mantine/tiptap @tiptap/react @tiptap/starter-kit @tiptap/extension-link
+yarn add @pop-ui/core react react-dom
 ```
 
 ## 사용 방법
 
-### React (Vite)
+`PopUiProvider`로 앱을 감싸고, 전역 스타일을 함께 불러오세요.
 
 ```tsx
-import { Button, TextField } from '@pop-ui/core';
+import '@pop-ui/core/styles.css';
 
-function App() {
+import { Button, Checkbox, PopUiProvider, Radio, TextField, toast } from '@pop-ui/core';
+
+export function App() {
   return (
-    <div>
-      <Button styleType="primary" size="md">
-        클릭하세요
-      </Button>
-      <TextField placeholder="텍스트를 입력하세요" />
-    </div>
+    <PopUiProvider>
+      <main>
+        <Button variant="primary">Button</Button>
+        <TextField label="Name" value="" onChange={() => {}} />
+        <Checkbox label="Agree" checked={false} onChange={() => {}} />
+        <Radio label="Option" checked={false} onChange={() => {}} />
+        <button onClick={() => toast({ message: 'Saved' })}>Toast</button>
+      </main>
+    </PopUiProvider>
   );
 }
 ```
 
-### Next.js
+`PopUiProvider` sets up Mantine provider, CSS variable injection, and Notifications. `toast` depends on the `Notifications` mounted by this provider.
 
-Next.js에서 사용하려면 Mantine Provider 설정이 필요합니다.
+## Stabilized surfaces
 
-#### App Router (Next.js 13+)
+This phase stabilizes the following surfaces:
 
-1. Providers 컴포넌트 생성:
+- `Button`
+- `TextField`
+- `Checkbox`
+- `Radio`
+- `toast`
 
-```tsx
-// app/providers.tsx
-'use client'
+### Button
 
-import { MantineProvider } from '@mantine/core'
-import '@mantine/core/styles.css'
+`Button`은 현재 `variant`, `size`, `isLoading` 같은 기존 사용 패턴을 유지합니다. `danger`는 호환성용 공개 변형으로 남아 있고, 현재는 warning 토큰 계열과 같은 스타일을 사용합니다.
 
-export function Providers({ children }: { children: React.ReactNode }) {
-  return <MantineProvider>{children}</MantineProvider>
-}
-```
+### TextField
 
-2. Layout에서 사용:
+`TextField`는 controlled `value`를 표시 상태와 clear affordance, counter sync의 기준으로 사용합니다. `maxTextCount`가 있으면 오버런 입력은 잘라내지 않고 차단합니다.
 
-```tsx
-// app/layout.tsx
-import { Providers } from './providers'
+### Checkbox
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return (
-    <html lang="ko">
-      <body>
-        <Providers>{children}</Providers>
-      </body>
-    </html>
-  )
-}
-```
+`Checkbox`는 JSX label과 DOM-style `onChange` 이벤트를 유지합니다. `e.target.checked` 기반 사용이 기준입니다.
 
-3. 컴포넌트 사용:
+### Radio
 
-```tsx
-// app/page.tsx
-'use client'
+`Radio`는 개별 controlled item으로 사용합니다. `e.target.value` 기반 이벤트 처리가 기준입니다.
 
-import { Button } from '@pop-ui/core'
+### toast
 
-export default function Page() {
-  return <Button onClick={() => alert('클릭!')}>클릭하세요</Button>
-}
-```
+`toast`는 함수형 API를 유지합니다. `toast(input)`, `toast.update(id, input)`, `toast.hide(id)`, `toast.clean()`가 현재 안정화된 호출 형태입니다.
 
-#### Pages Router (Next.js 12 이하)
+### Date picker surfaces
 
-```tsx
-// pages/_app.tsx
-import { MantineProvider } from '@mantine/core'
-import '@mantine/core/styles.css'
-import type { AppProps } from 'next/app'
+`DatePicker`와 `CalendarDatePicker`는 이번 단계에서 시각 계약만 맞췄습니다. `DatePicker`는 입력과 팝업 중심 surface로 남아 있고, `CalendarDatePicker`는 inline calendar surface와 exclusion 기능을 유지합니다.
 
-export default function App({ Component, pageProps }: AppProps) {
-  return (
-    <MantineProvider>
-      <Component {...pageProps} />
-    </MantineProvider>
-  )
-}
-```
+이 단계에서는 behavior parity를 구현하지 않습니다. `Date`와 `Dayjs` 값 모델, confirm/cancel 흐름은 다음 결정으로 남겨 둡니다.
 
-## 제공 컴포넌트
+## What this package does not document here
 
-- **Button** - 다양한 스타일의 버튼
-- **TextField** - 텍스트 입력 필드
-- **SearchBar** - 검색 입력 필드
-- **Dropdown** - 드롭다운 선택
-- **Checkbox** - 체크박스
-- **Radio** - 라디오 버튼
-- **Toggle** - 토글 스위치
-- **DatePicker** - 날짜 선택
-- **TimePicker** - 시간 선택
-- **Pagination** - 페이지네이션
-- **Tab** - 탭 메뉴
-- **SegmentButton** - 세그먼트 버튼
-- **Alert** - 알림 메시지
-- **Tooltip** - 툴팁
-- **Table** - 데이터 테이블
-- **Modal** - 모달 다이얼로그
-- **ImageUploader** - 이미지 업로드
-
-## 기술 스택
-
-- React 18
-- TypeScript
-- Mantine UI 6.x
-- SCSS Modules
-
-## 라이센스
-
-MIT
+이 README는 아직 안정화되지 않은 다른 export 전체를 자세히 설명하지 않습니다. `CalendarDatePicker`, `DatePicker`, `Dropdown`, `ImageUploader`, `Modal`, `Pagination`, `SearchBar`, `SegmentButton`, `Tab`, `TimePicker`, `Toggle`, `Tooltip`, and map-related exports are outside the scope of this stabilization note.

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { iconMetadata, IconCategory } from './metadata';
 import {
   ColorGray900,
-  ColorGray0,
+  ColorWhite,
   ColorGray500,
   ColorAqua500,
   ColorAqua600,
@@ -26,7 +26,7 @@ const iconModules = import.meta.glob<{ default: React.FC<IIconProps> }>('./Icon*
 
 const colorPalette = {
   'Gray 900': ColorGray900,
-  'Gray 0': ColorGray0,
+  'Gray 0': ColorWhite,
   'Gray 500': ColorGray500,
   'Aqua 500': ColorAqua500,
   'Aqua 600': ColorAqua600,

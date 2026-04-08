@@ -1,5 +1,5 @@
-@use "../shared/variables.scss" as *;
-@use "../shared/font.css" as *;
+@use '../shared/variables.scss' as *;
+@use '../shared/font.css' as *;
 
 @mixin NumberBox {
   display: flex;
@@ -56,5 +56,5 @@
   margin: 0 8px;
   width: 40px;
   height: 40px;
-  background-color: $color-gray-0;
+  background-color: $color-white;
 }

@@ -1,8 +1,13 @@
 import dayjs from 'dayjs';
 
-import type { TCalendarDatePickerType, TExcludeCheckerOptions, TMantineClassNames } from './types';
+import type {
+  TCalendarDatePickerType,
+  TExcludeCheckerOptions,
+  TMantineClassNameRecord,
+  TMantineClassNamesResolver,
+} from './types';
 import type { MantineTheme } from '@mantine/core';
-import type { DateValue, DatePickerStylesNames, DatePickerProps } from '@mantine/dates';
+import type { DateValue } from '@mantine/dates';
 
 /**
  * 날짜 제외 체크 함수 생성
@@ -263,37 +268,40 @@ export const resolveDatePickerValue = ({
  * );
  * // => (theme, props, ctx) => { day: 'default-day function-day' }
  */
-export const mergeClassNamesWithDefault = (
-  defaultClassNames: TMantineClassNames,
-  classNames?:
-    | TMantineClassNames
-    | ((theme: MantineTheme, props: DatePickerProps, ctx: unknown) => TMantineClassNames)
-    | null,
+export const mergeClassNamesWithDefault = <TStylesNames extends string, TProps>(
+  defaultClassNames: TMantineClassNameRecord<TStylesNames>,
+  classNames?: TMantineClassNamesResolver<TStylesNames, TProps>,
 ):
-  | TMantineClassNames
-  | ((theme: MantineTheme, props: DatePickerProps, ctx: unknown) => TMantineClassNames) => {
+  | TMantineClassNameRecord<TStylesNames>
+  | ((
+      theme: MantineTheme,
+      props: TProps,
+      ctx: unknown,
+    ) => TMantineClassNameRecord<TStylesNames>) => {
   // 객체 병합 헬퍼 함수
   const mergeObjects = (
-    defaultClassNames: TMantineClassNames,
-    customClassNames: TMantineClassNames,
-  ): TMantineClassNames => {
+    defaultClassNames: TMantineClassNameRecord<TStylesNames>,
+    customClassNames: TMantineClassNameRecord<TStylesNames>,
+  ): TMantineClassNameRecord<TStylesNames> => {
     // 1. defaultClassNames의 모든 키를 순회하여 병합
-    const merged: TMantineClassNames = Object.keys(defaultClassNames).reduce((acc, key) => {
-      const typedKey = key as DatePickerStylesNames;
-      const defaultClass = defaultClassNames[typedKey];
-      const customClass = customClassNames[typedKey];
+    const merged: TMantineClassNameRecord<TStylesNames> = Object.keys(defaultClassNames).reduce(
+      (acc, key) => {
+        const typedKey = key as TStylesNames;
+        const defaultClass = defaultClassNames[typedKey];
+        const customClass = customClassNames[typedKey];
 
-      const mergedClass = [defaultClass, customClass].filter(Boolean).join(' ');
-      if (mergedClass) {
-        acc[typedKey] = mergedClass;
-      }
+        const mergedClass = [defaultClass, customClass].filter(Boolean).join(' ');
+        if (mergedClass) {
+          acc[typedKey] = mergedClass;
+        }
 
-      return acc;
-    }, {} as TMantineClassNames);
+        return acc;
+      },
+      {} as TMantineClassNameRecord<TStylesNames>,
+    );
 
-    // 2. customClassNames에만 있는 키를 추가 (DatePickerStylesNames에 속하는 키만)
     Object.keys(customClassNames).forEach((key) => {
-      const typedKey = key as DatePickerStylesNames;
+      const typedKey = key as TStylesNames;
       const customClass = customClassNames[typedKey];
       if (!(typedKey in defaultClassNames) && customClass) {
         merged[typedKey] = customClass;
@@ -304,7 +312,7 @@ export const mergeClassNamesWithDefault = (
   };
 
   if (typeof classNames === 'function') {
-    return (theme: MantineTheme, props: DatePickerProps, ctx: unknown) =>
+    return (theme: MantineTheme, props: TProps, ctx: unknown) =>
       mergeObjects(defaultClassNames, classNames(theme, props, ctx));
   }
 

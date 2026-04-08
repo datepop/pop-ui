@@ -17,16 +17,42 @@ import {
 
 import type { ICalendarDatePickerProps, TMantineClassNames } from './types';
 import type { DateStringValue, DateValue } from '@mantine/dates';
+import type { MouseEvent } from 'react';
+
+type TDisplayedDate = Date | DateStringValue;
+
+const getLastInteractedDate = (value: DateValue): DateStringValue | null => {
+  if (value == null) {
+    return null;
+  }
+
+  if (Array.isArray(value)) {
+    for (let index = value.length - 1; index >= 0; index -= 1) {
+      const candidate = value[index];
+
+      if (candidate instanceof Date) {
+        return dayjs(candidate).format('YYYY-MM-DD');
+      }
+    }
+
+    return null;
+  }
+
+  return value instanceof Date ? dayjs(value).format('YYYY-MM-DD') : null;
+};
 
 const DEFAULT_CLASS_NAMES: Partial<TMantineClassNames> = {
-  levelsGroup: styles.datePickerWrapper,
-  calendarHeader: styles.calendarHeader,
-  calendarHeaderLevel: styles.calendarHeaderLevel,
-  calendarHeaderControl: styles.calendarHeaderControl,
-  month: styles.month,
-  day: styles.day,
-  monthRow: styles.monthRow,
-  weekday: styles.weekday,
+  levelsGroup: styles.CalendarDatePicker__Wrapper,
+  calendarHeader: styles.CalendarDatePicker__Header,
+  calendarHeaderLevel: styles.CalendarDatePicker__HeaderLevel,
+  calendarHeaderControl: styles.CalendarDatePicker__HeaderControl,
+  calendarHeaderControlIcon: styles.CalendarDatePicker__HeaderControlIcon,
+  month: styles.CalendarDatePicker__Month,
+  monthCell: styles.CalendarDatePicker__MonthCell,
+  day: styles.CalendarDatePicker__Day,
+  monthRow: styles.CalendarDatePicker__MonthRow,
+  weekdaysRow: styles.CalendarDatePicker__WeekdaysRow,
+  weekday: styles.CalendarDatePicker__Weekday,
 };
 
 /**
@@ -46,9 +72,24 @@ export const CalendarDatePicker = ({
   highlightToday = false,
   ...props
 }: ICalendarDatePickerProps) => {
+  const { classNames, date, defaultDate, onDateChange, getDayProps, ...restProps } = props;
+
   const [internalValue, setInternalValue] = useState<DateValue | undefined>(
     () => value ?? getEmptyValueForType(type),
   );
+  const [internalDate, setInternalDate] = useState<TDisplayedDate | undefined>(() => {
+    if (date) {
+      return date;
+    }
+
+    if (defaultDate) {
+      return defaultDate;
+    }
+
+    const initialValueDate = getLastInteractedDate(value ?? getEmptyValueForType(type));
+
+    return initialValueDate ?? new Date();
+  });
 
   const isExcluded = useMemo(
     () =>
@@ -57,6 +98,17 @@ export const CalendarDatePicker = ({
         excludedDates,
       }),
     [excludedDays, excludedDates],
+  );
+
+  const handleDisplayedDateChange = useCallback(
+    (nextDate: DateStringValue) => {
+      if (date === undefined) {
+        setInternalDate(nextDate);
+      }
+
+      onDateChange?.(nextDate);
+    },
+    [date, onDateChange],
   );
 
   const handleChange = (newValue: DateValue) => {
@@ -89,18 +141,39 @@ export const CalendarDatePicker = ({
       const isToday = dayjs(date).isSame(dayjs(), 'day');
       const shouldShowIndicator = isToday && highlightToday;
       return (
-        <>
-          {day}
-          {shouldShowIndicator && <span className={styles.todayIndicator}>오늘</span>}
-        </>
+        <span className={styles.CalendarDatePicker__DayContent}>
+          <span className={styles.CalendarDatePicker__DayLabel}>{day}</span>
+          {shouldShowIndicator && (
+            <span className={styles.CalendarDatePicker__TodayIndicator}>오늘</span>
+          )}
+        </span>
       );
     },
     [highlightToday],
   );
 
-  const { classNames, ...restProps } = props;
-
   const mergedClassNames = mergeClassNamesWithDefault(DEFAULT_CLASS_NAMES, classNames);
+  const displayedDate = date ?? internalDate;
+  const currentMonthKey = dayjs(displayedDate ?? new Date()).format('YYYY-MM');
+
+  const resolvedDayProps = useCallback(
+    (targetDate: DateStringValue) => {
+      const userDayProps = getDayProps?.(targetDate) ?? {};
+      const isOutsideDisplayedMonth = dayjs(targetDate).format('YYYY-MM') !== currentMonthKey;
+
+      return {
+        ...userDayProps,
+        onClick: (event: MouseEvent<HTMLButtonElement>) => {
+          userDayProps.onClick?.(event);
+
+          if (isOutsideDisplayedMonth) {
+            handleDisplayedDateChange(targetDate);
+          }
+        },
+      };
+    },
+    [currentMonthKey, getDayProps, handleDisplayedDateChange],
+  );
 
   return (
     <DatePicker
@@ -117,6 +190,10 @@ export const CalendarDatePicker = ({
       weekendDays={[0]}
       highlightToday={highlightToday}
       classNames={mergedClassNames}
+      defaultDate={date === undefined ? defaultDate : undefined}
+      date={displayedDate}
+      onDateChange={handleDisplayedDateChange}
+      getDayProps={resolvedDayProps}
       value={resolvedValue}
       excludeDate={isExcluded}
       renderDay={renderDay}
