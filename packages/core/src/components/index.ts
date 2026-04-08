@@ -11,6 +11,13 @@ export type {
   ImageInputItem,
   ImageInputProps,
 } from './ImageInput/types';
+export { LottieInput } from './LottieInput';
+export type {
+  LottieInputChangeAction,
+  LottieInputChangeMeta,
+  LottieInputItem,
+  LottieInputProps,
+} from './LottieInput/types';
 export { Modal } from './Modal';
 export { Pagination } from './Pagination';
 export { Radio } from './Radio';

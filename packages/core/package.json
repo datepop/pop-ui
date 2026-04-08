@@ -54,6 +54,7 @@
     "@mantine/notifications": "^8.3.6",
     "@pop-ui/foundation": "workspace:*",
     "dayjs": "^1.11.18",
+    "lottie-react": "^2.4.1",
     "react-easy-crop": "^5.5.3"
   },
   "peerDependencies": {
