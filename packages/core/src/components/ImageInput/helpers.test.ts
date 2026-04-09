@@ -1,10 +1,12 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import {
+  addItemAtPosition,
   addItems,
   cropItem,
   deleteItem,
   getPlaceholderCount,
+  reorderItemPositions,
   replaceItem,
   reorderItems,
   revokeItemUrls,
@@ -262,5 +264,91 @@ describe('revokeItemUrls', () => {
     revokeItemUrls(items);
     expect(mockRevokeObjectURL).toHaveBeenCalledTimes(1);
     expect(mockRevokeObjectURL).toHaveBeenCalledWith('blob:mock/b.jpg');
+  });
+});
+
+// ─── addItemAtPosition ──────────────────────────────────────────────────────
+
+describe('addItemAtPosition', () => {
+  it('adds item with specified position', () => {
+    const current = [{ ...makeItem('a'), position: 0 }];
+    const file = makeFile('new.jpg');
+    const result = addItemAtPosition(current, file, 2);
+    expect(result).toHaveLength(2);
+    expect(result[1].position).toBe(2);
+    expect(result[1].file).toBe(file);
+  });
+
+  it('preserves existing items', () => {
+    const current = [
+      { ...makeItem('a'), position: 0 },
+      { ...makeItem('b'), position: 1 },
+    ];
+    const result = addItemAtPosition(current, makeFile('c.jpg'), 3);
+    expect(result).toHaveLength(3);
+    expect(result[0].id).toBe('a');
+    expect(result[1].id).toBe('b');
+  });
+
+  it('generates unique id and blob url', () => {
+    const file = makeFile('test.jpg');
+    const result = addItemAtPosition([], file, 0);
+    expect(result[0].id).toBeTruthy();
+    expect(result[0].url).toContain('blob:');
+    expect(mockCreateObjectURL).toHaveBeenCalledWith(file);
+  });
+});
+
+// ─── reorderItemPositions ───────────────────────────────────────────────────
+
+describe('reorderItemPositions', () => {
+  it('앞→뒤: 0→2이면 [a,b,c] → [b,c,a]', () => {
+    const items = [
+      { ...makeItem('a'), position: 0 },
+      { ...makeItem('b'), position: 1 },
+      { ...makeItem('c'), position: 2 },
+    ];
+    const result = reorderItemPositions(items, 0, 2);
+    expect(result.find((i) => i.id === 'a')!.position).toBe(2);
+    expect(result.find((i) => i.id === 'b')!.position).toBe(0);
+    expect(result.find((i) => i.id === 'c')!.position).toBe(1);
+  });
+
+  it('뒤→앞: 3→1이면 [a,b,c,d] → [a,d,b,c]', () => {
+    const items = [
+      { ...makeItem('a'), position: 0 },
+      { ...makeItem('b'), position: 1 },
+      { ...makeItem('c'), position: 2 },
+      { ...makeItem('d'), position: 3 },
+    ];
+    const result = reorderItemPositions(items, 3, 1);
+    expect(result.find((i) => i.id === 'a')!.position).toBe(0);
+    expect(result.find((i) => i.id === 'b')!.position).toBe(2);
+    expect(result.find((i) => i.id === 'c')!.position).toBe(3);
+    expect(result.find((i) => i.id === 'd')!.position).toBe(1);
+  });
+
+  it('범위 밖 아이템은 영향 없음: 1→3이면 0, 2는 그대로', () => {
+    const items = [
+      { ...makeItem('a'), position: 0 },
+      { ...makeItem('b'), position: 1 },
+      { ...makeItem('c'), position: 2 },
+      { ...makeItem('d'), position: 3 },
+    ];
+    const result = reorderItemPositions(items, 1, 3);
+    expect(result.find((i) => i.id === 'a')!.position).toBe(0);
+    expect(result.find((i) => i.id === 'b')!.position).toBe(3);
+    expect(result.find((i) => i.id === 'c')!.position).toBe(1);
+    expect(result.find((i) => i.id === 'd')!.position).toBe(2);
+  });
+
+  it('preserves all item ids', () => {
+    const items = [
+      { ...makeItem('a'), position: 0 },
+      { ...makeItem('b'), position: 1 },
+    ];
+    const result = reorderItemPositions(items, 0, 1);
+    const ids = new Set(result.map((i) => i.id));
+    expect(ids).toEqual(new Set(['a', 'b']));
   });
 });
