@@ -162,6 +162,7 @@ export const LottieInput = ({
   } = usePositionGrid({ value, length, minLength, maxLength, onChange });
 
   const isError = !!errorMsg;
+  const itemByPosition = isPositionMode ? new Map(value.map((v) => [v.position, v])) : null;
 
   const handleDrop = async (files: File[]) => {
     if (readOnly) return;
@@ -242,7 +243,7 @@ export const LottieInput = ({
             {isPositionMode ? (
               Array.from({ length: resolvedMaxLength! }, (_, pos) => {
                 const slotId = slotIds[pos];
-                const item = value.find((v) => v.position === pos);
+                const item = itemByPosition?.get(pos);
                 return item ? (
                   <LottieTile
                     key={slotId}
@@ -258,29 +259,29 @@ export const LottieInput = ({
                     onLinkClick={onLinkClick}
                     onDelete={handleDelete}
                   />
+                ) : readOnly ? (
+                  <div key={slotId} style={{ width, height }} />
                 ) : (
-                  !readOnly && (
-                    <SortableEmptySlot key={slotId} id={slotId}>
-                      <PlaceholderDropzone
-                        onDrop={(files) => handlePositionDrop(pos, files)}
-                        accept={LOTTIE_ACCEPT}
-                        multiple={false}
-                        isLoading={isLoading}
-                        isError={isError}
-                        width={width}
-                        height={height}
-                      >
-                        {hasIcon && <IconPhoto size={36} color={isError ? '#e03131' : '#07a3c6'} />}
-                        {placeholder && (
-                          <div
-                            className={`${styles.PlaceholderText}${isError ? ` ${styles.PlaceholderTextError}` : ''}`}
-                          >
-                            {resolvedPlaceholder(pos)}
-                          </div>
-                        )}
-                      </PlaceholderDropzone>
-                    </SortableEmptySlot>
-                  )
+                  <SortableEmptySlot key={slotId} id={slotId}>
+                    <PlaceholderDropzone
+                      onDrop={(files) => handlePositionDrop(pos, files)}
+                      accept={LOTTIE_ACCEPT}
+                      multiple={false}
+                      isLoading={isLoading}
+                      isError={isError}
+                      width={width}
+                      height={height}
+                    >
+                      {hasIcon && <IconPhoto size={36} color={isError ? '#e03131' : '#07a3c6'} />}
+                      {placeholder && (
+                        <div
+                          className={`${styles.PlaceholderText}${isError ? ` ${styles.PlaceholderTextError}` : ''}`}
+                        >
+                          {resolvedPlaceholder(pos)}
+                        </div>
+                      )}
+                    </PlaceholderDropzone>
+                  </SortableEmptySlot>
                 );
               })
             ) : (

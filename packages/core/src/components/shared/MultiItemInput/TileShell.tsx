@@ -29,6 +29,12 @@ interface ITileShellProps {
   children: ReactNode;
 }
 
+const animateLayoutChanges: AnimateLayoutChanges = (args) => {
+  const { isSorting, wasDragging } = args;
+  if (isSorting || wasDragging) return false;
+  return defaultAnimateLayoutChanges(args);
+};
+
 export function TileShell({
   id,
   totalCount,
@@ -47,12 +53,6 @@ export function TileShell({
   onTileClick,
   children,
 }: ITileShellProps) {
-  const animateLayoutChanges: AnimateLayoutChanges = (args) => {
-    const { isSorting, wasDragging } = args;
-    if (isSorting || wasDragging) return false;
-    return defaultAnimateLayoutChanges(args);
-  };
-
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id,
     disabled: readOnly,

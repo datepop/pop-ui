@@ -166,6 +166,7 @@ export const ImageInput = ({
 
   const isError = !!errorMsg;
   const [editingItem, setEditingItem] = useState<ImageInputItem | null>(null);
+  const itemByPosition = isPositionMode ? new Map(value.map((v) => [v.position, v])) : null;
 
   // Revoke all blob URLs on unmount
   useEffect(() => {
@@ -234,7 +235,7 @@ export const ImageInput = ({
             {isPositionMode ? (
               Array.from({ length: resolvedMaxLength! }, (_, pos) => {
                 const slotId = slotIds[pos];
-                const item = value.find((v) => v.position === pos);
+                const item = itemByPosition?.get(pos);
                 return item ? (
                   <ImageTile
                     key={slotId}
@@ -255,29 +256,29 @@ export const ImageInput = ({
                     onReplace={handleReplace}
                     onEdit={setEditingItem}
                   />
+                ) : readOnly ? (
+                  <div key={slotId} style={{ width, height }} />
                 ) : (
-                  !readOnly && (
-                    <SortableEmptySlot key={slotId} id={slotId}>
-                      <PlaceholderDropzone
-                        onDrop={(files) => handlePositionDrop(pos, files)}
-                        accept={accept ?? IMAGE_MIME_TYPE}
-                        multiple={false}
-                        isLoading={isLoading}
-                        isError={isError}
-                        width={width}
-                        height={height}
-                      >
-                        {hasIcon && <IconPhoto size={36} color={isError ? '#e03131' : '#07a3c6'} />}
-                        {placeholder && (
-                          <div
-                            className={`${styles.PlaceholderText}${isError ? ` ${styles.PlaceholderTextError}` : ''}`}
-                          >
-                            {resolvedPlaceholder(pos)}
-                          </div>
-                        )}
-                      </PlaceholderDropzone>
-                    </SortableEmptySlot>
-                  )
+                  <SortableEmptySlot key={slotId} id={slotId}>
+                    <PlaceholderDropzone
+                      onDrop={(files) => handlePositionDrop(pos, files)}
+                      accept={accept ?? IMAGE_MIME_TYPE}
+                      multiple={false}
+                      isLoading={isLoading}
+                      isError={isError}
+                      width={width}
+                      height={height}
+                    >
+                      {hasIcon && <IconPhoto size={36} color={isError ? '#e03131' : '#07a3c6'} />}
+                      {placeholder && (
+                        <div
+                          className={`${styles.PlaceholderText}${isError ? ` ${styles.PlaceholderTextError}` : ''}`}
+                        >
+                          {resolvedPlaceholder(pos)}
+                        </div>
+                      )}
+                    </PlaceholderDropzone>
+                  </SortableEmptySlot>
                 );
               })
             ) : (
