@@ -2,9 +2,10 @@ import {
   generateItemId,
   reorderItems,
   getPlaceholderCount,
+  reorderItemPositions,
 } from '../shared/MultiItemInput/helpers';
 
-export { generateItemId, reorderItems, getPlaceholderCount };
+export { generateItemId, reorderItems, getPlaceholderCount, reorderItemPositions };
 
 import type { ImageInputItem } from './types';
 
@@ -44,6 +45,20 @@ export function replaceItem(current: ImageInputItem[], id: string, file: File): 
 
 export function cropItem(current: ImageInputItem[], id: string, file: File): ImageInputItem[] {
   return replaceItem(current, id, file);
+}
+
+export function addItemAtPosition(
+  current: ImageInputItem[],
+  file: File,
+  position: number,
+): ImageInputItem[] {
+  const newItem: ImageInputItem = {
+    id: generateItemId(),
+    file,
+    url: URL.createObjectURL(file),
+    position,
+  };
+  return [...current, newItem];
 }
 
 export function revokeItemUrls(items: ImageInputItem[]): void {
