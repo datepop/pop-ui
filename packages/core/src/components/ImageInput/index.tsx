@@ -168,9 +168,12 @@ export const ImageInput = ({
   const [editingItem, setEditingItem] = useState<ImageInputItem | null>(null);
 
   // Revoke all blob URLs on unmount
+  const latestValueRef = useRef(value);
   useEffect(() => {
-    return () => revokeItemUrls(value);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    latestValueRef.current = value;
+  }, [value]);
+  useEffect(() => {
+    return () => revokeItemUrls(latestValueRef.current);
   }, []);
 
   const handleDrop = (files: File[]) => {

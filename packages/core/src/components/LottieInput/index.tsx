@@ -54,41 +54,47 @@ function LottieTile({
   onLinkClick,
   onDelete,
 }: ILottieTileProps) {
-  const [resolvedData, setResolvedData] = useState<Record<string, unknown> | null>(
-    item.animationData ?? null,
-  );
-  const [tileLoading, setTileLoading] = useState(!item.animationData && !!(item.file || item.url));
+  // 비동기 로딩 결과를 key와 함께 추적 (effect 내 동기 setState 회피)
+  const needsAsyncLoad = !item.animationData && !!(item.file || item.url);
+  const asyncLoadKey = needsAsyncLoad
+    ? `${item.id}|${item.file ? `${item.file.name}:${item.file.size}` : (item.url ?? '')}`
+    : '';
+
+  const [asyncResult, setAsyncResult] = useState<{
+    key: string;
+    data: Record<string, unknown> | null;
+  }>({ key: '', data: null });
+
+  // 동기 데이터(animationData) 우선, 없으면 비동기 로딩 결과 사용
+  const resolvedData =
+    item.animationData ?? (asyncResult.key === asyncLoadKey ? asyncResult.data : null);
+  const tileLoading = !!asyncLoadKey && asyncResult.key !== asyncLoadKey;
 
   useEffect(() => {
-    if (item.animationData) {
-      setResolvedData(item.animationData);
-      return;
-    }
+    if (!asyncLoadKey) return;
 
-    if (!item.file && !item.url) return;
+    let cancelled = false;
 
-    setTileLoading(true);
+    const load = item.file
+      ? parseLottieFile(item.file)
+      : fetch(item.url!)
+          .then((res) => res.json())
+          .then((json: unknown) =>
+            isValidLottieJSON(json) ? (json as Record<string, unknown>) : null,
+          );
 
-    if (item.file) {
-      parseLottieFile(item.file).then((data) => {
-        setResolvedData(data);
-        setTileLoading(false);
+    load
+      .then((data) => {
+        if (!cancelled) setAsyncResult({ key: asyncLoadKey, data });
+      })
+      .catch(() => {
+        if (!cancelled) setAsyncResult({ key: asyncLoadKey, data: null });
       });
-    } else if (item.url) {
-      fetch(item.url)
-        .then((res) => res.json())
-        .then((json: unknown) => {
-          setResolvedData(isValidLottieJSON(json) ? (json as Record<string, unknown>) : null);
-          setTileLoading(false);
-        })
-        .catch(() => {
-          setResolvedData(null);
-          setTileLoading(false);
-        });
-    }
-    // item.id 변경 시에만 재실행 (file/url 교체 없이 동일 아이템 유지)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [item.id]);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [asyncLoadKey, item.file]);
 
   return (
     <TileShell
