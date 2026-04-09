@@ -6,6 +6,7 @@ interface ILottieInputItem {
   file?: File;
   animationData?: Record<string, unknown>;
   isLoading?: boolean;
+  position?: number;
 }
 
 type TLottieInputChangeAction = 'create' | 'delete' | 'reorder';
@@ -27,6 +28,7 @@ interface ILottieInputProps {
   hasIcon?: boolean;
   hasLink?: boolean;
   onLinkClick?: (item: ILottieInputItem) => void;
+  length?: number;
   minLength?: number;
   maxLength?: number;
   errorMsg?: ReactNode;
