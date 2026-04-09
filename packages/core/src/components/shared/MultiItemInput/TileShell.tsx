@@ -1,12 +1,13 @@
 'use client';
 
-import { useSortable } from '@dnd-kit/sortable';
+import { defaultAnimateLayoutChanges, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Loader } from '@mantine/core';
 import { ColorAqua500, IconDragMenu, IconXCircle } from '@pop-ui/foundation';
 
 import styles from './styles.module.scss';
 
+import type { AnimateLayoutChanges } from '@dnd-kit/sortable';
 import type { ReactNode } from 'react';
 
 interface ITileShellProps {
@@ -46,9 +47,16 @@ export function TileShell({
   onTileClick,
   children,
 }: ITileShellProps) {
+  const animateLayoutChanges: AnimateLayoutChanges = (args) => {
+    const { isSorting, wasDragging } = args;
+    if (isSorting || wasDragging) return false;
+    return defaultAnimateLayoutChanges(args);
+  };
+
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id,
     disabled: readOnly,
+    animateLayoutChanges,
   });
 
   const showActionBar =

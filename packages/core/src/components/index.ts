@@ -6,6 +6,7 @@ export { DatePicker } from './DatePicker';
 export { Dropdown } from './Dropdown';
 export { ImageInput } from './ImageInput';
 export type {
+  ImageInputAccept,
   ImageInputChangeAction,
   ImageInputChangeMeta,
   ImageInputItem,

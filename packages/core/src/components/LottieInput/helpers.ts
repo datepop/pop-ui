@@ -57,3 +57,16 @@ export function addItems(
 export function deleteItem(current: LottieInputItem[], id: string): LottieInputItem[] {
   return current.filter((i) => i.id !== id);
 }
+
+export function addItemAtPosition(
+  current: LottieInputItem[],
+  file: File,
+  position: number,
+): LottieInputItem[] {
+  const newItem: LottieInputItem = {
+    id: generateItemId(),
+    file,
+    position,
+  };
+  return [...current, newItem];
+}

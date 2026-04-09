@@ -9,30 +9,37 @@ import { useEffect, useRef, useState } from 'react';
 
 import { Button } from '../Button';
 import {
+  addItemAtPosition,
   addItems,
   cropItem,
   deleteItem,
-  getPlaceholderCount,
   replaceItem,
-  reorderItems,
   revokeItemUrls,
 } from './helpers';
 import { ImageInputCropModal } from './ImageInputCropModal';
 import styles from './styles.module.scss';
 import { PlaceholderDropzone } from '../shared/MultiItemInput/Dropzone';
+import { SortableEmptySlot } from '../shared/MultiItemInput/SortableEmptySlot';
 import { TileShell } from '../shared/MultiItemInput/TileShell';
-import { useSortableGrid } from '../shared/MultiItemInput/useSortableGrid';
+import { usePositionGrid } from '../shared/MultiItemInput/usePositionGrid';
 
-import type { ImageInputItem, ImageInputProps } from './types';
+import type { ImageInputAccept, ImageInputItem, ImageInputProps } from './types';
+
+function toInputAccept(accept?: ImageInputAccept): string {
+  if (!accept) return 'image/*';
+  return accept.join(',');
+}
 
 // ─── Sortable image tile ──────────────────────────────────────────────────────
 
 interface ITileProps {
   item: ImageInputItem;
+  sortableId?: string;
   index: number;
   totalCount: number;
   width: number;
   height: number;
+  accept?: ImageInputAccept;
   canDelete: boolean;
   hasLink: boolean;
   hasEdit: boolean;
@@ -46,10 +53,12 @@ interface ITileProps {
 
 function ImageTile({
   item,
+  sortableId,
   index,
   totalCount,
   width,
   height,
+  accept,
   canDelete,
   hasLink,
   hasEdit,
@@ -64,7 +73,7 @@ function ImageTile({
 
   return (
     <TileShell
-      id={item.id}
+      id={sortableId ?? item.id}
       totalCount={totalCount}
       width={width}
       height={height}
@@ -95,7 +104,7 @@ function ImageTile({
       <input
         ref={fileInputRef}
         type="file"
-        accept="image/*"
+        accept={toInputAccept(accept)}
         style={{ display: 'none' }}
         onChange={(e) => {
           const file = e.target.files?.[0];
@@ -117,6 +126,8 @@ function ImageTile({
 export const ImageInput = ({
   value = [],
   onChange,
+  accept,
+  length,
   width = 160,
   height = 200,
   placeholder = '이미지를 넣어주세요',
@@ -132,35 +143,43 @@ export const ImageInput = ({
   readOnly,
   gap = 8,
 }: ImageInputProps) => {
+  if (
+    process.env.NODE_ENV !== 'production' &&
+    length != null &&
+    (minLength != null || maxLength != null)
+  ) {
+    console.warn(
+      'ImageInput: length와 minLength/maxLength가 동시에 지정되었습니다. length가 우선 적용됩니다.',
+    );
+  }
+
+  const {
+    isPositionMode,
+    resolvedMaxLength,
+    placeholderCount,
+    slotIds,
+    sortableItems,
+    sensors,
+    handleDragEnd,
+    getMetaIndex,
+  } = usePositionGrid({ value, length, minLength, maxLength, onChange });
+
   const isError = !!errorMsg;
-  const placeholderCount = getPlaceholderCount(value, minLength, maxLength);
   const [editingItem, setEditingItem] = useState<ImageInputItem | null>(null);
 
   // Revoke all blob URLs on unmount
+  const latestValueRef = useRef(value);
   useEffect(() => {
-    return () => revokeItemUrls(value);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    latestValueRef.current = value;
+  }, [value]);
+  useEffect(() => {
+    return () => revokeItemUrls(latestValueRef.current);
   }, []);
-
-  const { sensors, handleDragEnd } = useSortableGrid({
-    items: value,
-    onReorder: (fromIndex, toIndex) => {
-      const next = reorderItems(value, fromIndex, toIndex);
-      const active = value[fromIndex];
-      onChange?.(next, {
-        action: 'reorder',
-        itemId: active.id,
-        index: toIndex,
-        previousIndex: fromIndex,
-        nextIndex: toIndex,
-      });
-    },
-  });
 
   const handleDrop = (files: File[]) => {
     if (readOnly) return;
     const prevLength = value.length;
-    const next = addItems(value, files, maxLength);
+    const next = addItems(value, files, resolvedMaxLength);
     if (next.length === prevLength) return;
     onChange?.(next, {
       action: 'create',
@@ -169,16 +188,28 @@ export const ImageInput = ({
     });
   };
 
+  const handlePositionDrop = (position: number, files: File[]) => {
+    if (readOnly) return;
+    const file = files[0];
+    if (!file) return;
+    const next = addItemAtPosition(value, file, position);
+    onChange?.(next, {
+      action: 'create',
+      itemId: next[next.length - 1].id,
+      index: position,
+    });
+  };
+
   const handleDelete = (id: string) => {
     if (readOnly) return;
-    const index = value.findIndex((i) => i.id === id);
+    const index = getMetaIndex(id);
     const next = deleteItem(value, id);
     onChange?.(next, { action: 'delete', itemId: id, index });
   };
 
   const handleReplace = (id: string, file: File) => {
     if (readOnly) return;
-    const index = value.findIndex((i) => i.id === id);
+    const index = getMetaIndex(id);
     const next = replaceItem(value, id, file);
     onChange?.(next, { action: 'replace', itemId: id, index });
   };
@@ -186,7 +217,7 @@ export const ImageInput = ({
   const handleCropSubmit = (file: File) => {
     if (!editingItem) return;
     const id = editingItem.id;
-    const index = value.findIndex((i) => i.id === id);
+    const index = getMetaIndex(id);
     const next = cropItem(value, id, file);
     setEditingItem(null);
     onChange?.(next, { action: 'crop', itemId: id, index });
@@ -201,50 +232,104 @@ export const ImageInput = ({
   return (
     <div>
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-        <SortableContext items={value.map((i) => i.id)} strategy={rectSortingStrategy}>
+        <SortableContext items={sortableItems} strategy={rectSortingStrategy}>
           <div className={styles.Container} style={{ gap }}>
-            {value.map((item, index) => (
-              <ImageTile
-                key={item.id}
-                item={item}
-                index={index}
-                totalCount={value.length}
-                width={width}
-                height={height}
-                canDelete={canDelete}
-                hasLink={hasLink}
-                hasEdit={hasEdit}
-                readOnly={readOnly ?? false}
-                isLoading={isLoading}
-                onLinkClick={onLinkClick}
-                onDelete={handleDelete}
-                onReplace={handleReplace}
-                onEdit={setEditingItem}
-              />
-            ))}
+            {isPositionMode ? (
+              Array.from({ length: resolvedMaxLength! }, (_, pos) => {
+                const slotId = slotIds[pos];
+                const item = value.find((v) => v.position === pos);
+                return item ? (
+                  <ImageTile
+                    key={slotId}
+                    item={item}
+                    sortableId={slotId}
+                    index={pos}
+                    totalCount={resolvedMaxLength!}
+                    width={width}
+                    height={height}
+                    accept={accept}
+                    canDelete={canDelete}
+                    hasLink={hasLink}
+                    hasEdit={hasEdit}
+                    readOnly={readOnly ?? false}
+                    isLoading={isLoading}
+                    onLinkClick={onLinkClick}
+                    onDelete={handleDelete}
+                    onReplace={handleReplace}
+                    onEdit={setEditingItem}
+                  />
+                ) : (
+                  !readOnly && (
+                    <SortableEmptySlot key={slotId} id={slotId}>
+                      <PlaceholderDropzone
+                        onDrop={(files) => handlePositionDrop(pos, files)}
+                        accept={accept ?? IMAGE_MIME_TYPE}
+                        multiple={false}
+                        isLoading={isLoading}
+                        isError={isError}
+                        width={width}
+                        height={height}
+                      >
+                        {hasIcon && <IconPhoto size={36} color={isError ? '#e03131' : '#07a3c6'} />}
+                        {placeholder && (
+                          <div
+                            className={`${styles.PlaceholderText}${isError ? ` ${styles.PlaceholderTextError}` : ''}`}
+                          >
+                            {resolvedPlaceholder(pos)}
+                          </div>
+                        )}
+                      </PlaceholderDropzone>
+                    </SortableEmptySlot>
+                  )
+                );
+              })
+            ) : (
+              <>
+                {value.map((item, index) => (
+                  <ImageTile
+                    key={item.id}
+                    item={item}
+                    index={index}
+                    totalCount={value.length}
+                    width={width}
+                    height={height}
+                    accept={accept}
+                    canDelete={canDelete}
+                    hasLink={hasLink}
+                    hasEdit={hasEdit}
+                    readOnly={readOnly ?? false}
+                    isLoading={isLoading}
+                    onLinkClick={onLinkClick}
+                    onDelete={handleDelete}
+                    onReplace={handleReplace}
+                    onEdit={setEditingItem}
+                  />
+                ))}
 
-            {!readOnly &&
-              Array.from({ length: placeholderCount }, (_, i) => (
-                <PlaceholderDropzone
-                  key={`placeholder-${i}`}
-                  onDrop={handleDrop}
-                  accept={IMAGE_MIME_TYPE}
-                  multiple={maxLength !== 1}
-                  isLoading={isLoading}
-                  isError={isError}
-                  width={width}
-                  height={height}
-                >
-                  {hasIcon && <IconPhoto size={36} color={isError ? '#e03131' : '#07a3c6'} />}
-                  {placeholder && (
-                    <div
-                      className={`${styles.PlaceholderText}${isError ? ` ${styles.PlaceholderTextError}` : ''}`}
+                {!readOnly &&
+                  Array.from({ length: placeholderCount }, (_, i) => (
+                    <PlaceholderDropzone
+                      key={`placeholder-${i}`}
+                      onDrop={handleDrop}
+                      accept={accept ?? IMAGE_MIME_TYPE}
+                      multiple={resolvedMaxLength !== 1}
+                      isLoading={isLoading}
+                      isError={isError}
+                      width={width}
+                      height={height}
                     >
-                      {resolvedPlaceholder(i)}
-                    </div>
-                  )}
-                </PlaceholderDropzone>
-              ))}
+                      {hasIcon && <IconPhoto size={36} color={isError ? '#e03131' : '#07a3c6'} />}
+                      {placeholder && (
+                        <div
+                          className={`${styles.PlaceholderText}${isError ? ` ${styles.PlaceholderTextError}` : ''}`}
+                        >
+                          {resolvedPlaceholder(i)}
+                        </div>
+                      )}
+                    </PlaceholderDropzone>
+                  ))}
+              </>
+            )}
           </div>
         </SortableContext>
       </DndContext>

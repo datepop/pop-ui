@@ -7,19 +7,19 @@ import { IconPhoto } from '@pop-ui/foundation';
 import Lottie from 'lottie-react';
 import { useEffect, useState } from 'react';
 
-import { PlaceholderDropzone } from '../shared/MultiItemInput/Dropzone';
-import { TileShell } from '../shared/MultiItemInput/TileShell';
-import { useSortableGrid } from '../shared/MultiItemInput/useSortableGrid';
-import { toast } from '../Toast';
 import {
+  addItemAtPosition,
   addItems,
   deleteItem,
-  getPlaceholderCount,
   isValidLottieJSON,
   parseLottieFile,
-  reorderItems,
 } from './helpers';
 import styles from './styles.module.scss';
+import { PlaceholderDropzone } from '../shared/MultiItemInput/Dropzone';
+import { SortableEmptySlot } from '../shared/MultiItemInput/SortableEmptySlot';
+import { TileShell } from '../shared/MultiItemInput/TileShell';
+import { usePositionGrid } from '../shared/MultiItemInput/usePositionGrid';
+import { toast } from '../Toast';
 
 import type { LottieInputItem, LottieInputProps } from './types';
 
@@ -29,6 +29,7 @@ const LOTTIE_ACCEPT = { 'application/json': ['.json'] };
 
 interface ILottieTileProps {
   item: LottieInputItem;
+  sortableId?: string;
   totalCount: number;
   width: number;
   height: number;
@@ -42,6 +43,7 @@ interface ILottieTileProps {
 
 function LottieTile({
   item,
+  sortableId,
   totalCount,
   width,
   height,
@@ -52,45 +54,51 @@ function LottieTile({
   onLinkClick,
   onDelete,
 }: ILottieTileProps) {
-  const [resolvedData, setResolvedData] = useState<Record<string, unknown> | null>(
-    item.animationData ?? null,
-  );
-  const [tileLoading, setTileLoading] = useState(!item.animationData && !!(item.file || item.url));
+  // 비동기 로딩 결과를 key와 함께 추적 (effect 내 동기 setState 회피)
+  const needsAsyncLoad = !item.animationData && !!(item.file || item.url);
+  const asyncLoadKey = needsAsyncLoad
+    ? `${item.id}|${item.file ? `${item.file.name}:${item.file.size}` : (item.url ?? '')}`
+    : '';
+
+  const [asyncResult, setAsyncResult] = useState<{
+    key: string;
+    data: Record<string, unknown> | null;
+  }>({ key: '', data: null });
+
+  // 동기 데이터(animationData) 우선, 없으면 비동기 로딩 결과 사용
+  const resolvedData =
+    item.animationData ?? (asyncResult.key === asyncLoadKey ? asyncResult.data : null);
+  const tileLoading = !!asyncLoadKey && asyncResult.key !== asyncLoadKey;
 
   useEffect(() => {
-    if (item.animationData) {
-      setResolvedData(item.animationData);
-      return;
-    }
+    if (!asyncLoadKey) return;
 
-    if (!item.file && !item.url) return;
+    let cancelled = false;
 
-    setTileLoading(true);
+    const load = item.file
+      ? parseLottieFile(item.file)
+      : fetch(item.url!)
+          .then((res) => res.json())
+          .then((json: unknown) =>
+            isValidLottieJSON(json) ? (json as Record<string, unknown>) : null,
+          );
 
-    if (item.file) {
-      parseLottieFile(item.file).then((data) => {
-        setResolvedData(data);
-        setTileLoading(false);
+    load
+      .then((data) => {
+        if (!cancelled) setAsyncResult({ key: asyncLoadKey, data });
+      })
+      .catch(() => {
+        if (!cancelled) setAsyncResult({ key: asyncLoadKey, data: null });
       });
-    } else if (item.url) {
-      fetch(item.url)
-        .then((res) => res.json())
-        .then((json: unknown) => {
-          setResolvedData(isValidLottieJSON(json) ? (json as Record<string, unknown>) : null);
-          setTileLoading(false);
-        })
-        .catch(() => {
-          setResolvedData(null);
-          setTileLoading(false);
-        });
-    }
-    // item.id 변경 시에만 재실행 (file/url 교체 없이 동일 아이템 유지)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [item.id]);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [asyncLoadKey, item.file]);
 
   return (
     <TileShell
-      id={item.id}
+      id={sortableId ?? item.id}
       totalCount={totalCount}
       width={width}
       height={height}
@@ -129,6 +137,7 @@ export const LottieInput = ({
   hasIcon = true,
   hasLink = false,
   onLinkClick,
+  length,
   minLength,
   maxLength,
   errorMsg,
@@ -137,23 +146,28 @@ export const LottieInput = ({
   gap = 8,
   canDelete = true,
 }: LottieInputProps) => {
-  const isError = !!errorMsg;
-  const placeholderCount = getPlaceholderCount(value, minLength, maxLength);
+  if (
+    process.env.NODE_ENV !== 'production' &&
+    length != null &&
+    (minLength != null || maxLength != null)
+  ) {
+    console.warn(
+      'LottieInput: length와 minLength/maxLength가 동시에 지정되었습니다. length가 우선 적용됩니다.',
+    );
+  }
 
-  const { sensors, handleDragEnd } = useSortableGrid({
-    items: value,
-    onReorder: (fromIndex, toIndex) => {
-      const next = reorderItems(value, fromIndex, toIndex);
-      const active = value[fromIndex];
-      onChange?.(next, {
-        action: 'reorder',
-        itemId: active.id,
-        index: toIndex,
-        previousIndex: fromIndex,
-        nextIndex: toIndex,
-      });
-    },
-  });
+  const {
+    isPositionMode,
+    resolvedMaxLength,
+    placeholderCount,
+    slotIds,
+    sortableItems,
+    sensors,
+    handleDragEnd,
+    getMetaIndex,
+  } = usePositionGrid({ value, length, minLength, maxLength, onChange });
+
+  const isError = !!errorMsg;
 
   const handleDrop = async (files: File[]) => {
     if (readOnly) return;
@@ -181,7 +195,7 @@ export const LottieInput = ({
     if (validFiles.length === 0) return;
 
     const prevLength = value.length;
-    const next = addItems(value, validFiles, maxLength);
+    const next = addItems(value, validFiles, resolvedMaxLength);
     if (next.length === prevLength) return;
 
     onChange?.(next, {
@@ -191,9 +205,31 @@ export const LottieInput = ({
     });
   };
 
+  const handlePositionDrop = async (position: number, files: File[]) => {
+    if (readOnly) return;
+    const file = files[0];
+    if (!file) return;
+
+    const data = await parseLottieFile(file);
+    if (!data) {
+      toast({
+        id: 'invalid-lottie-files',
+        message: '유효하지 않은 Lottie JSON 파일입니다',
+      });
+      return;
+    }
+
+    const next = addItemAtPosition(value, file, position);
+    onChange?.(next, {
+      action: 'create',
+      itemId: next[next.length - 1].id,
+      index: position,
+    });
+  };
+
   const handleDelete = (id: string) => {
     if (readOnly) return;
-    const index = value.findIndex((i) => i.id === id);
+    const index = getMetaIndex(id);
     const next = deleteItem(value, id);
     onChange?.(next, { action: 'delete', itemId: id, index });
   };
@@ -207,46 +243,94 @@ export const LottieInput = ({
   return (
     <div>
       <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-        <SortableContext items={value.map((i) => i.id)} strategy={rectSortingStrategy}>
+        <SortableContext items={sortableItems} strategy={rectSortingStrategy}>
           <div className={styles.Container} style={{ gap }}>
-            {value.map((item) => (
-              <LottieTile
-                key={item.id}
-                item={item}
-                totalCount={value.length}
-                width={width}
-                height={height}
-                readOnly={readOnly ?? false}
-                isLoading={isLoading}
-                canDelete={canDelete}
-                hasLink={hasLink}
-                onLinkClick={onLinkClick}
-                onDelete={handleDelete}
-              />
-            ))}
+            {isPositionMode ? (
+              Array.from({ length: resolvedMaxLength! }, (_, pos) => {
+                const slotId = slotIds[pos];
+                const item = value.find((v) => v.position === pos);
+                return item ? (
+                  <LottieTile
+                    key={slotId}
+                    item={item}
+                    sortableId={slotId}
+                    totalCount={resolvedMaxLength!}
+                    width={width}
+                    height={height}
+                    readOnly={readOnly ?? false}
+                    isLoading={isLoading}
+                    canDelete={canDelete}
+                    hasLink={hasLink}
+                    onLinkClick={onLinkClick}
+                    onDelete={handleDelete}
+                  />
+                ) : (
+                  !readOnly && (
+                    <SortableEmptySlot key={slotId} id={slotId}>
+                      <PlaceholderDropzone
+                        onDrop={(files) => handlePositionDrop(pos, files)}
+                        accept={LOTTIE_ACCEPT}
+                        multiple={false}
+                        isLoading={isLoading}
+                        isError={isError}
+                        width={width}
+                        height={height}
+                      >
+                        {hasIcon && <IconPhoto size={36} color={isError ? '#e03131' : '#07a3c6'} />}
+                        {placeholder && (
+                          <div
+                            className={`${styles.PlaceholderText}${isError ? ` ${styles.PlaceholderTextError}` : ''}`}
+                          >
+                            {resolvedPlaceholder(pos)}
+                          </div>
+                        )}
+                      </PlaceholderDropzone>
+                    </SortableEmptySlot>
+                  )
+                );
+              })
+            ) : (
+              <>
+                {value.map((item) => (
+                  <LottieTile
+                    key={item.id}
+                    item={item}
+                    totalCount={value.length}
+                    width={width}
+                    height={height}
+                    readOnly={readOnly ?? false}
+                    isLoading={isLoading}
+                    canDelete={canDelete}
+                    hasLink={hasLink}
+                    onLinkClick={onLinkClick}
+                    onDelete={handleDelete}
+                  />
+                ))}
 
-            {!readOnly &&
-              Array.from({ length: placeholderCount }, (_, i) => (
-                <PlaceholderDropzone
-                  key={`placeholder-${i}`}
-                  onDrop={handleDrop}
-                  accept={LOTTIE_ACCEPT}
-                  multiple={maxLength !== 1}
-                  isLoading={isLoading}
-                  isError={isError}
-                  width={width}
-                  height={height}
-                >
-                  {hasIcon && <IconPhoto size={36} color={isError ? '#e03131' : '#07a3c6'} />}
-                  {placeholder && (
-                    <div
-                      className={`${styles.PlaceholderText}${isError ? ` ${styles.PlaceholderTextError}` : ''}`}
+                {!readOnly &&
+                  Array.from({ length: placeholderCount }, (_, i) => (
+                    <PlaceholderDropzone
+                      key={`placeholder-${i}`}
+                      onDrop={handleDrop}
+                      accept={LOTTIE_ACCEPT}
+                      multiple={resolvedMaxLength !== 1}
+                      isLoading={isLoading}
+                      isError={isError}
+                      width={width}
+                      height={height}
                     >
-                      {resolvedPlaceholder(i)}
-                    </div>
-                  )}
-                </PlaceholderDropzone>
-              ))}
+                      {hasIcon && <IconPhoto size={36} color={isError ? '#e03131' : '#07a3c6'} />}
+                      {placeholder && (
+                        <div
+                          className={`${styles.PlaceholderText}${isError ? ` ${styles.PlaceholderTextError}` : ''}`}
+                        >
+                          {resolvedPlaceholder(i)}
+                        </div>
+                      )}
+                    </PlaceholderDropzone>
+                  ))}
+              </>
+            )}
           </div>
         </SortableContext>
       </DndContext>
