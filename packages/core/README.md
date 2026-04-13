@@ -41,6 +41,12 @@ export function App() {
 
 `PopUiProvider` sets up Mantine provider, CSS variable injection, and Notifications. `toast` depends on the `Notifications` mounted by this provider.
 
+### Next.js App Router notes
+
+- 앱 엔트리에서 `@pop-ui/core/styles.css`를 직접 import 해야 합니다.
+- 상호작용 컴포넌트는 client boundary 안에서 사용하는 것을 권장합니다.
+- 서버 컴포넌트에서 직접 폼 submit 버튼으로 쓸 경우에는 얇은 client wrapper를 두는 방식이 가장 안전합니다.
+
 ## Stabilized surfaces
 
 This phase stabilizes the following surfaces:
