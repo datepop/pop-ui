@@ -87,6 +87,14 @@ function ImageTile({
       onDelete={() => onDelete(item.id)}
       deleteAriaLabel="이미지 삭제"
       onTileClick={() => fileInputRef.current?.click()}
+      onFileDrop={(file) => {
+        if (accept) {
+          if (!accept.includes(file.type as ImageInputAccept[number])) return;
+        } else {
+          if (!file.type.startsWith('image/')) return;
+        }
+        onReplace(item.id, file);
+      }}
       actionBarExtra={
         !readOnly && hasEdit ? (
           <Button

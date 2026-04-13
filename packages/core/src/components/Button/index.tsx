@@ -91,6 +91,7 @@ export function Button({
   children,
   size = 'md',
   variant = 'primary',
+  type = 'button',
   isLoading = false,
   hideLabelOnLoading = false,
   disabled = false,
@@ -105,7 +106,7 @@ export function Button({
 
   return (
     <MantineButton
-      type="button"
+      type={type}
       unstyled
       className={joinClassNames(
         styles.Button,
@@ -115,8 +116,8 @@ export function Button({
         className,
       )}
       classNames={mergeClassNamesWithDefault(classNames)}
-      {...props}
       disabled={isDisabled}
+      {...props}
     >
       {isButtonLoading && <Loader color="currentColor" size={loaderSize} {...loaderProps} />}
       <span className={styles.Button__Label}>
