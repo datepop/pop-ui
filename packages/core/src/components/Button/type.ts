@@ -1,4 +1,5 @@
 import type { ButtonProps as MantineButtonProps } from '@mantine/core';
+import type { MouseEventHandler } from 'react';
 
 export type TButtonSize = 'sm' | 'md' | 'lg';
 export type TButtonVariant =
@@ -22,7 +23,8 @@ export const BUTTON_VARIANTS = [
 ] as const satisfies readonly TButtonVariant[];
 
 export interface IButtonProps extends Omit<MantineButtonProps, 'variant' | 'styles'> {
-  onClick?: () => void;
+  type?: 'button' | 'submit' | 'reset';
+  onClick?: MouseEventHandler<HTMLButtonElement>;
   size?: TButtonSize;
   variant?: TButtonVariant;
   isLoading?: boolean;
