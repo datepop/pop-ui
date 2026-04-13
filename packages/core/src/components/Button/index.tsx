@@ -116,8 +116,8 @@ export function Button({
         className,
       )}
       classNames={mergeClassNamesWithDefault(classNames)}
-      {...props}
       disabled={isDisabled}
+      {...props}
     >
       {isButtonLoading && <Loader color="currentColor" size={loaderSize} {...loaderProps} />}
       <span className={styles.Button__Label}>

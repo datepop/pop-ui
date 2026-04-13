@@ -94,7 +94,7 @@ function LottieTile({
     return () => {
       cancelled = true;
     };
-  }, [asyncLoadKey, item.file]);
+  }, [asyncLoadKey, item.file, item.url]);
 
   return (
     <TileShell

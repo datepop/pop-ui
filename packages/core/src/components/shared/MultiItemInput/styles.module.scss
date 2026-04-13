@@ -35,6 +35,12 @@
   border: 1px solid $color-gray-100;
   overflow: hidden;
   flex-shrink: 0;
+  transition: opacity 0.2s ease, border-color 0.2s ease;
+}
+
+.TileDragOver {
+  opacity: 0.7;
+  border-color: $color-aqua-500;
 }
 
 .LoadingOverlay {
