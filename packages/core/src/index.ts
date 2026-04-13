@@ -1,5 +1,3 @@
-'use client';
-
 import './components/shared/font.css';
 import './styles.css';
 
