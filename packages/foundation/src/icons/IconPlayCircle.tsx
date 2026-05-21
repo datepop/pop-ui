@@ -25,7 +25,6 @@ export default function IconPlayCircle({
         r="11.25"
         fill={isFilled ? color : 'none'}
         stroke={color}
-        opacity={isFilled ? 0.6 : 1}
         strokeWidth="1.5"
       />
       <path

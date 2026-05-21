@@ -81,6 +81,7 @@ export { default as IconQuote } from './IconQuote';
 export { default as IconRefresh } from './IconRefresh';
 export { default as IconReset } from './IconReset';
 export { default as IconRestaurant } from './IconRestaurant';
+export { default as IconRocket } from './IconRocket';
 export { default as IconSearch } from './IconSearch';
 export { default as IconSetting } from './IconSetting';
 export { default as IconShare } from './IconShare';

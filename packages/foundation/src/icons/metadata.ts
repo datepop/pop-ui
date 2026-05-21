@@ -355,6 +355,10 @@ export const iconMetadata: Record<TIconName, IIconMetadataEntry> = {
     categories: [IconCategory.CONTENT],
     variants: ['line', 'filled'],
   },
+  IconRocket: {
+    categories: [IconCategory.CONTENT],
+    variants: ['filled'],
+  },
   IconSearch: {
     categories: [IconCategory.ACTION],
     variants: ['line'],
