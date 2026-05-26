@@ -28,15 +28,7 @@ pipeline {
             stages {
                 stage('Checkout') {
                     steps {
-                        checkout([
-                            $class: 'GitSCM',
-                            branches: scm.branches,
-                            extensions: [
-                                [$class: 'CloneOption', depth: 50, shallow: true, noTags: true, timeout: 30],
-                                [$class: 'CheckoutOption', timeout: 30]
-                            ],
-                            userRemoteConfigs: scm.userRemoteConfigs
-                        ])
+                        checkout scm
                     }
                 }
                 stage('Install & Build') {
@@ -69,15 +61,7 @@ pipeline {
             stages {
                 stage('Checkout') {
                     steps {
-                        checkout([
-                            $class: 'GitSCM',
-                            branches: scm.branches,
-                            extensions: [
-                                [$class: 'CloneOption', depth: 50, shallow: true, noTags: true, timeout: 30],
-                                [$class: 'CheckoutOption', timeout: 30]
-                            ],
-                            userRemoteConfigs: scm.userRemoteConfigs
-                        ])
+                        checkout scm
                     }
                 }
                 stage('Install & Build') {
@@ -134,15 +118,7 @@ pipeline {
             stages {
                 stage('Checkout') {
                     steps {
-                        checkout([
-                            $class: 'GitSCM',
-                            branches: scm.branches,
-                            extensions: [
-                                [$class: 'CloneOption', depth: 50, shallow: true, noTags: true, timeout: 30],
-                                [$class: 'CheckoutOption', timeout: 30]
-                            ],
-                            userRemoteConfigs: scm.userRemoteConfigs
-                        ])
+                        checkout scm
                     }
                 }
                 stage('Validate Release Version') {
