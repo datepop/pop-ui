@@ -1,5 +1,41 @@
 @Library('datepop-shared') _
 
+def checkoutPopUi(Map args = [:]) {
+    int depth = (args.depth ?: 1) as int
+    String branchName = (env.BRANCH_NAME ?: '')
+        .replace('%2F', '/')
+        .replace('%2f', '/')
+    String refspec
+    String branchSpec
+
+    if (env.CHANGE_ID?.trim()) {
+        refspec = "+refs/pull/${env.CHANGE_ID}/merge:refs/remotes/origin/PR-${env.CHANGE_ID}"
+        branchSpec = "refs/remotes/origin/PR-${env.CHANGE_ID}"
+    } else if (env.TAG_NAME?.trim()) {
+        refspec = "+refs/tags/${env.TAG_NAME}:refs/tags/${env.TAG_NAME}"
+        branchSpec = "refs/tags/${env.TAG_NAME}"
+    } else if (branchName?.trim()) {
+        refspec = "+refs/heads/${branchName}:refs/remotes/origin/${branchName}"
+        branchSpec = "refs/remotes/origin/${branchName}"
+    } else {
+        error('Cannot determine git ref to checkout')
+    }
+
+    checkout([
+        $class: 'GitSCM',
+        branches: [[name: branchSpec]],
+        extensions: [
+            [$class: 'CloneOption', depth: depth, shallow: true, noTags: true, honorRefspec: true, timeout: 10],
+            [$class: 'CheckoutOption', timeout: 10]
+        ],
+        userRemoteConfigs: [[
+            url: 'https://github.com/datepop/pop-ui.git',
+            credentialsId: 'github-credentials',
+            refspec: refspec
+        ]]
+    ])
+}
+
 pipeline {
     agent any
 
@@ -28,15 +64,9 @@ pipeline {
             stages {
                 stage('Checkout') {
                     steps {
-                        checkout([
-                            $class: 'GitSCM',
-                            branches: scm.branches,
-                            extensions: [
-                                [$class: 'CloneOption', depth: 50, shallow: true, noTags: false, timeout: 30],
-                                [$class: 'CheckoutOption', timeout: 30]
-                            ],
-                            userRemoteConfigs: scm.userRemoteConfigs
-                        ])
+                        script {
+                            checkoutPopUi(depth: 1)
+                        }
                     }
                 }
                 stage('Install & Build') {
@@ -69,15 +99,9 @@ pipeline {
             stages {
                 stage('Checkout') {
                     steps {
-                        checkout([
-                            $class: 'GitSCM',
-                            branches: scm.branches,
-                            extensions: [
-                                [$class: 'CloneOption', depth: 50, shallow: true, noTags: false, timeout: 30],
-                                [$class: 'CheckoutOption', timeout: 30]
-                            ],
-                            userRemoteConfigs: scm.userRemoteConfigs
-                        ])
+                        script {
+                            checkoutPopUi(depth: 50)
+                        }
                     }
                 }
                 stage('Install & Build') {
@@ -134,15 +158,9 @@ pipeline {
             stages {
                 stage('Checkout') {
                     steps {
-                        checkout([
-                            $class: 'GitSCM',
-                            branches: scm.branches,
-                            extensions: [
-                                [$class: 'CloneOption', depth: 50, shallow: true, noTags: false, timeout: 30],
-                                [$class: 'CheckoutOption', timeout: 30]
-                            ],
-                            userRemoteConfigs: scm.userRemoteConfigs
-                        ])
+                        script {
+                            checkoutPopUi(depth: 1)
+                        }
                     }
                 }
                 stage('Validate Release Version') {
