@@ -28,10 +28,13 @@ yarn test
 yarn lint
 ```
 
-### Deploy major, minor version of package
+### Release packages
 
-main branch에 push되면 patch version이 하나씩 상승하며 배포됩니다. 다만, major와 minor version을 배포해야 하는 경우는 아래의 커맨드를 사용하여 로컬에서 배포합니다.
+`@pop-ui/core`와 `@pop-ui/foundation`은 같은 버전으로 배포합니다.
 
-```bash
-yarn lerna publish
-```
+1. `release/*` 브랜치에서 두 패키지의 `package.json` 버전을 같은 값으로 올립니다.
+2. `datepop-deploy/pop-ui/release/*`에서 Chromatic staging 검증을 통과시킵니다.
+3. release 브랜치를 `main`에 머지합니다.
+4. `main` 커밋에 `vX.Y.Z` 태그를 push하면 Jenkins가 npm에 아직 없는 패키지만 publish합니다.
+
+예: `v1.2.3` 태그를 push하려면 `@pop-ui/core`와 `@pop-ui/foundation`의 버전도 모두 `1.2.3`이어야 합니다.
