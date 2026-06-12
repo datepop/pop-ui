@@ -1,6 +1,10 @@
+import { useId } from 'react';
+
 import type { IBrandIconProps } from '../types/brand';
 
 export default function IconInstagramLine({ size = 24, ...props }: IBrandIconProps) {
+  const gradientId = useId();
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -16,20 +20,20 @@ export default function IconInstagramLine({ size = 24, ...props }: IBrandIconPro
         width="18.2"
         height="18.2"
         rx="4.6"
-        stroke="url(#instagram_line_gradient)"
+        stroke={`url(#${gradientId})`}
         strokeWidth="1.8"
       />
       <path
         d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"
-        stroke="url(#instagram_line_gradient)"
+        stroke={`url(#${gradientId})`}
         strokeWidth="1.8"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <circle cx="17.5" cy="6.5" r="1" fill="url(#instagram_line_gradient)" />
+      <circle cx="17.5" cy="6.5" r="1" fill={`url(#${gradientId})`} />
       <defs>
         <radialGradient
-          id="instagram_line_gradient"
+          id={gradientId}
           cx="0"
           cy="0"
           r="1"

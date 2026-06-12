@@ -1,6 +1,10 @@
+import { useId } from 'react';
+
 import type { IBrandIconProps } from '../types/brand';
 
 export default function IconKakao({ size = 24, ...props }: IBrandIconProps) {
+  const clipId = useId();
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -10,7 +14,7 @@ export default function IconKakao({ size = 24, ...props }: IBrandIconProps) {
       viewBox="0 0 24 24"
       {...props}
     >
-      <g clipPath="url(#clip0_kakao)">
+      <g clipPath={`url(#${clipId})`}>
         <path
           d="M23.9996 18.6608C23.9996 21.6105 21.61 24.0001 18.6599 24.0001H5.33935C2.38924 24.0001 -0.000366211 21.6105 -0.000366211 18.6608V5.33951C-0.000366211 2.38981 2.38924 0.000137329 5.33935 0.000137329H18.6599C21.61 0.000137329 23.9996 2.38981 23.9996 5.33951V18.6608Z"
           fill="#FAE100"
@@ -37,7 +41,7 @@ export default function IconKakao({ size = 24, ...props }: IBrandIconProps) {
         />
       </g>
       <defs>
-        <clipPath id="clip0_kakao">
+        <clipPath id={clipId}>
           <rect width="24" height="24" fill="white" />
         </clipPath>
       </defs>
