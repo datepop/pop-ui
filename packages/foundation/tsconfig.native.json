@@ -15,7 +15,8 @@
     "src/theme/colors/tokens.ts",
     "src/types/*.native.ts",
     "src/icons/native/**/*.tsx",
-    "src/illustrations/native/**/*.tsx"
+    "src/illustrations/native/**/*.tsx",
+    "src/brand/native/**/*.tsx"
   ],
   "exclude": ["**/*.test.ts", "**/*.test.tsx", "**/*.stories.tsx"]
 }
