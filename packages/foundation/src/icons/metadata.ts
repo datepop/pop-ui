@@ -247,6 +247,10 @@ export const iconMetadata: Record<TIconName, IIconMetadataEntry> = {
     categories: [IconCategory.CONTENT],
     variants: ['line'],
   },
+  IconLogout: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
   IconMail: {
     categories: [IconCategory.CONTENT],
     variants: ['filled'],
@@ -394,6 +398,10 @@ export const iconMetadata: Record<TIconName, IIconMetadataEntry> = {
   IconStar: {
     categories: [IconCategory.ACTION],
     variants: ['line', 'filled'],
+  },
+  IconStopSign: {
+    categories: [IconCategory.STATUS],
+    variants: ['line'],
   },
   IconShop: {
     categories: [IconCategory.SYSTEM],

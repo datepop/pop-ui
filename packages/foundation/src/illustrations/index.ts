@@ -17,6 +17,7 @@ export { default as IllustrationDiscountcoupon } from './IllustrationDiscountcou
 export { default as IllustrationDiscounttagMint } from './IllustrationDiscounttagMint';
 export { default as IllustrationDiscounttagPurple } from './IllustrationDiscounttagPurple';
 export { default as IllustrationDiscounttagRed } from './IllustrationDiscounttagRed';
+export { default as IllustrationExclamation } from './IllustrationExclamation';
 export { default as IllustrationExel } from './IllustrationExel';
 export { default as IllustrationFolder } from './IllustrationFolder';
 export { default as IllustrationHandOk } from './IllustrationHandOk';
@@ -26,6 +27,7 @@ export { default as IllustrationLink } from './IllustrationLink';
 export { default as IllustrationMappinMint } from './IllustrationMappinMint';
 export { default as IllustrationMappinRed } from './IllustrationMappinRed';
 export { default as IllustrationMegaphone } from './IllustrationMegaphone';
+export { default as IllustrationMegaphoneBlue } from './IllustrationMegaphoneBlue';
 export { default as IllustrationMoneybag } from './IllustrationMoneybag';
 export { default as IllustrationNoCircle } from './IllustrationNoCircle';
 export { default as IllustrationOffice } from './IllustrationOffice';
