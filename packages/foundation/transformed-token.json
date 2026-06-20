@@ -400,7 +400,7 @@
     }
   },
   "web": {
-    "H1-36-bold": {
+    "H1-40-bold": {
       "fontFamily": {
         "value": "Pretendard",
         "type": "fontFamilies"
