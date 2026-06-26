@@ -1,13 +1,16 @@
 import { ColorGray900 } from '../tokens/colors';
 
-import type { IIconLineOnlyProps } from '../types/icon';
+import type { IIconLineWeightProps } from '../types/icon';
 
 export default function IconX({
   size = 24,
   color = ColorGray900,
   variant: _variant = 'line',
+  thick = false,
   ...props
-}: IIconLineOnlyProps) {
+}: IIconLineWeightProps) {
+  const strokeWidth = thick ? 2.5 : 1.5;
+
   return (
     <svg
       width={size}
@@ -18,11 +21,16 @@ export default function IconX({
       {...props}
     >
       <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M4.33 4.33a1.3 1.3 0 0 1 1.84 0L12 10.163l5.83-5.831a1.3 1.3 0 0 1 1.84 1.838L13.837 12l5.831 5.83a1.3 1.3 0 1 1-1.838 1.84L12 13.837 6.17 19.67a1.3 1.3 0 1 1-1.84-1.838L10.163 12 4.33 6.17a1.3 1.3 0 0 1 0-1.84"
-        fill={color}
-        strokeWidth={0}
+        d="M3.99951 3.99902L20.0011 20.0006"
+        stroke={color}
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
+      />
+      <path
+        d="M3.99951 20.001L20.0011 3.99936"
+        stroke={color}
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
       />
     </svg>
   );

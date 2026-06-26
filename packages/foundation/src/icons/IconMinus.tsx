@@ -1,13 +1,16 @@
 import { ColorGray900 } from '../tokens/colors';
 
-import type { IIconLineOnlyProps } from '../types/icon';
+import type { IIconLineWeightProps } from '../types/icon';
 
 export default function IconMinus({
   size = 24,
   color = ColorGray900,
   variant: _variant = 'line',
+  thick = false,
   ...props
-}: IIconLineOnlyProps) {
+}: IIconLineWeightProps) {
+  const strokeWidth = thick ? 2.5 : 1.5;
+
   return (
     <svg
       width={size}
@@ -17,13 +20,7 @@ export default function IconMinus({
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M21.08 10.763a1.237 1.237 0 0 1 0 2.473H2.92a1.237 1.237 0 1 1 0-2.473z"
-        fill={color}
-        strokeWidth={0}
-      />
+      <path d="M3 12L21 12" stroke={color} strokeWidth={strokeWidth} strokeLinecap="round" />
     </svg>
   );
 }

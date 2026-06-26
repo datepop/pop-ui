@@ -17,33 +17,21 @@ export default function IconSwapHorizontal({
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <path d="M3 7.00488L21 7.00488" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
       <path
-        d="M17.14 12.5146L18.42 13.8046L21 16.3746L18.42 18.9446L17.14 20.2346"
+        d="M18 10L21 7L18 4"
         stroke={color}
-        strokeWidth="0.75"
+        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+      <path d="M21 17.0049L3 17.0049" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
       <path
-        d="M21 16.3748L4.28 16.3748"
+        d="M6 20L3 17L6 14"
         stroke={color}
-        strokeWidth="0.75"
-        strokeMiterlimit="10"
-        strokeLinecap="round"
-      />
-      <path
-        d="M6.8501 11.4746L5.5701 10.1946L3.0001 7.62465L5.5701 5.05465L6.8501 3.76465"
-        stroke={color}
-        strokeWidth="0.75"
+        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
-      />
-      <path
-        d="M2.99996 7.62451L19.71 7.62451"
-        stroke={color}
-        strokeWidth="0.75"
-        strokeMiterlimit="10"
-        strokeLinecap="round"
       />
     </svg>
   );
