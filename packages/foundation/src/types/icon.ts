@@ -16,3 +16,8 @@ export interface IIconFilledOnlyProps extends IIconBaseProps {
 export interface IIconLineOnlyProps extends IIconBaseProps {
   variant?: 'line';
 }
+
+export interface IIconLineWeightProps extends IIconBaseProps {
+  variant?: 'line';
+  thick?: boolean;
+}

@@ -29,6 +29,7 @@ export { default as IconChevronRightDouble } from './IconChevronRightDouble';
 export { default as IconChevronUp } from './IconChevronUp';
 export { default as IconChevronUpDown } from './IconChevronUpDown';
 export { default as IconClock } from './IconClock';
+export { default as IconClockPlus } from './IconClockPlus';
 export { default as IconCoffee } from './IconCoffee';
 export { default as IconCopy } from './IconCopy';
 export { default as IconCreditCard } from './IconCreditCard';

@@ -1,13 +1,16 @@
 import { ColorGray900 } from '../tokens/colors';
 
-import type { IIconLineOnlyProps } from '../types/icon';
+import type { IIconLineWeightProps } from '../types/icon';
 
 export default function IconArrowRight({
   size = 24,
   color = ColorGray900,
   variant: _variant = 'line',
+  thick = false,
   ...props
-}: IIconLineOnlyProps) {
+}: IIconLineWeightProps) {
+  const strokeWidth = thick ? 2.5 : 1.5;
+
   return (
     <svg
       width={size}
@@ -18,17 +21,17 @@ export default function IconArrowRight({
       {...props}
     >
       <path
-        d="M14.8333 6.5L20.5 12.5L14.8333 18.5"
+        d="M3 11.9951L21 11.9951"
         stroke={color}
-        strokeWidth="1.5"
+        strokeWidth={strokeWidth}
         strokeLinecap="round"
-        strokeLinejoin="round"
       />
       <path
-        d="M20.5 12.5005L3.5 12.5005"
+        d="M14 5L21 12L14 19"
         stroke={color}
-        strokeWidth="1.5"
+        strokeWidth={strokeWidth}
         strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

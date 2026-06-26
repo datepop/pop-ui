@@ -147,6 +147,10 @@ export const iconMetadata: Record<TIconName, IIconMetadataEntry> = {
     categories: [IconCategory.CONTENT],
     variants: ['line'],
   },
+  IconClockPlus: {
+    categories: [IconCategory.CONTENT],
+    variants: ['line'],
+  },
   IconCoffee: {
     categories: [IconCategory.CONTENT],
     variants: ['line'],
