@@ -1,13 +1,16 @@
 import { ColorGray900 } from '../tokens/colors';
 
-import type { IIconLineOnlyProps } from '../types/icon';
+import type { IIconLineWeightProps } from '../types/icon';
 
 export default function IconChevronUp({
   size = 24,
   color = ColorGray900,
   variant: _variant = 'line',
+  thick = false,
   ...props
-}: IIconLineOnlyProps) {
+}: IIconLineWeightProps) {
+  const strokeWidth = thick ? 2.5 : 1.5;
+
   return (
     <svg
       width={size}
@@ -18,9 +21,11 @@ export default function IconChevronUp({
       {...props}
     >
       <path
-        d="M3.08 17.42a1.3 1.3 0 0 0 1.84 0L12 10.337l7.08 7.081a1.3 1.3 0 1 0 1.84-1.838l-8-8a1.3 1.3 0 0 0-1.84 0l-8 8a1.3 1.3 0 0 0 0 1.838"
-        fill={color}
-        strokeWidth={0}
+        d="M19 15L12 8L5 15"
+        stroke={color}
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

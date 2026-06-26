@@ -20,7 +20,26 @@ import {
 import type { IIconProps } from '../types/icon';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-const iconModules = import.meta.glob<{ default: React.FC<IIconProps> }>('./Icon*.tsx', {
+type TIconStoryProps = IIconProps & {
+  thick?: boolean;
+};
+
+const lineWeightIconNames = new Set([
+  'IconArrowDown',
+  'IconArrowLeft',
+  'IconArrowRight',
+  'IconArrowUp',
+  'IconCheck',
+  'IconChevronDown',
+  'IconChevronLeft',
+  'IconChevronRight',
+  'IconChevronUp',
+  'IconX',
+  'IconMinus',
+  'IconPlus',
+]);
+
+const iconModules = import.meta.glob<{ default: React.FC<TIconStoryProps> }>('./Icon*.tsx', {
   eager: true,
 });
 
@@ -49,6 +68,7 @@ const iconList = Object.entries(iconModules)
       defaultSize: 24,
       categories: meta?.categories ?? [],
       variants: (meta?.variants ?? ['line']) as ('line' | 'filled')[],
+      supportsLineWeight: lineWeightIconNames.has(name),
     };
   })
   .filter((icon) => !icon.name.includes('.stories'))
@@ -71,19 +91,32 @@ export default meta;
 
 const IconCard: React.FC<{
   name: string;
-  Icon: React.FC<IIconProps>;
+  Icon: React.FC<TIconStoryProps>;
   defaultSize: number;
   size?: number;
   color?: string;
   variant?: 'line' | 'filled';
+  thick?: boolean;
   variants: ('line' | 'filled')[];
   categories: readonly IconCategory[];
-}> = ({ name, Icon, defaultSize, size, color, variant, variants, categories }) => {
+  supportsLineWeight: boolean;
+}> = ({
+  name,
+  Icon,
+  defaultSize,
+  size,
+  color,
+  variant,
+  thick,
+  variants,
+  categories,
+  supportsLineWeight,
+}) => {
   const [copied, setCopied] = useState(false);
   const effectiveVariant = variant && variants.includes(variant) ? variant : variants[0];
 
   const handleCopy = async () => {
-    const code = `import { ${name} } from '@pop-ui/foundation';\n\n<${name} ${size && size !== defaultSize ? `size={${size}} ` : ''}${color && color !== ColorGray900 ? `color="${color}" ` : ''}${effectiveVariant && effectiveVariant !== 'line' ? `variant="${effectiveVariant}" ` : ''}/>`;
+    const code = `import { ${name} } from '@pop-ui/foundation';\n\n<${name} ${size && size !== defaultSize ? `size={${size}} ` : ''}${color && color !== ColorGray900 ? `color="${color}" ` : ''}${effectiveVariant && effectiveVariant !== 'line' ? `variant="${effectiveVariant}" ` : ''}${supportsLineWeight && thick ? 'thick ' : ''}/>`;
     try {
       await navigator.clipboard.writeText(code);
       setCopied(true);
@@ -131,6 +164,7 @@ const IconCard: React.FC<{
             size={size || defaultSize}
             color={color || ColorGray900}
             variant={effectiveVariant}
+            {...(supportsLineWeight ? { thick } : {})}
           />
         </Box>
         <Stack gap="xs" align="center">
@@ -174,11 +208,13 @@ export const AllIcons: StoryObj<{
   size: number;
   color: string;
   variant?: 'line' | 'filled';
+  thick?: boolean;
 }> = {
   args: {
     size: 24,
     color: '#333',
     variant: 'line',
+    thick: false,
   },
   argTypes: {
     size: {
@@ -196,6 +232,10 @@ export const AllIcons: StoryObj<{
       control: { type: 'select' },
       options: ['line', 'filled'],
       description: 'Icon variant style',
+    },
+    thick: {
+      control: { type: 'boolean' },
+      description: 'Use thick stroke for supported line icons',
     },
   },
   render: (args) => {
@@ -266,8 +306,10 @@ export const AllIcons: StoryObj<{
                 size={args.size}
                 color={args.color}
                 variant={args.variant}
+                thick={args.thick}
                 variants={icon.variants}
                 categories={icon.categories}
+                supportsLineWeight={icon.supportsLineWeight}
               />
             ))}
           </div>
