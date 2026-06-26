@@ -2,7 +2,7 @@ import { ColorGray900 } from '../tokens/colors';
 
 import type { IIconLineOnlyProps } from '../types/icon';
 
-export default function IconSwapVertical({
+export default function IconClockPlus({
   size = 24,
   color = ColorGray900,
   variant: _variant = 'line',
@@ -17,22 +17,29 @@ export default function IconSwapVertical({
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <path d="M7.00488 21L7.00488 3" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
       <path
-        d="M10 6L7 3L4 6"
+        d="M12.12 12V7.05005"
         stroke={color}
         strokeWidth="1.5"
+        strokeMiterlimit="10"
         strokeLinecap="round"
-        strokeLinejoin="round"
       />
-      <path d="M17.0049 3L17.0049 21" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
       <path
-        d="M20 18L17 21L14 18"
+        d="M16.17 12H12.12"
         stroke={color}
         strokeWidth="1.5"
+        strokeMiterlimit="10"
         strokeLinecap="round"
-        strokeLinejoin="round"
       />
+      <path
+        d="M21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21"
+        stroke={color}
+        strokeWidth="1.5"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+      />
+      <path d="M18 15V21" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M15 18L21 18" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   );
 }
