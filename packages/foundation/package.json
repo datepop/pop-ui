@@ -35,9 +35,10 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "yarn generate:native && vite build && yarn build:native",
+    "build": "yarn generate:native && yarn verify:native-api && vite build && yarn build:native",
     "build:native": "tsc -p tsconfig.native.json",
     "generate:native": "tsx scripts/generate-native.ts",
+    "verify:native-api": "tsx scripts/verify-native-api.ts",
     "typecheck": "tsc",
     "token-transform": "token-transformer token.json transformed-token.json --expandTypography --expandShadow --expandCompotision --expandBorder",
     "token-build": "style-dictionary build --config config.json"
