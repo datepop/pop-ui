@@ -6,17 +6,8 @@ import { useState } from 'react';
 
 import styles from './styles.module.scss';
 
-import type { SelectProps, CSSProperties } from '@mantine/core';
-
-export interface IDropdownProps extends SelectProps {
-  label?: string;
-  labelPosition?: 'top' | 'left';
-  size?: 'sm' | 'md' | 'lg';
-  tooltip?: string;
-  tooltipPosition?: 'top' | 'bottom' | 'left' | 'right';
-  description?: string;
-  errorMsg?: string;
-}
+import type { IDropdownProps } from './types';
+import type { CSSProperties } from '@mantine/core';
 
 export const Dropdown = ({
   label,

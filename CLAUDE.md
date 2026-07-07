@@ -40,6 +40,9 @@ Button, CalendarDatePicker, Checkbox, DatePicker, Dropdown, ImageInput, LottieIn
 - **type/union은 `T` 접두사**: `TButtonSize`, `TDayOfWeek`, `TImageInputAccept`.
 - Props 타입은 `IXxxProps` 형태로 전 컴포넌트 일관. 접두사 벗긴 이름(`ButtonProps`)은 쓰지 않는다.
 - 타입 정의 파일명은 **`types.ts`**(복수). `type.ts` 아님.
+- **prop 타입은 반드시 `types.ts`에 정의**한다. `index.tsx` 인라인 정의 금지 — 전 컴포넌트가 `types.ts`를 갖는다(단일 진실원천).
+- **prop 타입은 barrel(`components/index.ts`)에서 export**한다: `export { Xxx }` 바로 아래에 `export type { IXxxProps } from './Xxx/types';`. 런타임 const(예: `BUTTON_SIZES`)는 `export type`가 아닌 값 export로 분리한다.
+- **union인 prop 타입은 `TXxxProps`(T 접두사)로 둔다.** interface로 표현할 수 없어서다(예: TextField의 `TTextFieldProps`). 레포 eslint(`@typescript-eslint/naming-convention`)가 type alias에 `T`를 강제하므로 `IXxxProps` 별칭을 만들지 않는다.
 
 ### size
 
@@ -71,7 +74,7 @@ Button, CalendarDatePicker, Checkbox, DatePicker, Dropdown, ImageInput, LottieIn
 
 1. **Mantine에 있으면 래핑**(자체 구현 지양). compound 패턴은 사내 전용 맥락에선 지양 — 필요하면 Mantine이 제공하는 compound API를 노출.
 2. named export만. `export const X`.
-3. Props는 `IXxxProps`(interface), union은 `TXxx`. 타입은 `types.ts`에.
+3. Props는 `IXxxProps`(interface), union은 `TXxx`. 타입은 **반드시 `types.ts`에** 정의하고 **barrel에서 export**(`export type { IXxxProps } from './Xxx/types'`).
 4. `size` 노출 시 `sm|md|lg` 3단계. 폭 같은 다른 의미면 그 사실을 주석/문서에 명시.
 5. 자체 boolean은 `is*`, 상속 boolean은 그대로.
 6. 숫자 radius/색상은 foundation 토큰 상수 사용.
