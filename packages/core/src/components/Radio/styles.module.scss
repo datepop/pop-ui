@@ -1,25 +1,26 @@
 @use 'sass:map';
 @use '../shared/variables.scss' as *;
+@use '../shared/functions' as fn;
 
 $radio-config-small: (
   size: 18px,
-  label-font-size: 16px,
+  label-font-size: fn.font-size(500),
   label-font-weight: 500,
-  description-font-size: 12px,
+  description-font-size: fn.font-size(400),
   description-font-weight: 500,
 );
 $radio-config-medium: (
-  size: 24px,
-  label-font-size: 18px,
+  size: fn.spacing(600),
+  label-font-size: fn.font-size(550),
   label-font-weight: 600,
-  description-font-size: 14px,
+  description-font-size: fn.font-size(450),
   description-font-weight: 500,
 );
 $radio-config-large: (
-  size: 32px,
-  label-font-size: 24px,
+  size: fn.spacing(800),
+  label-font-size: fn.font-size(700),
   label-font-weight: 700,
-  description-font-size: 16px,
+  description-font-size: fn.font-size(500),
   description-font-weight: 500,
 );
 
@@ -32,7 +33,7 @@ $radio-config-large: (
   &:hover {
     background-color: $color-aqua-50;
     border-color: $color-aqua-300;
-    border-width: 2px;
+    border-width: fn.border-width(50);
   }
 
   &:checked {
@@ -43,7 +44,7 @@ $radio-config-large: (
   &:disabled {
     background-color: $color-gray-100;
     border-color: $color-gray-200;
-    border-width: 2px;
+    border-width: fn.border-width(50);
   }
 }
 

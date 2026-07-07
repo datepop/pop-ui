@@ -1,8 +1,9 @@
 @use '../shared/variables.scss' as *;
+@use '../shared/functions' as fn;
 
 @mixin TooltipText {
   font-family: Pretendard;
-  font-size: 14px;
+  font-size: fn.font-size(450);
   font-style: normal;
   font-weight: 500;
   line-height: 150%;
@@ -17,7 +18,7 @@
 .Tooltip__Title {
   @include TooltipText;
 
-  margin-bottom: 8px;
+  margin-bottom: fn.spacing(200);
 }
 
 .Tooltip__Content {

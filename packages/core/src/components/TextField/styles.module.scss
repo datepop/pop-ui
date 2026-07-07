@@ -1,9 +1,10 @@
 @use "../shared/variables.scss" as *;
+@use "../shared/functions" as fn;
 
 .TextField--LeftLabel {
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: fn.spacing(500);
 }
 
 .TextField--TopLabel {
@@ -13,29 +14,29 @@
 
 .TextField__Label--Small {
   font-family: Pretendard;
-  font-size: 14px;
+  font-size: fn.font-size(450);
   font-weight: 600;
   letter-spacing: 0;
   text-align: left;
-  margin: 8px 3px;
+  margin: fn.spacing(200) 3px;
 }
 
 .TextField__Label--Medium {
   font-family: Pretendard;
-  font-size: 16px;
+  font-size: fn.font-size(500);
   font-weight: 600;
   letter-spacing: 0;
   text-align: left;
-  margin: 12px 4px;
+  margin: fn.spacing(300) fn.spacing(100);
 }
 
 .TextField__Label--Large {
   font-family: Pretendard;
-  font-size: 18px;
+  font-size: fn.font-size(550);
   font-weight: 600;
   letter-spacing: 0;
   text-align: left;
-  margin: 16px 4px;
+  margin: fn.spacing(400) fn.spacing(100);
 }
 
 .TextField__Tooltip--Small {
@@ -44,8 +45,8 @@
 }
 
 .TextField__Tooltip--Medium {
-  width: 16px;
-  height: 16px;
+  width: fn.spacing(400);
+  height: fn.spacing(400);
 }
 
 .TextField__Tooltip--Large {
@@ -55,12 +56,12 @@
 
 @mixin BorderFocus {
   &:hover {
-    outline: 1.5px solid $color-aqua-300;
+    outline: fn.border-width(37) solid $color-aqua-300;
     border-color: transparent;
   }
 
   &:focus-within {
-    outline: 1.5px solid $color-aqua-500;
+    outline: fn.border-width(37) solid $color-aqua-500;
     border-color: transparent;
   }
 }
@@ -74,7 +75,7 @@
   bottom: -16px;
   right: 0;
   font-family: Pretendard;
-  font-size: 12px;
+  font-size: fn.font-size(400);
   font-weight: 500;
   letter-spacing: 0;
   text-align: right;
@@ -91,8 +92,8 @@
   input {
     height: 30px;
     min-height: 30px;
-    padding: 8px;
-    font-size: 14px;
+    padding: fn.spacing(200);
+    font-size: fn.font-size(450);
 
     @include BorderFocus;
   }
@@ -100,10 +101,10 @@
 
 .TextField--Medium {
   input {
-    height: 40px;
-    min-height: 40px;
-    padding: 12px;
-    font-size: 14px;
+    height: fn.spacing(1000);
+    min-height: fn.spacing(1000);
+    padding: fn.spacing(300);
+    font-size: fn.font-size(450);
 
     @include BorderFocus;
   }
@@ -113,19 +114,19 @@
   input {
     height: 50px;
     min-height: 50px;
-    padding: 16px;
-    font-size: 16px;
+    padding: fn.spacing(400);
+    font-size: fn.font-size(500);
 
     @include BorderFocus;
   }
 }
 
 .TextField__Description {
-  margin-top: 8px;
+  margin-top: fn.spacing(200);
 }
 
 .TextField__ErrorMsg {
-  margin-top: 4px;
+  margin-top: fn.spacing(100);
 }
 
 .TextField__ClearButton {

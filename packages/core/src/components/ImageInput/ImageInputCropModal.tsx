@@ -1,6 +1,7 @@
 'use client';
 
 import { Group, Stack } from '@mantine/core';
+import { ColorWhite } from '@pop-ui/foundation';
 import { useState } from 'react';
 import Cropper from 'react-easy-crop';
 
@@ -98,7 +99,7 @@ export function ImageInputCropModal({
       withCloseButton
     >
       <Stack>
-        <div style={{ position: 'relative', height: 320, background: '#fff' }}>
+        <div style={{ position: 'relative', height: 320, background: ColorWhite }}>
           <Cropper
             image={item?.url ?? ''}
             crop={crop}
@@ -110,7 +111,7 @@ export function ImageInputCropModal({
             onCropChange={setCrop}
             onZoomChange={setZoom}
             onCropComplete={(_, pixels) => setCroppedAreaPixels(pixels)}
-            style={{ containerStyle: { backgroundColor: '#ffffff' } }}
+            style={{ containerStyle: { backgroundColor: ColorWhite } }}
           />
         </div>
         <Group justify="flex-end" style={{ padding: '0 16px' }}>

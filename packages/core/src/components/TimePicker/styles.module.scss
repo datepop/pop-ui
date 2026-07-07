@@ -1,25 +1,26 @@
 @use 'sass:map';
 @use '../shared/variables.scss' as *;
+@use '../shared/functions' as fn;
 
 $time-picker-config-small: (
   height: 30px,
   min-height: 30px,
-  padding: 8px,
-  font-size: 14px,
+  padding: fn.spacing(200),
+  font-size: fn.font-size(450),
   line-height: 100%,
 );
 $time-picker-config-medium: (
-  height: 40px,
-  min-height: 40px,
-  padding: 12px,
-  font-size: 14px,
+  height: fn.spacing(1000),
+  min-height: fn.spacing(1000),
+  padding: fn.spacing(300),
+  font-size: fn.font-size(450),
   line-height: 100%,
 );
 $time-picker-config-large: (
   height: 50px,
   min-height: 50px,
-  padding: 16px,
-  font-size: 16px,
+  padding: fn.spacing(400),
+  font-size: fn.font-size(500),
   line-height: 100%,
 );
 
@@ -33,13 +34,13 @@ $time-picker-config-large: (
 
 @mixin TimePickerFocus {
   &:hover {
-    outline: 1.5px solid $color-aqua-300;
+    outline: fn.border-width(37) solid $color-aqua-300;
     border-color: transparent;
     background-color: $color-white;
   }
 
   &:focus-within {
-    outline: 1.5px solid $color-aqua-500;
+    outline: fn.border-width(37) solid $color-aqua-500;
     border-color: transparent;
   }
 }

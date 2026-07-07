@@ -68,7 +68,8 @@ Button, CalendarDatePicker, Checkbox, DatePicker, Dropdown, ImageInput, LottieIn
 
 - 숫자 radius는 매직넘버 대신 `@pop-ui/foundation`의 `BorderRadiusXXX` 상수를 쓴다: `BorderRadius0=0, 50=2, 100=4, 150=6, 200=8, 300=12, 400=16, 500=20, 1000=9999`(px 숫자).
 - 색상도 하드코딩 대신 `ColorGray600` 같은 foundation 상수.
-- 토큰은 `packages/foundation/token.json`이 원본, `config.js`(style-dictionary)가 SCSS 변수와 JS 상수를 생성. **생성 파일(`src/tokens/*.ts`)은 직접 편집 금지**, `yarn token-build`로 재생성.
+- **SCSS에서 px 직접값 대신 함수를 쓴다**: `fn.spacing($step)`(패딩/마진/gap/폭/높이), `fn.font-size($step)`(글꼴 크기), `fn.border-width($step)`(선/아웃라인 두께). `@use "../shared/functions" as fn;` 후 `padding: fn.spacing(400)`(=16px). 스텝→값은 산술이 아니라 lookup(예: `border-width(37)`=1.5px, `font-size(450)`=14px) — 함수가 잘못된 스텝에 `@error`를 낸다. 스케일에 없는 값(예: `13px`, `30px`)은 px 그대로 둔다.
+- 토큰은 `packages/foundation/token.json`이 원본, `config.js`(style-dictionary)가 SCSS 변수·map과 JS 상수를 생성. **생성 파일(`src/tokens/*.ts`, `shared/_*-map.scss`)은 직접 편집 금지**, `yarn token-build`로 재생성. `shared/_functions.scss`는 그 map을 px로 변환하는 수동 파일.
 
 ## 신규 컴포넌트 체크리스트
 
@@ -77,7 +78,7 @@ Button, CalendarDatePicker, Checkbox, DatePicker, Dropdown, ImageInput, LottieIn
 3. Props는 `IXxxProps`(interface), union은 `TXxx`. 타입은 **반드시 `types.ts`에** 정의하고 **barrel에서 export**(`export type { IXxxProps } from './Xxx/types'`).
 4. `size` 노출 시 `sm|md|lg` 3단계. 폭 같은 다른 의미면 그 사실을 주석/문서에 명시.
 5. 자체 boolean은 `is*`, 상속 boolean은 그대로.
-6. 숫자 radius/색상은 foundation 토큰 상수 사용.
+6. 숫자 radius/색상은 foundation 토큰 상수 사용. SCSS의 px는 `fn.spacing()`/`fn.font-size()`/`fn.border-width()` 함수(스케일에 없는 값만 raw px).
 
 ## 검증
 
