@@ -1,0 +1,32 @@
+@use 'sass:map';
+@use 'spacing-map' as spacing-map;
+@use 'font-size-map' as font-size-map;
+@use 'border-width-map' as border-width-map;
+
+// unitless 토큰 map을 px 값으로 변환하는 함수들.
+// 키는 style-dictionary가 생성한 풀네임(spacing-400, font-size-500, border-width-37).
+// step만 넘기면(예: spacing(400)) 내부에서 풀네임 키를 조립한다.
+
+@function spacing($step) {
+  $key: 'spacing-#{$step}';
+  @if not map.has-key(spacing-map.$spacing-tokens, $key) {
+    @error 'Unknown spacing token: #{$key}';
+  }
+  @return #{map.get(spacing-map.$spacing-tokens, $key)}px;
+}
+
+@function font-size($step) {
+  $key: 'font-size-#{$step}';
+  @if not map.has-key(font-size-map.$font-size-tokens, $key) {
+    @error 'Unknown font-size token: #{$key}';
+  }
+  @return #{map.get(font-size-map.$font-size-tokens, $key)}px;
+}
+
+@function border-width($step) {
+  $key: 'border-width-#{$step}';
+  @if not map.has-key(border-width-map.$border-width-tokens, $key) {
+    @error 'Unknown border-width token: #{$key}';
+  }
+  @return #{map.get(border-width-map.$border-width-tokens, $key)}px;
+}
