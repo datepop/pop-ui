@@ -3,12 +3,7 @@
 import { Modal as MantineModal } from '@mantine/core';
 import { ColorGray600, ColorGray900, IconX } from '@pop-ui/foundation';
 
-import type { ModalProps as MantineModalProps } from '@mantine/core';
-
-export interface IModalProps extends MantineModalProps {
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-  width?: number;
-}
+import type { IModalProps } from './types';
 
 export const Modal = ({ size = 'md', width, withCloseButton = false, ...props }: IModalProps) => {
   let sizeNumber = 768;

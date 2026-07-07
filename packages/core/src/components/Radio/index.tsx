@@ -4,7 +4,7 @@ import { Radio as MantineRadio } from '@mantine/core';
 
 import styles from './styles.module.scss';
 
-import type { RadioProps as MantineRadioProps } from '@mantine/core';
+import type { IRadioProps } from './types';
 
 const RADIO_CLASS_NAME_BY_SIZE = {
   sm: styles['Radio--Small'],
@@ -17,10 +17,6 @@ const RADIO_DIMENSION_BY_SIZE = {
   md: 24,
   lg: 32,
 } as const;
-
-export interface IRadioProps extends MantineRadioProps {
-  size?: 'sm' | 'md' | 'lg';
-}
 
 export const Radio = ({ size = 'md', ...props }: IRadioProps) => {
   const sizeClassName = RADIO_CLASS_NAME_BY_SIZE[size];

@@ -7,11 +7,7 @@ import { useRef } from 'react';
 
 import styles from './styles.module.scss';
 
-import type { TimeInputProps } from '@mantine/dates';
-
-export interface ITimePickerProps extends TimeInputProps {
-  size?: 'sm' | 'md' | 'lg';
-}
+import type { ITimePickerProps } from './types';
 
 export const TimePicker = ({ size = 'md', ...props }: ITimePickerProps) => {
   const timeInputRef = useRef<HTMLInputElement>(null);

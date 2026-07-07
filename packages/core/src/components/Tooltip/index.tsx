@@ -4,12 +4,7 @@ import { Tooltip as MantineTooltip } from '@mantine/core';
 
 import styles from './styles.module.scss';
 
-import type { TooltipProps as MantineTooltipProps } from '@mantine/core';
-
-export interface ITooltipProps extends MantineTooltipProps {
-  title?: string;
-  content: string;
-}
+import type { ITooltipProps } from './types';
 
 export const Tooltip = ({
   title,
