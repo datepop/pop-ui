@@ -1,6 +1,7 @@
 'use client';
 
 import { Switch } from '@mantine/core';
+import { ColorAqua500 } from '@pop-ui/foundation';
 import { useCallback, useState } from 'react';
 
 import styles from './styles.module.scss';
@@ -45,8 +46,8 @@ export const Toggle = ({
       onChange={onChangeHandler}
       styles={() => ({
         track: {
-          backgroundColor: !disabled && isChecked ? '#0fd3d8 !important' : undefined,
-          borderColor: !disabled && isChecked ? '#0fd3d8 !important' : undefined,
+          backgroundColor: !disabled && isChecked ? `${ColorAqua500} !important` : undefined,
+          borderColor: !disabled && isChecked ? `${ColorAqua500} !important` : undefined,
           width: trackWidth,
         },
       })}
