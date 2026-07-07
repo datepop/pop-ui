@@ -104,5 +104,3 @@ toast.hide = (id: string): void => {
 toast.clean = (): void => {
   notifications.clean();
 };
-
-export default toast;

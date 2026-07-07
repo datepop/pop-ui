@@ -355,5 +355,3 @@ export const ImageInput = ({
     </div>
   );
 };
-
-export default ImageInput;

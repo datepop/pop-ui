@@ -339,5 +339,3 @@ export const LottieInput = ({
     </div>
   );
 };
-
-export default LottieInput;

@@ -8,7 +8,7 @@ import { useMap } from './useMap';
 
 import type { IMapProps } from './types';
 
-const Map = ({ options, onLoad }: IMapProps) => {
+export const Map = ({ options, onLoad }: IMapProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const styleRef = useRef<HTMLStyleElement | null>(null);
   const { createMap } = useNaverMap();
@@ -116,5 +116,3 @@ const Map = ({ options, onLoad }: IMapProps) => {
 };
 
 Map.displayName = 'Map';
-
-export default Map;

@@ -45,5 +45,3 @@ export const TimePicker = ({ size = 'md', ...props }: ITimePickerProps) => {
     />
   );
 };
-
-export default TimePicker;
