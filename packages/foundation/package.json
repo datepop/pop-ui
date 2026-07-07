@@ -40,7 +40,7 @@
     "generate:native": "tsx scripts/generate-native.ts",
     "typecheck": "tsc",
     "token-transform": "token-transformer token.json transformed-token.json --expandTypography --expandShadow --expandCompotision --expandBorder",
-    "token-build": "style-dictionary build --config config.json"
+    "token-build": "style-dictionary build --config config.js"
   },
   "peerDependencies": {
     "@mantine/core": "^8.3.6",
