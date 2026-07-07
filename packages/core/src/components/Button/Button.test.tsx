@@ -25,7 +25,7 @@ vi.mock('@mantine/core', () => ({
 
 import { Button } from '.';
 import { BUTTON_LOADER_SIZES } from './style';
-import { BUTTON_SIZES, BUTTON_VARIANTS } from './type';
+import { BUTTON_SIZES, BUTTON_VARIANTS } from './types';
 
 import type { Root } from 'react-dom/client';
 

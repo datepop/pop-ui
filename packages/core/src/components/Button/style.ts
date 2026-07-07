@@ -1,4 +1,4 @@
-import type { TButtonSize } from './type';
+import type { TButtonSize } from './types';
 
 export const BUTTON_LOADER_SIZES: Record<TButtonSize, number> = {
   sm: 14,

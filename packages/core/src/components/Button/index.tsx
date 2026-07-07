@@ -5,7 +5,7 @@ import { Button as MantineButton, Loader } from '@mantine/core';
 import { BUTTON_LOADER_SIZES } from './style';
 import styles from './styles.module.scss';
 
-import type { IButtonProps } from './type';
+import type { IButtonProps } from './types';
 import type {
   ButtonProps as MantineButtonProps,
   ButtonStylesNames,
