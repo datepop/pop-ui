@@ -36,5 +36,3 @@ export const Radio = ({ size = 'md', ...props }: IRadioProps) => {
     />
   );
 };
-
-export default Radio;

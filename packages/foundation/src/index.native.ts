@@ -1,4 +1,5 @@
 export * from './tokens/colors';
+export * from './tokens/radius';
 
 export type {
   IIconProps,

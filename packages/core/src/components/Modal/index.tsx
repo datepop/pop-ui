@@ -51,5 +51,3 @@ export const Modal = ({ size = 'md', width, withCloseButton = false, ...props }:
     />
   );
 };
-
-export default Modal;

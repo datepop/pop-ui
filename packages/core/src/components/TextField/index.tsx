@@ -191,5 +191,3 @@ export const TextField = (allProps: TTextFieldProps) => {
     </div>
   );
 };
-
-export default TextField;

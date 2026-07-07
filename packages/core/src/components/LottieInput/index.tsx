@@ -21,14 +21,14 @@ import { TileShell } from '../shared/MultiItemInput/TileShell';
 import { usePositionGrid } from '../shared/MultiItemInput/usePositionGrid';
 import { toast } from '../Toast';
 
-import type { LottieInputItem, LottieInputProps } from './types';
+import type { ILottieInputItem, ILottieInputProps } from './types';
 
 // ─── LottieTile ───────────────────────────────────────────────────────────────
 
 const LOTTIE_ACCEPT = { 'application/json': ['.json'] };
 
 interface ILottieTileProps {
-  item: LottieInputItem;
+  item: ILottieInputItem;
   sortableId?: string;
   totalCount: number;
   width: number;
@@ -37,7 +37,7 @@ interface ILottieTileProps {
   isLoading?: boolean;
   canDelete: boolean;
   hasLink: boolean;
-  onLinkClick?: (item: LottieInputItem) => void;
+  onLinkClick?: (item: ILottieInputItem) => void;
   onDelete: (id: string) => void;
 }
 
@@ -145,7 +145,7 @@ export const LottieInput = ({
   readOnly,
   gap = 8,
   canDelete = true,
-}: LottieInputProps) => {
+}: ILottieInputProps) => {
   if (
     process.env.NODE_ENV !== 'production' &&
     length != null &&
@@ -339,5 +339,3 @@ export const LottieInput = ({
     </div>
   );
 };
-
-export default LottieInput;

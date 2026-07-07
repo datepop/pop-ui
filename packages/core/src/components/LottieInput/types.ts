@@ -39,8 +39,8 @@ interface ILottieInputProps {
 }
 
 export type {
-  ILottieInputItem as LottieInputItem,
-  ILottieInputChangeMeta as LottieInputChangeMeta,
-  ILottieInputProps as LottieInputProps,
-  TLottieInputChangeAction as LottieInputChangeAction,
+  ILottieInputItem,
+  ILottieInputChangeMeta,
+  ILottieInputProps,
+  TLottieInputChangeAction,
 };

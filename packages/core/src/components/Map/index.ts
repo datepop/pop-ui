@@ -1,4 +1,4 @@
-export { default as Map } from './Map';
+export { Map } from './Map';
 export { NaverMapProvider, useNaverMap } from './NaverMapContext';
 export { useMap } from './useMap';
 export { useLocation } from './useLocation';

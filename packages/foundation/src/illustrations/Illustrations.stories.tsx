@@ -1,6 +1,8 @@
 import { Stack, Text, Paper, Box, TextInput, Button, Group, Select } from '@mantine/core';
 import React, { useState } from 'react';
+
 import { illustrationMetadata, IllustrationCategory } from './metadata';
+
 import type { IIllustrationProps } from '../types/illustration';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
@@ -128,8 +130,7 @@ export const AllIllustrations: StoryObj<{ size: number }> = {
     const filtered = illustrationList.filter((item) => {
       const matchSearch = item.name.toLowerCase().includes(searchTerm.toLowerCase());
       const matchCategory =
-        !categoryFilter ||
-        (item.categories as readonly string[]).includes(categoryFilter);
+        !categoryFilter || (item.categories as readonly string[]).includes(categoryFilter);
       return matchSearch && matchCategory;
     });
 

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { LottieInput } from '.';
 import successCheckJson from './example_lottie.json';
 
-import type { LottieInputItem } from './types';
+import type { ILottieInputItem } from './types';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const stackStyle = {
@@ -15,7 +15,7 @@ const stackStyle = {
 
 const SAMPLE_ANIMATION_DATA = successCheckJson as Record<string, unknown>;
 
-const SAMPLE_ITEMS: LottieInputItem[] = [
+const SAMPLE_ITEMS: ILottieInputItem[] = [
   { id: 'item-1', animationData: SAMPLE_ANIMATION_DATA },
   { id: 'item-2', animationData: SAMPLE_ANIMATION_DATA },
 ];
@@ -52,7 +52,7 @@ export const Playground: StoryObj<typeof LottieInput> = {
 
 export const Interactive: StoryObj<typeof LottieInput> = {
   render: () => {
-    const [items, setItems] = useState<LottieInputItem[]>(SAMPLE_ITEMS.slice(0, 1));
+    const [items, setItems] = useState<ILottieInputItem[]>(SAMPLE_ITEMS.slice(0, 1));
 
     return (
       <div style={stackStyle}>

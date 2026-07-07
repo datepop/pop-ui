@@ -1,6 +1,7 @@
 'use client';
 
 import { SegmentedControl } from '@mantine/core';
+import { BorderRadius150 } from '@pop-ui/foundation';
 
 import styles from './styles.module.scss';
 
@@ -11,7 +12,11 @@ export interface ISegmentButtonProps extends SegmentedControlProps {
   radius?: number | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 }
 
-export const SegmentButton = ({ size = 'md', radius = 6, ...props }: ISegmentButtonProps) => {
+export const SegmentButton = ({
+  size = 'md',
+  radius = BorderRadius150,
+  ...props
+}: ISegmentButtonProps) => {
   let sizeStyle = styles['SegmentButton--Medium'];
   if (size === 'sm') {
     sizeStyle = styles['SegmentButton--Small'];
@@ -29,5 +34,3 @@ export const SegmentButton = ({ size = 'md', radius = 6, ...props }: ISegmentBut
     />
   );
 };
-
-export default SegmentButton;
