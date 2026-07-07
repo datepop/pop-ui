@@ -1,7 +1,8 @@
 @use '../shared/variables.scss' as *;
+@use '../shared/functions' as fn;
 
 .Tab__TitleList {
-  border-bottom: 2px solid $color-gray-100;
+  border-bottom: fn.border-width(50) solid $color-gray-100;
 
   button {
     margin-bottom: 7px;
@@ -9,14 +10,14 @@
     align-items: center;
     text-align: center;
     font-family: Pretendard;
-    font-size: 18px;
+    font-size: fn.font-size(550);
     font-style: normal;
     font-weight: 700;
     height: 50px;
     color: $color-gray-400;
     border-radius: 6px;
     border: none;
-    padding: 0 20px;
+    padding: 0 fn.spacing(500);
     cursor: pointer;
 
     &:hover {
@@ -39,7 +40,7 @@
         bottom: -9px;
         left: 0;
         width: 100%;
-        border-bottom: 2px solid $color-aqua-600;
+        border-bottom: fn.border-width(50) solid $color-aqua-600;
         border-color: $color-aqua-600;
       }
     }
