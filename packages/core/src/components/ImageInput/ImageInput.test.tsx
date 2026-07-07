@@ -131,7 +131,7 @@ vi.mock('./ImageInputCropModal', () => ({
 
 import { ImageInput } from '.';
 
-import type { ImageInputItem } from './types';
+import type { IImageInputItem } from './types';
 import type { Root } from 'react-dom/client';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -158,7 +158,7 @@ const cleanupRenderedApp = ({ container, root }: IRenderedApp) => {
   container.remove();
 };
 
-const makeItem = (id: string, url = `blob:mock/${id}`): ImageInputItem => ({ id, url });
+const makeItem = (id: string, url = `blob:mock/${id}`): IImageInputItem => ({ id, url });
 
 // ─── Tests ────────────────────────────────────────────────────────────────────
 

@@ -4,7 +4,7 @@ import { notifications } from '@mantine/notifications';
 
 import styles from './styles.module.scss';
 
-import type { IToastOptions, TToastInput } from './type';
+import type { IToastOptions, TToastInput } from './types';
 
 interface IToastRuntime {
   (input: TToastInput): void;
@@ -104,5 +104,3 @@ toast.hide = (id: string): void => {
 toast.clean = (): void => {
   notifications.clean();
 };
-
-export default toast;

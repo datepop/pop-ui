@@ -4,7 +4,7 @@ import { IconMap, IconMapMarker, ColorAqua500, ColorGray800 } from '@pop-ui/foun
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { usePopUIConfig } from '../../theme';
-import Button from '../Button';
+import { Button } from '../Button';
 import { Map, NaverMapProvider } from '../Map';
 import { toast } from '../Toast';
 import styles from './styles.module.scss';
@@ -183,5 +183,3 @@ export const MapInfo = ({
     </div>
   );
 };
-
-export default MapInfo;

@@ -1,7 +1,7 @@
 import { Button } from './';
-import { BUTTON_SIZES, BUTTON_VARIANTS } from './type';
+import { BUTTON_SIZES, BUTTON_VARIANTS } from './types';
 
-import type { IButtonProps, TButtonVariant } from './type';
+import type { IButtonProps, TButtonVariant } from './types';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const VARIANT_LABELS: Record<TButtonVariant, string> = {

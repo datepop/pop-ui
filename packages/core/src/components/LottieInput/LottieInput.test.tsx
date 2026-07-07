@@ -100,7 +100,7 @@ vi.mock('../Toast', () => ({
 import { LottieInput } from '.';
 import { toast } from '../Toast';
 
-import type { LottieInputItem } from './types';
+import type { ILottieInputItem } from './types';
 import type { Root } from 'react-dom/client';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -129,7 +129,7 @@ const cleanupRenderedApp = ({ container, root }: IRenderedApp) => {
 
 const VALID_LOTTIE = { v: '5', fr: 30, ip: 0, op: 60, w: 400, h: 400, layers: [] };
 
-const makeItem = (id: string, overrides: Partial<LottieInputItem> = {}): LottieInputItem => ({
+const makeItem = (id: string, overrides: Partial<ILottieInputItem> = {}): ILottieInputItem => ({
   id,
   animationData: VALID_LOTTIE,
   ...overrides,

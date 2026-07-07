@@ -23,9 +23,9 @@ import { SortableEmptySlot } from '../shared/MultiItemInput/SortableEmptySlot';
 import { TileShell } from '../shared/MultiItemInput/TileShell';
 import { usePositionGrid } from '../shared/MultiItemInput/usePositionGrid';
 
-import type { ImageInputAccept, ImageInputItem, ImageInputProps } from './types';
+import type { TImageInputAccept, IImageInputItem, IImageInputProps } from './types';
 
-function toInputAccept(accept?: ImageInputAccept): string {
+function toInputAccept(accept?: TImageInputAccept): string {
   if (!accept) return 'image/*';
   return accept.join(',');
 }
@@ -33,22 +33,22 @@ function toInputAccept(accept?: ImageInputAccept): string {
 // ─── Sortable image tile ──────────────────────────────────────────────────────
 
 interface ITileProps {
-  item: ImageInputItem;
+  item: IImageInputItem;
   sortableId?: string;
   index: number;
   totalCount: number;
   width: number;
   height: number;
-  accept?: ImageInputAccept;
+  accept?: TImageInputAccept;
   canDelete: boolean;
   hasLink: boolean;
   hasEdit: boolean;
   readOnly: boolean;
   isLoading?: boolean;
-  onLinkClick?: (item: ImageInputItem) => void;
+  onLinkClick?: (item: IImageInputItem) => void;
   onDelete: (id: string) => void;
   onReplace: (id: string, file: File) => void;
-  onEdit: (item: ImageInputItem) => void;
+  onEdit: (item: IImageInputItem) => void;
 }
 
 function ImageTile({
@@ -89,7 +89,7 @@ function ImageTile({
       onTileClick={() => fileInputRef.current?.click()}
       onFileDrop={(file) => {
         if (accept) {
-          if (!accept.includes(file.type as ImageInputAccept[number])) return;
+          if (!accept.includes(file.type as TImageInputAccept[number])) return;
         } else {
           if (!file.type.startsWith('image/')) return;
         }
@@ -150,7 +150,7 @@ export const ImageInput = ({
   isLoading,
   readOnly,
   gap = 8,
-}: ImageInputProps) => {
+}: IImageInputProps) => {
   if (
     process.env.NODE_ENV !== 'production' &&
     length != null &&
@@ -173,7 +173,7 @@ export const ImageInput = ({
   } = usePositionGrid({ value, length, minLength, maxLength, onChange });
 
   const isError = !!errorMsg;
-  const [editingItem, setEditingItem] = useState<ImageInputItem | null>(null);
+  const [editingItem, setEditingItem] = useState<IImageInputItem | null>(null);
 
   // Revoke all blob URLs on unmount
   const latestValueRef = useRef(value);
@@ -355,5 +355,3 @@ export const ImageInput = ({
     </div>
   );
 };
-
-export default ImageInput;

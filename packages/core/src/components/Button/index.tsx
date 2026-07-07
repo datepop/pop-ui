@@ -5,7 +5,7 @@ import { Button as MantineButton, Loader } from '@mantine/core';
 import { BUTTON_LOADER_SIZES } from './style';
 import styles from './styles.module.scss';
 
-import type { IButtonProps } from './type';
+import type { IButtonProps } from './types';
 import type {
   ButtonProps as MantineButtonProps,
   ButtonStylesNames,
@@ -93,7 +93,8 @@ export function Button({
   variant = 'primary',
   type = 'button',
   isLoading = false,
-  hideLabelOnLoading = false,
+  loading = false,
+  hideLabelOnLoading = true,
   disabled = false,
   className,
   classNames,
@@ -101,7 +102,9 @@ export function Button({
   ...props
 }: IButtonProps) {
   const loaderSize = BUTTON_LOADER_SIZES[size];
-  const isButtonLoading = isLoading;
+  // Mantine `loading`도 로딩 트리거로 받되, unstyled 모드에서 깨지는 Mantine 로더로 전달되지 않도록
+  // 구조분해로 가로채 자체 Loader만 렌더한다.
+  const isButtonLoading = isLoading || loading;
   const isDisabled = disabled || isButtonLoading;
 
   return (
@@ -126,5 +129,3 @@ export function Button({
     </MantineButton>
   );
 }
-
-export default Button;

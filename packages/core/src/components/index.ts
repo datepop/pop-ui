@@ -1,4 +1,4 @@
-export { default as Button } from './Button';
+export { Button } from './Button';
 export { Checkbox } from './Checkbox';
 export { CalendarDatePicker } from './CalendarDatePicker';
 export type { ICalendarDatePickerProps, TDayOfWeek } from './CalendarDatePicker';
@@ -6,18 +6,18 @@ export { DatePicker } from './DatePicker';
 export { Dropdown } from './Dropdown';
 export { ImageInput } from './ImageInput';
 export type {
-  ImageInputAccept,
-  ImageInputChangeAction,
-  ImageInputChangeMeta,
-  ImageInputItem,
-  ImageInputProps,
+  TImageInputAccept,
+  TImageInputChangeAction,
+  IImageInputChangeMeta,
+  IImageInputItem,
+  IImageInputProps,
 } from './ImageInput/types';
 export { LottieInput } from './LottieInput';
 export type {
-  LottieInputChangeAction,
-  LottieInputChangeMeta,
-  LottieInputItem,
-  LottieInputProps,
+  TLottieInputChangeAction,
+  ILottieInputChangeMeta,
+  ILottieInputItem,
+  ILottieInputProps,
 } from './LottieInput/types';
 export { Modal } from './Modal';
 export { Pagination } from './Pagination';

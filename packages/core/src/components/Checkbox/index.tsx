@@ -40,5 +40,3 @@ export const Checkbox = ({ size = 'md', ...props }: ICheckboxProps) => {
     />
   );
 };
-
-export default Checkbox;

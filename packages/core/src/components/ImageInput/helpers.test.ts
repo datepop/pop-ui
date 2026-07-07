@@ -12,7 +12,7 @@ import {
   revokeItemUrls,
 } from './helpers';
 
-import type { ImageInputItem } from './types';
+import type { IImageInputItem } from './types';
 
 const mockCreateObjectURL = vi.fn(
   (file: Blob | MediaSource) => `blob:mock/${file instanceof File ? file.name : 'blob'}`,
@@ -30,7 +30,7 @@ function makeFile(name: string): File {
   return new File(['data'], name, { type: 'image/jpeg' });
 }
 
-function makeItem(id: string, url = `blob:mock/${id}.jpg`): ImageInputItem {
+function makeItem(id: string, url = `blob:mock/${id}.jpg`): IImageInputItem {
   return { id, url, file: makeFile(`${id}.jpg`) };
 }
 
