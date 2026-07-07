@@ -4,3 +4,4 @@ package.json
 package-lock.json
 coverage
 storybook-static
+packages/foundation/src/tokens

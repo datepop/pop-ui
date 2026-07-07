@@ -36,5 +36,3 @@ export const Tab = ({ tabList = [], containerPaddingTop, ...props }: ITabProps) 
     </Tabs>
   );
 };
-
-export default Tab;
