@@ -261,10 +261,10 @@ export const BehaviorPreserved_CustomClassNameMerging: StoryObj<typeof CalendarD
   args: {
     type: 'range',
     highlightToday: false,
-    className: customStyles.customWrapper,
+    className: customStyles.Custom__Wrapper,
     classNames: {
-      day: customStyles.customDay,
-      weekday: customStyles.customWeekday,
+      day: customStyles.Custom__Day,
+      weekday: customStyles.Custom__Weekday,
     },
   },
   parameters: {

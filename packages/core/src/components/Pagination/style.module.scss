@@ -1,16 +1,17 @@
 @use '../shared/variables.scss' as *;
 @use '../shared/font.css' as *;
+@use '../shared/functions' as fn;
 
 @mixin NumberBox {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-width: 40px;
-  height: 40px;
+  min-width: fn.spacing(1000);
+  height: fn.spacing(1000);
   border-radius: 8px;
   gap: 10px;
   font-family: Pretendard;
-  font-size: 14px;
+  font-size: fn.font-size(450);
   font-weight: 400;
   letter-spacing: 0;
   text-align: center;
@@ -52,9 +53,9 @@
 .Pagination__Arrow {
   @include NumberBox;
 
-  border: 1px solid $color-gray-400;
-  margin: 0 8px;
-  width: 40px;
-  height: 40px;
+  border: fn.border-width(25) solid $color-gray-400;
+  margin: 0 fn.spacing(200);
+  width: fn.spacing(1000);
+  height: fn.spacing(1000);
   background-color: $color-white;
 }

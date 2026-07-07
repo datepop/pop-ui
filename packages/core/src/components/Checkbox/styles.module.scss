@@ -1,10 +1,11 @@
 @use "../shared/variables.scss" as *;
+@use "../shared/functions" as fn;
 
 @mixin CheckboxColor {
   &:hover {
     background-color: $color-aqua-50;
     border-color: $color-aqua-300;
-    border-width: 2px;
+    border-width: fn.border-width(50);
   }
 
   &:checked {
@@ -15,7 +16,7 @@
   &:disabled {
     background-color: $color-gray-100;
     border-color: $color-gray-200;
-    border-width: 2px;
+    border-width: fn.border-width(50);
   }
 }
 
@@ -31,7 +32,7 @@
     height: 18px;
     color: $color-gray-900;
     font-family: Pretendard;
-    font-size: 16px;
+    font-size: fn.font-size(500);
     font-style: normal;
     font-weight: 500;
     display: flex;
@@ -41,7 +42,7 @@
   div {
     color: $color-gray-600;
     font-family: Pretendard;
-    font-size: 12px;
+    font-size: fn.font-size(400);
     font-style: normal;
     font-weight: 500;
   }
@@ -51,15 +52,15 @@
   input {
     @include CheckboxColor;
 
-    width: 24px;
-    height: 24px;
+    width: fn.spacing(600);
+    height: fn.spacing(600);
   }
 
   label {
-    height: 24px;
+    height: fn.spacing(600);
     color: $color-gray-900;
     font-family: Pretendard;
-    font-size: 18px;
+    font-size: fn.font-size(550);
     font-style: normal;
     font-weight: 600;
     display: flex;
@@ -69,7 +70,7 @@
   div {
     color: $color-gray-600;
     font-family: Pretendard;
-    font-size: 14px;
+    font-size: fn.font-size(450);
     font-style: normal;
     font-weight: 500;
   }
@@ -79,15 +80,15 @@
   input {
     @include CheckboxColor;
 
-    width: 32px;
-    height: 32px;
+    width: fn.spacing(800);
+    height: fn.spacing(800);
   }
 
   label {
-    height: 32px;
+    height: fn.spacing(800);
     color: $color-gray-900;
     font-family: Pretendard;
-    font-size: 24px;
+    font-size: fn.font-size(700);
     font-style: normal;
     font-weight: 700;
     display: flex;
@@ -97,7 +98,7 @@
   div {
     color: $color-gray-600;
     font-family: Pretendard;
-    font-size: 16px;
+    font-size: fn.font-size(500);
     font-style: normal;
     font-weight: 500;
   }

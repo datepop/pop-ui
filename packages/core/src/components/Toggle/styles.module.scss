@@ -1,11 +1,12 @@
 @use "../shared/variables.scss" as *;
+@use "../shared/functions" as fn;
 
 .Toggle--Small {
   label {
     height: 18px;
     color: $color-gray-900;
     font-family: Pretendard;
-    font-size: 16px;
+    font-size: fn.font-size(500);
     font-style: normal;
     font-weight: 500;
     display: flex;
@@ -15,7 +16,7 @@
   div {
     color: $color-gray-600;
     font-family: Pretendard;
-    font-size: 12px;
+    font-size: fn.font-size(400);
     font-style: normal;
     font-weight: 500;
   }
@@ -23,10 +24,10 @@
 
 .Toggle--Medium {
   label {
-    height: 24px;
+    height: fn.spacing(600);
     color: $color-gray-900;
     font-family: Pretendard;
-    font-size: 18px;
+    font-size: fn.font-size(550);
     font-style: normal;
     font-weight: 600;
     display: flex;
@@ -36,7 +37,7 @@
   div {
     color: $color-gray-600;
     font-family: Pretendard;
-    font-size: 14px;
+    font-size: fn.font-size(450);
     font-style: normal;
     font-weight: 500;
   }
@@ -44,10 +45,10 @@
 
 .Toggle--Large {
   label {
-    height: 32px;
+    height: fn.spacing(800);
     color: $color-gray-900;
     font-family: Pretendard;
-    font-size: 24px;
+    font-size: fn.font-size(700);
     font-style: normal;
     font-weight: 700;
     display: flex;
@@ -57,7 +58,7 @@
   div {
     color: $color-gray-600;
     font-family: Pretendard;
-    font-size: 16px;
+    font-size: fn.font-size(500);
     font-style: normal;
     font-weight: 500;
   }
