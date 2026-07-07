@@ -5,15 +5,7 @@ import { useEffect, useState } from 'react';
 
 import style from './style.module.scss';
 
-import type { HTMLAttributes } from 'react';
-
-export interface IPaginationProps extends HTMLAttributes<HTMLDivElement> {
-  currentPageIdx: number;
-  rowsPerPage?: number;
-  totalLength?: number;
-  paginationSize?: number;
-  onPageChange?: (e: number) => void;
-}
+import type { IPaginationProps } from './types';
 
 export const Pagination = ({
   currentPageIdx,

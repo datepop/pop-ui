@@ -6,30 +6,8 @@ import { useCallback, useState } from 'react';
 
 import styles from './styles.module.scss';
 
+import type { ICommonTextFieldProps, TTextFieldProps } from './types';
 import type { InputProps, TextareaProps } from '@mantine/core';
-
-interface ICommonTextFieldProps {
-  label?: string;
-  labelPosition?: 'top' | 'left';
-  size?: 'sm' | 'md' | 'lg';
-  required?: boolean;
-  tooltip?: string;
-  tooltipPosition?: 'top' | 'bottom' | 'left' | 'right';
-  description?: string;
-  errorMsg?: string;
-  maxTextCount?: number;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  onClear?: () => void;
-}
-
-export type TTextFieldProps = ICommonTextFieldProps &
-  (
-    | ({ textarea?: false } & Omit<InputProps, keyof ICommonTextFieldProps | 'vars'>)
-    | ({ textarea: true; minRows?: number } & Omit<
-        TextareaProps,
-        keyof ICommonTextFieldProps | 'vars'
-      >)
-  );
 
 const getTextLength = (value: unknown): number => {
   if (typeof value === 'string') {

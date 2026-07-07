@@ -5,12 +5,7 @@ import { BorderRadius150 } from '@pop-ui/foundation';
 
 import styles from './styles.module.scss';
 
-import type { SegmentedControlProps } from '@mantine/core';
-
-export interface ISegmentButtonProps extends SegmentedControlProps {
-  size?: 'sm' | 'md' | 'lg';
-  radius?: number | 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-}
+import type { ISegmentButtonProps } from './types';
 
 export const SegmentButton = ({
   size = 'md',

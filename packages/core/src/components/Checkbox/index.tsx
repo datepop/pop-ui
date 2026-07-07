@@ -4,7 +4,7 @@ import { Checkbox as MantineCheckbox } from '@mantine/core';
 
 import styles from './styles.module.scss';
 
-import type { CheckboxProps as MantineCheckboxProps } from '@mantine/core';
+import type { ICheckboxProps } from './types';
 
 const CHECKBOX_CLASS_NAME_BY_SIZE = {
   sm: styles['Checkbox--Small'],
@@ -17,10 +17,6 @@ const CHECKBOX_DIMENSION_BY_SIZE = {
   md: 24,
   lg: 32,
 } as const;
-
-export interface ICheckboxProps extends MantineCheckboxProps {
-  size?: 'sm' | 'md' | 'lg';
-}
 
 export const Checkbox = ({ size = 'md', ...props }: ICheckboxProps) => {
   const sizeClassName = CHECKBOX_CLASS_NAME_BY_SIZE[size];
