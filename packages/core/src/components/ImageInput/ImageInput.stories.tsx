@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 import { ImageInput } from '.';
 
-import type { ImageInputItem } from './types';
-import type { ImageInputChangeMeta } from './types';
+import type { IImageInputItem } from './types';
+import type { IImageInputChangeMeta } from './types';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const stackStyle = {
@@ -13,7 +13,7 @@ const stackStyle = {
   padding: '24px',
 } as const;
 
-const SAMPLE_ITEMS: ImageInputItem[] = [
+const SAMPLE_ITEMS: IImageInputItem[] = [
   { id: 'item-1', url: 'https://picsum.photos/seed/a/300/300' },
   { id: 'item-2', url: 'https://picsum.photos/seed/b/300/300' },
   { id: 'item-3', url: 'https://picsum.photos/seed/c/300/300' },
@@ -52,7 +52,7 @@ export const Playground: StoryObj<typeof ImageInput> = {
 
 export const Interactive: StoryObj<typeof ImageInput> = {
   render: () => {
-    const [items, setItems] = useState<ImageInputItem[]>(SAMPLE_ITEMS.slice(0, 2));
+    const [items, setItems] = useState<IImageInputItem[]>(SAMPLE_ITEMS.slice(0, 2));
 
     return (
       <div style={stackStyle}>
@@ -150,7 +150,7 @@ export const PerItemLoadingState: StoryObj<typeof ImageInput> = {
 
 export const WithCrop: StoryObj<typeof ImageInput> = {
   render: () => {
-    const [items, setItems] = useState<ImageInputItem[]>(SAMPLE_ITEMS.slice(0, 2));
+    const [items, setItems] = useState<IImageInputItem[]>(SAMPLE_ITEMS.slice(0, 2));
 
     return (
       <div style={stackStyle}>
@@ -212,16 +212,16 @@ function PositionModeLog({
   readOnly,
   hasLink,
 }: {
-  initialItems: ImageInputItem[];
+  initialItems: IImageInputItem[];
   label: string;
   description: string;
   readOnly?: boolean;
   hasLink?: boolean;
 }) {
-  const [items, setItems] = useState<ImageInputItem[]>(initialItems);
+  const [items, setItems] = useState<IImageInputItem[]>(initialItems);
   const [logs, setLogs] = useState<string[]>([]);
 
-  const handleChange = (next: ImageInputItem[], meta: ImageInputChangeMeta) => {
+  const handleChange = (next: IImageInputItem[], meta: IImageInputChangeMeta) => {
     setItems(next);
     const sorted = next.slice().sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
     const positions = sorted.map((i) => `[${i.position}]${i.id.slice(-4)}`).join(', ');

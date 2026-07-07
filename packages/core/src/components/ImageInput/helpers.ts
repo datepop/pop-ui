@@ -7,17 +7,17 @@ import {
 
 export { generateItemId, reorderItems, getPlaceholderCount, reorderItemPositions };
 
-import type { ImageInputItem } from './types';
+import type { IImageInputItem } from './types';
 
 export function addItems(
-  current: ImageInputItem[],
+  current: IImageInputItem[],
   files: File[],
   maxLength?: number,
-): ImageInputItem[] {
+): IImageInputItem[] {
   const sorted = [...files].sort((a, b) => a.name.localeCompare(b.name));
   const remaining = maxLength != null ? maxLength - current.length : Infinity;
   const accepted = sorted.slice(0, remaining);
-  const newItems: ImageInputItem[] = accepted.map((file) => ({
+  const newItems: IImageInputItem[] = accepted.map((file) => ({
     id: generateItemId(),
     file,
     url: URL.createObjectURL(file),
@@ -25,7 +25,7 @@ export function addItems(
   return [...current, ...newItems];
 }
 
-export function deleteItem(current: ImageInputItem[], id: string): ImageInputItem[] {
+export function deleteItem(current: IImageInputItem[], id: string): IImageInputItem[] {
   const item = current.find((i) => i.id === id);
   if (item?.url?.startsWith('blob:')) {
     URL.revokeObjectURL(item.url);
@@ -33,7 +33,7 @@ export function deleteItem(current: ImageInputItem[], id: string): ImageInputIte
   return current.filter((i) => i.id !== id);
 }
 
-export function replaceItem(current: ImageInputItem[], id: string, file: File): ImageInputItem[] {
+export function replaceItem(current: IImageInputItem[], id: string, file: File): IImageInputItem[] {
   return current.map((item) => {
     if (item.id !== id) return item;
     if (item.url?.startsWith('blob:')) {
@@ -43,16 +43,16 @@ export function replaceItem(current: ImageInputItem[], id: string, file: File): 
   });
 }
 
-export function cropItem(current: ImageInputItem[], id: string, file: File): ImageInputItem[] {
+export function cropItem(current: IImageInputItem[], id: string, file: File): IImageInputItem[] {
   return replaceItem(current, id, file);
 }
 
 export function addItemAtPosition(
-  current: ImageInputItem[],
+  current: IImageInputItem[],
   file: File,
   position: number,
-): ImageInputItem[] {
-  const newItem: ImageInputItem = {
+): IImageInputItem[] {
+  const newItem: IImageInputItem = {
     id: generateItemId(),
     file,
     url: URL.createObjectURL(file),
@@ -61,7 +61,7 @@ export function addItemAtPosition(
   return [...current, newItem];
 }
 
-export function revokeItemUrls(items: ImageInputItem[]): void {
+export function revokeItemUrls(items: IImageInputItem[]): void {
   for (const item of items) {
     if (item.url?.startsWith('blob:')) {
       URL.revokeObjectURL(item.url);

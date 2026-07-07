@@ -54,10 +54,10 @@ interface IImageInputProps {
 }
 
 export type {
-  TImageInputAccept as ImageInputAccept,
-  IImageInputChangeMeta as ImageInputChangeMeta,
-  IImageInputItem as ImageInputItem,
-  IImageInputProps as ImageInputProps,
-  TImageInputChangeAction as ImageInputChangeAction,
-  TImageInputPlaceholder as ImageInputPlaceholder,
+  TImageInputAccept,
+  IImageInputChangeMeta,
+  IImageInputItem,
+  IImageInputProps,
+  TImageInputChangeAction,
+  TImageInputPlaceholder,
 };

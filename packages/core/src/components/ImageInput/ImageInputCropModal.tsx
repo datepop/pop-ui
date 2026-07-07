@@ -7,12 +7,12 @@ import Cropper from 'react-easy-crop';
 import { Button } from '../Button';
 import { Modal } from '../Modal';
 
-import type { ImageInputItem } from './types';
+import type { IImageInputItem } from './types';
 import type { Area, Point } from 'react-easy-crop';
 
 // ─── Canvas crop utility ──────────────────────────────────────────────────────
 
-async function getCroppedImage(item: ImageInputItem, pixelCrop: Area): Promise<File | null> {
+async function getCroppedImage(item: IImageInputItem, pixelCrop: Area): Promise<File | null> {
   const src = item.url ?? '';
   if (!src) return null;
 
@@ -58,7 +58,7 @@ async function getCroppedImage(item: ImageInputItem, pixelCrop: Area): Promise<F
 // ─── Component ────────────────────────────────────────────────────────────────
 
 interface IImageInputCropModalProps {
-  item: ImageInputItem | null;
+  item: IImageInputItem | null;
   isOpen: boolean;
   aspect?: number;
   onClose: () => void;

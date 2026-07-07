@@ -6,7 +6,7 @@ import {
 
 export { reorderItems, getPlaceholderCount };
 
-import type { LottieInputItem } from './types';
+import type { ILottieInputItem } from './types';
 
 export function isValidLottieJSON(json: unknown): boolean {
   if (!json || typeof json !== 'object' || Array.isArray(json)) return false;
@@ -40,30 +40,30 @@ export function parseLottieFile(file: File): Promise<Record<string, unknown> | n
 }
 
 export function addItems(
-  current: LottieInputItem[],
+  current: ILottieInputItem[],
   files: File[],
   maxLength?: number,
-): LottieInputItem[] {
+): ILottieInputItem[] {
   const sorted = [...files].sort((a, b) => a.name.localeCompare(b.name));
   const remaining = maxLength != null ? maxLength - current.length : Infinity;
   const accepted = sorted.slice(0, remaining);
-  const newItems: LottieInputItem[] = accepted.map((file) => ({
+  const newItems: ILottieInputItem[] = accepted.map((file) => ({
     id: generateItemId(),
     file,
   }));
   return [...current, ...newItems];
 }
 
-export function deleteItem(current: LottieInputItem[], id: string): LottieInputItem[] {
+export function deleteItem(current: ILottieInputItem[], id: string): ILottieInputItem[] {
   return current.filter((i) => i.id !== id);
 }
 
 export function addItemAtPosition(
-  current: LottieInputItem[],
+  current: ILottieInputItem[],
   file: File,
   position: number,
-): LottieInputItem[] {
-  const newItem: LottieInputItem = {
+): ILottieInputItem[] {
+  const newItem: ILottieInputItem = {
     id: generateItemId(),
     file,
     position,
