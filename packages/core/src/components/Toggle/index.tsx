@@ -5,14 +5,7 @@ import { useCallback, useState } from 'react';
 
 import styles from './styles.module.scss';
 
-import type { SwitchProps } from '@mantine/core';
-
-export interface IToggleProps extends SwitchProps {
-  size?: 'sm' | 'md' | 'lg';
-  labelPosition: 'left' | 'right';
-  disabled?: boolean;
-  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}
+import type { IToggleProps } from './types';
 
 export const Toggle = ({
   size = 'md',
