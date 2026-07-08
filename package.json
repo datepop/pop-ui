@@ -29,9 +29,12 @@
     "lint:style": "stylelint \"packages/**/*.scss\"",
     "lint:style:fix": "stylelint \"packages/**/*.scss\" --fix",
     "typecheck": "lerna run typecheck --stream",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
     "prepare": "husky || true"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.31.0",
     "@storybook/addon-links": "^10.0.4",
     "@storybook/addon-themes": "^10.0.4",
     "@storybook/react-vite": "^10.0.4",
