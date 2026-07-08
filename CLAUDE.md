@@ -82,7 +82,7 @@ Button, CalendarDatePicker, Checkbox, DatePicker, Dropdown, ImageInput, LottieIn
 
 ## 검증
 
-- 타입: `yarn typecheck` (4패키지)
+- 타입: `yarn typecheck` (4패키지). **CI(Jenkins)가 모든 빌드 흐름에서 `yarn build` 전에 이를 강제** — 타입이 깨지면 빌드·배포가 차단된다.
 - 빌드: `yarn build` (foundation → 전체), `yarn build:core`, `yarn build:foundation`
 - Storybook: `yarn build-storybook`
 - 배포는 README의 `release/*` → Chromatic → `main` → `vX.Y.Z` 태그 절차.
