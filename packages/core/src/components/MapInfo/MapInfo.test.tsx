@@ -81,6 +81,7 @@ describe('MapInfo', () => {
     mockMapOptions.length = 0;
     mockNaverClientId = undefined;
     document.body.innerHTML = '';
+    vi.unstubAllGlobals();
   });
 
   it('renders the NoClientId guidance and no map when naverClientId is missing', () => {
@@ -141,7 +142,6 @@ describe('MapInfo', () => {
     expect(mockToast).toHaveBeenCalledWith('주소 복사 완료');
 
     cleanupRenderedApp(view);
-    vi.unstubAllGlobals();
   });
 
   it('uses a custom addressCopied toast message when provided', () => {
@@ -162,7 +162,6 @@ describe('MapInfo', () => {
     expect(mockToast).toHaveBeenCalledWith('복사됨!');
 
     cleanupRenderedApp(view);
-    vi.unstubAllGlobals();
   });
 
   it('subtracts the address bar height to compute the map preview height', () => {
