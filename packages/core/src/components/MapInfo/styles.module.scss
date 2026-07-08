@@ -1,9 +1,10 @@
 @use '../shared/variables.scss' as *;
+@use '../shared/functions' as fn;
 
 .MapInfo {
   overflow: hidden;
   border-radius: 10px;
-  border: 1px solid $color-gray-100;
+  border: fn.border-width(25) solid $color-gray-100;
   background: $color-white;
 
   &__NoClientId {
@@ -11,8 +12,8 @@
     align-items: center;
     justify-content: center;
     height: 100%;
-    padding: 16px;
-    font-size: 14px;
+    padding: fn.spacing(400);
+    font-size: fn.font-size(450);
     color: $color-gray-500;
     text-align: center;
   }
@@ -25,15 +26,15 @@
   &__ExpandButton {
     position: absolute;
     z-index: 10;
-    top: 8px;
-    right: 8px;
+    top: fn.spacing(200);
+    right: fn.spacing(200);
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 36px;
-    height: 36px;
+    width: fn.spacing(900);
+    height: fn.spacing(900);
     background: $color-white;
-    border: 1px solid $color-gray-100;
+    border: fn.border-width(25) solid $color-gray-100;
     border-radius: 50%;
     cursor: pointer;
     transition: background-color 0.2s;
@@ -48,10 +49,10 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    height: 60px;
-    padding: 4px 8px;
+    height: fn.spacing(1500);
+    padding: fn.spacing(100) fn.spacing(200);
     background: $color-white;
-    border-top: 1px solid $color-gray-100;
+    border-top: fn.border-width(25) solid $color-gray-100;
   }
 
   &__AddressContent {
@@ -63,7 +64,7 @@
   }
 
   &__Address {
-    font-size: 14px;
+    font-size: fn.font-size(450);
     line-height: 1.4;
     color: $color-gray-800;
     cursor: pointer;
@@ -89,13 +90,13 @@
   &__DirectionButton {
     min-height: fit-content !important;
     height: fit-content !important;
-    padding: 8px 12px !important;
+    padding: fn.spacing(200) fn.spacing(300) !important;
     border-radius: 99px !important;
-    font-size: 14px !important;
+    font-size: fn.font-size(450) !important;
     font-weight: 600 !important;
     background: $color-white !important;
     color: $color-gray-800 !important;
-    border: 1px solid $color-gray-100 !important;
+    border: fn.border-width(25) solid $color-gray-100 !important;
 
     &:hover {
       background: $color-gray-50 !important;

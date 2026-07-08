@@ -1,5 +1,6 @@
 @use 'sass:map';
 @use '../shared/variables.scss' as *;
+@use '../shared/functions' as fn;
 
 @function button-font-weight($weight-token) {
   @if $weight-token == Bold {
@@ -41,7 +42,7 @@
 @mixin ButtonVariant($bg, $text, $border-color: transparent) {
   background-color: $bg;
   color: $text;
-  border: 1px solid $border-color;
+  border: fn.border-width(25) solid $border-color;
 }
 
 $button-size-layout-map: (
@@ -385,7 +386,7 @@ $button-variant-class-map: (
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--button-section-gap, 6px);
+  gap: var(--button-section-gap, fn.spacing(150));
   width: 100%;
 }
 
@@ -393,7 +394,7 @@ $button-variant-class-map: (
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: fn.spacing(150);
   white-space: nowrap;
 }
 

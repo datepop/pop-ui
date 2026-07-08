@@ -77,6 +77,10 @@ vi.mock('@pop-ui/foundation', () => ({
   IconPhoto: () => <div data-testid="icon-photo" />,
   IconXCircle: () => <div data-testid="icon-xcircle" />,
   IconDragMenu: () => <div data-testid="icon-drag" />,
+  ColorRed700: '#e03131',
+  ColorAqua700: '#07a3c6',
+  ColorAqua500: '#0fd3d8',
+  ColorGray600: '#808080',
 }));
 
 vi.mock('../Button', () => ({

@@ -1,7 +1,13 @@
 'use client';
 
 import { Input, Select, Tooltip } from '@mantine/core';
-import { IconInfoCircle, IconChevronUp, IconChevronDown } from '@pop-ui/foundation';
+import {
+  ColorBlack,
+  ColorGray100,
+  IconInfoCircle,
+  IconChevronUp,
+  IconChevronDown,
+} from '@pop-ui/foundation';
 import { useState } from 'react';
 
 import styles from './styles.module.scss';
@@ -73,8 +79,8 @@ export const Dropdown = ({
             option: {
               '&[data-selected]': {
                 '&, &:hover': {
-                  backgroundColor: '#e7e7e7',
-                  color: '#000000',
+                  backgroundColor: ColorGray100,
+                  color: ColorBlack,
                 } as CSSProperties,
               } as CSSProperties,
             } as CSSProperties,

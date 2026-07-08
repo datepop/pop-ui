@@ -1,4 +1,5 @@
 @use '../shared/variables.scss' as *;
+@use '../shared/functions' as fn;
 
 @mixin DatePickerShellFocus {
   &:hover {
@@ -25,7 +26,7 @@
 }
 
 .DatePickerBase {
-  --date-picker-height: 44px;
+  --date-picker-height: #{fn.spacing(1100)};
   --date-picker-padding-inline: #{$spacing-300}px;
   --date-picker-font-size: #{$font-size-450}px;
   --date-picker-line-height: #{$lh-500};
@@ -33,7 +34,7 @@
   --date-picker-section-width: 42px;
   --date-picker-icon-shell-size: #{$spacing-800}px;
   --date-picker-popup-radius: #{$border-radius-300};
-  --date-picker-time-control-height: 44px;
+  --date-picker-time-control-height: #{fn.spacing(1100)};
   --date-picker-time-control-radius: #{$border-radius-200};
 }
 
@@ -42,33 +43,33 @@
 }
 
 .DatePicker--Small {
-  --date-picker-height: 32px;
+  --date-picker-height: #{fn.spacing(800)};
   --date-picker-padding-inline: #{$spacing-200}px;
   --date-picker-font-size: #{$font-size-450}px;
   --date-picker-radius: #{$border-radius-200};
   --date-picker-section-width: 34px;
-  --date-picker-icon-shell-size: 24px;
-  --date-picker-time-control-height: 32px;
+  --date-picker-icon-shell-size: #{fn.spacing(600)};
+  --date-picker-time-control-height: #{fn.spacing(800)};
 }
 
 .DatePicker--Medium {
-  --date-picker-height: 44px;
+  --date-picker-height: #{fn.spacing(1100)};
   --date-picker-padding-inline: #{$spacing-300}px;
   --date-picker-font-size: #{$font-size-450}px;
   --date-picker-radius: #{$border-radius-300};
   --date-picker-section-width: 42px;
   --date-picker-icon-shell-size: #{$spacing-800}px;
-  --date-picker-time-control-height: 44px;
+  --date-picker-time-control-height: #{fn.spacing(1100)};
 }
 
 .DatePicker--Large {
-  --date-picker-height: 52px;
+  --date-picker-height: #{fn.spacing(1300)};
   --date-picker-padding-inline: #{$spacing-400}px;
   --date-picker-font-size: #{$font-size-500}px;
   --date-picker-radius: #{$border-radius-300};
   --date-picker-section-width: 50px;
-  --date-picker-icon-shell-size: 36px;
-  --date-picker-time-control-height: 52px;
+  --date-picker-icon-shell-size: #{fn.spacing(900)};
+  --date-picker-time-control-height: #{fn.spacing(1300)};
 }
 
 .DatePicker__Wrapper {

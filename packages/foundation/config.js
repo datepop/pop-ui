@@ -23,6 +23,24 @@ export default {
           destination: 'variables.scss',
           format: 'scss/variables',
         },
+        {
+          destination: '_spacing-map.scss',
+          format: 'scss/map-flat',
+          filter: { type: 'spacing' },
+          options: { mapName: 'spacing-tokens' },
+        },
+        {
+          destination: '_font-size-map.scss',
+          format: 'scss/map-flat',
+          filter: { type: 'fontSizes' },
+          options: { mapName: 'font-size-tokens' },
+        },
+        {
+          destination: '_border-width-map.scss',
+          format: 'scss/map-flat',
+          filter: { type: 'borderWidth' },
+          options: { mapName: 'border-width-tokens' },
+        },
       ],
     },
     ts: {

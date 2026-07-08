@@ -3,7 +3,7 @@
 import { defaultAnimateLayoutChanges, useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import { Loader } from '@mantine/core';
-import { ColorAqua500, IconDragMenu, IconXCircle } from '@pop-ui/foundation';
+import { ColorAqua500, ColorGray600, IconDragMenu, IconXCircle } from '@pop-ui/foundation';
 import { useState } from 'react';
 
 import styles from './styles.module.scss';
@@ -142,7 +142,7 @@ export function TileShell({
               {...listeners}
               aria-label="드래그로 순서 변경"
             >
-              <IconDragMenu size={20} color="#808080" />
+              <IconDragMenu size={20} color={ColorGray600} />
             </button>
           )}
 

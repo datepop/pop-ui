@@ -1,4 +1,5 @@
 @use '../shared/variables.scss' as *;
+@use '../shared/functions' as fn;
 
 .Container {
   display: flex;
@@ -18,10 +19,10 @@
 // 편집 버튼 (ImageInput 전용)
 .EditButton {
   flex-shrink: 0;
-  font-size: 12px;
+  font-size: fn.font-size(400);
   border-radius: 8px;
-  height: 24px;
-  padding: 0 8px;
+  height: fn.spacing(600);
+  padding: 0 fn.spacing(200);
 }
 
 // PlaceholderText는 shared Dropzone children으로 사용 (ImageInput에서 className으로 전달)
@@ -34,7 +35,7 @@
 
   span {
     color: $color-aqua-700;
-    font-size: 16px;
+    font-size: fn.font-size(500);
     font-weight: 500;
     line-height: 1.4;
   }
