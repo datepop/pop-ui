@@ -38,7 +38,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "typecheck": "tsc",
+    "typecheck": "tsc && tsc -p tsconfig.test.json",
     "lint": "eslint src --max-warnings 0",
     "lint:fix": "eslint src --fix",
     "preview": "vite preview"
