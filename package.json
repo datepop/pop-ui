@@ -75,6 +75,7 @@
   "packageManager": "yarn@4.10.3",
   "resolutions": {
     "tar": "^6.2.1",
-    "tmp": "^0.2.4"
+    "tmp": "^0.2.6",
+    "linkify-it": "^5.0.1"
   }
 }
