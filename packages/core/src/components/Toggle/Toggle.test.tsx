@@ -64,7 +64,7 @@ const cleanupRenderedApp = ({ container, root }: IRenderedApp): void => {
 
 type TStylesFn = () => { track: { width: number; backgroundColor?: string; borderColor?: string } };
 
-const getStyles = (call: number): TStylesFn => mockSwitch.mock.calls[call]?.[0].styles;
+const getStyles = (call: number): TStylesFn => mockSwitch.mock.calls[call]?.[0].styles as TStylesFn;
 
 describe('Toggle', () => {
   afterEach(() => {
@@ -73,7 +73,7 @@ describe('Toggle', () => {
   });
 
   it('uses the medium class, right label position, and 50px track width by default', () => {
-    const view = renderApp(<Toggle />);
+    const view = renderApp(<Toggle labelPosition="right" />);
 
     const props = mockSwitch.mock.calls[0]?.[0];
 
@@ -87,8 +87,8 @@ describe('Toggle', () => {
   it('maps sm and lg sizes to matching class names and track widths', () => {
     const view = renderApp(
       <>
-        <Toggle size="sm" />
-        <Toggle size="lg" />
+        <Toggle labelPosition="right" size="sm" />
+        <Toggle labelPosition="right" size="lg" />
       </>,
     );
 
@@ -105,7 +105,7 @@ describe('Toggle', () => {
 
   it('forwards the change event to the user-provided onChange', () => {
     const onChange = vi.fn();
-    const view = renderApp(<Toggle onChange={onChange} />);
+    const view = renderApp(<Toggle labelPosition="right" onChange={onChange} />);
 
     const input = view.container.querySelector('input');
 
@@ -122,7 +122,7 @@ describe('Toggle', () => {
   });
 
   it('seeds isChecked from the checked prop and reflects it in the track color', () => {
-    const view = renderApp(<Toggle checked />);
+    const view = renderApp(<Toggle checked labelPosition="right" />);
 
     const track = getStyles(0)().track;
 
