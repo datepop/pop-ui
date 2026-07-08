@@ -76,6 +76,7 @@ pipeline {
                             yarn install
                             yarn token-transform
                             yarn token-build
+                            yarn typecheck
                             yarn build
                         '''
                     }
@@ -111,6 +112,7 @@ pipeline {
                             yarn install
                             yarn token-transform
                             yarn token-build
+                            yarn typecheck
                             yarn build
                         '''
                     }
@@ -232,6 +234,7 @@ NODE
                             yarn install
                             yarn token-transform
                             yarn token-build
+                            yarn typecheck
                             yarn build
                         '''
                     }
