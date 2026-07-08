@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { DatePicker } from '.';
 
-import type { IDatePickerProps } from '.';
+import type { IDatePickerProps } from './types';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 const stackStyle = {

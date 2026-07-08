@@ -10,6 +10,9 @@ interface IMockedDatePickerProps {
   nextIcon?: React.ReactNode;
   renderDay?: (date: Date) => React.ReactNode;
   onChange?: (value: unknown) => void;
+  getDayProps?: (date: string) => {
+    onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  };
   [key: string]: unknown;
 }
 
@@ -194,8 +197,7 @@ describe('CalendarDatePicker', () => {
       />,
     );
 
-    const props = mockMantineDatePicker.mock.calls[0]?.[0];
-    const outsideMonthDate = new Date('2025-10-30T00:00:00.000Z');
+    const props = mockMantineDatePicker.mock.calls[0]?.[0] as IMockedDatePickerProps;
     const insideMonthDate = new Date('2025-11-12T00:00:00.000Z');
 
     act(() => {
