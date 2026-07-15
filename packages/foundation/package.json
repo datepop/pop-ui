@@ -1,7 +1,7 @@
 {
   "name": "@pop-ui/foundation",
   "type": "module",
-  "version": "1.1.11",
+  "version": "1.1.12",
   "main": "./dist/foundation.umd.cjs",
   "module": "./dist/foundation.js",
   "types": "./dist/types/index.d.ts",
@@ -38,7 +38,7 @@
     "build": "yarn generate:native && vite build && yarn build:native",
     "build:native": "tsc -p tsconfig.native.json",
     "generate:native": "tsx scripts/generate-native.ts",
-    "typecheck": "tsc",
+    "typecheck": "yarn generate:native && tsc",
     "token-transform": "token-transformer token.json transformed-token.json --expandTypography --expandShadow --expandCompotision --expandBorder",
     "token-build": "style-dictionary build --config config.js"
   },
