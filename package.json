@@ -28,7 +28,7 @@
     "lint:fix": "eslint . --fix",
     "lint:style": "stylelint \"packages/**/*.scss\"",
     "lint:style:fix": "stylelint \"packages/**/*.scss\" --fix",
-    "typecheck": "lerna run typecheck --stream",
+    "typecheck": "lerna run --scope @pop-ui/editor-core build --stream && lerna run typecheck --stream",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "prepare": "husky || true"
