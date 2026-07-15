@@ -146,11 +146,7 @@ export const LottieInput = ({
   gap = 8,
   canDelete = true,
 }: ILottieInputProps) => {
-  if (
-    process.env.NODE_ENV !== 'production' &&
-    length != null &&
-    (minLength != null || maxLength != null)
-  ) {
+  if (import.meta.env.DEV && length != null && (minLength != null || maxLength != null)) {
     console.warn(
       'LottieInput: length와 minLength/maxLength가 동시에 지정되었습니다. length가 우선 적용됩니다.',
     );

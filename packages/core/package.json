@@ -1,7 +1,7 @@
 {
   "name": "@pop-ui/core",
   "type": "module",
-  "version": "1.1.11",
+  "version": "1.1.12",
   "main": "./dist/core.umd.cjs",
   "module": "./dist/core.js",
   "types": "./dist/types/index.d.ts",
@@ -38,7 +38,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "typecheck": "tsc",
+    "typecheck": "tsc && tsc -p tsconfig.test.json",
     "lint": "eslint src --max-warnings 0",
     "lint:fix": "eslint src --fix",
     "preview": "vite preview"
@@ -58,8 +58,8 @@
     "react-easy-crop": "^5.5.3"
   },
   "peerDependencies": {
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
     "@mantine/carousel": "^8.3.6",
