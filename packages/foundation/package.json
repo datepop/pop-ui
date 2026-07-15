@@ -38,7 +38,7 @@
     "build": "yarn generate:native && vite build && yarn build:native",
     "build:native": "tsc -p tsconfig.native.json",
     "generate:native": "tsx scripts/generate-native.ts",
-    "typecheck": "tsc",
+    "typecheck": "yarn generate:native && tsc",
     "token-transform": "token-transformer token.json transformed-token.json --expandTypography --expandShadow --expandCompotision --expandBorder",
     "token-build": "style-dictionary build --config config.js"
   },
