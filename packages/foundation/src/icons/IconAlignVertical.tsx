@@ -2,7 +2,7 @@ import { ColorGray900 } from '../tokens/colors';
 
 import type { IIconLineOnlyProps } from '../types/icon';
 
-export default function IconSwapHorizontal({
+export default function IconAlignVertical({
   size = 24,
   color = ColorGray900,
   variant: _variant = 'line',
@@ -17,17 +17,17 @@ export default function IconSwapHorizontal({
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <path d="M3 7.00488L21 7.00488" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M7.00488 21L7.00488 3" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
       <path
-        d="M18 10L21 7L18 4"
+        d="M10 6L7 3L4 6"
         stroke={color}
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <path d="M21 17.0049L3 17.0049" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M17.0049 3L17.0049 21" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
       <path
-        d="M6 20L3 17L6 14"
+        d="M20 18L17 21L14 18"
         stroke={color}
         strokeWidth="1.5"
         strokeLinecap="round"
