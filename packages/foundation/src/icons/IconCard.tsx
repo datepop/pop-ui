@@ -1,8 +1,8 @@
-import { useId } from "react";
+import { useId } from 'react';
 
-import { ColorGray900 } from "../tokens/colors";
+import { ColorGray900 } from '../tokens/colors';
 
-import type { IIconProps } from "../types/icon";
+import type { IIconProps } from '../types/icon';
 
 export default function IconCard({
   size = 24,
@@ -22,32 +22,29 @@ export default function IconCard({
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      {isFilled && (
-        <mask id={maskId}>
-          <rect x="4.5" y="1.5" width="15" height="21" rx="2" fill="white" />
-          <rect x="10.8462" y="4.92773" width="2.30762" height="3" rx="0.5" fill="black" />
-        </mask>
-      )}
-      <rect
-        x="4.5"
-        y="1.5"
-        width="15"
-        height="21"
-        rx="2"
-        stroke={color}
-        strokeWidth="1.5"
-        fill={isFilled ? color : 'none'}
-        mask={isFilled ? `url(#${maskId})` : undefined}
-      />
-      {!isFilled && (
-        <rect
-          x="10.8462"
-          y="4.92773"
-          width="2.30762"
-          height="3"
-          rx="0.5"
-          fill={color}
-        />
+      {isFilled ? (
+        <>
+          <mask id={maskId}>
+            <rect x="4.5" y="1.5" width="15" height="21" rx="2" fill="white" />
+            <rect x="10.8462" y="4.92773" width="2.30762" height="3" rx="0.5" fill="black" />
+          </mask>
+          <rect
+            x="4.5"
+            y="1.5"
+            width="15"
+            height="21"
+            rx="2"
+            stroke={color}
+            strokeWidth="1.5"
+            fill={color}
+            mask={`url(#${maskId})`}
+          />{' '}
+        </>
+      ) : (
+        <>
+          <rect fill={color} height="3" rx="0.5" width="2" x="11" y="6" />
+          <rect height="18" rx="2" stroke={color} strokeWidth="1.5" width="14" x="5" y="3" />{' '}
+        </>
       )}
     </svg>
   );

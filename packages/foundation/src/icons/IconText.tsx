@@ -17,9 +17,19 @@ export default function IconText({
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <rect height="18" rx="2" stroke={color} strokeWidth="1.5" width="18" x="3" y="3" />
+      <path d="M9.6814 16.738H14.3154" stroke={color} strokeLinecap="round" strokeWidth="1.5" />
       <path
-        d="M19.286 7.482h-1.519l-.364-2.41q-.087-.44-.426-.439h-3.678v14.22q0 .189.126.364.138.175.414.201l1.644.1v1.105H8.517v-1.105l1.645-.1q.276-.026.401-.201a.58.58 0 0 0 .138-.364V4.633H6.999q-.377 0-.44.439l-.351 2.41H4.714V3.378h14.572z"
-        fill={color}
+        d="M7.31079 8.57739L8.13571 7.5688C8.32564 7.33659 8.60978 7.2019 8.90978 7.2019H15.0897C15.3897 7.2019 15.6739 7.33659 15.8638 7.5688L16.6887 8.57739"
+        stroke={color}
+        strokeLinecap="round"
+        strokeWidth="1.5"
+      />
+      <path
+        d="M12.0039 7.31836L12.0039 16.2937"
+        stroke={color}
+        strokeLinecap="round"
+        strokeWidth="1.5"
       />
     </svg>
   );
