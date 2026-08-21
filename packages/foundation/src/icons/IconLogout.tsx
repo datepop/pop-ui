@@ -18,18 +18,18 @@ export default function IconLogout({
       {...props}
     >
       <path
-        d="M12.36364 4H6.63636C6.20237 4 5.78616 4.21071 5.47928 4.58579C5.1724 4.96086 5 5.46957 5 6V18C5 18.5304 5.1724 19.0391 5.47928 19.4142C5.78616 19.7893 6.20237 20 6.63636 20H12.36364"
+        d="M9.5 20H5C3.89543 20 3 19.1046 3 18V6C3 4.89543 3.89543 4 5 4H9.5"
         stroke={color}
-        strokeWidth="1.5"
         strokeLinecap="round"
-        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
+      <path d="M8 12L21 12" stroke={color} strokeLinecap="round" strokeWidth="1.5" />
       <path
-        d="M9 12H19M15.7273 15L19 12L15.7273 9"
+        d="M17 8L21 12L17 16"
         stroke={color}
-        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
+        strokeWidth="1.5"
       />
     </svg>
   );

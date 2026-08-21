@@ -18,17 +18,17 @@ export default function IconSearch({
       {...props}
     >
       <path
-        d="M10.1811 17.3621C14.147 17.3621 17.3621 14.147 17.3621 10.1811C17.3621 6.21507 14.147 3 10.1811 3C6.21507 3 3 6.21507 3 10.1811C3 14.147 6.21507 17.3621 10.1811 17.3621Z"
+        d="M10 17C13.866 17 17 13.866 17 10C17 6.13401 13.866 3 10 3C6.13401 3 3 6.13401 3 10C3 13.866 6.13401 17 10 17Z"
         stroke={color}
-        strokeWidth="1.5"
         strokeMiterlimit="10"
+        strokeWidth="1.5"
       />
       <path
-        d="M15.2876 15.2876L21.0002 21.0002"
+        d="M15 15L21 21"
         stroke={color}
-        strokeWidth="1.5"
-        strokeMiterlimit="10"
         strokeLinecap="round"
+        strokeMiterlimit="10"
+        strokeWidth="1.5"
       />
     </svg>
   );

@@ -17,9 +17,9 @@ export default function IconHamburger({
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <rect width="18" height="1.5" x="3" y="4" fill={color} rx="0.75" strokeWidth={0}></rect>
-      <rect width="18" height="1.5" x="3" y="11.5" fill={color} rx="0.75" strokeWidth={0}></rect>
-      <rect width="18" height="1.5" x="3" y="19" fill={color} rx="0.75" strokeWidth={0}></rect>
+      <path d="M3 5H21" stroke={color} strokeLinecap="round" strokeWidth="1.5" />
+      <path d="M3 12H21" stroke={color} strokeLinecap="round" strokeWidth="1.5" />
+      <path d="M3 19H21" stroke={color} strokeLinecap="round" strokeWidth="1.5" />
     </svg>
   );
 }

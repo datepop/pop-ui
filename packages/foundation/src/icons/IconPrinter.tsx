@@ -1,6 +1,6 @@
-import { ColorGray900 } from "../tokens/colors";
+import { ColorGray900 } from '../tokens/colors';
 
-import type { IIconLineOnlyProps } from "../types/icon";
+import type { IIconLineOnlyProps } from '../types/icon';
 
 export default function IconPrinter({
   size = 24,
@@ -18,38 +18,38 @@ export default function IconPrinter({
       {...props}
     >
       <path
-        d="M8.46985 11.4272H15.5299"
+        d="M19 20V8C19 7.44772 18.5523 7 18 7H6C5.44772 7 5 7.44772 5 8V20C5 21.1046 5.89543 22 7 22H17C18.1046 22 19 21.1046 19 20Z"
         stroke={color}
         strokeWidth="1.5"
-        strokeMiterlimit="10"
+      />
+      <path
+        d="M19 9.5C20.1046 9.5 21 8.60457 21 7.5V4C21 2.89543 20.1046 2 19 2H5C3.89543 2 3 2.89543 3 4V7.5C3 8.60457 3.89543 9.5 5 9.5"
+        stroke={color}
+        strokeWidth="1.5"
+      />
+      <path
+        d="M8.5 11H15.5"
+        stroke={color}
         strokeLinecap="round"
-      />
-      <path
-        d="M8.46985 14.5371H15.5299"
-        stroke={color}
-        strokeWidth="1.5"
         strokeMiterlimit="10"
-        strokeLinecap="round"
+        strokeWidth="1.5"
       />
       <path
-        d="M8.46985 17.6572H12.0806"
+        d="M8.5 14.5H15.5"
         stroke={color}
-        strokeWidth="1.5"
+        strokeLinecap="round"
         strokeMiterlimit="10"
+        strokeWidth="1.5"
+      />
+      <path
+        d="M8.5 18H12.875"
+        stroke={color}
         strokeLinecap="round"
-      />
-      <path
-        d="M5.00012 8.23047C5.00012 7.95433 5.22398 7.73047 5.50012 7.73047H18.5001C18.7763 7.73047 19.0001 7.95433 19.0001 8.23047V20.2607C19.0001 21.3653 18.1047 22.2607 17.0001 22.2607H7.00012C5.89555 22.2607 5.00012 21.3653 5.00012 20.2607V8.23047Z"
-        stroke={color}
+        strokeMiterlimit="10"
         strokeWidth="1.5"
       />
-      <path
-        d="M19.1437 10.2775C19.2459 10.2775 19.3459 10.2775 19.4432 10.2775C20.5478 10.2775 21.4432 9.38208 21.4432 8.27751V3.73926C21.4432 2.63469 20.5478 1.73926 19.4432 1.73926H4.55676C3.45219 1.73926 2.55676 2.63469 2.55676 3.73926V8.27751C2.55676 9.38208 3.4521 10.2775 4.55667 10.2775C4.64938 10.2775 4.74438 10.2775 4.84155 10.2775"
-        stroke={color}
-        strokeWidth="1.5"
-      />
-      <circle cx="5.60999" cy="4.73926" r="1" fill={color} />
-      <circle cx="9.20911" cy="4.73926" r="1" fill={color} />
+      <circle cx="6.75" cy="4.75" fill={color} r="0.75" />
+      <circle cx="9.75" cy="4.75" fill={color} r="0.75" />
     </svg>
   );
 }
