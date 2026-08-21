@@ -18,27 +18,24 @@ export default function IconHelp({
       {...props}
     >
       <path
-        d="M5 18.1349V11C5 7.134 8.134 4 12 4C15.866 4 19 7.134 19 11V16.129C19 16.8161 18.4176 20 14.5058 20"
+        d="M4 10.4877C4 10.3169 4 10.1539 4 9.99809C4.00001 5.57989 7.58194 2 12.0001 2C16.4183 2 20 5.58166 20 9.99986V10.4877M14.2858 21C17.7483 20.2566 19.1687 17.9344 19.7055 16.2736"
         stroke={color}
+        strokeLinecap="round"
         strokeWidth="1.5"
-        strokeLinecap="round"
       />
       <path
-        d="M1.5 12.5C1.5 10.567 3.067 9 5 9V16.5C3.067 16.5 1.5 14.933 1.5 13V12.5Z"
-        fill={color}
-      />
-      <path
-        d="M22.5 12.5C22.5 10.567 20.933 9 19 9V16.5C20.933 16.5 22.5 14.933 22.5 13V12.5Z"
-        fill={color}
-      />
-      <circle cx="9.25" cy="11.5" r="0.75" fill={color} />
-      <circle cx="14.75" cy="11.5" r="0.75" fill={color} />
-      <path
-        d="M10 16C10 16 10.5818 17 12 17C13.4182 17 14 16 14 16"
+        d="M22 12C22 11.4477 21.5523 11 21 11H19V16H21C21.5523 16 22 15.5523 22 15V12Z"
         stroke={color}
-        strokeWidth="1"
-        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
+      <path
+        d="M2 12C2 11.4477 2.44772 11 3 11H5V16H3C2.44772 16 2 15.5523 2 15V12Z"
+        stroke={color}
+        strokeLinejoin="round"
+        strokeWidth="1.5"
+      />
+      <rect height="2" rx="1" stroke={color} strokeWidth="1.5" width="4" x="10" y="20" />
     </svg>
   );
 }
