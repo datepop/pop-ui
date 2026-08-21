@@ -69,6 +69,15 @@ describe('normalized icons', () => {
     }
   });
 
+  it('uses the requested color for the download circle line variant', () => {
+    expect(renderToStaticMarkup(<Icons.IconDownloadCircle color="#123456" />)).not.toContain(
+      'stroke="white"',
+    );
+    expect(
+      renderToStaticMarkup(<Icons.IconDownloadCircle color="#123456" variant="filled" />),
+    ).toContain('stroke="white"');
+  });
+
   it('keeps legacy filled geometries inside the normalized canvas', () => {
     for (const Icon of [IconGrid, IconSound]) {
       const svg = renderToStaticMarkup(<Icon variant="filled" />);

@@ -35,17 +35,6 @@ export default function IconDownloadCircle({
       ) : (
         <>
           <circle cx="12" cy="12" r="9" stroke={color} strokeWidth="1.5" />
-          <path d="M16.5 17H7.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-          <g>
-            <path
-              d="M15 11L12 14L9 11"
-              stroke="white"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-            <path d="M12 14L12 6" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
-          </g>
           <path d="M16 16.5H8" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
           <g>
             <path
