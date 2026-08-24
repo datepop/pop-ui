@@ -17,20 +17,15 @@ export default function IconFilter({
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
+      <path d="M3 7H13.0654M21 7H18.9634" stroke={color} strokeLinecap="round" strokeWidth="1.5" />
+      <circle cx="16" cy="7" r="2.5" stroke={color} strokeWidth="1.5" />
       <path
-        d="M3 8H13.0654M21 8H18.9634"
+        d="M21 17H10.9356M3 17H5.03771"
         stroke={color}
-        strokeWidth="1.5"
         strokeLinecap="round"
-      />
-      <path
-        d="M21 16H10.9357M3 16H5.0377"
-        stroke={color}
         strokeWidth="1.5"
-        strokeLinecap="round"
       />
-      <circle cx="16" cy="8" r="2.75" stroke={color} strokeWidth="1.5" />
-      <circle cx="8" cy="16" r="2.75" stroke={color} strokeWidth="1.5" />
+      <circle cx="8" cy="17" r="2.5" stroke={color} strokeWidth="1.5" />
     </svg>
   );
 }

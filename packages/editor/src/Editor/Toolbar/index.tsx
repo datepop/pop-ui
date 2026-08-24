@@ -6,7 +6,7 @@ import {
   IconListNumber,
   IconMapMarker,
   IconMinus,
-  IconPhoto,
+  IconImage,
   IconQuote,
   IconText,
 } from '@pop-ui/foundation';
@@ -326,7 +326,7 @@ export const EditorToolbar = ({
     toolbarGroups.push([
       <React.Fragment key="image">
         <ToolbarButton
-          icon={<IconPhoto size={20} color={ColorGray900} />}
+          icon={<IconImage size={20} color={ColorGray900} />}
           label="이미지"
           onClick={handleImage}
         />

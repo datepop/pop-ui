@@ -12,24 +12,24 @@ export default function IconChevronUpDown({
     <svg
       width={size}
       height={size}
-      viewBox="0 0 40 40"
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <path
-        d="M29.2855 27.0236L20.4761 35.833L11.6667 27.0236"
+        d="M18 15L12 21L6 15"
         stroke={color}
-        strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"
+        strokeWidth="1.5"
       />
       <path
-        d="M11.6676 13.8094L20.477 5.00004L29.2864 13.8094"
+        d="M6 9L12 3L18 9"
         stroke={color}
-        strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"
+        strokeWidth="1.5"
       />
     </svg>
   );

@@ -18,25 +18,25 @@ export default function IconLink({
       {...props}
     >
       <path
-        d="M14.1138 7.99707H19.0016C21.2117 7.99707 23 9.78532 23 11.9954C23 14.2055 21.2117 15.9937 19.0016 15.9937H14.1138"
+        d="M14 8H18.1858C20.2941 8 22 9.78899 22 12C22 14.211 20.2941 16 18.1858 16H14"
         stroke={color}
-        strokeWidth="1.5"
-        strokeMiterlimit="10"
         strokeLinecap="round"
+        strokeMiterlimit="10"
+        strokeWidth="1.5"
       />
       <path
-        d="M10.1155 16.003H4.99832C2.78823 16.003 1 14.2148 1 12.0047C1 9.79459 2.78823 8.00635 4.99832 8.00635H10.1155"
+        d="M10 8H5.8142C3.70589 8 2 9.78899 2 12C2 14.211 3.70589 16 5.8142 16H10"
         stroke={color}
-        strokeWidth="1.5"
-        strokeMiterlimit="10"
         strokeLinecap="round"
+        strokeMiterlimit="10"
+        strokeWidth="1.5"
       />
       <path
-        d="M6.99756 11.9954H17.0026"
+        d="M7 12H17"
         stroke={color}
-        strokeWidth="1.5"
-        strokeMiterlimit="10"
         strokeLinecap="round"
+        strokeMiterlimit="10"
+        strokeWidth="1.5"
       />
     </svg>
   );

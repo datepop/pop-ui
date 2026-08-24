@@ -12,33 +12,31 @@ export default function IconDev({
     <svg
       width={size}
       height={size}
-      viewBox="0 0 40 40"
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <rect
-        x="5"
-        y="6.66663"
-        width="30"
-        height="22.0776"
-        rx="3.33333"
+      <rect height="13" rx="2" stroke={color} strokeWidth="1.5" width="18" x="3" y="4" />
+      <path
+        d="M10 8.5L8.14142 10.3586C8.06332 10.4367 8.06332 10.5633 8.14142 10.6414L10 12.5"
         stroke={color}
-        strokeWidth="2.5"
+        strokeLinecap="round"
+        strokeWidth="1.5"
       />
       <path
-        d="M16.2256 14.5514L13.1481 17.4632C13.0092 17.5947 13.0092 17.816 13.1481 17.9475L16.2256 20.8593"
+        d="M14 8.5L15.8586 10.3586C15.9367 10.4367 15.9367 10.5633 15.8586 10.6414L14 12.5"
         stroke={color}
-        strokeWidth="2.5"
         strokeLinecap="round"
+        strokeWidth="1.5"
       />
       <path
-        d="M23.7744 14.5514L26.8519 17.4632C26.9908 17.5947 26.9908 17.816 26.8519 17.9475L23.7744 20.8593"
+        d="M8.5 20.5H15.5"
         stroke={color}
-        strokeWidth="2.5"
         strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
-      <rect x="13.3333" y="32.6345" width="13.3333" height="2.36546" rx="1.18273" fill={color} />
     </svg>
   );
 }

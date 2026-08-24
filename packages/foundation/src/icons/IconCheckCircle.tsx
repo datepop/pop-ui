@@ -1,4 +1,4 @@
-import { ColorGray900, ColorWhite } from '../tokens/colors';
+import { ColorGray900 } from '../tokens/colors';
 
 import type { IIconProps } from '../types/icon';
 
@@ -19,21 +19,32 @@ export default function IconCheckCircle({
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <circle
-        cx="12"
-        cy="12"
-        r="9"
-        fill={isFilled ? color : 'none'}
-        stroke={color}
-        strokeWidth="1.5"
-      />
-      <path
-        d="M8.24878 12L11.2488 15L16.5 9.5"
-        stroke={isFilled ? ColorWhite : color}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      {isFilled ? (
+        <>
+          <path
+            d="M11.9995 1.99951C17.5222 1.99951 21.9993 6.47683 21.9995 11.9995C21.9995 17.5224 17.5224 21.9995 11.9995 21.9995C6.47683 21.9993 1.99951 17.5222 1.99951 11.9995C1.99971 6.47695 6.47695 1.99971 11.9995 1.99951Z"
+            fill={color}
+          />
+          <path
+            d="M8 12L11 15L16 10"
+            stroke="white"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
+          />{' '}
+        </>
+      ) : (
+        <>
+          <circle cx="12" cy="12" r="9" stroke={color} strokeWidth="1.5" />
+          <path
+            d="M8 12L11 15L16 10"
+            stroke={color}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth="1.5"
+          />{' '}
+        </>
+      )}
     </svg>
   );
 }

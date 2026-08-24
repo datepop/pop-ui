@@ -18,39 +18,39 @@ export default function IconLocation({
       {...props}
     >
       <path
-        d="M12 21C16.9706 21 21 16.9706 21 12C21 7.0294 16.9706 3 12 3C7.0294 3 3 7.0294 3 12C3 16.9706 7.0294 21 12 21Z"
+        d="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"
         stroke={color}
-        strokeWidth="1.5"
-        strokeMiterlimit="10"
         strokeLinecap="round"
+        strokeMiterlimit="10"
+        strokeWidth="1.5"
       />
       <path
-        d="M21 12H16.17"
+        d="M12 7V3"
         stroke={color}
-        strokeWidth="1.5"
-        strokeMiterlimit="10"
         strokeLinecap="round"
+        strokeMiterlimit="10"
+        strokeWidth="1.5"
       />
       <path
-        d="M7.83 12H3"
+        d="M12 21V17"
         stroke={color}
-        strokeWidth="1.5"
-        strokeMiterlimit="10"
         strokeLinecap="round"
+        strokeMiterlimit="10"
+        strokeWidth="1.5"
       />
       <path
-        d="M12 21V16.17"
+        d="M17 12H21"
         stroke={color}
-        strokeWidth="1.5"
-        strokeMiterlimit="10"
         strokeLinecap="round"
+        strokeMiterlimit="10"
+        strokeWidth="1.5"
       />
       <path
-        d="M12 7.83V3"
+        d="M3 12H7"
         stroke={color}
-        strokeWidth="1.5"
-        strokeMiterlimit="10"
         strokeLinecap="round"
+        strokeMiterlimit="10"
+        strokeWidth="1.5"
       />
     </svg>
   );

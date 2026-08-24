@@ -12,32 +12,14 @@ export default function IconMeatBall({
     <svg
       width={size}
       height={size}
-      viewBox="0 0 40 40"
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <circle
-        cx="10.8333"
-        cy="19.1667"
-        r="2.5"
-        transform="rotate(-90 10.8333 19.1667)"
-        fill={color}
-      />
-      <circle
-        cx="20.8333"
-        cy="19.1666"
-        r="2.5"
-        transform="rotate(-90 20.8333 19.1666)"
-        fill={color}
-      />
-      <circle
-        cx="30.8333"
-        cy="19.1666"
-        r="2.5"
-        transform="rotate(-90 30.8333 19.1666)"
-        fill={color}
-      />
+      <circle cx="18" cy="12" fill={color} r="1.5" transform="rotate(90 18 12)" />
+      <circle cx="12" cy="12" fill={color} r="1.5" transform="rotate(90 12 12)" />
+      <circle cx="6" cy="12" fill={color} r="1.5" transform="rotate(90 6 12)" />
     </svg>
   );
 }

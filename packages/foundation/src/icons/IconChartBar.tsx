@@ -19,36 +19,76 @@ export default function IconChartBar({
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <rect
-        x="3.5"
-        y="13.8889"
-        width="3.77778"
-        height="6.61111"
-        rx="1"
-        stroke={color}
-        strokeWidth={isFilled ? 0 : 1.5}
-        fill={isFilled ? color : undefined}
-      />
-      <rect
-        x="10.1113"
-        y="3.5"
-        width="3.77778"
-        height="17"
-        rx="1"
-        stroke={color}
-        strokeWidth={isFilled ? 0 : 1.5}
-        fill={isFilled ? color : undefined}
-      />
-      <rect
-        x="16.7222"
-        y="9.16675"
-        width="3.77778"
-        height="11.3333"
-        rx="1"
-        stroke={color}
-        strokeWidth={isFilled ? 0 : 1.5}
-        fill={isFilled ? color : undefined}
-      />
+      {isFilled ? (
+        <>
+          <rect
+            fill={color}
+            height="4"
+            rx="1"
+            stroke={color}
+            strokeWidth="1.5"
+            transform="rotate(90 7 14)"
+            width="7"
+            x="7"
+            y="14"
+          />
+          <rect
+            fill={color}
+            height="4"
+            rx="1"
+            stroke={color}
+            strokeWidth="1.5"
+            transform="rotate(90 14 3)"
+            width="18"
+            x="14"
+            y="3"
+          />
+          <rect
+            fill={color}
+            height="4"
+            rx="1"
+            stroke={color}
+            strokeWidth="1.5"
+            transform="rotate(90 21 9)"
+            width="12"
+            x="21"
+            y="9"
+          />{' '}
+        </>
+      ) : (
+        <>
+          <rect
+            height="4"
+            rx="1"
+            stroke={color}
+            strokeWidth="1.5"
+            transform="rotate(90 7 14)"
+            width="7"
+            x="7"
+            y="14"
+          />
+          <rect
+            height="4"
+            rx="1"
+            stroke={color}
+            strokeWidth="1.5"
+            transform="rotate(90 14 3)"
+            width="18"
+            x="14"
+            y="3"
+          />
+          <rect
+            height="4"
+            rx="1"
+            stroke={color}
+            strokeWidth="1.5"
+            transform="rotate(90 21 9)"
+            width="12"
+            x="21"
+            y="9"
+          />{' '}
+        </>
+      )}
     </svg>
   );
 }
