@@ -3,7 +3,7 @@
 import { DndContext, closestCenter } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import { Input } from '@mantine/core';
-import { ColorAqua700, ColorRed700, IconPhoto } from '@pop-ui/foundation';
+import { ColorAqua700, ColorRed700, IconImage } from '@pop-ui/foundation';
 import Lottie from 'lottie-react';
 import { useEffect, useState } from 'react';
 
@@ -273,7 +273,7 @@ export const LottieInput = ({
                         height={height}
                       >
                         {hasIcon && (
-                          <IconPhoto size={36} color={isError ? ColorRed700 : ColorAqua700} />
+                          <IconImage size={36} color={isError ? ColorRed700 : ColorAqua700} />
                         )}
                         {placeholder && (
                           <div
@@ -318,7 +318,7 @@ export const LottieInput = ({
                       height={height}
                     >
                       {hasIcon && (
-                        <IconPhoto size={36} color={isError ? ColorRed700 : ColorAqua700} />
+                        <IconImage size={36} color={isError ? ColorRed700 : ColorAqua700} />
                       )}
                       {placeholder && (
                         <div

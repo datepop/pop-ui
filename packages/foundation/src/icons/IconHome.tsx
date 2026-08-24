@@ -18,23 +18,24 @@ export default function IconHome({
       {...props}
     >
       <path
-        d="M20.1671 9.0322V19.2757C20.1671 20.3831 19.2698 21.2804 18.1624 21.2804H5.8474C4.74 21.2804 3.8426 20.3831 3.8426 19.2757V9.0322"
+        d="M20 9V19.0359C20 20.1208 19.1205 21 18.0351 21H5.96491C4.87953 21 4 20.1208 4 19.0359V9"
         stroke={color}
-        strokeWidth="1.5"
         strokeMiterlimit="10"
+        strokeWidth="1.5"
       />
       <path
-        d="M2 10.426L10.5536 3.2566C11.3842 2.5406 12.6157 2.5406 13.4462 3.2566L22 10.4356"
+        d="M9 21V16C9 14.8954 9.89543 14 11 14H13C14.1046 14 15 14.8954 15 16V21"
         stroke={color}
-        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
+        strokeWidth="1.5"
       />
       <path
-        d="M9.1791 21.2804V16.6886C9.1791 15.5812 10.0765 14.6838 11.1839 14.6838H12.8354C13.9428 14.6838 14.8402 15.5812 14.8402 16.6886V21.2804"
+        d="M2 10.5L10.7047 3.101C11.4516 2.46618 12.5484 2.46617 13.2953 3.101L22 10.5"
         stroke={color}
-        strokeWidth="1.5"
+        strokeLinecap="round"
         strokeLinejoin="round"
+        strokeWidth="1.5"
       />
     </svg>
   );

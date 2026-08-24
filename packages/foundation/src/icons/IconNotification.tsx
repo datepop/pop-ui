@@ -1,3 +1,5 @@
+import { useId } from 'react';
+
 import { ColorGray900 } from '../tokens/colors';
 
 import type { IIconProps } from '../types/icon';
@@ -9,31 +11,58 @@ export default function IconNotification({
   ...props
 }: IIconProps) {
   const isFilled = variant === 'filled';
+  const maskId = useId();
 
   return (
     <svg
       width={size}
       height={size}
-      viewBox="0 0 40 40"
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <path
-        d="M25.3832 30.2916C25.3832 33.2416 22.9832 35.6416 20.0332 35.6416C17.0832 35.6416 14.6832 33.2416 14.6832 30.2916"
-        stroke={color}
-        strokeMiterlimit="10"
-        strokeLinecap="round"
-        fill={isFilled ? color : 'none'}
-        strokeWidth={isFilled ? 0 : 2.5}
-      />
-      <path
-        d="M32.3833 30.2916H7.59997C6.26664 30.2916 5.39997 28.9083 5.9833 27.7083L8.1333 23.3249C8.24997 23.0749 8.31664 22.8083 8.31664 22.5416V16.0416C8.31664 9.59161 13.55 4.35828 20 4.35828C26.45 4.35828 31.6833 9.59161 31.6833 16.0416V22.5416C31.6833 22.8083 31.75 23.0916 31.8666 23.3249L34.0166 27.7083C34.6 28.8916 33.7333 30.2916 32.4 30.2916H32.3833Z"
-        stroke={color}
-        strokeMiterlimit="10"
-        fill={isFilled ? color : 'none'}
-        strokeWidth={isFilled ? 0 : 2.5}
-      />
+      {isFilled ? (
+        <>
+          <mask id={maskId} maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+            <rect width="24" height="24" fill="white" />
+            <path d="M8.25 18.5H15.75" stroke="black" strokeWidth="1.5" />
+          </mask>
+          <g mask={`url(#${maskId})`}>
+            <path
+              d="M15 18.5C15 20.1542 13.6542 21.5 12 21.5C10.3458 21.5 9 20.1542 9 18.5"
+              stroke={color}
+              strokeLinecap="round"
+              strokeMiterlimit="10"
+              strokeWidth="1.5"
+              fill={color}
+            />
+            <path
+              d="M19.8477 18.2815H4.14175C3.29677 18.2815 2.74754 17.428 3.11722 16.6877L4.47974 13.9833C4.55367 13.829 4.59592 13.6645 4.59592 13.5L4.59588 9.70823C4.59588 5.72879 7.9124 2.5 12 2.5C16.0875 2.5 19.404 5.72879 19.404 9.70823L19.4041 13.5C19.4041 13.6645 19.4463 13.8393 19.5203 13.9833L20.8828 16.6877C21.2525 17.4177 20.7032 18.2815 19.8583 18.2815H19.8477Z"
+              stroke={color}
+              strokeMiterlimit="10"
+              strokeWidth="1.5"
+              fill={color}
+            />
+          </g>{' '}
+        </>
+      ) : (
+        <>
+          <path
+            d="M15 18.5C15 20.1542 13.6542 21.5 12 21.5C10.3458 21.5 9 20.1542 9 18.5"
+            stroke={color}
+            strokeLinecap="round"
+            strokeMiterlimit="10"
+            strokeWidth="1.5"
+          />
+          <path
+            d="M19.8477 18.2815H4.14175C3.29677 18.2815 2.74754 17.428 3.11722 16.6877L4.47974 13.9833C4.55367 13.829 4.59592 13.6645 4.59592 13.5L4.59588 9.70823C4.59588 5.72879 7.9124 2.5 12 2.5C16.0875 2.5 19.404 5.72879 19.404 9.70823L19.4041 13.5C19.4041 13.6645 19.4463 13.8393 19.5203 13.9833L20.8828 16.6877C21.2525 17.4177 20.7032 18.2815 19.8583 18.2815H19.8477Z"
+            stroke={color}
+            strokeMiterlimit="10"
+            strokeWidth="1.5"
+          />{' '}
+        </>
+      )}
     </svg>
   );
 }

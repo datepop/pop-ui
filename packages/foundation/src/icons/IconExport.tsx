@@ -12,31 +12,24 @@ export default function IconExport({
     <svg
       width={size}
       height={size}
-      viewBox="0 0 40 40"
+      viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
       <path
-        d="M32.8572 17.2537V31.2558C32.8572 33.329 31.1863 35 29.113 35H10.8871C8.81391 35 7.14294 33.329 7.14294 31.2558V17.2537"
+        d="M21.5 15V19C21.5 20.1046 20.6046 21 19.5 21H4.5C3.39543 21 2.5 20.1046 2.5 19V15"
         stroke={color}
-        strokeWidth="2.5"
-        strokeMiterlimit="10"
         strokeLinecap="round"
+        strokeWidth="1.5"
       />
+      <path d="M12 16L12 3" stroke={color} strokeLinecap="round" strokeWidth="1.5" />
       <path
-        d="M12.5116 12.4884L20 5L27.5039 12.4884"
+        d="M16 7L12 3L8 7"
         stroke={color}
-        strokeWidth="2.5"
         strokeLinecap="round"
         strokeLinejoin="round"
-      />
-      <path
-        d="M20 5V25.6395"
-        stroke={color}
-        strokeWidth="2.5"
-        strokeMiterlimit="10"
-        strokeLinecap="round"
+        strokeWidth="1.5"
       />
     </svg>
   );

@@ -307,7 +307,7 @@ export const iconMetadata: Record<TIconName, IIconMetadataEntry> = {
     categories: [IconCategory.SYSTEM],
     variants: ['line'],
   },
-  IconPhoto: {
+  IconImage: {
     categories: [IconCategory.CONTENT],
     variants: ['line'],
   },
@@ -350,6 +350,10 @@ export const iconMetadata: Record<TIconName, IIconMetadataEntry> = {
   IconQuote: {
     categories: [IconCategory.ACTION],
     variants: ['line', 'filled'],
+  },
+  IconQuoteSerif: {
+    categories: [IconCategory.ACTION],
+    variants: ['filled'],
   },
   IconRefresh: {
     categories: [IconCategory.ACTION],
@@ -415,11 +419,11 @@ export const iconMetadata: Record<TIconName, IIconMetadataEntry> = {
     categories: [IconCategory.SYSTEM],
     variants: ['line'],
   },
-  IconSwapHorizontal: {
+  IconAlignHorizontal: {
     categories: [IconCategory.ACTION],
     variants: ['line'],
   },
-  IconSwapVertical: {
+  IconAlignVertical: {
     categories: [IconCategory.ACTION],
     variants: ['line'],
   },
@@ -429,13 +433,25 @@ export const iconMetadata: Record<TIconName, IIconMetadataEntry> = {
   },
   IconTicket: {
     categories: [IconCategory.CONTENT],
-    variants: ['line'],
+    variants: ['line', 'filled'],
+  },
+  IconTicketMovie: {
+    categories: [IconCategory.CONTENT],
+    variants: ['line', 'filled'],
   },
   IconTicketPlay: {
     categories: [IconCategory.CONTENT],
     variants: ['line'],
   },
+  IconTicketPoppass: {
+    categories: [IconCategory.CONTENT],
+    variants: ['line'],
+  },
   IconTrash: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
+  IconTrashcan: {
     categories: [IconCategory.ACTION],
     variants: ['line'],
   },
@@ -470,5 +486,89 @@ export const iconMetadata: Record<TIconName, IIconMetadataEntry> = {
   IconXCircle: {
     categories: [IconCategory.STATUS],
     variants: ['line', 'filled'],
+  },
+  IconImageAdd: {
+    categories: [IconCategory.CONTENT],
+    variants: ['line'],
+  },
+  IconAlign: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
+  IconChevronLeftCircle: {
+    categories: [IconCategory.ACTION],
+    variants: ['line', 'filled'],
+  },
+  IconControl: {
+    categories: [IconCategory.SYSTEM],
+    variants: ['line'],
+  },
+  IconDocumentCheck: {
+    categories: [IconCategory.CONTENT],
+    variants: ['line'],
+  },
+  IconDownload: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
+  IconDownloadCircle: {
+    categories: [IconCategory.ACTION],
+    variants: ['line', 'filled'],
+  },
+  IconKeyword: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
+  IconMenuPlus: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
+  IconOpenInFull: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
+  IconParking: {
+    categories: [IconCategory.CONTENT],
+    variants: ['line'],
+  },
+  IconPlayTicket2: {
+    categories: [IconCategory.BRAND],
+    variants: ['line'],
+  },
+  IconPurchase: {
+    categories: [IconCategory.BRAND],
+    variants: ['line'],
+  },
+  IconReport: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
+  IconReport2: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
+  IconRemove: {
+    categories: [IconCategory.ACTION],
+    variants: ['line', 'filled'],
+  },
+  IconRoad: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
+  IconSync: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
+  IconSyncAlt: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
+  IconVisibilityOff: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+  },
+  IconWeb: {
+    categories: [IconCategory.CONTENT],
+    variants: ['line'],
   },
 };

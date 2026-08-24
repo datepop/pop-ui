@@ -30,7 +30,7 @@ def checkoutPopUi(Map args = [:]) {
         ],
         userRemoteConfigs: [[
             url: 'https://github.com/datepop/pop-ui.git',
-            credentialsId: 'github-credentials',
+            credentialsId: 'github-app',
             refspec: refspec
         ]]
     ])

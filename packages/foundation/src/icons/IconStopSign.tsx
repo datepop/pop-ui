@@ -17,14 +17,8 @@ export default function IconStopSign({
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <circle cx="12" cy="12" r="9.25" stroke={color} strokeWidth="1.5" />
-      <path
-        d="M5.6532 17.7853L18.3469 6.01475"
-        stroke={color}
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+      <path d="M18 6L6 18" stroke={color} strokeLinecap="round" strokeWidth="1.5" />
+      <circle cx="12" cy="12" r="9" stroke={color} strokeMiterlimit="10" strokeWidth="1.5" />
     </svg>
   );
 }

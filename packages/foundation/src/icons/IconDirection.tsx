@@ -18,18 +18,17 @@ export default function IconDirection({
       {...props}
     >
       <path
-        d="M3.3003 22.8938V10.6187C3.3003 9.0062 4.6128 7.6937 6.2253 7.6937H20.7003"
+        d="M15 3L20 8L15 13"
         stroke={color}
-        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
+        strokeWidth="1.5"
       />
       <path
-        d="M14.113 1.10614L20.7006 7.69364L14.113 14.2811"
+        d="M19 8H8C6.34315 8 5 9.34315 5 11V21"
         stroke={color}
-        strokeWidth="1.5"
         strokeLinecap="round"
-        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
     </svg>
   );
