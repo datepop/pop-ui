@@ -4,20 +4,21 @@ Pop UI의 공용 React 컴포넌트 패키지입니다.
 
 ## 요구 사항
 
-- React `19.2.x`
-- `react-dom` `19.2.x`
+- React `18.x` 또는 `19.x`
+- `react-dom` `18.x` 또는 `19.x`
+- Mantine `8.3.x`: `@mantine/core`, `@mantine/dates`, `@mantine/dropzone`, `@mantine/hooks`, `@mantine/notifications`
 
 패키지는 `@pop-ui/core/styles.css`를 export 하므로, 앱 엔트리에서 한 번만 로드해야 합니다.
 
 ## 설치
 
 ```bash
-yarn add @pop-ui/core react react-dom
+yarn add @pop-ui/core @mantine/core @mantine/dates @mantine/dropzone @mantine/hooks @mantine/notifications react react-dom
 ```
 
 ## 사용 방법
 
-`PopUiProvider`로 앱을 감싸고, 전역 스타일을 함께 불러오세요.
+앱 엔트리에서 `@pop-ui/core/styles.css`를 한 번만 import한 뒤, `PopUiProvider`로 앱을 감싸세요.
 
 ```tsx
 import '@pop-ui/core/styles.css';
@@ -40,6 +41,10 @@ export function App() {
 ```
 
 `PopUiProvider` sets up Mantine provider, CSS variable injection, and Notifications. `toast` depends on the `Notifications` mounted by this provider.
+
+### Release order
+
+`@pop-ui/foundation` must be published before `@pop-ui/core` whenever core starts using a new foundation export. Core's published manifest pins the normalized foundation version, so reusing an already-published version after changing its exports can make a clean consumer fail even when the workspace build passes.
 
 ### Next.js App Router notes
 
