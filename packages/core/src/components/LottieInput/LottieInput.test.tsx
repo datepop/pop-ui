@@ -76,7 +76,7 @@ vi.mock('@dnd-kit/utilities', () => ({
 }));
 
 vi.mock('@pop-ui/foundation', () => ({
-  IconImage: () => <div data-testid="icon-image" />,
+  IconPhoto: () => <div data-testid="icon-image" />,
   IconXCircle: () => <div data-testid="icon-xcircle" />,
   IconDragMenu: () => <div data-testid="icon-drag" />,
   ColorRed700: '#e03131',

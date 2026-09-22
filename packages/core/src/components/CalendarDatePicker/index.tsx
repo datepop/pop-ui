@@ -3,7 +3,7 @@
 import { DatePicker } from '@mantine/dates';
 import { IconChevronLeft, IconChevronRight } from '@pop-ui/foundation';
 import dayjs from 'dayjs';
-import 'dayjs/locale/ko';
+import 'dayjs/locale/ko.js';
 import { useCallback, useMemo, useState } from 'react';
 
 import styles from './styles.module.scss';

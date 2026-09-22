@@ -1,11 +1,11 @@
 'use client';
 
-import 'dayjs/locale/ko';
+import 'dayjs/locale/ko.js';
 import { Input, Popover } from '@mantine/core';
 import { DateTimePicker } from '@mantine/dates';
 import { IconCalendar, formatDateDisplay, toValueString, parseDateValue } from '@pop-ui/foundation';
 import dayjs from 'dayjs';
-import customParseFormat from 'dayjs/plugin/customParseFormat';
+import customParseFormat from 'dayjs/plugin/customParseFormat.js';
 import { useState } from 'react';
 
 dayjs.extend(customParseFormat);
