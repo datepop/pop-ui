@@ -42,10 +42,6 @@ export function App() {
 
 `PopUiProvider` sets up Mantine provider, CSS variable injection, and Notifications. `toast` depends on the `Notifications` mounted by this provider.
 
-### Release order
-
-`@pop-ui/foundation` must be published before `@pop-ui/core` whenever core starts using a new foundation export. Core's published manifest pins the normalized foundation version, so reusing an already-published version after changing its exports can make a clean consumer fail even when the workspace build passes.
-
 ### Next.js App Router notes
 
 - 앱 엔트리에서 `@pop-ui/core/styles.css`를 직접 import 해야 합니다.

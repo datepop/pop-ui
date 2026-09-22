@@ -83,6 +83,7 @@ export { default as IconParking } from './IconParking';
 export { default as IconPercentBadge } from './IconPercentBadge';
 export { default as IconPhoneClock } from './IconPhoneClock';
 export { default as IconImage } from './IconImage';
+export { default as IconPhoto } from './IconImage';
 export { default as IconPlayCircle } from './IconPlayCircle';
 export { default as IconPlayTicket2 } from './IconPlayTicket2';
 export { default as IconPlus } from './IconPlus';

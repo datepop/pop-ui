@@ -311,6 +311,10 @@ export const iconMetadata: Record<TIconName, IIconMetadataEntry> = {
     categories: [IconCategory.CONTENT],
     variants: ['line'],
   },
+  IconPhoto: {
+    categories: [IconCategory.CONTENT],
+    variants: ['line'],
+  },
   IconPlayCircle: {
     categories: [IconCategory.CONTENT],
     variants: ['line', 'filled'],

@@ -159,10 +159,10 @@ describe('normalized icons', () => {
     expect('IconSwapVertical' in Icons).toBe(false);
   });
 
-  it('exports image names without legacy photo aliases', () => {
+  it('exports image names with a legacy photo alias', () => {
     expect(Icons.IconImage).toBeTypeOf('function');
     expect(Icons.IconImageAdd).toBeTypeOf('function');
-    expect('IconPhoto' in Icons).toBe(false);
+    expect(Icons.IconPhoto).toBe(Icons.IconImage);
     expect('IconAddImage' in Icons).toBe(false);
   });
 
