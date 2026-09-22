@@ -1,5 +1,12 @@
 # @pop-ui/core
 
+## 2.0.0
+
+### Patch Changes
+
+- Updated dependencies [4a412cc]
+  - @pop-ui/foundation@2.0.0
+
 ## 1.1.12
 
 ### Patch Changes
