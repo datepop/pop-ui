@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.0
+
+### Minor Changes
+
+- Next.js 16 SSR 호환성을 보강하고 core의 Mantine 의존성 중복 설치를 방지하도록 패키지 계약을 정리했습니다. foundation에 기존 `IconPhoto` 이름을 alias로 복원해 PDS v2.0 아이콘 이름 변경으로 인한 소비 앱 오류를 방지합니다.
+
 ## 2.0.0
 
 ### Major Changes
