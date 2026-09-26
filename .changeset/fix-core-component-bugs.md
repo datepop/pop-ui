@@ -10,4 +10,4 @@ Modal에 `styles`를 넘기면 기본 스타일이 통째로 사라지던 문제
 
 IButtonProps, TButtonVariant, IModalProps 등 컴포넌트 props 타입을 패키지 루트에서 type-only로 export합니다.
 
-Button warning variant의 포커스 상태 텍스트를 흰색에서 red-800으로 바꿔 배경 대비(5.02:1)를 확보했습니다.
+Button warning variant의 focus-visible 상태 텍스트가 red-50 배경 위 흰색으로 렌더되던 오타를 수정해, 다른 warning 상태와 같은 red-500으로 맞췄습니다.
