@@ -12,10 +12,14 @@ export const Toggle = ({
   size = 'md',
   labelPosition = 'right',
   disabled,
+  checked,
+  defaultChecked,
   onChange,
   ...props
 }: IToggleProps) => {
-  const [isChecked, setIsChecked] = useState<boolean>(props?.checked || false);
+  const isControlled = checked !== undefined;
+  const [uncontrolledChecked, setUncontrolledChecked] = useState<boolean>(defaultChecked ?? false);
+  const isChecked = isControlled ? checked : uncontrolledChecked;
 
   let sizeStyle = styles['Toggle--Medium'];
   let trackWidth = 50;
@@ -32,9 +36,11 @@ export const Toggle = ({
       if (onChange) {
         onChange(event);
       }
-      setIsChecked(event?.target?.checked);
+      if (!isControlled) {
+        setUncontrolledChecked(event?.target?.checked);
+      }
     },
-    [onChange],
+    [isControlled, onChange],
   );
 
   return (
@@ -43,6 +49,8 @@ export const Toggle = ({
       size={size}
       labelPosition={labelPosition}
       disabled={disabled}
+      checked={checked}
+      defaultChecked={defaultChecked}
       onChange={onChangeHandler}
       styles={() => ({
         track: {
