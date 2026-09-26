@@ -65,6 +65,7 @@ const cleanupRenderedApp = ({ container, root }: IRenderedApp): void => {
 type TStylesFn = () => { track: { width: number; backgroundColor?: string; borderColor?: string } };
 
 const getStyles = (call: number): TStylesFn => mockSwitch.mock.calls[call]?.[0].styles as TStylesFn;
+const getLastStyles = (): TStylesFn => mockSwitch.mock.lastCall?.[0].styles as TStylesFn;
 
 describe('Toggle', () => {
   afterEach(() => {
@@ -128,6 +129,68 @@ describe('Toggle', () => {
 
     expect(track.backgroundColor).toBe('#0fd3d8 !important');
     expect(track.borderColor).toBe('#0fd3d8 !important');
+
+    cleanupRenderedApp(view);
+  });
+
+  it('follows the controlled checked prop when the parent changes it', () => {
+    const view = renderApp(<Toggle checked={false} labelPosition="right" />);
+
+    expect(mockSwitch.mock.lastCall?.[0].checked).toBe(false);
+    expect(getLastStyles()().track.backgroundColor).toBeUndefined();
+
+    act(() => {
+      view.root.render(<Toggle checked labelPosition="right" />);
+    });
+
+    expect(mockSwitch.mock.lastCall?.[0].checked).toBe(true);
+    expect(getLastStyles()().track.backgroundColor).toBe('#0fd3d8 !important');
+
+    act(() => {
+      view.root.render(<Toggle checked={false} labelPosition="right" />);
+    });
+
+    expect(mockSwitch.mock.lastCall?.[0].checked).toBe(false);
+    expect(getLastStyles()().track.backgroundColor).toBeUndefined();
+
+    cleanupRenderedApp(view);
+  });
+
+  it('keeps the controlled track color when clicked without the parent updating checked', () => {
+    const onChange = vi.fn();
+    const view = renderApp(<Toggle checked={false} labelPosition="right" onChange={onChange} />);
+
+    act(() => {
+      view.container.querySelector('input')?.click();
+    });
+
+    expect(onChange).toHaveBeenCalledTimes(1);
+    expect(mockSwitch.mock.lastCall?.[0].checked).toBe(false);
+    expect(getLastStyles()().track.backgroundColor).toBeUndefined();
+
+    cleanupRenderedApp(view);
+  });
+
+  it('seeds the uncontrolled track color from defaultChecked and forwards it to Switch', () => {
+    const view = renderApp(<Toggle defaultChecked labelPosition="right" />);
+
+    expect(mockSwitch.mock.lastCall?.[0].defaultChecked).toBe(true);
+    expect(mockSwitch.mock.lastCall?.[0].checked).toBeUndefined();
+    expect(getLastStyles()().track.backgroundColor).toBe('#0fd3d8 !important');
+
+    cleanupRenderedApp(view);
+  });
+
+  it('updates the uncontrolled track color on change', () => {
+    const view = renderApp(<Toggle labelPosition="right" />);
+
+    expect(getLastStyles()().track.backgroundColor).toBeUndefined();
+
+    act(() => {
+      view.container.querySelector('input')?.click();
+    });
+
+    expect(getLastStyles()().track.backgroundColor).toBe('#0fd3d8 !important');
 
     cleanupRenderedApp(view);
   });
