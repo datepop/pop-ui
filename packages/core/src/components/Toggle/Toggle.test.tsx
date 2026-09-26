@@ -136,18 +136,21 @@ describe('Toggle', () => {
   it('follows the controlled checked prop when the parent changes it', () => {
     const view = renderApp(<Toggle checked={false} labelPosition="right" />);
 
+    expect(mockSwitch.mock.lastCall?.[0].checked).toBe(false);
     expect(getLastStyles()().track.backgroundColor).toBeUndefined();
 
     act(() => {
       view.root.render(<Toggle checked labelPosition="right" />);
     });
 
+    expect(mockSwitch.mock.lastCall?.[0].checked).toBe(true);
     expect(getLastStyles()().track.backgroundColor).toBe('#0fd3d8 !important');
 
     act(() => {
       view.root.render(<Toggle checked={false} labelPosition="right" />);
     });
 
+    expect(mockSwitch.mock.lastCall?.[0].checked).toBe(false);
     expect(getLastStyles()().track.backgroundColor).toBeUndefined();
 
     cleanupRenderedApp(view);
@@ -162,6 +165,7 @@ describe('Toggle', () => {
     });
 
     expect(onChange).toHaveBeenCalledTimes(1);
+    expect(mockSwitch.mock.lastCall?.[0].checked).toBe(false);
     expect(getLastStyles()().track.backgroundColor).toBeUndefined();
 
     cleanupRenderedApp(view);

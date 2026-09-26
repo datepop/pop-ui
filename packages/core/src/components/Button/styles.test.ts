@@ -44,7 +44,7 @@ const contrastRatio = (foreground: string, background: string): number => {
 };
 
 describe('Button styles', () => {
-  it('keeps the warning focus state text readable against its background (WCAG AA 4.5:1)', () => {
+  it('gives the warning focus-visible state at least 4.5:1 text contrast against its background', () => {
     const focus = getDeclarations('.Button--Warning:focus-visible:not(:disabled)');
 
     expect(contrastRatio(focus.color, focus['background-color'])).toBeGreaterThanOrEqual(4.5);
