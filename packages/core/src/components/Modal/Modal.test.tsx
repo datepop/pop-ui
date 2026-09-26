@@ -15,6 +15,7 @@ vi.mock('@pop-ui/foundation', () => ({
 
 import { Modal } from '.';
 
+import type { IModalProps } from './types';
 import type { Root } from 'react-dom/client';
 
 interface IRenderedApp {
@@ -55,7 +56,7 @@ const DEFAULT_STYLES: TStylesRecord = {
   content: { borderRadius: '12px' },
   title: { fontSize: '16px', fontWeight: '700', lineHeight: '150%', color: '#1a1a1a' },
   header: { padding: '16px' },
-  body: { paddingLeft: '0px', paddingRight: '0px' },
+  body: { paddingInline: 0 },
 };
 
 describe('Modal', () => {
@@ -92,6 +93,39 @@ describe('Modal', () => {
       title: { ...DEFAULT_STYLES.title, fontSize: '20px' },
       overlay: { opacity: 0.5 },
     });
+
+    cleanupRenderedApp(view);
+  });
+
+  it('lets user body padding coexist with the default inline padding reset', () => {
+    const view = renderApp(
+      <Modal opened onClose={() => {}} styles={{ body: { padding: '8px' } }} />,
+    );
+
+    expect((getProps().styles as TStylesRecord).body).toEqual({ paddingInline: 0, padding: '8px' });
+
+    cleanupRenderedApp(view);
+  });
+
+  it('drops the default content radius in fullScreen so Mantine keeps its square corners', () => {
+    const view = renderApp(<Modal opened fullScreen onClose={() => {}} />);
+
+    const styles = getProps().styles as TStylesRecord;
+
+    expect(getProps().fullScreen).toBe(true);
+    expect(styles.content?.borderRadius).toBeUndefined();
+    expect(styles.title).toEqual(DEFAULT_STYLES.title);
+
+    cleanupRenderedApp(view);
+  });
+
+  it('passes function-form styles through unchanged', () => {
+    const userStyles = () => ({ content: { backgroundColor: 'red' } });
+    const view = renderApp(
+      <Modal opened onClose={() => {}} styles={userStyles as unknown as IModalProps['styles']} />,
+    );
+
+    expect(getProps().styles).toBe(userStyles);
 
     cleanupRenderedApp(view);
   });
