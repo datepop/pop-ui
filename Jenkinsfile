@@ -265,16 +265,11 @@ NODE
                 }
                 stage('Create GitHub Release') {
                     steps {
-                        withCredentials([string(credentialsId: 'github-pat', variable: 'GH_PAT')]) {
-                            sh '''
-                                set -eu
-                                export GH_TOKEN="$GH_PAT"
-                                gh release create "$TAG_NAME" \
-                                    --title "Release $TAG_NAME" \
-                                    --generate-notes \
-                                    || echo "[release] GitHub release already exists or could not be created"
-                            '''
-                        }
+                        createGithubReleaseIfMissing(
+                            tagName: env.TAG_NAME,
+                            title: "Release ${env.TAG_NAME}",
+                            generateNotes: true
+                        )
                     }
                 }
             }
