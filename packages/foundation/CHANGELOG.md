@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.1.1
+
+### Patch Changes
+
+- `@pop-ui/core` 2.1.1 과 버전을 맞추기 위한 릴리스입니다. foundation 변경은 없습니다.
+
 ## 2.1.0
 
 ### Minor Changes
