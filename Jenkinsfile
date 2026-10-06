@@ -37,7 +37,7 @@ def checkoutPopUi(Map args = [:]) {
 }
 
 pipeline {
-    agent any
+    agent { label 'jenkins-worker' }
 
     options {
         disableConcurrentBuilds()
