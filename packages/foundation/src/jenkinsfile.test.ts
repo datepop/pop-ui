@@ -13,3 +13,11 @@ describe('Jenkins GitHub release policy', () => {
     expect(jenkinsfile).toContain('generateNotes: true');
   });
 });
+
+describe('Jenkins agent policy', () => {
+  it('runs on the shared worker without activating corepack globally', () => {
+    expect(jenkinsfile).toContain("pipeline {\n    agent { label 'jenkins-worker' }");
+    expect(jenkinsfile).not.toContain('agent any');
+    expect(jenkinsfile).not.toContain('corepack enable');
+  });
+});
