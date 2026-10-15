@@ -8,6 +8,7 @@ import { ColorAqua700, ColorRed700, IconPhoto } from '@pop-ui/foundation';
 import { useEffect, useRef, useState } from 'react';
 
 import { Button } from '../Button';
+import { Modal } from '../Modal';
 import {
   addItemAtPosition,
   addItems,
@@ -23,7 +24,26 @@ import { SortableEmptySlot } from '../shared/MultiItemInput/SortableEmptySlot';
 import { TileShell } from '../shared/MultiItemInput/TileShell';
 import { usePositionGrid } from '../shared/MultiItemInput/usePositionGrid';
 
-import type { TImageInputAccept, IImageInputItem, IImageInputProps } from './types';
+import type {
+  TImageInputAccept,
+  IImageInputItem,
+  IImageInputProps,
+  IImagePreviewProps,
+} from './types';
+
+function isSafeExternalUrl(value?: string): value is string {
+  if (!value) return false;
+  try {
+    const protocol = new URL(value).protocol;
+    return protocol === 'http:' || protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
+function openExternalUrl(value: string): void {
+  if (isSafeExternalUrl(value)) window.open(value, '_blank', 'noopener,noreferrer');
+}
 
 function toInputAccept(accept?: TImageInputAccept): string {
   if (!accept) return 'image/*';
@@ -49,6 +69,7 @@ interface ITileProps {
   onDelete: (id: string) => void;
   onReplace: (id: string, file: File) => void;
   onEdit: (item: IImageInputItem) => void;
+  onPreview: (item: IImageInputItem) => void;
 }
 
 function ImageTile({
@@ -68,8 +89,10 @@ function ImageTile({
   onDelete,
   onReplace,
   onEdit,
+  onPreview,
 }: ITileProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const canShowLink = onLinkClick ? !!item.url : isSafeExternalUrl(item.url);
 
   return (
     <TileShell
@@ -81,9 +104,13 @@ function ImageTile({
       isLoading={isLoading}
       itemIsLoading={item.isLoading}
       canDelete={canDelete}
-      hasLink={hasLink}
+      hasLink={hasLink && canShowLink}
       linkUrl={item.url}
-      onLinkClick={onLinkClick ? () => onLinkClick(item) : undefined}
+      onLinkClick={
+        hasLink && canShowLink
+          ? () => (onLinkClick ? onLinkClick(item) : item.url && openExternalUrl(item.url))
+          : undefined
+      }
       onDelete={() => onDelete(item.id)}
       deleteAriaLabel="이미지 삭제"
       onTileClick={() => fileInputRef.current?.click()}
@@ -96,16 +123,33 @@ function ImageTile({
         onReplace(item.id, file);
       }}
       actionBarExtra={
-        !readOnly && hasEdit ? (
-          <Button
-            variant="basic"
-            size="sm"
-            aria-label="이미지 편집"
-            className={styles.EditButton}
-            onClick={() => onEdit(item)}
-          >
-            편집
-          </Button>
+        item.url || (!readOnly && hasEdit) ? (
+          <>
+            {item.url && (
+              <Button
+                variant="basic"
+                size="sm"
+                aria-label="이미지 확대보기"
+                className={styles.ActionButton}
+                disabled={isLoading || item.isLoading}
+                onClick={() => onPreview(item)}
+              >
+                확대보기
+              </Button>
+            )}
+            {!readOnly && hasEdit && (
+              <Button
+                variant="basic"
+                size="sm"
+                aria-label="이미지 편집"
+                className={styles.ActionButton}
+                disabled={isLoading || item.isLoading}
+                onClick={() => onEdit(item)}
+              >
+                편집
+              </Button>
+            )}
+          </>
         ) : undefined
       }
     >
@@ -170,6 +214,14 @@ export const ImageInput = ({
 
   const isError = !!errorMsg;
   const [editingItem, setEditingItem] = useState<IImageInputItem | null>(null);
+  const [previewSelection, setPreviewSelection] = useState<
+    (Pick<IImageInputItem, 'id'> & { url: string }) | null
+  >(null);
+  const previewItem = previewSelection
+    ? (value.find((item) => item.id === previewSelection.id && item.url === previewSelection.url) ??
+      null)
+    : null;
+  if (previewSelection && !previewItem) setPreviewSelection(null);
 
   // Revoke all blob URLs on unmount
   const latestValueRef = useRef(value);
@@ -261,6 +313,9 @@ export const ImageInput = ({
                     onDelete={handleDelete}
                     onReplace={handleReplace}
                     onEdit={setEditingItem}
+                    onPreview={(item) => {
+                      if (item.url) setPreviewSelection({ id: item.id, url: item.url });
+                    }}
                   />
                 ) : (
                   !readOnly && (
@@ -309,6 +364,9 @@ export const ImageInput = ({
                     onDelete={handleDelete}
                     onReplace={handleReplace}
                     onEdit={setEditingItem}
+                    onPreview={(item) => {
+                      if (item.url) setPreviewSelection({ id: item.id, url: item.url });
+                    }}
                   />
                 ))}
 
@@ -352,6 +410,55 @@ export const ImageInput = ({
           onSubmit={handleCropSubmit}
         />
       )}
+
+      <Modal
+        opened={!!previewItem}
+        onClose={() => setPreviewSelection(null)}
+        title={previewItem?.file?.name ?? '이미지 미리보기'}
+        size="xl"
+        centered
+        withCloseButton
+        styles={{ body: { padding: '16px' } }}
+      >
+        {previewItem && (
+          <ImagePreview key={`${previewItem.id}:${previewItem.url}`} item={previewItem} />
+        )}
+      </Modal>
     </div>
   );
 };
+
+function ImagePreview({ item }: IImagePreviewProps) {
+  const [isOriginalSize, setIsOriginalSize] = useState(false);
+
+  return (
+    <div>
+      <div className={styles.PreviewControls} role="group" aria-label="이미지 크기 보기">
+        <Button
+          variant={isOriginalSize ? 'basic' : 'primary'}
+          size="sm"
+          aria-label="화면에 맞춤"
+          aria-pressed={!isOriginalSize}
+          onClick={() => setIsOriginalSize(false)}
+        >
+          화면에 맞춤
+        </Button>
+        <Button
+          variant={isOriginalSize ? 'primary' : 'basic'}
+          size="sm"
+          aria-label="원본 크기 (100%)"
+          aria-pressed={isOriginalSize}
+          onClick={() => setIsOriginalSize(true)}
+        >
+          원본 크기 (100%)
+        </Button>
+      </div>
+      <div
+        data-size-mode={isOriginalSize ? 'original' : 'fit'}
+        className={`${styles.PreviewViewport}${isOriginalSize ? ` ${styles.PreviewOriginal}` : ''}`}
+      >
+        <img src={item.url} alt={item.file?.name ?? '이미지 미리보기'} />
+      </div>
+    </div>
+  );
+}

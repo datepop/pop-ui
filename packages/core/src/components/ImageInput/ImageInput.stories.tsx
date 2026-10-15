@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { ImageInput } from '.';
 
@@ -84,6 +84,40 @@ export const ReadOnly: StoryObj<typeof ImageInput> = {
       />
     </div>
   ),
+};
+
+export const PreviewLocalAndSaved: StoryObj<typeof ImageInput> = {
+  render: () => {
+    const [localUrl] = useState(() =>
+      URL.createObjectURL(
+        new Blob(
+          [
+            '<svg xmlns="http://www.w3.org/2000/svg" width="960" height="640"><rect width="100%" height="100%" fill="#d9f2f3"/><text x="50%" y="50%" text-anchor="middle" font-size="48" fill="#087c91">Local image</text></svg>',
+          ],
+          { type: 'image/svg+xml' },
+        ),
+      ),
+    );
+    useEffect(() => () => URL.revokeObjectURL(localUrl), [localUrl]);
+
+    return (
+      <div style={stackStyle}>
+        <p style={{ margin: 0, fontSize: 12, color: '#666' }}>
+          Blob URL과 저장된 CDN 이미지 모두 확대보기에서 화면 맞춤과 100% 원본 크기로 확인할 수
+          있습니다.
+        </p>
+        <ImageInput
+          value={[
+            { id: 'local-image', url: localUrl, file: new File(['local'], 'local.svg') },
+            { id: 'saved-image', url: 'https://picsum.photos/seed/saved-preview/1200/800' },
+          ]}
+          maxLength={2}
+          hasLink
+          canDelete
+        />
+      </div>
+    );
+  },
 };
 
 // ─── ErrorState ──────────────────────────────────────────────────────────────

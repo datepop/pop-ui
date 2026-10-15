@@ -16,13 +16,47 @@
   object-position: center;
 }
 
-// 편집 버튼 (ImageInput 전용)
-.EditButton {
+// ImageInput action buttons stay compact enough for the shared tile action bar.
+.ActionButton {
   flex-shrink: 0;
   font-size: fn.font-size(400);
-  border-radius: 8px;
+  border-radius: $border-radius-200;
   height: fn.spacing(600);
-  padding: 0 fn.spacing(200);
+  padding: 0 fn.spacing(100);
+}
+
+.PreviewControls {
+  display: flex;
+  justify-content: center;
+  gap: fn.spacing(100);
+  margin-bottom: fn.spacing(200);
+}
+
+.PreviewViewport {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  max-height: calc(100dvh - 180px);
+  overflow: auto;
+
+  img {
+    display: block;
+    max-width: 100%;
+    max-height: calc(100dvh - 220px);
+    object-fit: contain;
+  }
+}
+
+.PreviewOriginal {
+  display: block;
+  overflow: auto;
+  max-height: calc(100dvh - 180px);
+
+  img {
+    max-width: none;
+    max-height: none;
+  }
 }
 
 // PlaceholderText는 shared Dropzone children으로 사용 (ImageInput에서 className으로 전달)
