@@ -226,7 +226,7 @@ describe('ImageInput', () => {
     it('renders a keyboard-accessible icon preview action in readOnly mode', () => {
       const view = renderApp(
         <ImageInput
-          value={[makeItem('saved', 'https://cdn.example.test/image.jpg'), makeItem('missing', '')]}
+          value={[makeItem('saved', 'https://cdn.example.test/image.jpg'), { id: 'missing' }]}
           readOnly
         />,
       );

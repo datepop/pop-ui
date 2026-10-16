@@ -88,30 +88,44 @@ export const ReadOnly: StoryObj<typeof ImageInput> = {
 
 export const PreviewLocalAndSaved: StoryObj<typeof ImageInput> = {
   render: () => {
-    const [localUrl] = useState(() =>
-      URL.createObjectURL(
-        new Blob(
-          [
-            '<svg xmlns="http://www.w3.org/2000/svg" width="960" height="640"><rect width="100%" height="100%" fill="#d9f2f3"/><text x="50%" y="50%" text-anchor="middle" font-size="48" fill="#087c91">Local image</text></svg>',
-          ],
-          { type: 'image/svg+xml' },
+    const [localUrls] = useState(() =>
+      [
+        [80, 100, 'Small', '#087c91'],
+        [320, 1000, 'Portrait', '#00759a'],
+        [4000, 3000, 'Very large', '#006180'],
+      ].map(([width, height, label, color]) =>
+        URL.createObjectURL(
+          new Blob(
+            [
+              `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><rect width="100%" height="100%" fill="#d9f2f3"/><text x="50%" y="50%" text-anchor="middle" font-size="32" fill="${color}">${label}</text></svg>`,
+            ],
+            { type: 'image/svg+xml' },
+          ),
         ),
       ),
     );
-    useEffect(() => () => URL.revokeObjectURL(localUrl), [localUrl]);
+    useEffect(() => () => localUrls.forEach((url) => URL.revokeObjectURL(url)), [localUrls]);
 
     return (
       <div style={stackStyle}>
         <p style={{ margin: 0, fontSize: 12, color: '#666' }}>
-          Blob URL과 저장된 CDN 이미지 모두 확대보기에서 화면 맞춤과 100% 원본 크기로 확인할 수
-          있습니다.
+          작은 이미지, 세로형, 가로형, 매우 큰 Blob/CDN 이미지를 모달의 화면 맞춤 및 100% 원본
+          크기로 비교해 보세요. 작은 화면에서도 모달이 이미지와 컨트롤 폭에 맞춰집니다.
         </p>
         <ImageInput
           value={[
-            { id: 'local-image', url: localUrl, file: new File(['local'], 'local.svg') },
-            { id: 'saved-image', url: 'https://picsum.photos/seed/saved-preview/1200/800' },
+            { id: 'local-small', url: localUrls[0], file: new File(['small'], 'small.svg') },
+            {
+              id: 'local-portrait',
+              url: localUrls[1],
+              file: new File(['portrait'], 'portrait.svg'),
+            },
+            { id: 'local-large', url: localUrls[2], file: new File(['large'], 'large.svg') },
+            { id: 'saved-landscape', url: 'https://picsum.photos/seed/saved-preview/1200/800' },
           ]}
-          maxLength={2}
+          width={120}
+          height={100}
+          maxLength={4}
           hasLink
           canDelete
         />

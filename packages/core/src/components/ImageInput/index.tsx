@@ -426,12 +426,22 @@ export const ImageInput = ({
         title={previewItem?.file?.name ?? '이미지 미리보기'}
         size="xl"
         centered
+        xOffset={16}
+        yOffset={16}
         withCloseButton
         closeButtonProps={{
           'aria-label': '이미지 미리보기 닫기',
           icon: <IconX size={18} color={ColorGray600} />,
         }}
-        styles={{ body: { padding: '16px' } }}
+        styles={{
+          content: {
+            flex: '0 1 auto',
+            width: 'fit-content',
+            maxWidth: 'calc(100vw - 32px)',
+            maxHeight: 'calc(100dvh - 32px)',
+          },
+          body: { padding: '16px' },
+        }}
       >
         {previewItem && (
           <ImagePreview key={`${previewItem.id}:${previewItem.url}`} item={previewItem} />
@@ -445,7 +455,7 @@ function ImagePreview({ item }: IImagePreviewProps) {
   const [isOriginalSize, setIsOriginalSize] = useState(false);
 
   return (
-    <div>
+    <div className={styles.PreviewContent}>
       <div className={styles.PreviewControls} role="group" aria-label="이미지 크기 보기">
         <Button
           variant={isOriginalSize ? 'basic' : 'primary'}

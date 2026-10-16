@@ -87,31 +87,44 @@
 
 .PreviewControls {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: fn.spacing(100);
   margin-bottom: fn.spacing(200);
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+.PreviewContent {
+  width: fit-content;
+  max-width: 100%;
 }
 
 .PreviewViewport {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: fit-content;
   max-width: 100%;
-  max-height: calc(100dvh - 180px);
+  margin-inline: auto;
+  max-height: calc(100dvh - 240px);
   overflow: auto;
 
   img {
     display: block;
     max-width: 100%;
-    max-height: calc(100dvh - 220px);
+    max-height: calc(100dvh - 240px);
     object-fit: contain;
   }
 }
 
 .PreviewOriginal {
   display: block;
+  width: fit-content;
+  max-width: 100%;
   overflow: auto;
-  max-height: calc(100dvh - 180px);
+  max-height: calc(100dvh - 240px);
 
   img {
     max-width: none;
