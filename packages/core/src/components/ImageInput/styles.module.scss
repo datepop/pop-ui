@@ -8,6 +8,12 @@
 }
 
 // 이미지 전용
+.TileContent {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 .TileImage {
   display: block;
   width: 100%;
@@ -16,13 +22,112 @@
   object-position: center;
 }
 
-// 편집 버튼 (ImageInput 전용)
-.EditButton {
-  flex-shrink: 0;
-  font-size: fn.font-size(400);
-  border-radius: 8px;
-  height: fn.spacing(600);
-  padding: 0 fn.spacing(200);
+.OverlayButton {
+  position: absolute;
+  bottom: fn.spacing(200);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: fn.spacing(800);
+  height: fn.spacing(800);
+  padding: 0;
+  border: fn.border-width(25) solid $color-gray-100;
+  border-radius: $border-radius-200;
+  background: $color-white;
+  box-shadow: #{$shadow-dashboard-card-x}px #{$shadow-dashboard-card-y}px
+    #{$shadow-dashboard-card-blur} #{$shadow-dashboard-card-spread}px $shadow-dashboard-card-color;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.95);
+  transition:
+    opacity 120ms ease,
+    transform 120ms ease;
+
+  &:hover {
+    background: $color-gray-50;
+  }
+
+  &:focus-visible {
+    outline: fn.border-width(50) solid $color-aqua-700;
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.OverlayButtonLeft {
+  left: fn.spacing(200);
+}
+
+.OverlayButtonRight {
+  right: fn.spacing(200);
+}
+
+.TileContent:hover .OverlayButton,
+.TileContent:focus-within .OverlayButton,
+.OverlayButton:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+@media (hover: none), (pointer: coarse) {
+  .OverlayButton {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1);
+  }
+}
+
+.PreviewControls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: fn.spacing(100);
+  margin-bottom: fn.spacing(200);
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+.PreviewContent {
+  width: fit-content;
+  max-width: 100%;
+}
+
+.PreviewViewport {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  max-height: calc(100dvh - 240px);
+  overflow: auto;
+
+  img {
+    display: block;
+    max-width: 100%;
+    max-height: calc(100dvh - 240px);
+    object-fit: contain;
+  }
+}
+
+.PreviewOriginal {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  overflow: auto;
+  max-height: calc(100dvh - 240px);
+
+  img {
+    max-width: none;
+    max-height: none;
+  }
 }
 
 // PlaceholderText는 shared Dropzone children으로 사용 (ImageInput에서 className으로 전달)

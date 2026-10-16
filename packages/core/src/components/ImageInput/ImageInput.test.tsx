@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 // ─── Hoisted mock factories ───────────────────────────────────────────────────
 
-const { mockDropzone } = vi.hoisted(() => {
+const { mockDropzone, mockSortableKeyDown, mockSortableActivatorRef } = vi.hoisted(() => {
   const spy = vi.fn(
     ({
       children,
@@ -28,7 +28,11 @@ const { mockDropzone } = vi.hoisted(() => {
       </div>
     ),
   );
-  return { mockDropzone: spy };
+  return {
+    mockDropzone: spy,
+    mockSortableKeyDown: vi.fn(),
+    mockSortableActivatorRef: vi.fn(),
+  };
 });
 
 // ─── Module mocks ─────────────────────────────────────────────────────────────
@@ -44,6 +48,7 @@ vi.mock('@mantine/core', () => ({
       <div data-testid="input-error">{children}</div>
     ),
   },
+  Loader: () => <div data-testid="loader" />,
 }));
 
 vi.mock('@dnd-kit/core', () => ({
@@ -60,8 +65,9 @@ vi.mock('@dnd-kit/sortable', () => ({
   rectSortingStrategy: vi.fn(),
   sortableKeyboardCoordinates: vi.fn(),
   useSortable: vi.fn(() => ({
-    attributes: {},
-    listeners: {},
+    attributes: { role: 'button', tabIndex: 0, 'data-sortable-attribute': 'preserved' },
+    listeners: { onKeyDown: mockSortableKeyDown },
+    setActivatorNodeRef: mockSortableActivatorRef,
     setNodeRef: vi.fn(),
     transform: null,
     transition: undefined,
@@ -75,12 +81,16 @@ vi.mock('@dnd-kit/utilities', () => ({
 
 vi.mock('@pop-ui/foundation', () => ({
   IconPhoto: () => <div data-testid="icon-image" />,
+  IconOpenInFull: () => <svg data-testid="preview-icon" />,
+  IconEdit: () => <svg data-testid="edit-icon" />,
   IconXCircle: () => <div data-testid="icon-xcircle" />,
   IconDragMenu: () => <div data-testid="icon-drag" />,
+  IconX: () => <svg data-testid="icon-x" />,
+  ColorGray900: '#333333',
+  ColorGray600: '#808080',
   ColorRed700: '#e03131',
   ColorAqua700: '#07a3c6',
   ColorAqua500: '#0fd3d8',
-  ColorGray600: '#808080',
 }));
 
 vi.mock('../Button', () => ({
@@ -133,6 +143,32 @@ vi.mock('./ImageInputCropModal', () => ({
     ) : null,
 }));
 
+vi.mock('../Modal', () => ({
+  Modal: ({
+    opened,
+    title,
+    onClose,
+    closeButtonProps,
+    children,
+  }: {
+    opened: boolean;
+    title: string;
+    onClose: () => void;
+    closeButtonProps?: { 'aria-label'?: string };
+    children: React.ReactNode;
+  }) =>
+    opened ? (
+      <div data-testid="preview-modal" aria-label={title}>
+        <button
+          data-testid="preview-close"
+          aria-label={closeButtonProps?.['aria-label']}
+          onClick={onClose}
+        />
+        {children}
+      </div>
+    ) : null,
+}));
+
 import { ImageInput } from '.';
 
 import type { IImageInputItem } from './types';
@@ -168,6 +204,8 @@ const makeItem = (id: string, url = `blob:mock/${id}`): IImageInputItem => ({ id
 
 describe('ImageInput', () => {
   beforeEach(() => {
+    mockSortableKeyDown.mockClear();
+    mockSortableActivatorRef.mockClear();
     vi.spyOn(URL, 'createObjectURL').mockReturnValue('blob:mock/new');
     vi.spyOn(URL, 'revokeObjectURL').mockImplementation(() => {});
   });
@@ -193,11 +231,135 @@ describe('ImageInput', () => {
       cleanupRenderedApp(view);
     });
 
+    it('renders a keyboard-accessible icon preview action in readOnly mode', () => {
+      const view = renderApp(
+        <ImageInput
+          value={[makeItem('saved', 'https://cdn.example.test/image.jpg'), { id: 'missing' }]}
+          readOnly
+        />,
+      );
+      const previewButton =
+        view.container.querySelector<HTMLButtonElement>('[aria-label="이미지 확대보기"]');
+      expect(previewButton).not.toBeNull();
+      expect(previewButton).toHaveAttribute('title', '크게 보기');
+      expect(previewButton).toHaveTextContent('');
+      expect(previewButton?.querySelector('[data-testid="preview-icon"]')).not.toBeNull();
+      expect(previewButton?.tabIndex).toBe(0);
+      expect(previewButton?.parentElement).toBe(view.container.querySelector('img')?.parentElement);
+      act(() => previewButton?.focus());
+      expect(document.activeElement).toBe(previewButton);
+      expect(view.container.querySelectorAll('[aria-label="이미지 확대보기"]')).toHaveLength(1);
+      act(() => {
+        previewButton?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+      expect(view.container.querySelector('[data-testid="preview-modal"]')).not.toBeNull();
+      expect(view.container.querySelector('[data-testid="preview-close"]')).toHaveAttribute(
+        'aria-label',
+        '이미지 미리보기 닫기',
+      );
+      cleanupRenderedApp(view);
+    });
+
+    it('does not open the replacement picker when the preview action is clicked', () => {
+      const clickSpy = vi.spyOn(HTMLInputElement.prototype, 'click').mockImplementation(() => {});
+      const view = renderApp(<ImageInput value={[makeItem('a')]} />);
+      act(() => {
+        view.container
+          .querySelector('[aria-label="이미지 확대보기"]')
+          ?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+      expect(clickSpy).not.toHaveBeenCalled();
+      expect(view.container.querySelector('[data-testid="preview-modal"]')).not.toBeNull();
+      cleanupRenderedApp(view);
+    });
+
+    it('keeps tile click wired to replacement selection', () => {
+      const clickSpy = vi.spyOn(HTMLInputElement.prototype, 'click').mockImplementation(() => {});
+      const view = renderApp(<ImageInput value={[makeItem('a')]} />);
+      act(() => {
+        view.container
+          .querySelector('img')
+          ?.parentElement?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+      expect(clickSpy).toHaveBeenCalledTimes(1);
+      expect(view.container.querySelector('[data-testid="preview-modal"]')).toBeNull();
+      cleanupRenderedApp(view);
+    });
+
     it('readOnly hides delete buttons, drag handles, and dropzones', () => {
       const view = renderApp(<ImageInput value={[makeItem('a')]} readOnly />);
       expect(view.container.querySelector('[aria-label="이미지 삭제"]')).toBeNull();
       expect(view.container.querySelector('[aria-label="드래그로 순서 변경"]')).toBeNull();
       expect(view.container.querySelector('[data-testid="dropzone"]')).toBeNull();
+      cleanupRenderedApp(view);
+    });
+
+    it('places the reorder handle over the image and keeps its sortable keyboard behavior', () => {
+      const view = renderApp(<ImageInput value={[makeItem('a'), makeItem('b')]} />);
+      const image = view.container.querySelector('img');
+      const handle = view.container.querySelector<HTMLButtonElement>(
+        '[aria-label="드래그로 순서 변경"]',
+      );
+
+      expect(handle?.parentElement).toBe(image?.parentElement?.parentElement);
+      expect(handle).toHaveAttribute('role', 'button');
+      expect(handle).toHaveAttribute('tabindex', '0');
+      expect(handle).toHaveAttribute('data-sortable-attribute', 'preserved');
+      expect(mockSortableActivatorRef).toHaveBeenCalled();
+
+      act(() => {
+        handle?.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, key: ' ' }));
+      });
+      expect(mockSortableKeyDown).toHaveBeenCalledTimes(1);
+      cleanupRenderedApp(view);
+    });
+
+    it('keeps image replacement from opening when the overlay reorder handle is clicked', () => {
+      const clickSpy = vi.spyOn(HTMLInputElement.prototype, 'click').mockImplementation(() => {});
+      const view = renderApp(<ImageInput value={[makeItem('a'), makeItem('b')]} />);
+      const handle = view.container.querySelector('[aria-label="드래그로 순서 변경"]');
+
+      act(() => {
+        handle?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+
+      expect(clickSpy).not.toHaveBeenCalled();
+      cleanupRenderedApp(view);
+    });
+
+    it('keeps the original link action bar when the image reorder handle is overlaid', () => {
+      const view = renderApp(
+        <ImageInput value={[makeItem('a', 'https://example.com/a'), makeItem('b')]} hasLink />,
+      );
+      const image = view.container.querySelector('img');
+      const handle = view.container.querySelector('[aria-label="드래그로 순서 변경"]');
+      const linkButton = Array.from(view.container.querySelectorAll('button')).find(
+        (button) => button.textContent === '링크',
+      );
+
+      expect(handle?.parentElement).toBe(image?.parentElement?.parentElement);
+      expect(linkButton).not.toBeUndefined();
+      expect(linkButton?.parentElement).not.toBe(handle?.parentElement);
+      cleanupRenderedApp(view);
+    });
+
+    it('disables the overlay reorder handle while the image input is loading', () => {
+      const view = renderApp(<ImageInput value={[makeItem('a'), makeItem('b')]} isLoading />);
+      expect(view.container.querySelector('[aria-label="드래그로 순서 변경"]')).toBeDisabled();
+      cleanupRenderedApp(view);
+    });
+
+    it('disables the overlay reorder handle while its image is loading', () => {
+      const view = renderApp(
+        <ImageInput value={[{ ...makeItem('a'), isLoading: true }, makeItem('b')]} />,
+      );
+      expect(view.container.querySelector('[aria-label="드래그로 순서 변경"]')).toBeDisabled();
+      cleanupRenderedApp(view);
+    });
+
+    it('does not show the reorder handle when only one image is present', () => {
+      const view = renderApp(<ImageInput value={[makeItem('a')]} />);
+      expect(view.container.querySelector('[aria-label="드래그로 순서 변경"]')).toBeNull();
       cleanupRenderedApp(view);
     });
 
@@ -209,9 +371,16 @@ describe('ImageInput', () => {
       cleanupRenderedApp(view);
     });
 
-    it('hasEdit=true shows edit buttons on tiles', () => {
+    it('shows a keyboard-accessible edit icon on tiles when hasEdit is enabled', () => {
       const view = renderApp(<ImageInput value={[makeItem('a')]} hasEdit />);
-      expect(view.container.querySelector('[aria-label="이미지 편집"]')).not.toBeNull();
+      const editButton =
+        view.container.querySelector<HTMLButtonElement>('[aria-label="이미지 편집"]');
+      expect(editButton).not.toBeNull();
+      expect(editButton).toHaveAttribute('title', '편집');
+      expect(editButton).toHaveTextContent('');
+      expect(editButton?.querySelector('[data-testid="edit-icon"]')).not.toBeNull();
+      expect(editButton?.parentElement).toBe(view.container.querySelector('img')?.parentElement);
+      expect(editButton?.tabIndex).toBe(0);
       cleanupRenderedApp(view);
     });
 
@@ -219,6 +388,170 @@ describe('ImageInput', () => {
       const view = renderApp(<ImageInput value={[makeItem('a')]} hasEdit={false} />);
       expect(view.container.querySelector('[aria-label="이미지 편집"]')).toBeNull();
       cleanupRenderedApp(view);
+    });
+
+    it('hides the edit icon in readOnly mode', () => {
+      const view = renderApp(<ImageInput value={[makeItem('a')]} hasEdit readOnly />);
+      expect(view.container.querySelector('[aria-label="이미지 편집"]')).toBeNull();
+      cleanupRenderedApp(view);
+    });
+  });
+
+  describe('image preview', () => {
+    it('opens from the explicit action and toggles fit and original size without changing value', () => {
+      const onChange = vi.fn();
+      const view = renderApp(
+        <ImageInput value={[makeItem('a', 'blob:mock/a')]} onChange={onChange} />,
+      );
+
+      act(() => {
+        view.container
+          .querySelector('[aria-label="이미지 확대보기"]')
+          ?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+
+      expect(view.container.querySelector('[data-testid="preview-modal"]')).not.toBeNull();
+      expect(
+        view.container.querySelector('[data-testid="preview-modal"] img')?.getAttribute('src'),
+      ).toBe('blob:mock/a');
+      expect(view.container.querySelector('[aria-label="화면에 맞춤"]')).toHaveAttribute(
+        'aria-pressed',
+        'true',
+      );
+
+      act(() => {
+        view.container
+          .querySelector('[aria-label="원본 크기 (100%)"]')
+          ?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+      expect(view.container.querySelector('[aria-label="원본 크기 (100%)"]')).toHaveAttribute(
+        'aria-pressed',
+        'true',
+      );
+      expect(view.container.querySelector('[data-size-mode="original"]')).not.toBeNull();
+      expect(onChange).not.toHaveBeenCalled();
+
+      act(() => {
+        view.container
+          .querySelector('[data-testid="preview-close"]')
+          ?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+      expect(view.container.querySelector('[data-testid="preview-modal"]')).toBeNull();
+      expect(onChange).not.toHaveBeenCalled();
+      cleanupRenderedApp(view);
+    });
+
+    it('supports position mode and closes when the controlled value removes the previewed item', () => {
+      const view = renderApp(
+        <ImageInput
+          value={[{ ...makeItem('a', 'https://cdn.example.test/a.jpg'), position: 1 }]}
+          length={3}
+        />,
+      );
+      act(() => {
+        view.container
+          .querySelector('[aria-label="이미지 확대보기"]')
+          ?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+      expect(view.container.querySelector('[data-testid="preview-modal"]')).not.toBeNull();
+
+      act(() => view.root.render(<ImageInput value={[]} length={3} />));
+      expect(view.container.querySelector('[data-testid="preview-modal"]')).toBeNull();
+      cleanupRenderedApp(view);
+    });
+
+    it('keeps preview open for cloned items but closes when the selected source changes', () => {
+      const item = makeItem('a', 'https://cdn.example.test/a.jpg');
+      const view = renderApp(<ImageInput value={[item]} />);
+      act(() => {
+        view.container
+          .querySelector('[aria-label="이미지 확대보기"]')
+          ?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+      act(() => view.root.render(<ImageInput value={[{ ...item }]} />));
+      expect(view.container.querySelector('[data-testid="preview-modal"]')).not.toBeNull();
+
+      act(() =>
+        view.root.render(
+          <ImageInput value={[{ ...item, url: 'https://cdn.example.test/replacement.jpg' }]} />,
+        ),
+      );
+      expect(view.container.querySelector('[data-testid="preview-modal"]')).toBeNull();
+      cleanupRenderedApp(view);
+    });
+
+    it('disables both overlay actions while the item is loading', () => {
+      const view = renderApp(
+        <ImageInput value={[{ ...makeItem('a'), isLoading: true }]} hasEdit />,
+      );
+      expect(view.container.querySelector('[aria-label="이미지 확대보기"]')).toBeDisabled();
+      expect(view.container.querySelector('[aria-label="이미지 편집"]')).toBeDisabled();
+      cleanupRenderedApp(view);
+    });
+
+    it('disables both overlay actions while ImageInput is loading', () => {
+      const view = renderApp(<ImageInput value={[makeItem('a')]} hasEdit isLoading />);
+      expect(view.container.querySelector('[aria-label="이미지 확대보기"]')).toBeDisabled();
+      expect(view.container.querySelector('[aria-label="이미지 편집"]')).toBeDisabled();
+      cleanupRenderedApp(view);
+    });
+  });
+
+  describe('original link', () => {
+    it('opens HTTPS URLs in a protected new tab when no callback is provided', () => {
+      const openSpy = vi.spyOn(window, 'open').mockReturnValue(null);
+      const url = 'https://cdn.example.test/image.jpg?width=original&token=keep';
+      const view = renderApp(<ImageInput value={[makeItem('a', url)]} hasLink />);
+      act(() => {
+        Array.from(view.container.querySelectorAll('button'))
+          .find((button) => button.textContent === '링크')
+          ?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+      expect(openSpy).toHaveBeenCalledWith(url, '_blank', 'noopener,noreferrer');
+      cleanupRenderedApp(view);
+    });
+
+    it('opens plain HTTP URLs in a protected new tab', () => {
+      const openSpy = vi.spyOn(window, 'open').mockReturnValue(null);
+      const url = 'http://cdn.example.test/image.jpg';
+      const view = renderApp(<ImageInput value={[makeItem('a', url)]} hasLink />);
+      act(() => {
+        Array.from(view.container.querySelectorAll('button'))
+          .find((button) => button.textContent === '링크')
+          ?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+      expect(openSpy).toHaveBeenCalledWith(url, '_blank', 'noopener,noreferrer');
+      cleanupRenderedApp(view);
+    });
+
+    it('preserves onLinkClick and rejects unsafe default URL protocols', () => {
+      const onLinkClick = vi.fn();
+      const openSpy = vi.spyOn(window, 'open').mockReturnValue(null);
+      const overrideView = renderApp(
+        <ImageInput
+          value={[makeItem('callback', 'javascript:alert(1)')]}
+          hasLink
+          onLinkClick={onLinkClick}
+        />,
+      );
+      act(() => {
+        Array.from(overrideView.container.querySelectorAll('button'))
+          .find((button) => button.textContent === '링크')
+          ?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+      expect(onLinkClick).toHaveBeenCalledWith(makeItem('callback', 'javascript:alert(1)'));
+      cleanupRenderedApp(overrideView);
+
+      const unsafeView = renderApp(
+        <ImageInput value={[makeItem('unsafe', 'javascript:alert(1)')]} hasLink />,
+      );
+      expect(
+        Array.from(unsafeView.container.querySelectorAll('button')).some(
+          (button) => button.textContent === '링크',
+        ),
+      ).toBe(false);
+      expect(openSpy).not.toHaveBeenCalled();
+      cleanupRenderedApp(unsafeView);
     });
   });
 
@@ -295,7 +628,8 @@ describe('ImageInput', () => {
   // ─── crop modal ────────────────────────────────────────────────────────────
 
   describe('crop modal', () => {
-    it('edit button opens crop modal', () => {
+    it('edit icon opens crop modal without opening the replacement picker', () => {
+      const clickSpy = vi.spyOn(HTMLInputElement.prototype, 'click').mockImplementation(() => {});
       const view = renderApp(<ImageInput value={[makeItem('a')]} hasEdit />);
 
       expect(view.container.querySelector('[data-testid="crop-modal"]')).toBeNull();
@@ -307,6 +641,7 @@ describe('ImageInput', () => {
       });
 
       expect(view.container.querySelector('[data-testid="crop-modal"]')).not.toBeNull();
+      expect(clickSpy).not.toHaveBeenCalled();
       cleanupRenderedApp(view);
     });
 

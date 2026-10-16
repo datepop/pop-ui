@@ -32,6 +32,10 @@ interface IImageInputChangeMeta {
 
 type TImageInputPlaceholder = ReactNode | ((index: number) => ReactNode);
 
+interface IImagePreviewProps {
+  item: IImageInputItem;
+}
+
 interface IImageInputProps {
   value: IImageInputItem[];
   onChange?: (nextValue: IImageInputItem[], meta: IImageInputChangeMeta) => void;
@@ -57,6 +61,7 @@ export type {
   TImageInputAccept,
   IImageInputChangeMeta,
   IImageInputItem,
+  IImagePreviewProps,
   IImageInputProps,
   TImageInputChangeAction,
   TImageInputPlaceholder,
