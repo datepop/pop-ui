@@ -77,6 +77,7 @@ vi.mock('@dnd-kit/utilities', () => ({
 vi.mock('@pop-ui/foundation', () => ({
   IconPhoto: () => <div data-testid="icon-image" />,
   IconOpenInFull: () => <svg data-testid="preview-icon" />,
+  IconEdit: () => <svg data-testid="edit-icon" />,
   IconXCircle: () => <div data-testid="icon-xcircle" />,
   IconDragMenu: () => <div data-testid="icon-drag" />,
   IconX: () => <svg data-testid="icon-x" />,
@@ -294,14 +295,27 @@ describe('ImageInput', () => {
       cleanupRenderedApp(view);
     });
 
-    it('hasEdit=true shows edit buttons on tiles', () => {
+    it('shows a keyboard-accessible edit icon on tiles when hasEdit is enabled', () => {
       const view = renderApp(<ImageInput value={[makeItem('a')]} hasEdit />);
-      expect(view.container.querySelector('[aria-label="이미지 편집"]')).not.toBeNull();
+      const editButton =
+        view.container.querySelector<HTMLButtonElement>('[aria-label="이미지 편집"]');
+      expect(editButton).not.toBeNull();
+      expect(editButton).toHaveAttribute('title', '편집');
+      expect(editButton).toHaveTextContent('');
+      expect(editButton?.querySelector('[data-testid="edit-icon"]')).not.toBeNull();
+      expect(editButton?.parentElement).toBe(view.container.querySelector('img')?.parentElement);
+      expect(editButton?.tabIndex).toBe(0);
       cleanupRenderedApp(view);
     });
 
     it('hasEdit=false hides edit buttons', () => {
       const view = renderApp(<ImageInput value={[makeItem('a')]} hasEdit={false} />);
+      expect(view.container.querySelector('[aria-label="이미지 편집"]')).toBeNull();
+      cleanupRenderedApp(view);
+    });
+
+    it('hides the edit icon in readOnly mode', () => {
+      const view = renderApp(<ImageInput value={[makeItem('a')]} hasEdit readOnly />);
       expect(view.container.querySelector('[aria-label="이미지 편집"]')).toBeNull();
       cleanupRenderedApp(view);
     });
@@ -390,9 +404,19 @@ describe('ImageInput', () => {
       cleanupRenderedApp(view);
     });
 
-    it('disables preview action while the tile is loading', () => {
-      const view = renderApp(<ImageInput value={[{ ...makeItem('a'), isLoading: true }]} />);
+    it('disables both overlay actions while the item is loading', () => {
+      const view = renderApp(
+        <ImageInput value={[{ ...makeItem('a'), isLoading: true }]} hasEdit />,
+      );
       expect(view.container.querySelector('[aria-label="이미지 확대보기"]')).toBeDisabled();
+      expect(view.container.querySelector('[aria-label="이미지 편집"]')).toBeDisabled();
+      cleanupRenderedApp(view);
+    });
+
+    it('disables both overlay actions while ImageInput is loading', () => {
+      const view = renderApp(<ImageInput value={[makeItem('a')]} hasEdit isLoading />);
+      expect(view.container.querySelector('[aria-label="이미지 확대보기"]')).toBeDisabled();
+      expect(view.container.querySelector('[aria-label="이미지 편집"]')).toBeDisabled();
       cleanupRenderedApp(view);
     });
   });
@@ -528,7 +552,8 @@ describe('ImageInput', () => {
   // ─── crop modal ────────────────────────────────────────────────────────────
 
   describe('crop modal', () => {
-    it('edit button opens crop modal', () => {
+    it('edit icon opens crop modal without opening the replacement picker', () => {
+      const clickSpy = vi.spyOn(HTMLInputElement.prototype, 'click').mockImplementation(() => {});
       const view = renderApp(<ImageInput value={[makeItem('a')]} hasEdit />);
 
       expect(view.container.querySelector('[data-testid="crop-modal"]')).toBeNull();
@@ -540,6 +565,7 @@ describe('ImageInput', () => {
       });
 
       expect(view.container.querySelector('[data-testid="crop-modal"]')).not.toBeNull();
+      expect(clickSpy).not.toHaveBeenCalled();
       cleanupRenderedApp(view);
     });
 

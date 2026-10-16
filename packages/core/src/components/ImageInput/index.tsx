@@ -9,6 +9,7 @@ import {
   ColorGray600,
   ColorGray900,
   ColorRed700,
+  IconEdit,
   IconOpenInFull,
   IconPhoto,
   IconX,
@@ -130,20 +131,6 @@ function ImageTile({
         }
         onReplace(item.id, file);
       }}
-      actionBarExtra={
-        !readOnly && hasEdit ? (
-          <Button
-            variant="basic"
-            size="sm"
-            aria-label="이미지 편집"
-            className={styles.ActionButton}
-            disabled={isLoading || item.isLoading}
-            onClick={() => onEdit(item)}
-          >
-            편집
-          </Button>
-        ) : undefined
-      }
     >
       <input
         ref={fileInputRef}
@@ -162,10 +149,25 @@ function ImageTile({
           alt={item.file?.name ?? `이미지 ${index + 1}`}
           className={styles.TileImage}
         />
+        {hasEdit && !readOnly && (
+          <button
+            type="button"
+            className={`${styles.OverlayButton} ${styles.OverlayButtonLeft}`}
+            aria-label="이미지 편집"
+            title="편집"
+            disabled={isLoading || item.isLoading}
+            onClick={(event) => {
+              event.stopPropagation();
+              onEdit(item);
+            }}
+          >
+            <IconEdit size={18} />
+          </button>
+        )}
         {item.url && (
           <button
             type="button"
-            className={styles.PreviewButton}
+            className={`${styles.OverlayButton} ${styles.OverlayButtonRight}`}
             aria-label="이미지 확대보기"
             title="크게 보기"
             disabled={isLoading || item.isLoading}

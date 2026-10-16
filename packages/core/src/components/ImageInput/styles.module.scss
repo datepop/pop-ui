@@ -22,9 +22,8 @@
   object-position: center;
 }
 
-.PreviewButton {
+.OverlayButton {
   position: absolute;
-  right: fn.spacing(200);
   bottom: fn.spacing(200);
   z-index: 2;
   display: flex;
@@ -60,29 +59,28 @@
   }
 }
 
-.TileContent:hover .PreviewButton,
-.TileContent:focus-within .PreviewButton,
-.PreviewButton:focus-visible {
+.OverlayButtonLeft {
+  left: fn.spacing(200);
+}
+
+.OverlayButtonRight {
+  right: fn.spacing(200);
+}
+
+.TileContent:hover .OverlayButton,
+.TileContent:focus-within .OverlayButton,
+.OverlayButton:focus-visible {
   opacity: 1;
   pointer-events: auto;
   transform: scale(1);
 }
 
 @media (hover: none), (pointer: coarse) {
-  .PreviewButton {
+  .OverlayButton {
     opacity: 1;
     pointer-events: auto;
     transform: scale(1);
   }
-}
-
-// ImageInput action buttons stay compact enough for the shared tile action bar.
-.ActionButton {
-  flex-shrink: 0;
-  font-size: fn.font-size(400);
-  border-radius: $border-radius-200;
-  height: fn.spacing(600);
-  padding: 0 fn.spacing(100);
 }
 
 .PreviewControls {
