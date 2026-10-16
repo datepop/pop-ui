@@ -21,6 +21,7 @@ interface ITileShellProps {
   itemIsLoading?: boolean;
   canDelete: boolean;
   hasLink: boolean;
+  isDragHandleOverlay?: boolean;
   linkUrl?: string;
   onLinkClick?: () => void;
   onDelete: () => void;
@@ -41,6 +42,7 @@ export function TileShell({
   itemIsLoading,
   canDelete,
   hasLink,
+  isDragHandleOverlay = false,
   linkUrl,
   onLinkClick,
   onDelete,
@@ -83,14 +85,34 @@ export function TileShell({
     return defaultAnimateLayoutChanges(args);
   };
 
-  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
-    id,
-    disabled: readOnly,
-    animateLayoutChanges,
-  });
+  const {
+    attributes,
+    listeners,
+    setActivatorNodeRef,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id, disabled: readOnly, animateLayoutChanges });
 
+  const dragHandle = !readOnly && totalCount > 1 && (
+    <button
+      type="button"
+      className={isDragHandleOverlay ? styles.DragHandleOverlay : styles.DragHandle}
+      ref={setActivatorNodeRef}
+      {...attributes}
+      {...listeners}
+      aria-label="드래그로 순서 변경"
+      disabled={isDragHandleOverlay && (!!isLoading || !!itemIsLoading)}
+      onClick={isDragHandleOverlay ? (event) => event.stopPropagation() : undefined}
+    >
+      <IconDragMenu size={20} color={ColorGray600} />
+    </button>
+  );
   const showActionBar =
-    (!readOnly && totalCount > 1) || (hasLink && !!linkUrl && !!onLinkClick) || !!actionBarExtra;
+    (!isDragHandleOverlay && !!dragHandle) ||
+    (hasLink && !!linkUrl && !!onLinkClick) ||
+    !!actionBarExtra;
 
   const tileCursor = readOnly || isLoading || itemIsLoading || !onTileClick ? 'default' : 'pointer';
 
@@ -125,6 +147,7 @@ export function TileShell({
         onDrop={handleDrop}
       >
         {children}
+        {isDragHandleOverlay && dragHandle}
         {(isLoading || itemIsLoading) && (
           <div className={styles.LoadingOverlay}>
             <Loader size={width / 6} color={ColorAqua500} />
@@ -134,17 +157,7 @@ export function TileShell({
 
       {showActionBar && (
         <div className={styles.ActionBar}>
-          {!readOnly && totalCount > 1 && (
-            <button
-              type="button"
-              className={styles.DragHandle}
-              {...attributes}
-              {...listeners}
-              aria-label="드래그로 순서 변경"
-            >
-              <IconDragMenu size={20} color={ColorGray600} />
-            </button>
-          )}
+          {!isDragHandleOverlay && dragHandle}
 
           {hasLink && linkUrl && onLinkClick && (
             <button type="button" className={styles.LinkButton} onClick={onLinkClick}>

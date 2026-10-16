@@ -171,6 +171,16 @@ describe('LottieInput', () => {
       cleanupRenderedApp(view);
     });
 
+    it('keeps the reorder handle in the action bar for Lottie tiles', () => {
+      const view = renderApp(<LottieInput value={[makeItem('a'), makeItem('b')]} />);
+      const handle = view.container.querySelector('[aria-label="드래그로 순서 변경"]');
+      const player = view.container.querySelector('[data-testid="lottie-player"]');
+
+      expect(handle).not.toBeNull();
+      expect(handle?.parentElement).not.toBe(player?.parentElement);
+      cleanupRenderedApp(view);
+    });
+
     it('readOnly hides delete buttons and dropzones', () => {
       const view = renderApp(<LottieInput value={[makeItem('a')]} readOnly />);
       expect(view.container.querySelector('[aria-label="Lottie 삭제"]')).toBeNull();

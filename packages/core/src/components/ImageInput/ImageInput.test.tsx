@@ -4,7 +4,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 // ─── Hoisted mock factories ───────────────────────────────────────────────────
 
-const { mockDropzone } = vi.hoisted(() => {
+const { mockDropzone, mockSortableKeyDown, mockSortableActivatorRef } = vi.hoisted(() => {
   const spy = vi.fn(
     ({
       children,
@@ -28,7 +28,11 @@ const { mockDropzone } = vi.hoisted(() => {
       </div>
     ),
   );
-  return { mockDropzone: spy };
+  return {
+    mockDropzone: spy,
+    mockSortableKeyDown: vi.fn(),
+    mockSortableActivatorRef: vi.fn(),
+  };
 });
 
 // ─── Module mocks ─────────────────────────────────────────────────────────────
@@ -61,8 +65,9 @@ vi.mock('@dnd-kit/sortable', () => ({
   rectSortingStrategy: vi.fn(),
   sortableKeyboardCoordinates: vi.fn(),
   useSortable: vi.fn(() => ({
-    attributes: {},
-    listeners: {},
+    attributes: { role: 'button', tabIndex: 0, 'data-sortable-attribute': 'preserved' },
+    listeners: { onKeyDown: mockSortableKeyDown },
+    setActivatorNodeRef: mockSortableActivatorRef,
     setNodeRef: vi.fn(),
     transform: null,
     transition: undefined,
@@ -199,6 +204,8 @@ const makeItem = (id: string, url = `blob:mock/${id}`): IImageInputItem => ({ id
 
 describe('ImageInput', () => {
   beforeEach(() => {
+    mockSortableKeyDown.mockClear();
+    mockSortableActivatorRef.mockClear();
     vi.spyOn(URL, 'createObjectURL').mockReturnValue('blob:mock/new');
     vi.spyOn(URL, 'revokeObjectURL').mockImplementation(() => {});
   });
@@ -284,6 +291,75 @@ describe('ImageInput', () => {
       expect(view.container.querySelector('[aria-label="이미지 삭제"]')).toBeNull();
       expect(view.container.querySelector('[aria-label="드래그로 순서 변경"]')).toBeNull();
       expect(view.container.querySelector('[data-testid="dropzone"]')).toBeNull();
+      cleanupRenderedApp(view);
+    });
+
+    it('places the reorder handle over the image and keeps its sortable keyboard behavior', () => {
+      const view = renderApp(<ImageInput value={[makeItem('a'), makeItem('b')]} />);
+      const image = view.container.querySelector('img');
+      const handle = view.container.querySelector<HTMLButtonElement>(
+        '[aria-label="드래그로 순서 변경"]',
+      );
+
+      expect(handle?.parentElement).toBe(image?.parentElement?.parentElement);
+      expect(handle).toHaveAttribute('role', 'button');
+      expect(handle).toHaveAttribute('tabindex', '0');
+      expect(handle).toHaveAttribute('data-sortable-attribute', 'preserved');
+      expect(mockSortableActivatorRef).toHaveBeenCalled();
+
+      act(() => {
+        handle?.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, key: ' ' }));
+      });
+      expect(mockSortableKeyDown).toHaveBeenCalledTimes(1);
+      cleanupRenderedApp(view);
+    });
+
+    it('keeps image replacement from opening when the overlay reorder handle is clicked', () => {
+      const clickSpy = vi.spyOn(HTMLInputElement.prototype, 'click').mockImplementation(() => {});
+      const view = renderApp(<ImageInput value={[makeItem('a'), makeItem('b')]} />);
+      const handle = view.container.querySelector('[aria-label="드래그로 순서 변경"]');
+
+      act(() => {
+        handle?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+
+      expect(clickSpy).not.toHaveBeenCalled();
+      cleanupRenderedApp(view);
+    });
+
+    it('keeps the original link action bar when the image reorder handle is overlaid', () => {
+      const view = renderApp(
+        <ImageInput value={[makeItem('a', 'https://example.com/a'), makeItem('b')]} hasLink />,
+      );
+      const image = view.container.querySelector('img');
+      const handle = view.container.querySelector('[aria-label="드래그로 순서 변경"]');
+      const linkButton = Array.from(view.container.querySelectorAll('button')).find(
+        (button) => button.textContent === '링크',
+      );
+
+      expect(handle?.parentElement).toBe(image?.parentElement?.parentElement);
+      expect(linkButton).not.toBeUndefined();
+      expect(linkButton?.parentElement).not.toBe(handle?.parentElement);
+      cleanupRenderedApp(view);
+    });
+
+    it('disables the overlay reorder handle while the image input is loading', () => {
+      const view = renderApp(<ImageInput value={[makeItem('a'), makeItem('b')]} isLoading />);
+      expect(view.container.querySelector('[aria-label="드래그로 순서 변경"]')).toBeDisabled();
+      cleanupRenderedApp(view);
+    });
+
+    it('disables the overlay reorder handle while its image is loading', () => {
+      const view = renderApp(
+        <ImageInput value={[{ ...makeItem('a'), isLoading: true }, makeItem('b')]} />,
+      );
+      expect(view.container.querySelector('[aria-label="드래그로 순서 변경"]')).toBeDisabled();
+      cleanupRenderedApp(view);
+    });
+
+    it('does not show the reorder handle when only one image is present', () => {
+      const view = renderApp(<ImageInput value={[makeItem('a')]} />);
+      expect(view.container.querySelector('[aria-label="드래그로 순서 변경"]')).toBeNull();
       cleanupRenderedApp(view);
     });
 
