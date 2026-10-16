@@ -4,7 +4,15 @@ import { DndContext, closestCenter } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import { Input } from '@mantine/core';
 import { IMAGE_MIME_TYPE } from '@mantine/dropzone';
-import { ColorAqua700, ColorRed700, IconPhoto } from '@pop-ui/foundation';
+import {
+  ColorAqua700,
+  ColorGray600,
+  ColorGray900,
+  ColorRed700,
+  IconOpenInFull,
+  IconPhoto,
+  IconX,
+} from '@pop-ui/foundation';
 import { useEffect, useRef, useState } from 'react';
 
 import { Button } from '../Button';
@@ -123,33 +131,17 @@ function ImageTile({
         onReplace(item.id, file);
       }}
       actionBarExtra={
-        item.url || (!readOnly && hasEdit) ? (
-          <>
-            {item.url && (
-              <Button
-                variant="basic"
-                size="sm"
-                aria-label="이미지 확대보기"
-                className={styles.ActionButton}
-                disabled={isLoading || item.isLoading}
-                onClick={() => onPreview(item)}
-              >
-                확대보기
-              </Button>
-            )}
-            {!readOnly && hasEdit && (
-              <Button
-                variant="basic"
-                size="sm"
-                aria-label="이미지 편집"
-                className={styles.ActionButton}
-                disabled={isLoading || item.isLoading}
-                onClick={() => onEdit(item)}
-              >
-                편집
-              </Button>
-            )}
-          </>
+        !readOnly && hasEdit ? (
+          <Button
+            variant="basic"
+            size="sm"
+            aria-label="이미지 편집"
+            className={styles.ActionButton}
+            disabled={isLoading || item.isLoading}
+            onClick={() => onEdit(item)}
+          >
+            편집
+          </Button>
         ) : undefined
       }
     >
@@ -164,11 +156,28 @@ function ImageTile({
           e.target.value = '';
         }}
       />
-      <img
-        src={item.url}
-        alt={item.file?.name ?? `이미지 ${index + 1}`}
-        className={styles.TileImage}
-      />
+      <div className={styles.TileContent}>
+        <img
+          src={item.url}
+          alt={item.file?.name ?? `이미지 ${index + 1}`}
+          className={styles.TileImage}
+        />
+        {item.url && (
+          <button
+            type="button"
+            className={styles.PreviewButton}
+            aria-label="이미지 확대보기"
+            title="크게 보기"
+            disabled={isLoading || item.isLoading}
+            onClick={(event) => {
+              event.stopPropagation();
+              onPreview(item);
+            }}
+          >
+            <IconOpenInFull size={18} color={ColorGray900} />
+          </button>
+        )}
+      </div>
     </TileShell>
   );
 }
@@ -418,6 +427,10 @@ export const ImageInput = ({
         size="xl"
         centered
         withCloseButton
+        closeButtonProps={{
+          'aria-label': '이미지 미리보기 닫기',
+          icon: <IconX size={18} color={ColorGray600} />,
+        }}
         styles={{ body: { padding: '16px' } }}
       >
         {previewItem && (

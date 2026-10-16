@@ -76,12 +76,15 @@ vi.mock('@dnd-kit/utilities', () => ({
 
 vi.mock('@pop-ui/foundation', () => ({
   IconPhoto: () => <div data-testid="icon-image" />,
+  IconOpenInFull: () => <svg data-testid="preview-icon" />,
   IconXCircle: () => <div data-testid="icon-xcircle" />,
   IconDragMenu: () => <div data-testid="icon-drag" />,
+  IconX: () => <svg data-testid="icon-x" />,
+  ColorGray900: '#333333',
+  ColorGray600: '#808080',
   ColorRed700: '#e03131',
   ColorAqua700: '#07a3c6',
   ColorAqua500: '#0fd3d8',
-  ColorGray600: '#808080',
 }));
 
 vi.mock('../Button', () => ({
@@ -139,18 +142,22 @@ vi.mock('../Modal', () => ({
     opened,
     title,
     onClose,
+    closeButtonProps,
     children,
   }: {
     opened: boolean;
     title: string;
     onClose: () => void;
+    closeButtonProps?: { 'aria-label'?: string };
     children: React.ReactNode;
   }) =>
     opened ? (
       <div data-testid="preview-modal" aria-label={title}>
-        <button data-testid="preview-close" onClick={onClose}>
-          닫기
-        </button>
+        <button
+          data-testid="preview-close"
+          aria-label={closeButtonProps?.['aria-label']}
+          onClick={onClose}
+        />
         {children}
       </div>
     ) : null,
@@ -216,19 +223,44 @@ describe('ImageInput', () => {
       cleanupRenderedApp(view);
     });
 
-    it('shows preview action for saved and local image URLs in readOnly mode', () => {
+    it('renders a keyboard-accessible icon preview action in readOnly mode', () => {
       const view = renderApp(
         <ImageInput
-          value={[makeItem('saved', 'https://cdn.example.test/image.jpg'), makeItem('local')]}
+          value={[makeItem('saved', 'https://cdn.example.test/image.jpg'), makeItem('missing', '')]}
           readOnly
         />,
       );
-      expect(view.container.querySelectorAll('[aria-label="이미지 확대보기"]')).toHaveLength(2);
+      const previewButton =
+        view.container.querySelector<HTMLButtonElement>('[aria-label="이미지 확대보기"]');
+      expect(previewButton).not.toBeNull();
+      expect(previewButton).toHaveAttribute('title', '크게 보기');
+      expect(previewButton).toHaveTextContent('');
+      expect(previewButton?.querySelector('[data-testid="preview-icon"]')).not.toBeNull();
+      expect(previewButton?.tabIndex).toBe(0);
+      expect(previewButton?.parentElement).toBe(view.container.querySelector('img')?.parentElement);
+      act(() => previewButton?.focus());
+      expect(document.activeElement).toBe(previewButton);
+      expect(view.container.querySelectorAll('[aria-label="이미지 확대보기"]')).toHaveLength(1);
+      act(() => {
+        previewButton?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      });
+      expect(view.container.querySelector('[data-testid="preview-modal"]')).not.toBeNull();
+      expect(view.container.querySelector('[data-testid="preview-close"]')).toHaveAttribute(
+        'aria-label',
+        '이미지 미리보기 닫기',
+      );
+      cleanupRenderedApp(view);
+    });
+
+    it('does not open the replacement picker when the preview action is clicked', () => {
+      const clickSpy = vi.spyOn(HTMLInputElement.prototype, 'click').mockImplementation(() => {});
+      const view = renderApp(<ImageInput value={[makeItem('a')]} />);
       act(() => {
         view.container
           .querySelector('[aria-label="이미지 확대보기"]')
           ?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
       });
+      expect(clickSpy).not.toHaveBeenCalled();
       expect(view.container.querySelector('[data-testid="preview-modal"]')).not.toBeNull();
       cleanupRenderedApp(view);
     });
