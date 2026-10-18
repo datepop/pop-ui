@@ -50,7 +50,7 @@ export default function IconCafe({
             stroke={color}
             strokeWidth="1.5"
             strokeLinecap="round"
-          />{' '}
+          />
         </>
       ) : (
         <>
@@ -76,7 +76,7 @@ export default function IconCafe({
             stroke={color}
             strokeLinecap="round"
             strokeWidth="1.5"
-          />{' '}
+          />
         </>
       )}
     </svg>

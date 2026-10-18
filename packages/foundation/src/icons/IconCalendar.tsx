@@ -45,7 +45,7 @@ export default function IconCalendar({
           <path
             d="M5.25 5.5C5.25 6.4665 6.0335 7.25 7 7.25C7.9665 7.25 8.75 6.4665 8.75 5.5V4.25H15.25V5.5C15.25 6.4665 16.0335 7.25 17 7.25C17.9665 7.24995 18.75 6.46647 18.75 5.5V4.25H19C20.5188 4.25 21.75 5.48122 21.75 7V9C21.75 9.41421 21.4142 9.75 21 9.75H3C2.58579 9.75 2.25 9.41421 2.25 9V7C2.25 5.48122 3.48122 4.25 5 4.25H5.25V5.5Z"
             fill={color}
-          />{' '}
+          />
         </>
       ) : (
         <>
@@ -70,7 +70,7 @@ export default function IconCalendar({
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="1.5"
-          />{' '}
+          />
         </>
       )}
     </svg>

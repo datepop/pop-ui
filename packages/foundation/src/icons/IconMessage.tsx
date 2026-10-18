@@ -49,7 +49,7 @@ export default function IconMessage({
             strokeMiterlimit="10"
             fill={color}
             mask={`url(#${maskId})`}
-          />{' '}
+          />
         </>
       ) : (
         <>
@@ -70,7 +70,7 @@ export default function IconMessage({
           <path
             d="M16 12C16.5523 12 17 11.5523 17 11C17 10.4477 16.5523 10 16 10C15.4477 10 15 10.4477 15 11C15 11.5523 15.4477 12 16 12Z"
             fill={color}
-          />{' '}
+          />
         </>
       )}
     </svg>

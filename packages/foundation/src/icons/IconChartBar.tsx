@@ -53,7 +53,7 @@ export default function IconChartBar({
             width="12"
             x="21"
             y="9"
-          />{' '}
+          />
         </>
       ) : (
         <>
@@ -86,7 +86,7 @@ export default function IconChartBar({
             width="12"
             x="21"
             y="9"
-          />{' '}
+          />
         </>
       )}
     </svg>

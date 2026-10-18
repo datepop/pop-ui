@@ -38,12 +38,12 @@ export default function IconCard({
             strokeWidth="1.5"
             fill={color}
             mask={`url(#${maskId})`}
-          />{' '}
+          />
         </>
       ) : (
         <>
           <rect fill={color} height="3" rx="0.5" width="2" x="11" y="6" />
-          <rect height="18" rx="2" stroke={color} strokeWidth="1.5" width="14" x="5" y="3" />{' '}
+          <rect height="18" rx="2" stroke={color} strokeWidth="1.5" width="14" x="5" y="3" />
         </>
       )}
     </svg>

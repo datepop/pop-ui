@@ -44,7 +44,7 @@ export default function IconNotification({
               strokeWidth="1.5"
               fill={color}
             />
-          </g>{' '}
+          </g>
         </>
       ) : (
         <>
@@ -60,7 +60,7 @@ export default function IconNotification({
             stroke={color}
             strokeMiterlimit="10"
             strokeWidth="1.5"
-          />{' '}
+          />
         </>
       )}
     </svg>

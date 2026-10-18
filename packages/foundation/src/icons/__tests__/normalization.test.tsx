@@ -1,6 +1,8 @@
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
 
+import * as BrandIcons from '../../brand';
+import * as Illustrations from '../../illustrations';
 import IllustrationMegaphoneBlue from '../../illustrations/IllustrationMegaphoneBlue';
 import IconArrowRight from '../IconArrowRight';
 import IconCalendar from '../IconCalendar';
@@ -179,5 +181,29 @@ describe('normalized icons', () => {
 
     expect(svg).toContain('cx="13.583"');
     expect(svg).toContain('M21.4181 7.44592');
+  });
+
+  it('renders no text nodes inside any icon, illustration, or brand svg', () => {
+    const components = Object.entries({ ...Icons, ...Illustrations, ...BrandIcons }).filter(
+      (entry): entry is [string, ComponentType<IIconProps>] => typeof entry[1] === 'function',
+    );
+    const offenders: string[] = [];
+
+    expect(components.length).toBeGreaterThan(0);
+
+    for (const [name, Component] of components) {
+      for (const variant of ['line', 'filled'] as const) {
+        const container = document.createElement('div');
+        container.innerHTML = renderToStaticMarkup(<Component variant={variant} />);
+
+        const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT);
+
+        if (walker.nextNode()) {
+          offenders.push(`${name}:${variant}`);
+        }
+      }
+    }
+
+    expect(offenders).toEqual([]);
   });
 });
