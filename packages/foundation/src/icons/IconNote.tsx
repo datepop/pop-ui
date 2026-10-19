@@ -17,35 +17,12 @@ export default function IconNote({
       xmlns="http://www.w3.org/2000/svg"
       {...props}
     >
-      <rect
-        x="0.65"
-        y="2.67539"
-        width="21.2859"
-        height="20.7513"
-        rx="4.01666"
-        stroke={color}
-        strokeWidth="1.3"
-      />
-      <path d="M6 4.65039V0.650391" stroke={color} strokeWidth="1.3" strokeLinecap="round" />
-      <path d="M19 4.65039V0.650391" stroke={color} strokeWidth="1.3" strokeLinecap="round" />
-      <path
-        d="M5.29297 9.16504C5.29297 9.16504 12.6067 9.16504 17.293 9.16504"
-        stroke={color}
-        strokeWidth="1.3"
-        strokeLinecap="round"
-      />
-      <path
-        d="M5.29297 13.417C5.29297 13.417 12.6067 13.417 17.293 13.417"
-        stroke={color}
-        strokeWidth="1.3"
-        strokeLinecap="round"
-      />
-      <path
-        d="M8.09961 18.0479C8.09961 18.0479 9.80151 18.0479 14.4878 18.0479"
-        stroke={color}
-        strokeWidth="1.3"
-        strokeLinecap="round"
-      />
+      <rect x="3.75" y="4.75" width="16.5" height="16.5" rx="3" stroke={color} strokeWidth="1.5" />
+      <path d="M8 2.75V6.75" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M16 2.75V6.75" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M7.5 10H16.5" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M7.5 13.5H16.5" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M9.5 17H14.5" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   );
 }
