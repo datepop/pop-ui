@@ -541,7 +541,7 @@ export const iconMetadata: Record<TIconName, IIconMetadataEntry> = {
   },
   IconPurchase: {
     categories: [IconCategory.BRAND],
-    variants: ['line'],
+    variants: ['line', 'filled'],
   },
   IconReport: {
     categories: [IconCategory.ACTION],
