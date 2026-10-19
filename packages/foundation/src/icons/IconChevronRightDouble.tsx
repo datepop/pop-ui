@@ -18,16 +18,16 @@ export default function IconChevronRightDouble({
       {...props}
     >
       <path
-        d="M12 6L18 12L12 18"
+        d="M6 17L11 12L6 7"
         stroke={color}
-        strokeWidth="2"
+        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
-        d="M6 6L12 12L6 18"
+        d="M13 17L18 12L13 7"
         stroke={color}
-        strokeWidth="2"
+        strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
       />

@@ -6,20 +6,34 @@ import * as Illustrations from '../../illustrations';
 import IllustrationMegaphoneBlue from '../../illustrations/IllustrationMegaphoneBlue';
 import IconArrowRight from '../IconArrowRight';
 import IconCalendar from '../IconCalendar';
+import IconCards from '../IconCards';
 import IconCaretDown from '../IconCaretDown';
 import IconCaretUp from '../IconCaretUp';
 import IconCart from '../IconCart';
 import IconCartAdd from '../IconCartAdd';
 import IconCartCheck from '../IconCartCheck';
 import IconCaution from '../IconCaution';
+import IconCheckBadge from '../IconCheckBadge';
+import IconChevronLeftDouble from '../IconChevronLeftDouble';
+import IconChevronRightDouble from '../IconChevronRightDouble';
 import IconGrid from '../IconGrid';
+import IconNote from '../IconNote';
 import IconNotification from '../IconNotification';
+import IconPercentBadge from '../IconPercentBadge';
+import IconPlusCircle from '../IconPlusCircle';
+import IconPoppass from '../IconPoppass';
+import IconPurchase from '../IconPurchase';
 import IconQuote from '../IconQuote';
 import IconQuoteSerif from '../IconQuoteSerif';
 import IconRefresh from '../IconRefresh';
 import IconRemove from '../IconRemove';
+import IconReport from '../IconReport';
+import IconReport2 from '../IconReport2';
 import IconReset from '../IconReset';
 import IconShop from '../IconShop';
+import IconShoppingBagCheck from '../IconShoppingBagCheck';
+import IconSiren from '../IconSiren';
+import IconSirenImportant from '../IconSirenImportant';
 import IconSmartphone from '../IconSmartphone';
 import IconSound from '../IconSound';
 import IconStore from '../IconStore';
@@ -249,6 +263,131 @@ describe('normalized icons', () => {
     expect(svg).not.toContain('M1 4H2.4914');
     expect(svg).not.toContain('M10.5 8.5L11.6464');
     expect(svg).not.toContain('r="2.25"');
+  });
+
+  it.each([
+    ['IconSiren', IconSiren, IconReport2],
+    ['IconSirenImportant', IconSirenImportant, IconReport],
+    ['IconPoppass', IconPoppass, IconTicketPoppass],
+  ] as const)('renders %s identically to its PDS v2.0 icon', (_name, Alias, Target) => {
+    expect(renderToStaticMarkup(<Alias color="#123456" size={20} />)).toBe(
+      renderToStaticMarkup(<Target color="#123456" size={20} />),
+    );
+  });
+
+  it.each(['line', 'filled'] as const)(
+    'renders IconShoppingBagCheck identically to IconPurchase (%s)',
+    (variant) => {
+      expect(
+        renderToStaticMarkup(<IconShoppingBagCheck color="#123456" size={20} variant={variant} />),
+      ).toBe(renderToStaticMarkup(<IconPurchase color="#123456" size={20} variant={variant} />));
+    },
+  );
+
+  it('keeps the purchase line markup with a stroked check and no mask', () => {
+    const svg = renderToStaticMarkup(<IconPurchase color="#123456" />);
+
+    expect(svg).toContain('d="M9 14.5L11.1176 16.5L15 12.5"');
+    expect(svg).toContain('stroke="#123456"');
+    expect(svg).not.toContain('<mask');
+  });
+
+  it('knocks the purchase check out of the filled body instead of drawing it', () => {
+    const svg = renderToStaticMarkup(<IconPurchase color="#123456" variant="filled" />);
+    const check = 'd="M9 14.5L11.1176 16.5L15 12.5"';
+    const mask = svg.match(/<mask[\s\S]*?<\/mask>/)?.[0];
+
+    expect(mask).toBeTruthy();
+    expect(mask).toContain(check);
+    expect(mask).toContain('stroke="black"');
+    expect(svg.split(check)).toHaveLength(2);
+    expect(svg).toContain('fill="#123456"');
+    expect(svg).not.toContain('stroke="white"');
+    expect(svg).not.toContain('#ffffff');
+  });
+
+  it('draws the double chevrons with the 1.5px double arrow geometry', () => {
+    const right = renderToStaticMarkup(<IconChevronRightDouble />);
+    const left = renderToStaticMarkup(<IconChevronLeftDouble />);
+
+    for (const path of ['M6 17L11 12L6 7', 'M13 17L18 12L13 7']) {
+      expect(right).toContain(`d="${path}"`);
+    }
+    for (const path of ['M18 17L13 12L18 7', 'M11 17L6 12L11 7']) {
+      expect(left).toContain(`d="${path}"`);
+    }
+    for (const svg of [right, left]) {
+      expect(svg).toContain('stroke-width="1.5"');
+      expect(svg).not.toContain('stroke-width="2"');
+      expect(svg).not.toContain('M12 6L18 12L12 18');
+      expect(svg).not.toContain('M12 6L6 12L12 18');
+    }
+  });
+
+  it('draws the plus circle with an r=9 circle and a white plus when filled', () => {
+    const circle =
+      'd="M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21Z"';
+    const line = renderToStaticMarkup(<IconPlusCircle color="#123456" />);
+    const filled = renderToStaticMarkup(<IconPlusCircle color="#123456" variant="filled" />);
+
+    for (const svg of [line, filled]) {
+      expect(svg).toContain(circle);
+      expect(svg).toContain('d="M12 8V16M8 12H16"');
+      expect(svg).not.toContain('r="10.9091"');
+    }
+    expect(line).not.toContain('#ffffff');
+    expect(filled).toContain('fill="#123456"');
+    expect(filled).toContain('stroke="#ffffff"');
+  });
+
+  it('draws the note on the 24px grid', () => {
+    const svg = renderToStaticMarkup(<IconNote color="#123456" />);
+
+    expect(svg).toContain('x="3.75"');
+    expect(svg).not.toContain('x="0.65"');
+    expect(svg).toContain('stroke="#123456"');
+  });
+
+  it('shares the badge outline between the percent badge and the check badge', () => {
+    const badge = renderToStaticMarkup(<IconCheckBadge />).match(/d="([^"]+)"/)?.[1];
+    const percent = renderToStaticMarkup(<IconPercentBadge color="#123456" />);
+
+    expect(badge).toBeTruthy();
+    expect(percent.match(/d="([^"]+)"/)?.[1]).toBe(badge);
+    expect(percent).toContain('fill="#123456"');
+    expect(percent).toContain('d="M9.5 14.5L14.5 9.5"');
+    expect(percent).toContain('stroke-width="1.5"');
+    expect(percent).toContain('cx="9.5" cy="9.5" fill="#ffffff" r="1"');
+    expect(percent).toContain('cx="14.5" cy="14.5" fill="#ffffff" r="1"');
+  });
+
+  it('keeps the cards icon visually unchanged on a 24px canvas', () => {
+    const svg = renderToStaticMarkup(<IconCards />);
+
+    expect(svg).toContain('viewBox="0 0 24 24"');
+    expect(svg).toContain('transform="scale(1.2)"');
+    expect(svg).not.toContain('viewBox="0 0 20 20"');
+  });
+
+  it('renders every icon on a 24px canvas in both variants', () => {
+    const components = Object.entries(Icons).filter(
+      (entry): entry is [string, ComponentType<IIconProps>] => typeof entry[1] === 'function',
+    );
+    const offenders: string[] = [];
+
+    expect(components.length).toBeGreaterThan(0);
+
+    for (const [name, Component] of components) {
+      for (const variant of ['line', 'filled'] as const) {
+        if (
+          !renderToStaticMarkup(<Component variant={variant} />).includes('viewBox="0 0 24 24"')
+        ) {
+          offenders.push(`${name}:${variant}`);
+        }
+      }
+    }
+
+    expect(offenders).toEqual([]);
   });
 
   it('renders no text nodes inside any icon, illustration, or brand svg', () => {
