@@ -24,13 +24,6 @@ export default function IconCart({
       />
       <circle cx="18" cy="19" r="2" stroke={color} strokeWidth="1.5" />
       <circle cx="9.5" cy="19" r="2" stroke={color} strokeWidth="1.5" />
-      <path
-        d="M11 8L13 10L17 6"
-        stroke={color}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.5"
-      />
     </svg>
   );
 }
