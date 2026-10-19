@@ -28,7 +28,7 @@ export default function IconHeart({
             strokeLinejoin="round"
             strokeMiterlimit="10"
             strokeWidth="1.5"
-          />{' '}
+          />
         </>
       ) : (
         <>
@@ -38,7 +38,7 @@ export default function IconHeart({
             strokeLinejoin="round"
             strokeMiterlimit="10"
             strokeWidth="1.5"
-          />{' '}
+          />
         </>
       )}
     </svg>

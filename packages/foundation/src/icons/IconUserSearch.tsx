@@ -42,7 +42,7 @@ export default function IconUserSearch({
           <path
             d="M11 10C12.1046 10 13 9.10457 13 8C13 6.89543 12.1046 6 11 6C9.89543 6 9 6.89543 9 8C9 9.10457 9.89543 10 11 10Z"
             fill="white"
-          />{' '}
+          />
         </>
       ) : (
         <>
@@ -70,7 +70,7 @@ export default function IconUserSearch({
             stroke={color}
             strokeLinejoin="round"
             strokeWidth="1.5"
-          />{' '}
+          />
         </>
       )}
     </svg>

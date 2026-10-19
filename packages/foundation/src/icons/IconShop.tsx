@@ -42,7 +42,7 @@ export default function IconShop({
             fill={color}
             stroke={color}
             strokeWidth="1.5"
-          />{' '}
+          />
         </>
       ) : (
         <>
@@ -70,7 +70,7 @@ export default function IconShop({
             d="M4 10.8506V19.6006C4 20.2909 4.55964 20.8506 5.25 20.8506H12H18.75C19.4404 20.8506 20 20.2909 20 19.6006V10.8506"
             stroke={color}
             strokeWidth="1.5"
-          />{' '}
+          />
         </>
       )}
     </svg>

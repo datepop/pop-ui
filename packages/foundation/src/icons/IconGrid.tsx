@@ -79,7 +79,7 @@ export default function IconGrid({
             width="7.41"
             x="13.5901"
             y="13.6001"
-          />{' '}
+          />
         </>
       )}
     </svg>

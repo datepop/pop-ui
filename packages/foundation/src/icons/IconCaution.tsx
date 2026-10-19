@@ -30,7 +30,7 @@ export default function IconCaution({
             strokeWidth="1.5"
           />
           <path d="M12 8V13" stroke="white" strokeLinecap="round" strokeWidth="1.5" />
-          <circle cx="12" cy="16" fill="white" r="1" />{' '}
+          <circle cx="12" cy="16" fill="white" r="1" />
         </>
       ) : (
         <>
@@ -42,7 +42,7 @@ export default function IconCaution({
             strokeWidth="1.5"
           />
           <path d="M12 8V13" stroke={color} strokeLinecap="round" strokeWidth="1.5" />
-          <circle cx="12" cy="16" fill={color} r="1" />{' '}
+          <circle cx="12" cy="16" fill={color} r="1" />
         </>
       )}
     </svg>

@@ -31,7 +31,7 @@ export default function IconCheckCircle({
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="1.5"
-          />{' '}
+          />
         </>
       ) : (
         <>
@@ -42,7 +42,7 @@ export default function IconCheckCircle({
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth="1.5"
-          />{' '}
+          />
         </>
       )}
     </svg>

@@ -42,7 +42,7 @@ export default function IconUserDouble({
           <path
             d="M18.0005 11.75C20.2787 11.7502 23.0005 13.4885 23.0005 16.5C23.0005 17.5767 22.2762 18.7495 21.0522 18.75H18.2437C18.166 16.0823 16.8544 13.6572 14.8218 12.1934C15.4513 11.9071 16.1824 11.75 17.0005 11.75H18.0005Z"
             fill={color}
-          />{' '}
+          />
         </>
       ) : (
         <>
@@ -69,7 +69,7 @@ export default function IconUserDouble({
             stroke={color}
             strokeLinejoin="round"
             strokeWidth="1.5"
-          />{' '}
+          />
         </>
       )}
     </svg>

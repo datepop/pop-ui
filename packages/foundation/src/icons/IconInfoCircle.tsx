@@ -30,7 +30,7 @@ export default function IconInfoCircle({
             strokeWidth="1.5"
           />
           <path d="M12 16.5V11.5" stroke="white" strokeLinecap="round" strokeWidth="1.5" />
-          <circle cx="1" cy="1" fill="white" r="1" transform="matrix(1 0 0 -1 11 9.5)" />{' '}
+          <circle cx="1" cy="1" fill="white" r="1" transform="matrix(1 0 0 -1 11 9.5)" />
         </>
       ) : (
         <>
@@ -42,7 +42,7 @@ export default function IconInfoCircle({
             strokeWidth="1.5"
           />
           <path d="M12 16.5V11.5" stroke={color} strokeLinecap="round" strokeWidth="1.5" />
-          <circle cx="1" cy="1" fill={color} r="1" transform="matrix(1 0 0 -1 11 9.5)" />{' '}
+          <circle cx="1" cy="1" fill={color} r="1" transform="matrix(1 0 0 -1 11 9.5)" />
         </>
       )}
     </svg>

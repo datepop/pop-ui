@@ -1,11 +1,16 @@
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
 
+import * as BrandIcons from '../../brand';
+import * as Illustrations from '../../illustrations';
 import IllustrationMegaphoneBlue from '../../illustrations/IllustrationMegaphoneBlue';
 import IconArrowRight from '../IconArrowRight';
 import IconCalendar from '../IconCalendar';
 import IconCaretDown from '../IconCaretDown';
 import IconCaretUp from '../IconCaretUp';
+import IconCart from '../IconCart';
+import IconCartAdd from '../IconCartAdd';
+import IconCartCheck from '../IconCartCheck';
 import IconGrid from '../IconGrid';
 import IconNotification from '../IconNotification';
 import IconQuote from '../IconQuote';
@@ -179,5 +184,60 @@ describe('normalized icons', () => {
 
     expect(svg).toContain('cx="13.583"');
     expect(svg).toContain('M21.4181 7.44592');
+  });
+
+  it('keeps the plain cart free of a check mark and shares its body with cart variants', () => {
+    const checkPath = 'd="M11 8L13 10L17 6"';
+    const body = renderToStaticMarkup(<IconCart />).match(/d="([^"]+)"/)?.[1];
+    const wheels = ['cx="18" cy="19" r="2"', 'cx="9.5" cy="19" r="2"'];
+    const cart = renderToStaticMarkup(<IconCart />);
+    const cartAdd = renderToStaticMarkup(<IconCartAdd />);
+    const cartCheck = renderToStaticMarkup(<IconCartCheck />);
+
+    expect(body).toBeTruthy();
+    expect(cart).not.toContain(checkPath);
+    expect(cartAdd).not.toContain(checkPath);
+    expect(cartCheck).toContain(checkPath);
+
+    for (const svg of [cart, cartAdd, cartCheck]) {
+      expect(svg).toContain(`d="${body}"`);
+
+      for (const wheel of wheels) {
+        expect(svg).toContain(wheel);
+      }
+    }
+  });
+
+  it('drops the legacy cart check geometry from the cart check icon', () => {
+    const svg = renderToStaticMarkup(<IconCartCheck color="#123456" />);
+
+    expect(svg).toContain('#123456');
+    expect(svg).not.toContain('M1 4H2.4914');
+    expect(svg).not.toContain('M10.5 8.5L11.6464');
+    expect(svg).not.toContain('r="2.25"');
+  });
+
+  it('renders no text nodes inside any icon, illustration, or brand svg', () => {
+    const components = Object.entries({ ...Icons, ...Illustrations, ...BrandIcons }).filter(
+      (entry): entry is [string, ComponentType<IIconProps>] => typeof entry[1] === 'function',
+    );
+    const offenders: string[] = [];
+
+    expect(components.length).toBeGreaterThan(0);
+
+    for (const [name, Component] of components) {
+      for (const variant of ['line', 'filled'] as const) {
+        const container = document.createElement('div');
+        container.innerHTML = renderToStaticMarkup(<Component variant={variant} />);
+
+        const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT);
+
+        if (walker.nextNode()) {
+          offenders.push(`${name}:${variant}`);
+        }
+      }
+    }
+
+    expect(offenders).toEqual([]);
   });
 });
