@@ -22,6 +22,7 @@ import IconNotification from '../IconNotification';
 import IconPercentBadge from '../IconPercentBadge';
 import IconPlusCircle from '../IconPlusCircle';
 import IconPoppass from '../IconPoppass';
+import IconPurchase from '../IconPurchase';
 import IconQuote from '../IconQuote';
 import IconQuoteSerif from '../IconQuoteSerif';
 import IconRefresh from '../IconRefresh';
@@ -30,6 +31,7 @@ import IconReport from '../IconReport';
 import IconReport2 from '../IconReport2';
 import IconReset from '../IconReset';
 import IconShop from '../IconShop';
+import IconShoppingBagCheck from '../IconShoppingBagCheck';
 import IconSiren from '../IconSiren';
 import IconSirenImportant from '../IconSirenImportant';
 import IconSmartphone from '../IconSmartphone';
@@ -271,6 +273,37 @@ describe('normalized icons', () => {
     expect(renderToStaticMarkup(<Alias color="#123456" size={20} />)).toBe(
       renderToStaticMarkup(<Target color="#123456" size={20} />),
     );
+  });
+
+  it.each(['line', 'filled'] as const)(
+    'renders IconShoppingBagCheck identically to IconPurchase (%s)',
+    (variant) => {
+      expect(
+        renderToStaticMarkup(<IconShoppingBagCheck color="#123456" size={20} variant={variant} />),
+      ).toBe(renderToStaticMarkup(<IconPurchase color="#123456" size={20} variant={variant} />));
+    },
+  );
+
+  it('keeps the purchase line markup with a stroked check and no mask', () => {
+    const svg = renderToStaticMarkup(<IconPurchase color="#123456" />);
+
+    expect(svg).toContain('d="M9 14.5L11.1176 16.5L15 12.5"');
+    expect(svg).toContain('stroke="#123456"');
+    expect(svg).not.toContain('<mask');
+  });
+
+  it('knocks the purchase check out of the filled body instead of drawing it', () => {
+    const svg = renderToStaticMarkup(<IconPurchase color="#123456" variant="filled" />);
+    const check = 'd="M9 14.5L11.1176 16.5L15 12.5"';
+    const mask = svg.match(/<mask[\s\S]*?<\/mask>/)?.[0];
+
+    expect(mask).toBeTruthy();
+    expect(mask).toContain(check);
+    expect(mask).toContain('stroke="black"');
+    expect(svg.split(check)).toHaveLength(2);
+    expect(svg).toContain('fill="#123456"');
+    expect(svg).not.toContain('stroke="white"');
+    expect(svg).not.toContain('#ffffff');
   });
 
   it('draws the double chevrons with the 1.5px double arrow geometry', () => {
