@@ -58,7 +58,7 @@ export default function IconSound({
             stroke={color}
             strokeLinecap="round"
             strokeWidth="1.5"
-          />{' '}
+          />
         </>
       )}
     </svg>

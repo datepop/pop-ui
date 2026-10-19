@@ -36,7 +36,7 @@ export default function IconWarningTriangle({
             d="M12.0026 16.1335C12.5861 16.1335 13.0577 16.6051 13.0577 17.1885C13.0577 17.7719 12.5861 18.2435 12.0026 18.2435C11.4193 18.2435 10.9424 17.7719 10.9424 17.1885C10.9424 16.6051 11.4097 16.1335 11.9921 16.1335H12.0026Z"
             fill="#ffffff"
             strokeWidth="0"
-          />{' '}
+          />
         </>
       ) : (
         <>
@@ -46,7 +46,7 @@ export default function IconWarningTriangle({
             strokeWidth="1.5"
           />
           <path d="M12 9.5V13.5" stroke={color} strokeLinecap="round" strokeWidth="1.5" />
-          <circle cx="12" cy="16.5" fill={color} r="1" />{' '}
+          <circle cx="12" cy="16.5" fill={color} r="1" />
         </>
       )}
     </svg>

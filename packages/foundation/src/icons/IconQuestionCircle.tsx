@@ -36,7 +36,7 @@ export default function IconQuestionCircle({
             strokeMiterlimit="10"
             strokeWidth="1.5"
           />
-          <circle cx="11.9572" cy="16.3739" fill="white" r="0.847778" />{' '}
+          <circle cx="11.9572" cy="16.3739" fill="white" r="0.847778" />
         </>
       ) : (
         <>
@@ -54,7 +54,7 @@ export default function IconQuestionCircle({
             strokeMiterlimit="10"
             strokeWidth="1.5"
           />
-          <circle cx="11.9572" cy="16.3739" fill={color} r="0.847778" />{' '}
+          <circle cx="11.9572" cy="16.3739" fill={color} r="0.847778" />
         </>
       )}
     </svg>

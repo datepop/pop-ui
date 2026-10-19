@@ -34,7 +34,7 @@ export default function IconUp({
             strokeMiterlimit="10"
             fill={color}
             strokeWidth="0"
-          />{' '}
+          />
         </>
       ) : (
         <>
@@ -49,7 +49,7 @@ export default function IconUp({
             stroke={color}
             strokeLinejoin="round"
             strokeWidth="1.5"
-          />{' '}
+          />
         </>
       )}
     </svg>

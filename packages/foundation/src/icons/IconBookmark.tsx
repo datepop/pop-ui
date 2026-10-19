@@ -27,7 +27,7 @@ export default function IconBookmark({
             stroke={color}
             strokeLinejoin="round"
             strokeWidth="1.5"
-          />{' '}
+          />
         </>
       ) : (
         <>
@@ -36,7 +36,7 @@ export default function IconBookmark({
             stroke={color}
             strokeLinejoin="round"
             strokeWidth="1.5"
-          />{' '}
+          />
         </>
       )}
     </svg>

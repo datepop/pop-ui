@@ -17,19 +17,20 @@ export default function IconCartCheck({
       {...props}
     >
       <path
-        d="M1 4H2.4914C3.38436 4 4.16913 4.59195 4.41445 5.45056L6.58555 13.0494C6.83087 13.908 7.61564 14.5 8.5086 14.5H18C19.1046 14.5 20 13.6046 20 12.5V7"
+        d="M2 3H3.38805C4.32891 3 5.14255 3.65578 5.3424 4.57517L7.1576 12.9256C7.35745 13.845 8.17109 14.5008 9.11195 14.5008H18.749C19.7514 14.5008 20.5989 13.7587 20.7314 12.7651L21.5 7.00079"
         stroke={color}
-        strokeWidth="1.5"
         strokeLinecap="round"
+        strokeWidth="1.5"
       />
       <path
-        d="M10.5 8.5L11.6464 9.64645C11.8417 9.84171 12.1583 9.84171 12.3536 9.64645L15.5 6.5"
+        d="M11 8L13 10L17 6"
         stroke={color}
-        strokeWidth="1.5"
         strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="1.5"
       />
-      <circle cx="18" cy="19" r="2.25" stroke={color} strokeWidth="1.5" />
-      <circle cx="7.5" cy="19" r="2.25" stroke={color} strokeWidth="1.5" />
+      <circle cx="18" cy="19" r="2" stroke={color} strokeWidth="1.5" />
+      <circle cx="9.5" cy="19" r="2" stroke={color} strokeWidth="1.5" />
     </svg>
   );
 }

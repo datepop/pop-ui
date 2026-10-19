@@ -67,7 +67,7 @@ export default function IconRestaurant({
             stroke={color}
             strokeWidth="1.5"
             strokeLinecap="round"
-          />{' '}
+          />
         </>
       ) : (
         <>
@@ -86,7 +86,7 @@ export default function IconRestaurant({
             d="M7.5 9C8.88071 9 10 7.65686 10 6C10 4.34315 8.88071 3 7.5 3C6.11929 3 5 4.34315 5 6C5 7.65686 6.11929 9 7.5 9Z"
             stroke={color}
             strokeWidth="1.5"
-          />{' '}
+          />
         </>
       )}
     </svg>

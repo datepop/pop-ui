@@ -1,5 +1,16 @@
 # @pop-ui/core
 
+## 2.2.0
+
+### Minor Changes
+
+- 42ee699: Add image preview with fit-to-viewport and original-size viewing, and safely open image URLs from the existing link action.
+
+### Patch Changes
+
+- Updated dependencies [a8d14a6]
+  - @pop-ui/foundation@2.2.0
+
 ## 2.1.1
 
 ### Patch Changes
@@ -13,6 +24,7 @@
   IButtonProps, TButtonVariant, IModalProps 등 컴포넌트 props 타입을 패키지 루트에서 type-only로 export합니다.
 
   Button warning variant의 focus-visible 상태 텍스트가 red-50 배경 위 흰색으로 렌더되던 오타를 수정해, 다른 warning 상태와 같은 red-500으로 맞췄습니다.
+
 - Updated dependencies
   - @pop-ui/foundation@2.1.1
 
