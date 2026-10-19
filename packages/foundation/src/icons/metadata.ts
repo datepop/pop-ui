@@ -421,7 +421,7 @@ export const iconMetadata: Record<TIconName, IIconMetadataEntry> = {
   },
   IconStore: {
     categories: [IconCategory.SYSTEM],
-    variants: ['line'],
+    variants: ['line', 'filled'],
   },
   IconAlignHorizontal: {
     categories: [IconCategory.ACTION],

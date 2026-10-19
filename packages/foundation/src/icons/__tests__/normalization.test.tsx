@@ -11,6 +11,7 @@ import IconCaretUp from '../IconCaretUp';
 import IconCart from '../IconCart';
 import IconCartAdd from '../IconCartAdd';
 import IconCartCheck from '../IconCartCheck';
+import IconCaution from '../IconCaution';
 import IconGrid from '../IconGrid';
 import IconNotification from '../IconNotification';
 import IconQuote from '../IconQuote';
@@ -19,12 +20,15 @@ import IconRefresh from '../IconRefresh';
 import IconRemove from '../IconRemove';
 import IconReset from '../IconReset';
 import IconShop from '../IconShop';
+import IconSmartphone from '../IconSmartphone';
 import IconSound from '../IconSound';
+import IconStore from '../IconStore';
 import IconSync from '../IconSync';
 import IconTicket from '../IconTicket';
 import IconTicketMovie from '../IconTicketMovie';
 import IconTicketPoppass from '../IconTicketPoppass';
 import IconTrashcan from '../IconTrashcan';
+import IconWarningCircle from '../IconWarningCircle';
 import * as Icons from '../index';
 
 import type { IIconProps } from '../../types/icon';
@@ -142,6 +146,36 @@ describe('normalized icons', () => {
     expect(renderToStaticMarkup(<IconTrashcan />)).toContain('M5 5.5H19');
     expect(renderToStaticMarkup(<IconRemove />)).toContain('M11.9995 2.25049');
     expect(renderToStaticMarkup(<IconRemove variant="filled" />)).toContain('M11.9995 1.99951');
+  });
+
+  it.each(['line', 'filled'] as const)(
+    'renders IconStore identically to IconShop (%s)',
+    (variant) => {
+      expect(renderToStaticMarkup(<IconStore color="#123456" size={20} variant={variant} />)).toBe(
+        renderToStaticMarkup(<IconShop color="#123456" size={20} variant={variant} />),
+      );
+    },
+  );
+
+  it.each(['line', 'filled'] as const)(
+    'renders IconWarningCircle identically to IconCaution (%s)',
+    (variant) => {
+      expect(
+        renderToStaticMarkup(<IconWarningCircle color="#123456" size={20} variant={variant} />),
+      ).toBe(renderToStaticMarkup(<IconCaution color="#123456" size={20} variant={variant} />));
+    },
+  );
+
+  it.each([12, 16, 24, 40])('draws the smartphone on a square canvas at size %i', (size) => {
+    const svg = renderToStaticMarkup(<IconSmartphone color="#123456" size={size} />);
+
+    expect(svg).toContain(`width="${size}"`);
+    expect(svg).toContain(`height="${size}"`);
+    expect(svg).toContain('viewBox="0 0 24 24"');
+    expect(svg).toContain('x="6.5"');
+    expect(svg).toContain('height="18.5"');
+    expect(svg).toContain('stroke="#123456"');
+    expect(svg).not.toContain('viewBox="0 0 24 26"');
   });
 
   it('exports every Figma-only icon on a normalized canvas', () => {
