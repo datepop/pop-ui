@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.2.0
+
+### Patch Changes
+
+- a8d14a6: Remove stray whitespace string children from icon SVGs so the generated React Native icons no longer render a raw text node inside `<Svg>`. Restore the plain `IconCart` without a check mark and normalize `IconCartCheck` to the same cart body with the check mark.
+
 ## 2.1.1
 
 ### Patch Changes
