@@ -401,7 +401,7 @@ export const iconMetadata: Record<TIconName, IIconMetadataEntry> = {
   },
   IconSmartphone: {
     categories: [IconCategory.SYSTEM],
-    variants: ['line'],
+    variants: ['line', 'filled'],
   },
   IconSound: {
     categories: [IconCategory.CONTENT],
