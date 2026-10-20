@@ -192,6 +192,29 @@ describe('normalized icons', () => {
     expect(svg).not.toContain('viewBox="0 0 24 26"');
   });
 
+  it('keeps the smartphone line markup with a stroked speaker and no mask', () => {
+    const svg = renderToStaticMarkup(<IconSmartphone color="#123456" />);
+
+    expect(svg).toContain('d="M10.25 5.25H13.75"');
+    expect(svg).toContain('stroke="#123456"');
+    expect(svg).not.toContain('fill="#123456"');
+    expect(svg).not.toContain('<mask');
+  });
+
+  it('knocks the smartphone speaker out of the filled body instead of drawing it', () => {
+    const svg = renderToStaticMarkup(<IconSmartphone color="#123456" variant="filled" />);
+    const speaker = 'd="M10.25 5.25H13.75"';
+    const mask = svg.match(/<mask[\s\S]*?<\/mask>/)?.[0];
+
+    expect(mask).toBeTruthy();
+    expect(mask).toContain(speaker);
+    expect(mask).toContain('stroke="black"');
+    expect(svg.split(speaker)).toHaveLength(2);
+    expect(svg).toContain('x="6.5" y="2.75" width="11" height="18.5" rx="2" fill="#123456"');
+    expect(svg).not.toContain('stroke="white"');
+    expect(svg).not.toContain('#ffffff');
+  });
+
   it('exports every Figma-only icon on a normalized canvas', () => {
     for (const [name, variants] of Object.entries(figmaOnlyIcons)) {
       const Icon = Icons[name as keyof typeof figmaOnlyIcons] as ComponentType<IIconProps>;
