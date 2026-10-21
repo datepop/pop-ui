@@ -2,7 +2,7 @@
 @use '../shared/functions' as fn;
 
 @mixin TooltipText {
-  font-family: Pretendard;
+  font-family: fn.$font-family;
   font-size: fn.font-size(450);
   font-style: normal;
   font-weight: 500;

@@ -1,4 +1,5 @@
 @use '../shared/variables.scss' as *;
+@use '../shared/functions' as fn;
 
 .CalendarDatePicker__Wrapper {
   display: flex;
@@ -38,7 +39,7 @@
 .CalendarDatePicker__Day {
   border: #{$border-width-25}px solid transparent;
   border-radius: #{$border-radius-1000};
-  font-family: $font-family-pretendard;
+  font-family: fn.$font-family;
   font-weight: $font-weight-regular;
   height: #{$spacing-1100}px;
   width: #{$spacing-1100}px;

@@ -20,7 +20,15 @@
     "scss/at-import-partial-extension": null,
     "scss/comment-no-empty": null,
     "scss/at-mixin-pattern": null,
-    "font-family-no-missing-generic-family-keyword": null
+    "font-family-no-missing-generic-family-keyword": null,
+    "declaration-property-value-disallowed-list": [
+      {
+        "font-family": ["/Pretendard/", "/\\$font-family-pretendard/"]
+      },
+      {
+        "message": "Pretendard 를 직접 쓰지 말고 fn.$font-family 를 사용하세요 (소비처가 --pop-ui-font-family 로 글꼴을 바꿀 수 있어야 합니다)"
+      }
+    ]
   },
   "ignoreFiles": [
     "node_modules/**/*",

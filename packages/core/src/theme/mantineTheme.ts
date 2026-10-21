@@ -44,5 +44,5 @@ export const mantineTheme = createTheme({
   },
   primaryColor: 'aqua',
   primaryShade: 5,
-  fontFamily: 'Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+  fontFamily: 'var(--pop-ui-font-family, Pretendard), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
 });
