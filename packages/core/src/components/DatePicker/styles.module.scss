@@ -88,7 +88,7 @@
   border-radius: var(--date-picker-radius);
   background-color: $color-white;
   color: $color-gray-900;
-  font-family: $font-family-pretendard;
+  font-family: fn.$font-family;
   font-size: var(--date-picker-font-size);
   font-weight: $font-weight-medium;
   line-height: var(--date-picker-line-height);
@@ -181,7 +181,7 @@
   height: auto;
   white-space: nowrap;
   color: $color-gray-900;
-  font-family: $font-family-pretendard;
+  font-family: fn.$font-family;
   font-size: #{$font-size-500}px;
   font-weight: $font-weight-semibold;
   line-height: $lh-500;
@@ -224,7 +224,7 @@
   height: #{$spacing-1200}px;
   padding: 0;
   color: $color-gray-500;
-  font-family: $font-family-pretendard;
+  font-family: fn.$font-family;
   font-size: #{$font-size-450}px;
   font-weight: $font-weight-medium;
   line-height: $lh-500;
@@ -246,7 +246,7 @@
   height: #{$spacing-1100}px;
   border-radius: #{$border-radius-1000};
   color: $color-gray-900;
-  font-family: $font-family-pretendard;
+  font-family: fn.$font-family;
   font-size: #{$font-size-500}px;
   font-weight: $font-weight-regular;
   line-height: $lh-500;
@@ -318,7 +318,7 @@
   border-radius: var(--date-picker-time-control-radius);
   background: $color-white;
   color: $color-gray-900;
-  font-family: $font-family-pretendard;
+  font-family: fn.$font-family;
   font-size: #{$font-size-450}px;
   font-weight: $font-weight-medium;
   line-height: $lh-500;

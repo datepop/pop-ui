@@ -49,7 +49,7 @@ $button-size-layout-map: (
   sm: (
     height: 30px,
     padding-x: $spacing-300,
-    font-family: $font-family-pretendard,
+    font-family: fn.$font-family,
     font-size: $font-size-450,
     font-weight: $font-weight-semibold,
     line-height: $lh-300,
@@ -59,7 +59,7 @@ $button-size-layout-map: (
   md: (
     height: 40px,
     padding-x: $spacing-400,
-    font-family: $font-family-pretendard,
+    font-family: fn.$font-family,
     font-size: $font-size-500,
     font-weight: $font-weight-semibold,
     line-height: $lh-300,
@@ -69,7 +69,7 @@ $button-size-layout-map: (
   lg: (
     height: 50px,
     padding-x: $spacing-500,
-    font-family: $font-family-pretendard,
+    font-family: fn.$font-family,
     font-size: $font-size-550,
     font-weight: $font-weight-bold,
     line-height: $lh-300,
