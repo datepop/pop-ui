@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.2.4
+
+### Patch Changes
+
+- Version aligned with `@pop-ui/core` 2.2.4 (linked release). No changes in this package.
+
 ## 2.2.3
 
 ### Patch Changes
