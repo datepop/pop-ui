@@ -1,5 +1,6 @@
 import React, { act } from 'react';
 import { createRoot } from 'react-dom/client';
+import { renderToStaticMarkup } from 'react-dom/server';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 // ─── Hoisted mock factories ───────────────────────────────────────────────────
@@ -117,11 +118,12 @@ interface IRenderedApp {
   root: Root;
 }
 
-const renderApp = (ui: React.ReactNode): IRenderedApp => {
+// lottie-react 는 lazy import 되므로 Suspense 가 풀릴 때까지 기다리는 async act 로 렌더링한다
+const renderApp = async (ui: React.ReactNode): Promise<IRenderedApp> => {
   const container = document.createElement('div');
   document.body.appendChild(container);
   const root = createRoot(container);
-  act(() => root.render(ui));
+  await act(async () => root.render(ui));
   return { container, root };
 };
 
@@ -159,20 +161,20 @@ describe('LottieInput', () => {
   // ─── render ────────────────────────────────────────────────────────────────
 
   describe('render', () => {
-    it('empty value → one placeholder dropzone', () => {
-      const view = renderApp(<LottieInput value={[]} />);
+    it('empty value → one placeholder dropzone', async () => {
+      const view = await renderApp(<LottieInput value={[]} />);
       expect(view.container.querySelectorAll('[data-testid="dropzone"]')).toHaveLength(1);
       cleanupRenderedApp(view);
     });
 
-    it('renders lottie player for items with animationData', () => {
-      const view = renderApp(<LottieInput value={[makeItem('a'), makeItem('b')]} />);
+    it('renders lottie player for items with animationData', async () => {
+      const view = await renderApp(<LottieInput value={[makeItem('a'), makeItem('b')]} />);
       expect(view.container.querySelectorAll('[data-testid="lottie-player"]')).toHaveLength(2);
       cleanupRenderedApp(view);
     });
 
-    it('keeps the reorder handle in the action bar for Lottie tiles', () => {
-      const view = renderApp(<LottieInput value={[makeItem('a'), makeItem('b')]} />);
+    it('keeps the reorder handle in the action bar for Lottie tiles', async () => {
+      const view = await renderApp(<LottieInput value={[makeItem('a'), makeItem('b')]} />);
       const handle = view.container.querySelector('[aria-label="드래그로 순서 변경"]');
       const player = view.container.querySelector('[data-testid="lottie-player"]');
 
@@ -181,23 +183,25 @@ describe('LottieInput', () => {
       cleanupRenderedApp(view);
     });
 
-    it('readOnly hides delete buttons and dropzones', () => {
-      const view = renderApp(<LottieInput value={[makeItem('a')]} readOnly />);
+    it('readOnly hides delete buttons and dropzones', async () => {
+      const view = await renderApp(<LottieInput value={[makeItem('a')]} readOnly />);
       expect(view.container.querySelector('[aria-label="Lottie 삭제"]')).toBeNull();
       expect(view.container.querySelector('[data-testid="dropzone"]')).toBeNull();
       cleanupRenderedApp(view);
     });
 
-    it('errorMsg renders Input.Error', () => {
-      const view = renderApp(<LottieInput value={[]} errorMsg="파일을 추가하세요" />);
+    it('errorMsg renders Input.Error', async () => {
+      const view = await renderApp(<LottieInput value={[]} errorMsg="파일을 추가하세요" />);
       expect(view.container.querySelector('[data-testid="input-error"]')).toHaveTextContent(
         '파일을 추가하세요',
       );
       cleanupRenderedApp(view);
     });
 
-    it('maxLength=2, 2 items → 0 placeholders', () => {
-      const view = renderApp(<LottieInput value={[makeItem('a'), makeItem('b')]} maxLength={2} />);
+    it('maxLength=2, 2 items → 0 placeholders', async () => {
+      const view = await renderApp(
+        <LottieInput value={[makeItem('a'), makeItem('b')]} maxLength={2} />,
+      );
       expect(view.container.querySelector('[data-testid="dropzone"]')).toBeNull();
       cleanupRenderedApp(view);
     });
@@ -208,7 +212,7 @@ describe('LottieInput', () => {
   describe('onChange: create', () => {
     it('dropping a valid lottie file calls onChange with action: create', async () => {
       const onChange = vi.fn();
-      const view = renderApp(<LottieInput value={[]} onChange={onChange} />);
+      const view = await renderApp(<LottieInput value={[]} onChange={onChange} />);
 
       const onDrop = mockDropzone.mock.calls[0]?.[0].onDrop;
       await act(async () => {
@@ -224,7 +228,7 @@ describe('LottieInput', () => {
 
     it('dropping invalid file shows toast, no onChange', async () => {
       const onChange = vi.fn();
-      const view = renderApp(<LottieInput value={[]} onChange={onChange} />);
+      const view = await renderApp(<LottieInput value={[]} onChange={onChange} />);
 
       const onDrop = mockDropzone.mock.calls[0]?.[0].onDrop;
       await act(async () => {
@@ -238,7 +242,7 @@ describe('LottieInput', () => {
 
     it('mixed valid/invalid files: valid added, toast for invalid count', async () => {
       const onChange = vi.fn();
-      const view = renderApp(<LottieInput value={[]} onChange={onChange} />);
+      const view = await renderApp(<LottieInput value={[]} onChange={onChange} />);
 
       const onDrop = mockDropzone.mock.calls[0]?.[0].onDrop;
       await act(async () => {
@@ -257,9 +261,9 @@ describe('LottieInput', () => {
   // ─── onChange: delete ──────────────────────────────────────────────────────
 
   describe('onChange: delete', () => {
-    it('delete button click → action: delete', () => {
+    it('delete button click → action: delete', async () => {
       const onChange = vi.fn();
-      const view = renderApp(<LottieInput value={[makeItem('a')]} onChange={onChange} />);
+      const view = await renderApp(<LottieInput value={[makeItem('a')]} onChange={onChange} />);
 
       act(() => {
         view.container
@@ -271,12 +275,54 @@ describe('LottieInput', () => {
       cleanupRenderedApp(view);
     });
 
-    it('delete in readOnly → no onChange', () => {
+    it('delete in readOnly → no onChange', async () => {
       const onChange = vi.fn();
-      const view = renderApp(<LottieInput value={[makeItem('a')]} readOnly onChange={onChange} />);
+      const view = await renderApp(
+        <LottieInput value={[makeItem('a')]} readOnly onChange={onChange} />,
+      );
       expect(view.container.querySelector('[aria-label="Lottie 삭제"]')).toBeNull();
       expect(onChange).not.toHaveBeenCalled();
       cleanupRenderedApp(view);
+    });
+  });
+
+  // ─── lazy lottie player ────────────────────────────────────────────────────
+
+  describe('lazy lottie player', () => {
+    // 모듈 레지스트리를 비우고 lottie-react mock 을 다시 등록해 lazy import 전 상태의 LottieInput 을 얻는다
+    const importFreshLottieInput = async () => {
+      const lottieModuleLoads = { count: 0 };
+      vi.resetModules();
+      vi.doMock('lottie-react', () => {
+        lottieModuleLoads.count += 1;
+        return { default: () => <div data-testid="lottie-player" /> };
+      });
+      const { LottieInput: FreshLottieInput } = await import('.');
+      return { FreshLottieInput, lottieModuleLoads };
+    };
+
+    it('loads lottie-react only once a tile with animation data renders', async () => {
+      const { FreshLottieInput, lottieModuleLoads } = await importFreshLottieInput();
+
+      const emptyView = await renderApp(<FreshLottieInput value={[]} />);
+      expect(lottieModuleLoads.count).toBe(0);
+      cleanupRenderedApp(emptyView);
+
+      const view = await renderApp(<FreshLottieInput value={[makeItem('a')]} />);
+      expect(lottieModuleLoads.count).toBe(1);
+      expect(view.container.querySelectorAll('[data-testid="lottie-player"]')).toHaveLength(1);
+      cleanupRenderedApp(view);
+    });
+
+    it('server-renders a tile-sized placeholder while lottie-react is loading', async () => {
+      const { FreshLottieInput } = await importFreshLottieInput();
+
+      const markup = renderToStaticMarkup(
+        <FreshLottieInput value={[makeItem('a')]} width={120} height={80} readOnly />,
+      );
+
+      expect(markup).not.toContain('data-testid="lottie-player"');
+      expect(markup).toContain('style="width:120px;height:80px;display:block"');
     });
   });
 });

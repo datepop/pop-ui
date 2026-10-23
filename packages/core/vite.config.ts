@@ -1,13 +1,13 @@
-import * as path from "path";
+import * as path from 'path';
 
-import { getBaseConfig } from "../../vite.config";
+import { getBaseConfig } from '../../vite.config';
 
-import type { Plugin } from "vite";
+import type { Plugin } from 'vite';
 
 const preserveUseClientDirective = (): Plugin => ({
-  name: "preserve-use-client-directive",
+  name: 'preserve-use-client-directive',
   renderChunk(code, chunk) {
-    if (!chunk.fileName.endsWith(".js")) {
+    if (!chunk.fileName.endsWith('.js')) {
       return;
     }
 
@@ -17,9 +17,10 @@ const preserveUseClientDirective = (): Plugin => ({
 
 export default getBaseConfig({
   plugins: [preserveUseClientDirective()],
+  preserveModules: true,
   lib: {
-    entry: path.resolve(__dirname, "src/index.ts"),
-    name: "Core",
-    fileName: "core",
+    entry: path.resolve(__dirname, 'src/index.ts'),
+    name: 'Core',
+    fileName: 'core',
   },
 });

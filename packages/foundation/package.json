@@ -1,7 +1,7 @@
 {
   "name": "@pop-ui/foundation",
   "type": "module",
-  "version": "2.2.4",
+  "version": "2.2.5",
   "main": "./dist/foundation.umd.cjs",
   "module": "./dist/foundation.js",
   "types": "./dist/types/index.d.ts",
@@ -21,6 +21,7 @@
       }
     }
   },
+  "sideEffects": false,
   "repository": {
     "type": "git",
     "url": "https://github.com/datepop/pop-ui"
