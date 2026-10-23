@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 
-import type { Plugin } from 'vite';
+import type { Plugin, Rollup } from 'vite';
 
 const isExternal = (id: string) => !id.startsWith('.') && !path.isAbsolute(id);
 
@@ -55,8 +55,54 @@ const copyFontPlugin = (fontPath?: string): Plugin => {
   };
 };
 
-export const getBaseConfig = ({ plugins = [], lib }) =>
-  defineConfig({
+const sharedOutput: Rollup.OutputOptions = {
+  globals: {
+    react: 'React',
+    'react-dom': 'ReactDOM',
+    'react/jsx-runtime': 'jsxRuntime',
+    '@mantine/core': 'MantineCore',
+    '@mantine/hooks': 'MantineHooks',
+  },
+  assetFileNames: (assetInfo) => {
+    if (assetInfo.name && assetInfo.name.endsWith('.woff2')) {
+      return 'assets/[name][extname]';
+    }
+    if (assetInfo.name && assetInfo.name.endsWith('.css')) {
+      return '[name].css';
+    }
+    return 'assets/[name]-[hash][extname]';
+  },
+};
+
+// ESM 을 소스 모듈 단위 파일로 내보내 소비자 번들러가 쓰지 않는 컴포넌트와 그 외부 의존성을 버릴 수 있게 한다.
+// 진입 파일은 기존 경로(`<fileName>.js`)를 유지하고 나머지 모듈은 `esm/` 아래에 src 구조 그대로 둔다.
+// UMD 는 preserveModules 를 지원하지 않으므로 기존 단일 파일(`<fileName>.umd.cjs`)로 남긴다.
+const getPreservedModulesOutputs = (lib: {
+  entry: string;
+  name: string;
+  fileName: string;
+}): Rollup.OutputOptions[] => [
+  {
+    ...sharedOutput,
+    format: 'es',
+    preserveModules: true,
+    preserveModulesRoot: path.dirname(lib.entry),
+    entryFileNames: (chunk) => (chunk.isEntry ? `${lib.fileName}.js` : 'esm/[name].js'),
+  },
+  {
+    ...sharedOutput,
+    format: 'umd',
+    name: lib.name,
+  },
+];
+
+export const getBaseConfig = ({ plugins = [], lib, preserveModules = false }) => {
+  const resolvedLib = {
+    entry: path.resolve(__dirname, 'src/index.ts'),
+    ...lib,
+  };
+
+  return defineConfig({
     plugins: [
       react(),
       dts({
@@ -75,33 +121,14 @@ export const getBaseConfig = ({ plugins = [], lib }) =>
     },
     build: {
       assetsInlineLimit: 0,
-      lib: {
-        entry: path.resolve(__dirname, 'src/index.ts'),
-        ...lib,
-      },
+      lib: resolvedLib,
       rollupOptions: {
         external: isExternal,
-        output: {
-          globals: {
-            react: 'React',
-            'react-dom': 'ReactDOM',
-            'react/jsx-runtime': 'jsxRuntime',
-            '@mantine/core': 'MantineCore',
-            '@mantine/hooks': 'MantineHooks',
-          },
-          assetFileNames: (assetInfo) => {
-            if (assetInfo.name && assetInfo.name.endsWith('.woff2')) {
-              return 'assets/[name][extname]';
-            }
-            if (assetInfo.name && assetInfo.name.endsWith('.css')) {
-              return '[name].css';
-            }
-            return 'assets/[name]-[hash][extname]';
-          },
-        },
+        output: preserveModules ? getPreservedModulesOutputs(resolvedLib) : sharedOutput,
       },
     },
   });
+};
 
 const config = getBaseConfig({
   lib: {
