@@ -4,8 +4,7 @@ import { DndContext, closestCenter } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import { Input } from '@mantine/core';
 import { ColorAqua700, ColorRed700, IconPhoto } from '@pop-ui/foundation';
-import Lottie from 'lottie-react';
-import { useEffect, useState } from 'react';
+import { Suspense, lazy, useEffect, useState } from 'react';
 
 import {
   addItemAtPosition,
@@ -22,8 +21,20 @@ import { usePositionGrid } from '../shared/MultiItemInput/usePositionGrid';
 import { toast } from '../Toast';
 
 import type { ILottieInputItem, ILottieInputProps } from './types';
+import type LottiePlayer from 'lottie-react';
 
 // ─── LottieTile ───────────────────────────────────────────────────────────────
+
+type TLottiePlayer = typeof LottiePlayer;
+
+// lottie-web 은 무거우므로 애니메이션 데이터가 있는 타일이 실제로 렌더링될 때 내려받는다.
+const Lottie = lazy(() =>
+  // Node 네이티브 ESM 로더는 CommonJS 인 lottie-react 의 exports 객체 전체를 default 로 넘긴다.
+  import('lottie-react').then((module: { default: TLottiePlayer | { default: TLottiePlayer } }) => {
+    const player = module.default;
+    return { default: typeof player === 'function' ? player : player.default };
+  }),
+);
 
 const LOTTIE_ACCEPT = { 'application/json': ['.json'] };
 
@@ -113,12 +124,14 @@ function LottieTile({
       deleteAriaLabel="Lottie 삭제"
     >
       {resolvedData ? (
-        <Lottie
-          animationData={resolvedData}
-          loop
-          autoplay
-          style={{ width, height, display: 'block' }}
-        />
+        <Suspense fallback={<div style={{ width, height, display: 'block' }} />}>
+          <Lottie
+            animationData={resolvedData}
+            loop
+            autoplay
+            style={{ width, height, display: 'block' }}
+          />
+        </Suspense>
       ) : (
         <div className={styles.Empty} style={{ width, height }} />
       )}
