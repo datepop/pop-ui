@@ -16,7 +16,7 @@ The existing native generator also produces the icon components for React Native
 
 ## Raster images
 
-The web-only `hotelSummaryImages` catalog exports `favoriteOn`, `favoriteOff`, `mapSample` and `poploggerRecruitmentBanner` URLs. The Poplogger recruitment image is the original 166×135 logical-pixel artwork used by the conditional Poplog section. The favorite images contain the original hero bubble and shadow and are displayed in Android at 75 logical pixels. Binary files are copied without modification.
+The web-only `hotelSummaryImages` catalog exports `favoriteOn`, `favoriteOff`, `mapSample`, `poploggerRecruitmentBanner`, `reviewStarOn` and `reviewStarOff` URLs. The Poplogger recruitment image is the original 166×135 logical-pixel artwork used by the conditional Poplog section. The favorite images contain the original hero bubble and shadow and are displayed in Android at 75 logical pixels. Binary files are copied without modification. Review stars are the original 52×52 xxhdpi bitmaps referenced by Android `comment_star.xml`, displayed in Summary at 20 logical pixels; the generic vector `IconStar` has different artwork.
 
 `mapSample` is explicitly a sample illustration. It must not represent an actual map or substitute for missing coordinates. A consumer with no location must show its unset state. The catalog is intentionally absent from the React Native entry point; native consumers use their original platform resources.
 

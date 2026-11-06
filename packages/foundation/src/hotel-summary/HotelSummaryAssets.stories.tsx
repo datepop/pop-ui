@@ -47,6 +47,18 @@ export const Originals: TStory = {
         height={135}
         alt="Original Poplogger recruitment artwork"
       />
+      <img
+        src={hotelSummaryImages.reviewStarOn}
+        width={20}
+        height={20}
+        alt="Original selected review star"
+      />
+      <img
+        src={hotelSummaryImages.reviewStarOff}
+        width={20}
+        height={20}
+        alt="Original unselected review star"
+      />
       <IllustrationHotelRoomSoldOut />
       <Icons.IconHotelFooterFavorite variant="filled" />
       <Icons.IconHotelHelpful variant="filled" />

@@ -31,7 +31,14 @@ it('keeps facility clip paths separate when several instances share a document',
 });
 
 it('ships the unmodified Android raster originals identified by the source inventory', () => {
-  for (const name of ['favoriteOn', 'favoriteOff', 'mapSample', 'poploggerRecruitmentBanner']) {
+  for (const name of [
+    'favoriteOn',
+    'favoriteOff',
+    'mapSample',
+    'poploggerRecruitmentBanner',
+    'reviewStarOn',
+    'reviewStarOff',
+  ]) {
     const source = sources.find((entry) => entry.export === `hotelSummaryImages.${name}`);
     const bytes = readFileSync(resolve('packages/foundation/src/hotel-summary', `${name}.webp`));
     expect(createHash('sha256').update(bytes).digest('hex')).toBe(source?.sha256);

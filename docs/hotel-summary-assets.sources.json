@@ -444,5 +444,19 @@
     "path": "core-res/src/main/res/drawable/ic_hotel_room_sold_out.xml",
     "sha256": "d67f7a593e5071138a75a4ecfec4ec435063728717fc89f37e5d04b0af0cc49d",
     "viewBox": "0 0 100 96"
+  },
+  {
+    "export": "hotelSummaryImages.reviewStarOn",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable-xxhdpi/mydate_star_visit_blue.webp",
+    "sha256": "21fdea16ebad5b069eb70f2e79dabb777d10cfc291bbef819707e5c6829fc57b"
+  },
+  {
+    "export": "hotelSummaryImages.reviewStarOff",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable-xxhdpi/mydate_star_visit_brown.webp",
+    "sha256": "10a9976a0c51f12fe312e0c8d74a19bd84ec5ede0b8e6b28f313be38d92c259e"
   }
 ]
