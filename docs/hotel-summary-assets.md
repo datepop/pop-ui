@@ -18,7 +18,7 @@ The web-only `hotelSummaryImages` catalog exports `favoriteOn`, `favoriteOff` an
 
 `mapSample` is explicitly a sample illustration. It must not represent an actual map or substitute for missing coordinates. A consumer with no location must show its unset state. The catalog is intentionally absent from the React Native entry point; native consumers use their original platform resources.
 
-These first-party icons and images remain covered by the repository's Tenfingers license. Their inventory preserves their original repository provenance.
+The first-party icon and favorite artwork retains the repository's Tenfingers license. `mapSample` is an existing map screenshot from the Android repository; its embedded map-provider attribution must remain intact, and this package does not grant a new license to the provider's map content. The inventory records repository provenance rather than claiming ownership of third-party map data.
 
 ## Fonts
 
