@@ -1,4 +1,5 @@
 import * as Icons from '../icons';
+import { IllustrationHotelRoomSoldOut } from '../illustrations';
 import { hotelSummaryImages } from './index';
 
 import type { Meta, StoryObj } from '@storybook/react-vite';
@@ -40,7 +41,15 @@ export const Originals: TStory = {
           alt="Sample map artwork, not an actual location"
         />
       </div>
+      <img
+        src={hotelSummaryImages.poploggerRecruitmentBanner}
+        width={166}
+        height={135}
+        alt="Original Poplogger recruitment artwork"
+      />
+      <IllustrationHotelRoomSoldOut />
       <Icons.IconHotelFooterFavorite variant="filled" />
+      <Icons.IconHotelHelpful variant="filled" />
     </div>
   ),
 };

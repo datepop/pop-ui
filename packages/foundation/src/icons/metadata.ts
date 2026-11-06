@@ -23,6 +23,8 @@ interface IIconMetadataEntry {
 }
 
 export const iconMetadata: Record<TIconName, IIconMetadataEntry> = {
+  IconHotelPoploggerArrowRight: { categories: [IconCategory.ACTION], variants: ['line'] },
+  IconHotelHelpful: { categories: [IconCategory.ACTION], variants: ['line', 'filled'] },
   IconHotelAmenity: { categories: [IconCategory.CONTENT], variants: ['line'] },
   IconHotelAmenitySmall: { categories: [IconCategory.CONTENT], variants: ['line'] },
   IconHotelBed: { categories: [IconCategory.CONTENT], variants: ['line'] },

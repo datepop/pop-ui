@@ -396,5 +396,53 @@
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/font/montserrat_bold.ttf",
     "sha256": "447b848269bdae2e8e30f385a95f24dcc54a80304b00452159cdd3f687d6cfc3"
+  },
+  {
+    "export": "IconHotelPoploggerArrowRight",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/poplogger_recruitment_arrow_right.xml",
+    "sha256": "c430b399f7738929b5ecf8cba816868d594e90200cb0cd711f782aa40d80a073",
+    "viewBox": "0 0 16 16"
+  },
+  {
+    "export": "IconHotelHelpful",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/icon_unselected_helpful.xml",
+    "sha256": "6335c9f1a71074fa67dfaa1e195cde2fa3ac01929aee9610ba3e27b8639a4ab5",
+    "viewBox": "0 0 20 20",
+    "variant": "line"
+  },
+  {
+    "export": "IconHotelHelpful",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/icon_selected_helpful.xml",
+    "sha256": "72a6c554eb2be715c9db1a93be08c3630d227c87133e9ef0098f6c0bd1880f6f",
+    "viewBox": "0 0 24 24",
+    "variant": "filled"
+  },
+  {
+    "export": "hotelSummaryImages.poploggerRecruitmentBanner",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable-nodpi/poplogger_recruitment_banner.webp",
+    "sha256": "20a7ffef15e13f7c179e23c20306e1f9646238c8433ba7c5f1c5425cebfce03a"
+  },
+  {
+    "export": "NotoSansKR-Regular",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/font/noto_sans_kr_regular.ttf",
+    "sha256": "9db318b65ee9c575a43e7efd273dbdd1afef26e467eea3e1073a50e1a6595f6d"
+  },
+  {
+    "export": "IllustrationHotelRoomSoldOut",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/ic_hotel_room_sold_out.xml",
+    "sha256": "d67f7a593e5071138a75a4ecfec4ec435063728717fc89f37e5d04b0af0cc49d",
+    "viewBox": "0 0 100 96"
   }
 ]

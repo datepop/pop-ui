@@ -61,6 +61,16 @@
       "glyphCount": 1596,
       "cmapCount": 707,
       "verified": "glyph outlines, glyph order, cmap, name, hmtx, OS/2, GSUB and GPOS unchanged"
+    },
+    {
+      "source": "noto_sans_kr_regular.ttf",
+      "weight": 400,
+      "file": "NotoSansKR-Regular.woff2",
+      "sourceSha256": "9db318b65ee9c575a43e7efd273dbdd1afef26e467eea3e1073a50e1a6595f6d",
+      "sha256": "ef23774c98ab408aaa0aaec68ff950090dfdba086410f53c81b005c738147abe",
+      "glyphCount": 24868,
+      "cmapCount": 23174,
+      "verified": "glyph outlines, glyph order, cmap, name, hmtx, OS/2, GSUB and GPOS unchanged"
     }
   ]
 }

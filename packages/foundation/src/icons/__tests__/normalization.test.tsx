@@ -402,8 +402,11 @@ describe('normalized icons', () => {
     expect(components.length).toBeGreaterThan(0);
 
     for (const [name, Component] of components) {
-      const canvas = hotelSources.find((source) => source.export === name)?.viewBox ?? '0 0 24 24';
       for (const variant of ['line', 'filled'] as const) {
+        const canvas =
+          hotelSources.find(
+            (source) => source.export === name && (!source.variant || source.variant === variant),
+          )?.viewBox ?? '0 0 24 24';
         if (
           !renderToStaticMarkup(<Component variant={variant} />).includes(`viewBox="${canvas}"`)
         ) {

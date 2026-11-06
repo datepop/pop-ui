@@ -13,7 +13,7 @@ export const ScopedFamilies: TStory = {
       {['Pop UI Hotel Noto Sans KR', 'Pop UI Hotel Montserrat'].map((family) => (
         <div key={family}>
           <h2>{family}</h2>
-          {[500, 600, 700].map((weight) => (
+          {(family.includes('Noto') ? [400, 500, 600, 700] : [500, 600, 700]).map((weight) => (
             <p key={weight} style={{ fontFamily: family, fontWeight: weight }}>
               {weight} — 호텔 예약 · 123,456원 · Hotel Summary
             </p>

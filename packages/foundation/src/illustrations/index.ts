@@ -50,3 +50,4 @@ export { default as IllustrationWrite } from './IllustrationWrite';
 export { default as IllustrationYesCircle } from './IllustrationYesCircle';
 export { default as IllustrationYesSpike } from './IllustrationYesSpike';
 export { default as IllustrationYoutube } from './IllustrationYoutube';
+export { default as IllustrationHotelRoomSoldOut } from './IllustrationHotelRoomSoldOut';

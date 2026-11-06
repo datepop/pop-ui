@@ -57,3 +57,11 @@ http://scripts.sil.org/OFL
   font-display: swap;
   src: url('./hotel-fonts/Montserrat-Bold.woff2') format('woff2');
 }
+
+@font-face {
+  font-family: 'Pop UI Hotel Noto Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./hotel-fonts/NotoSansKR-Regular.woff2') format('woff2');
+}

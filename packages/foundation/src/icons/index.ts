@@ -177,3 +177,5 @@ export { default as IconHotelFacilityStyler } from './IconHotelFacilityStyler';
 export { default as IconHotelFacilityTv } from './IconHotelFacilityTv';
 export { default as IconHotelFacilityWashingMachine } from './IconHotelFacilityWashingMachine';
 export { default as IconHotelFacilityWifi } from './IconHotelFacilityWifi';
+export { default as IconHotelPoploggerArrowRight } from './IconHotelPoploggerArrowRight';
+export { default as IconHotelHelpful } from './IconHotelHelpful';
