@@ -27,6 +27,7 @@ export enum IllustrationCategory {
  * - categories: 의미 분류 체계
  */
 export const illustrationMetadata: Record<TIllustrationName, IIllustrationMetadataEntry> = {
+  IllustrationHotelRoomSoldOut: { categories: [IllustrationCategory.STATUS] },
   IllustrationAge12: { categories: [IllustrationCategory.CONTENT] },
   IllustrationAge15: { categories: [IllustrationCategory.CONTENT] },
   IllustrationAge19: { categories: [IllustrationCategory.CONTENT] },
