@@ -1,0 +1,400 @@
+[
+  {
+    "export": "IconHotelAmenity",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/ic_hotel_amenity.xml",
+    "sha256": "772b5901e60d7919e86faf64301a7d9dfc53e18723d1c0e5a4049a38d12d15c7",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "export": "IconHotelAmenitySmall",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/ic_hotel_amenity_small.xml",
+    "sha256": "e139e515d9442df278ae63c19aa7e8f5aa56bef349131a43fce2abdeebc7f8bd",
+    "viewBox": "0 0 20 20"
+  },
+  {
+    "export": "IconHotelEvent",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/ic_hotel_event.xml",
+    "sha256": "412b15ae6edcb51a5f31294234ddc133c11a828c585d96cb3af9e29ad51db2fd",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "export": "IconHotelRoomSection",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/ic_hotel_room_section.xml",
+    "sha256": "7d1f3df97fba3999a87356a287e50cf82480f057e6316cb730c4df2bb387dc7f",
+    "viewBox": "0 0 24 24"
+  },
+  {
+    "export": "IconHotelCalendar",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/ic_hotel_calendar.xml",
+    "sha256": "5d61eec82c3ea5b01d745d91d57c7f55f2a42443325fd29f46ef11e7184c2834",
+    "viewBox": "0 0 16 16"
+  },
+  {
+    "export": "IconHotelPerson",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/ic_hotel_person.xml",
+    "sha256": "1f86da8e90b749580a6b6e73abee5f80a833b353bd80f51647fda9c387c21ded",
+    "viewBox": "0 0 16 16"
+  },
+  {
+    "export": "IconHotelPin",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/ic_hotel_pin.xml",
+    "sha256": "1135818d1fea210e65b4bd4ea84b7b5e05627203d5c99f743291eea7567028f6",
+    "viewBox": "0 0 7.9979 10.25"
+  },
+  {
+    "export": "IconHotelChevronRight",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/ic_hotel_chevron_right.xml",
+    "sha256": "a0b8e5177e61b0aa3b4c4762eee1e644752a29e2837e1eebb8c3ba23840516c6",
+    "viewBox": "0 0 12 12"
+  },
+  {
+    "export": "IconHotelChevronDown",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/ic_hotel_chevron_down.xml",
+    "sha256": "5fc7c2e877ec50c8d4a23206a45ce2443dc27ff09ce850a0b35bd86a86b2b6d1",
+    "viewBox": "0 0 14 14"
+  },
+  {
+    "export": "IconHotelChevronDownBold",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/ic_hotel_chevron_down_bold.xml",
+    "sha256": "8bb457dbf8f8720b05abf237aba04fb514fefc56861ece611a79d41a1381ac0c",
+    "viewBox": "0 0 16 16"
+  },
+  {
+    "export": "IconHotelChevronUpBold",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/ic_hotel_chevron_up_bold.xml",
+    "sha256": "a1150d53bf302ddfe0d1da5237955cea3f2a47d2045cf02d5f46d5ad9b8b6912",
+    "viewBox": "0 0 16 16"
+  },
+  {
+    "export": "IconHotelBed",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/ic_hotel_bed.xml",
+    "sha256": "dc4cead4e0bf4fcfbbd96b8e7807871cfb0878dbc8f1b5e00d53e11be33580d0",
+    "viewBox": "0 0 16 16"
+  },
+  {
+    "export": "IconHotelCancellation",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/ic_hotel_cancellation.xml",
+    "sha256": "bec54dfd17f7986464770190330c20626e7ac80c04e49b6ba3e9b511153d55d6",
+    "viewBox": "0 0 16 16"
+  },
+  {
+    "export": "IconHotelCheck",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/ic_hotel_check.xml",
+    "sha256": "52fc983efc8230efcf7c805d49de0f63872888f486267f9f9a559be1e2ab6eb1",
+    "viewBox": "0 0 12 12"
+  },
+  {
+    "export": "IconHotelInformation",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/ic_hotel_detail_information.xml",
+    "sha256": "9a04ae5b480e1b5ba086bfaea403dacad1f1fa0d9d123b42063e42a1445f6b7b",
+    "viewBox": "0 0 14 14"
+  },
+  {
+    "export": "IconHotelSeller",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/ic_hotel_seller.xml",
+    "sha256": "d319f5ccbdee74a3a74cd3813bb9cea8a361b7141d24f80c0b14c93113ecbb6d",
+    "viewBox": "0 0 16 16"
+  },
+  {
+    "export": "IconHotelSupportCall",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/ic_hotel_support_call.xml",
+    "sha256": "0f71caa6009ebab76a953927ed04bb88edadb17ea86448a944a100deb6d29ca8",
+    "viewBox": "0 0 13.6668 13.6668"
+  },
+  {
+    "export": "IconHotelReport",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/ic_hotel_report.xml",
+    "sha256": "58a3527866bf6c5f97fd5447215adbd44ade81bbdf277ab4583ce57be7acfb5e",
+    "viewBox": "0 0 16 16"
+  },
+  {
+    "export": "IconHotelSummaryMap",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/ic_spot_summary_map.xml",
+    "sha256": "991dc8aa51f85f98332420153a8e44a482cf2c991a29bb9488ba311eebe9baac",
+    "viewBox": "0 0 31 30"
+  },
+  {
+    "export": "IconHotelNaverLogo",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/spot_naver_logo.xml",
+    "sha256": "4ec0d77296dab3c58922f9b2c45dd4dd2573dce732cfbf9bad1bbb1e91bb2905",
+    "viewBox": "0 0 18 18"
+  },
+  {
+    "export": "IconHotelNaverSearch",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/spot_naver_search.xml",
+    "sha256": "c95c6bb56cac524c0c3a3c77cc02b46f8d6a4c7faf295a9ab55a8742fd5f1651",
+    "viewBox": "0 0 17 17"
+  },
+  {
+    "export": "IconHotelFooterCheck",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/ic_spot_pi_check.xml",
+    "sha256": "d3dcde3ee72135c18612cec10894e2245aba9b52ccfd1c396140d7560d3aa6f3",
+    "viewBox": "0 0 15 15"
+  },
+  {
+    "export": "IconHotelFooterFavorite",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/ic_spot_bottom_favorite_off.xml",
+    "sha256": "041735a957d32147106a0fc8bf7ecb7604782a5991769ccb46a6dbb3d31b6975",
+    "viewBox": "0 0 18 17"
+  },
+  {
+    "export": "IconHotelFooterFavorite",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/ic_spot_bottom_favorite_on.xml",
+    "sha256": "2c25f2ce02df6cab77d944e39c9c2606d62c15a2002727e68ce1642a57b66a44",
+    "viewBox": "0 0 18 17"
+  },
+  {
+    "export": "IconHotelFacilityPet",
+    "repo": "datepop/inhouse",
+    "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
+    "path": "src/pages/SpotContentWritePage/HotelBasic/assets/pet.svg",
+    "sha256": "210c28182ac203b6c0f30a8470f13d170e1de2032bb828189c6bd764a4fd99a5",
+    "viewBox": "0 0 20 20"
+  },
+  {
+    "export": "IconHotelFacilityLuggage",
+    "repo": "datepop/inhouse",
+    "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
+    "path": "src/pages/SpotContentWritePage/HotelBasic/assets/luggage.svg",
+    "sha256": "04046f7bc51662a4f93fa8cbdd974a2486a4d45ff582fdda052c927695d83f0c",
+    "viewBox": "0 0 20 20"
+  },
+  {
+    "export": "IconHotelFacilityRefrigerator",
+    "repo": "datepop/inhouse",
+    "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
+    "path": "src/pages/SpotContentWritePage/HotelBasic/assets/refrigerator.svg",
+    "sha256": "1757596f1258f1f671343ffa1908740b93bb00c0c0e99fd7fd0eea9e3bdeda45",
+    "viewBox": "0 0 20 20"
+  },
+  {
+    "export": "IconHotelFacilityBreakfast",
+    "repo": "datepop/inhouse",
+    "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
+    "path": "src/pages/SpotContentWritePage/HotelBasic/assets/breakfast.svg",
+    "sha256": "63c0019a19b95a0c9068ecbbbdd32cdf0655e0a9e9a2f672ef28c17a8a8b90d5",
+    "viewBox": "0 0 20 20"
+  },
+  {
+    "export": "IconHotelFacilityWifi",
+    "repo": "datepop/inhouse",
+    "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
+    "path": "src/pages/SpotContentWritePage/HotelBasic/assets/wifi.svg",
+    "sha256": "babd1d89ebacaf8d0966da7ac32483364823fbc53f7bcd8e4d53fd0b6816ce93",
+    "viewBox": "0 0 20 20"
+  },
+  {
+    "export": "IconHotelFacilityNoSmoking",
+    "repo": "datepop/inhouse",
+    "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
+    "path": "src/pages/SpotContentWritePage/HotelBasic/assets/no-smoking.svg",
+    "sha256": "52850606176c34482f8ccfb5382c68518c45297265539025db39303f2b4a8de1",
+    "viewBox": "0 0 20 20"
+  },
+  {
+    "export": "IconHotelFacilityOtt",
+    "repo": "datepop/inhouse",
+    "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
+    "path": "src/pages/SpotContentWritePage/HotelBasic/assets/ott.svg",
+    "sha256": "6b7daf611e1681e420541b506ddceb628b934873e4a0a8470d4072840d79f49a",
+    "viewBox": "0 0 20 20"
+  },
+  {
+    "export": "IconHotelFacilityAmenities",
+    "repo": "datepop/inhouse",
+    "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
+    "path": "src/pages/SpotContentWritePage/HotelBasic/assets/amenities.svg",
+    "sha256": "5e28001ac8e3558d283a4337b3172b9ee4b5e4fe23d820d781db70bcfdad2122",
+    "viewBox": "0 0 20 20"
+  },
+  {
+    "export": "IconHotelFacilitySauna",
+    "repo": "datepop/inhouse",
+    "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
+    "path": "src/pages/SpotContentWritePage/HotelBasic/assets/sauna.svg",
+    "sha256": "ce016e483f732684a6daedc4e64a5d09ca94ba2bf0e0e9a712f44371b7bfc626",
+    "viewBox": "0 0 20 20"
+  },
+  {
+    "export": "IconHotelFacilityTv",
+    "repo": "datepop/inhouse",
+    "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
+    "path": "src/pages/SpotContentWritePage/HotelBasic/assets/tv.svg",
+    "sha256": "1326cf0efbb9ec6619f8e415da32e9a8d09e0f1408a40abe47cf0796b2f2c808",
+    "viewBox": "0 0 20 20"
+  },
+  {
+    "export": "IconHotelFacilityFitness",
+    "repo": "datepop/inhouse",
+    "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
+    "path": "src/pages/SpotContentWritePage/HotelBasic/assets/fitness.svg",
+    "sha256": "ec73e5ac81a4da6a38c80fc299345abfb470f7939b1f80e9e6bb0c4be94a4d81",
+    "viewBox": "0 0 20 20"
+  },
+  {
+    "export": "IconHotelFacilityStyler",
+    "repo": "datepop/inhouse",
+    "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
+    "path": "src/pages/SpotContentWritePage/HotelBasic/assets/styler.svg",
+    "sha256": "3cbf2522a380a4d6331f9ed17bd29e4aaec18da91a3efcd44ab0dfb2dbdb5692",
+    "viewBox": "0 0 20 20"
+  },
+  {
+    "export": "IconHotelFacilityAirPurifier",
+    "repo": "datepop/inhouse",
+    "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
+    "path": "src/pages/SpotContentWritePage/HotelBasic/assets/air-purifier.svg",
+    "sha256": "32822ad8b454e3cdff1a625528ad27f0d402e2baf2803344892cac57f64a1239",
+    "viewBox": "0 0 20 20"
+  },
+  {
+    "export": "IconHotelFacilityWashingMachine",
+    "repo": "datepop/inhouse",
+    "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
+    "path": "src/pages/SpotContentWritePage/HotelBasic/assets/washing-machine.svg",
+    "sha256": "29b400e8b4abecec214cac8ff49495ce5aeb533b4d30bf9bfe8878d570b46115",
+    "viewBox": "0 0 20 20"
+  },
+  {
+    "export": "IconHotelFacilityBathtub",
+    "repo": "datepop/inhouse",
+    "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
+    "path": "src/pages/SpotContentWritePage/HotelBasic/assets/bathtub.svg",
+    "sha256": "e1dcf89a399e4ceeaf22db21e29927c53b4b3c6ca613a90a3868fdd0cd71c73c",
+    "viewBox": "0 0 20 20"
+  },
+  {
+    "export": "IconHotelFacilityAirConditioner",
+    "repo": "datepop/inhouse",
+    "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
+    "path": "src/pages/SpotContentWritePage/HotelBasic/assets/air-conditioner.svg",
+    "sha256": "7e9b4fc3e023c5ea2e67602a46932a196c973a4f0636993865c8de07b986ece3",
+    "viewBox": "0 0 20 20"
+  },
+  {
+    "export": "IconHotelFacilityDryer",
+    "repo": "datepop/inhouse",
+    "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
+    "path": "src/pages/SpotContentWritePage/HotelBasic/assets/dryer.svg",
+    "sha256": "a6f1edee59cc960d337f742adfde887d3f6b20bfa408361653a420ffa3c4abd7",
+    "viewBox": "0 0 20 20"
+  },
+  {
+    "export": "IconParking",
+    "repo": "datepop/inhouse",
+    "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
+    "path": "src/pages/SpotContentWritePage/HotelBasic/assets/parking.svg",
+    "sha256": "40454892389a00f03d4e320f9f1c0359d7a60170228ebaa33a62868470ce3bda"
+  },
+  {
+    "export": "hotelSummaryImages.favoriteOn",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable-xxxhdpi/ic_favorite_on.webp",
+    "sha256": "3ae23c20b93387ec9d8e8a52ae628e378405bcacf1c5efd918c4b4d56c606ff2"
+  },
+  {
+    "export": "hotelSummaryImages.favoriteOff",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable-xxxhdpi/ic_favorite_off.webp",
+    "sha256": "9840fd42abf111258925d5b18159cb89024d1b13dfee8d281dcfab4e29a843e0"
+  },
+  {
+    "export": "hotelSummaryImages.mapSample",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable-xxhdpi/spot_summary_map_sample.webp",
+    "sha256": "7c712bea66d2b38eb9472b731928fc39457dacea2dfd08f085db91624c2cbd27"
+  },
+  {
+    "font": "noto_sans_kr_medium.ttf",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/font/noto_sans_kr_medium.ttf",
+    "sha256": "a89e734776f21fde8dc09caf1129f503e40d0b0ba1b3c6b9999cd9ba71e6735c"
+  },
+  {
+    "font": "noto_sans_kr_semi_bold.ttf",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/font/noto_sans_kr_semi_bold.ttf",
+    "sha256": "7400a489542a8b0c42547530b55df54dce876b54508512898dc5a3859bdc2a01"
+  },
+  {
+    "font": "noto_sans_kr_bold.ttf",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/font/noto_sans_kr_bold.ttf",
+    "sha256": "a76c8dabfcfae31d67c86207373155718979ddcfcc1ce62d3129dd36530a5bdf"
+  },
+  {
+    "font": "montserrat_medium.ttf",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/font/montserrat_medium.ttf",
+    "sha256": "dae47428bb041f9716604e0e07b5b0c8585b3bdd8183362f75c69fe7bb3cfaf4"
+  },
+  {
+    "font": "montserrat_semibold.ttf",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/font/montserrat_semibold.ttf",
+    "sha256": "bab583d38d105dac9141b287fb2b7763b6d8b0bae97e745faaccedb40a579c29"
+  },
+  {
+    "font": "montserrat_bold.ttf",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/font/montserrat_bold.ttf",
+    "sha256": "447b848269bdae2e8e30f385a95f24dcc54a80304b00452159cdd3f687d6cfc3"
+  }
+]

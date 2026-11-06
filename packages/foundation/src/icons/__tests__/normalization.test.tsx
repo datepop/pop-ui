@@ -1,6 +1,7 @@
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
 
+import hotelSources from '../../../../../docs/hotel-summary-assets.sources.json';
 import * as BrandIcons from '../../brand';
 import * as Illustrations from '../../illustrations';
 import IllustrationMegaphoneBlue from '../../illustrations/IllustrationMegaphoneBlue';
@@ -392,7 +393,7 @@ describe('normalized icons', () => {
     expect(svg).not.toContain('viewBox="0 0 20 20"');
   });
 
-  it('renders every icon on a 24px canvas in both variants', () => {
+  it('preserves normalized canvases and registered original hotel canvases in both variants', () => {
     const components = Object.entries(Icons).filter(
       (entry): entry is [string, ComponentType<IIconProps>] => typeof entry[1] === 'function',
     );
@@ -401,9 +402,10 @@ describe('normalized icons', () => {
     expect(components.length).toBeGreaterThan(0);
 
     for (const [name, Component] of components) {
+      const canvas = hotelSources.find((source) => source.export === name)?.viewBox ?? '0 0 24 24';
       for (const variant of ['line', 'filled'] as const) {
         if (
-          !renderToStaticMarkup(<Component variant={variant} />).includes('viewBox="0 0 24 24"')
+          !renderToStaticMarkup(<Component variant={variant} />).includes(`viewBox="${canvas}"`)
         ) {
           offenders.push(`${name}:${variant}`);
         }

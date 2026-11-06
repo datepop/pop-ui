@@ -1,56 +1,24 @@
-import fs from 'fs';
 import path from 'path';
 
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 
+import { copyFontAssets } from './scripts/fontAssets';
+
 import type { Plugin, Rollup } from 'vite';
 
 const isExternal = (id: string) => !id.startsWith('.') && !path.isAbsolute(id);
 
-const copyFontPlugin = (fontPath?: string): Plugin => {
+const copyFontPlugin = (): Plugin => {
   let outDir = 'dist';
-
   return {
     name: 'copy-font-files',
     configResolved(config) {
       outDir = config.build.outDir;
     },
     closeBundle() {
-      const defaultFontPath = path.join(
-        process.cwd(),
-        'src/components/shared/PretendardVariable.woff2',
-      );
-      const fontSource = fontPath || defaultFontPath;
-      const assetsDir = path.join(outDir, 'assets');
-
-      if (!fs.existsSync(assetsDir)) {
-        fs.mkdirSync(assetsDir, { recursive: true });
-      }
-
-      const fontDest = path.join(assetsDir, 'PretendardVariable.woff2');
-      if (fs.existsSync(fontSource)) {
-        fs.copyFileSync(fontSource, fontDest);
-        console.log('Font file copied to:', fontDest);
-      }
-
-      // CSS 파일은 dist 루트에 생성되므로 거기서 찾아서 수정
-      const rootCssFiles = fs.readdirSync(outDir).filter((f) => f.endsWith('.css'));
-      rootCssFiles.forEach((cssFile) => {
-        const cssPath = path.join(outDir, cssFile);
-        let cssContent = fs.readFileSync(cssPath, 'utf-8');
-        const regex = /url\(data:font\/woff2;base64,[^)]+\)/g;
-        const matches = cssContent.match(regex);
-
-        if (matches) {
-          console.log(`Found ${matches.length} base64 font URLs in ${cssFile}`);
-          cssContent = cssContent.replace(regex, 'url(./assets/PretendardVariable.woff2)');
-        }
-
-        fs.writeFileSync(cssPath, cssContent);
-        console.log(`Font URLs processed in ${cssFile}`);
-      });
+      copyFontAssets(path.join(process.cwd(), 'src/components/shared'), outDir);
     },
   };
 };

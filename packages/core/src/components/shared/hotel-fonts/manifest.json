@@ -1,0 +1,66 @@
+{
+  "sourceCommit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+  "tool": "fonttools 4.60.2; recalcBBoxes=False, recalcTimestamp=False, flavor=woff2; no subset",
+  "fonts": [
+    {
+      "source": "noto_sans_kr_medium.ttf",
+      "weight": 500,
+      "file": "NotoSansKR-Medium.woff2",
+      "sourceSha256": "a89e734776f21fde8dc09caf1129f503e40d0b0ba1b3c6b9999cd9ba71e6735c",
+      "sha256": "6cfc2f492e31307f2308d4ed2e952f5429b0b2c57de53394b51d90af07f063c8",
+      "glyphCount": 24868,
+      "cmapCount": 23174,
+      "verified": "glyph outlines, glyph order, cmap, name, hmtx, OS/2, GSUB and GPOS unchanged"
+    },
+    {
+      "source": "noto_sans_kr_semi_bold.ttf",
+      "weight": 600,
+      "file": "NotoSansKR-SemiBold.woff2",
+      "sourceSha256": "7400a489542a8b0c42547530b55df54dce876b54508512898dc5a3859bdc2a01",
+      "sha256": "a90e48b996fb854825025d220b1e59526a4950c943019783ccf8b3b363329e07",
+      "glyphCount": 24868,
+      "cmapCount": 23174,
+      "verified": "glyph outlines, glyph order, cmap, name, hmtx, OS/2, GSUB and GPOS unchanged"
+    },
+    {
+      "source": "noto_sans_kr_bold.ttf",
+      "weight": 700,
+      "file": "NotoSansKR-Bold.woff2",
+      "sourceSha256": "a76c8dabfcfae31d67c86207373155718979ddcfcc1ce62d3129dd36530a5bdf",
+      "sha256": "97fc46a5c081d587c8642315f28b36efc8122784cb552ef140ac7ce6a276c378",
+      "glyphCount": 24868,
+      "cmapCount": 23174,
+      "verified": "glyph outlines, glyph order, cmap, name, hmtx, OS/2, GSUB and GPOS unchanged"
+    },
+    {
+      "source": "montserrat_medium.ttf",
+      "weight": 500,
+      "file": "Montserrat-Medium.woff2",
+      "sourceSha256": "dae47428bb041f9716604e0e07b5b0c8585b3bdd8183362f75c69fe7bb3cfaf4",
+      "sha256": "7be6fd8b55ac73852775cc00db3616008d493f2f40c2575e6b794fa77c2a5a8d",
+      "glyphCount": 2747,
+      "cmapCount": 1312,
+      "verified": "glyph outlines, glyph order, cmap, name, hmtx, OS/2, GSUB and GPOS unchanged"
+    },
+    {
+      "source": "montserrat_semibold.ttf",
+      "weight": 600,
+      "file": "Montserrat-SemiBold.woff2",
+      "sourceSha256": "bab583d38d105dac9141b287fb2b7763b6d8b0bae97e745faaccedb40a579c29",
+      "sha256": "1fe03fc42673a02ac260a78ba43a170d6fd0d2d7f12ffe506699bf75f6dab85b",
+      "glyphCount": 1943,
+      "cmapCount": 969,
+      "verified": "glyph outlines, glyph order, cmap, name, hmtx, OS/2, GSUB and GPOS unchanged"
+    },
+    {
+      "source": "montserrat_bold.ttf",
+      "weight": 700,
+      "file": "Montserrat-Bold.woff2",
+      "sourceSha256": "447b848269bdae2e8e30f385a95f24dcc54a80304b00452159cdd3f687d6cfc3",
+      "sha256": "8d72c6990de68338c7aa8177df21021a8dad44004090becb010763d2da92f29c",
+      "glyphCount": 1596,
+      "cmapCount": 707,
+      "verified": "glyph outlines, glyph order, cmap, name, hmtx, OS/2, GSUB and GPOS unchanged"
+    }
+  ]
+}
