@@ -38,6 +38,7 @@ it('ships the unmodified Android raster originals identified by the source inven
     'poploggerRecruitmentBanner',
     'reviewStarOn',
     'reviewStarOff',
+    'profilePlaceholder',
   ]) {
     const source = sources.find((entry) => entry.export === `hotelSummaryImages.${name}`);
     const bytes = readFileSync(resolve('packages/foundation/src/hotel-summary', `${name}.webp`));

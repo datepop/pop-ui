@@ -179,3 +179,4 @@ export { default as IconHotelFacilityWashingMachine } from './IconHotelFacilityW
 export { default as IconHotelFacilityWifi } from './IconHotelFacilityWifi';
 export { default as IconHotelPoploggerArrowRight } from './IconHotelPoploggerArrowRight';
 export { default as IconHotelHelpful } from './IconHotelHelpful';
+export { default as IconHotelPoplogChevronRight } from './IconHotelPoplogChevronRight';

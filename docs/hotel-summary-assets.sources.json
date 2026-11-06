@@ -458,5 +458,20 @@
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable-xxhdpi/mydate_star_visit_brown.webp",
     "sha256": "10a9976a0c51f12fe312e0c8d74a19bd84ec5ede0b8e6b28f313be38d92c259e"
+  },
+  {
+    "export": "IconHotelPoplogChevronRight",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable/chevron_right_gray.xml",
+    "sha256": "e94745458e9c9d837311746b54c56f0d83a81f70f98f9508ac4c708f46042d24",
+    "viewBox": "0 0 14 14"
+  },
+  {
+    "export": "hotelSummaryImages.profilePlaceholder",
+    "repo": "datepop/datepop-android",
+    "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
+    "path": "core-res/src/main/res/drawable-xxhdpi/exception_no_cover_image.webp",
+    "sha256": "b0517572091c27bc0c4bc54ab20c601d635d87b850a5504a189bd64129affdad"
   }
 ]

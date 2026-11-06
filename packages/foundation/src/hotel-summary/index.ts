@@ -2,6 +2,7 @@ import favoriteOff from './favoriteOff.webp';
 import favoriteOn from './favoriteOn.webp';
 import mapSample from './mapSample.webp';
 import poploggerRecruitmentBanner from './poploggerRecruitmentBanner.webp';
+import profilePlaceholder from './profilePlaceholder.webp';
 import reviewStarOff from './reviewStarOff.webp';
 import reviewStarOn from './reviewStarOn.webp';
 
@@ -13,4 +14,5 @@ export const hotelSummaryImages = {
   poploggerRecruitmentBanner,
   reviewStarOn,
   reviewStarOff,
+  profilePlaceholder,
 } as const;

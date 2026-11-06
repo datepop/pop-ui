@@ -59,6 +59,12 @@ export const Originals: TStory = {
         height={20}
         alt="Original unselected review star"
       />
+      <img
+        src={hotelSummaryImages.profilePlaceholder}
+        width={30}
+        height={30}
+        alt="Original unavailable profile image"
+      />
       <IllustrationHotelRoomSoldOut />
       <Icons.IconHotelFooterFavorite variant="filled" />
       <Icons.IconHotelHelpful variant="filled" />
