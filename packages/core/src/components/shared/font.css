@@ -8,9 +8,60 @@ http://scripts.sil.org/OFL
 */
 
 @font-face {
-  font-family: "Pretendard";
+  font-family: 'Pretendard';
   font-weight: 500;
   font-style: normal;
   font-display: swap;
-  src: url("./PretendardVariable.woff2") format("woff2-variations");
+  src: url('./PretendardVariable.woff2') format('woff2-variations');
+}
+
+@font-face {
+  font-family: 'Pop UI Hotel Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./hotel-fonts/NotoSansKR-Medium.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pop UI Hotel Noto Sans KR';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('./hotel-fonts/NotoSansKR-SemiBold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pop UI Hotel Noto Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./hotel-fonts/NotoSansKR-Bold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pop UI Hotel Montserrat';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./hotel-fonts/Montserrat-Medium.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pop UI Hotel Montserrat';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('./hotel-fonts/Montserrat-SemiBold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pop UI Hotel Montserrat';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./hotel-fonts/Montserrat-Bold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Pop UI Hotel Noto Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./hotel-fonts/NotoSansKR-Regular.woff2') format('woff2');
 }

@@ -18,3 +18,5 @@ export type { IBrandIconProps } from './types/brand';
 export * from './icons';
 export * from './illustrations';
 export * from './brand';
+
+export { hotelSummaryImages } from './hotel-summary';
