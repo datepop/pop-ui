@@ -36,6 +36,8 @@ interface ILottieInputProps {
   readOnly?: boolean;
   gap?: number;
   canDelete?: boolean;
+  /** 로띠 아래에 깔 이미지 주소. 앱처럼 이미지 위에 로띠를 겹쳐 미리본다. */
+  backgroundImage?: string;
 }
 
 export type {
