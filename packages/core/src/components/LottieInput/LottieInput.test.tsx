@@ -173,6 +173,25 @@ describe('LottieInput', () => {
       cleanupRenderedApp(view);
     });
 
+    it('backgroundImage sits under the lottie and replaces the empty fill', async () => {
+      const view = await renderApp(
+        <LottieInput
+          value={[makeItem('a'), makeItem('b', { animationData: undefined })]}
+          backgroundImage="https://cdn.test/bg.png"
+        />,
+      );
+      const players = view.container.querySelectorAll('[data-testid="lottie-player"]');
+      const stages = view.container.querySelectorAll<HTMLElement>(
+        '[style*="https://cdn.test/bg.png"]',
+      );
+
+      expect(players).toHaveLength(1);
+      expect(stages).toHaveLength(2);
+      expect(stages[0].contains(players[0])).toBe(true);
+      expect(stages[1].firstElementChild?.className).toBe('');
+      cleanupRenderedApp(view);
+    });
+
     it('keeps the reorder handle in the action bar for Lottie tiles', async () => {
       const view = await renderApp(<LottieInput value={[makeItem('a'), makeItem('b')]} />);
       const handle = view.container.querySelector('[aria-label="드래그로 순서 변경"]');
