@@ -14,6 +14,13 @@
   height: 100%;
 }
 
+// backgroundImage 를 로띠(lottie-web 기본 meet)와 같은 맞춤으로 깔아 겹친 모습을 맞춘다
+.Stage {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
 // 파싱 실패 또는 데이터 없음 상태
 .Empty {
   background-color: $color-gray-50;

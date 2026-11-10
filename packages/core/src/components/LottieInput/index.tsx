@@ -48,6 +48,7 @@ interface ILottieTileProps {
   isLoading?: boolean;
   canDelete: boolean;
   hasLink: boolean;
+  backgroundImage?: string;
   onLinkClick?: (item: ILottieInputItem) => void;
   onDelete: (id: string) => void;
 }
@@ -62,6 +63,7 @@ function LottieTile({
   isLoading,
   canDelete,
   hasLink,
+  backgroundImage,
   onLinkClick,
   onDelete,
 }: ILottieTileProps) {
@@ -123,18 +125,27 @@ function LottieTile({
       onDelete={() => onDelete(item.id)}
       deleteAriaLabel="Lottie 삭제"
     >
-      {resolvedData ? (
-        <Suspense fallback={<div style={{ width, height, display: 'block' }} />}>
-          <Lottie
-            animationData={resolvedData}
-            loop
-            autoplay
-            style={{ width, height, display: 'block' }}
-          />
-        </Suspense>
-      ) : (
-        <div className={styles.Empty} style={{ width, height }} />
-      )}
+      <div
+        className={styles.Stage}
+        style={
+          backgroundImage
+            ? { backgroundImage: `url(${JSON.stringify(backgroundImage)})` }
+            : undefined
+        }
+      >
+        {resolvedData ? (
+          <Suspense fallback={<div style={{ width, height, display: 'block' }} />}>
+            <Lottie
+              animationData={resolvedData}
+              loop
+              autoplay
+              style={{ width, height, display: 'block' }}
+            />
+          </Suspense>
+        ) : (
+          <div className={backgroundImage ? undefined : styles.Empty} style={{ width, height }} />
+        )}
+      </div>
     </TileShell>
   );
 }
@@ -158,6 +169,7 @@ export const LottieInput = ({
   readOnly,
   gap = 8,
   canDelete = true,
+  backgroundImage,
 }: ILottieInputProps) => {
   if (import.meta.env.DEV && length != null && (minLength != null || maxLength != null)) {
     console.warn(
@@ -270,6 +282,7 @@ export const LottieInput = ({
                     isLoading={isLoading}
                     canDelete={canDelete}
                     hasLink={hasLink}
+                    backgroundImage={backgroundImage}
                     onLinkClick={onLinkClick}
                     onDelete={handleDelete}
                   />
@@ -313,6 +326,7 @@ export const LottieInput = ({
                     isLoading={isLoading}
                     canDelete={canDelete}
                     hasLink={hasLink}
+                    backgroundImage={backgroundImage}
                     onLinkClick={onLinkClick}
                     onDelete={handleDelete}
                   />

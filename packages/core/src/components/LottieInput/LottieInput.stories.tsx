@@ -158,6 +158,18 @@ export const WithURL: StoryObj<typeof LottieInput> = {
   },
 };
 
+// ─── WithBackgroundImage ─────────────────────────────────────────────────────
+
+export const WithBackgroundImage: StoryObj<typeof LottieInput> = {
+  args: {
+    value: SAMPLE_ITEMS.slice(0, 1),
+    maxLength: 1,
+    width: 200,
+    height: 200,
+    backgroundImage: 'https://picsum.photos/seed/lottie-bg/400/400',
+  },
+};
+
 // ─── WithAnimationData ────────────────────────────────────────────────────────
 
 export const WithAnimationData: StoryObj<typeof LottieInput> = {
