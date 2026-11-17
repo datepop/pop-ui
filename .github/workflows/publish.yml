@@ -1,0 +1,154 @@
+# npm trusted publishing(OIDC)은 이 파일 이름(publish.yml)으로 npm 패키지 설정에 등록돼 있다.
+# 파일 이름을 바꾸면 npm의 Trusted Publisher 설정도 같이 바꿔야 발행된다.
+name: Publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+
+jobs:
+  check-latest-tag:
+    runs-on: ubuntu-latest
+    outputs:
+      latest: ${{ steps.check.outputs.latest }}
+    steps:
+      - id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          if ! [[ "$TAG_NAME" =~ ^v[0-9]+(\.[0-9]+)*$ ]]; then
+            echo "::error::invalid release tag '$TAG_NAME' (only vMAJOR.MINOR.PATCH allowed)"
+            exit 1
+          fi
+
+          latest=$(gh api --paginate "repos/$GITHUB_REPOSITORY/tags" --jq '.[].name' | grep -E '^v[0-9]+(\.[0-9]+)*$' | sort -V | tail -n 1)
+          if [ "$latest" != "$TAG_NAME" ]; then
+            echo "[publish] skip ${TAG_NAME}; latest tag is ${latest}"
+            echo "latest=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          tag_sha=$(gh api "repos/$GITHUB_REPOSITORY/commits/$TAG_NAME" --jq .sha)
+          main_sha=$(gh api "repos/$GITHUB_REPOSITORY/git/ref/heads/main" --jq .object.sha)
+          if [ "$tag_sha" != "$main_sha" ]; then
+            echo "::error::tag ${TAG_NAME} points to ${tag_sha}, but main HEAD is ${main_sha}"
+            exit 1
+          fi
+          echo "latest=true" >> "$GITHUB_OUTPUT"
+
+  publish:
+    needs: check-latest-tag
+    if: needs.check-latest-tag.outputs.latest == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # GitHub Release
+      id-token: write # npm trusted publishing
+    env:
+      HUSKY: '0'
+      TAG_NAME: ${{ github.ref_name }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate release version
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+
+          const tagName = process.env.TAG_NAME || '';
+          if (!/^v\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?$/.test(tagName)) {
+            throw new Error(`TAG_NAME must be a semver tag like v1.2.3, got '${tagName}'`);
+          }
+
+          const releaseVersion = tagName.slice(1);
+          const packages = [
+            { name: '@pop-ui/foundation', dir: 'packages/foundation', required: true },
+            { name: '@pop-ui/core', dir: 'packages/core', required: true },
+            { name: '@pop-ui/editor-core', dir: 'packages/editor-core', required: false },
+            { name: '@pop-ui/editor', dir: 'packages/editor', required: false },
+          ];
+
+          function readPackageJson(dir) {
+            return JSON.parse(fs.readFileSync(`${dir}/package.json`, 'utf8'));
+          }
+
+          const publishRows = [];
+          for (const pkg of packages) {
+            const manifest = readPackageJson(pkg.dir);
+
+            if (manifest.name !== pkg.name) {
+              throw new Error(`${pkg.dir}/package.json name mismatch: expected ${pkg.name}, got ${manifest.name}`);
+            }
+
+            if (pkg.required && manifest.version !== releaseVersion) {
+              throw new Error(`${pkg.name} version must match ${tagName}: expected ${releaseVersion}, got ${manifest.version}`);
+            }
+
+            if (!pkg.required && manifest.version !== releaseVersion) {
+              console.log(`[release] skip ${pkg.name}@${manifest.version}; tag ${tagName} targets ${releaseVersion}`);
+              continue;
+            }
+
+            if (manifest.private) {
+              console.log(`[release] skip private package ${pkg.name}`);
+              continue;
+            }
+
+            publishRows.push(`${manifest.name}|${pkg.dir}|${manifest.version}`);
+          }
+
+          const core = readPackageJson('packages/core');
+          const foundationDependency = core.dependencies && core.dependencies['@pop-ui/foundation'];
+          if (foundationDependency && foundationDependency !== 'workspace:*' && foundationDependency !== releaseVersion) {
+            throw new Error(`@pop-ui/core must depend on @pop-ui/foundation ${releaseVersion} or workspace:*, got ${foundationDependency}`);
+          }
+
+          fs.writeFileSync('publish-plan.txt', publishRows.length ? `${publishRows.join('\n')}\n` : '');
+          console.log(`[release] publish candidates: ${publishRows.length ? publishRows.join(', ') : 'none'}`);
+          NODE
+
+      - name: Install & Build
+        run: |
+          set -eu
+          yarn install
+          yarn token-transform
+          yarn token-build
+          yarn typecheck
+          yarn build
+
+      # npmAuthToken이 없으면 yarn이 GitHub OIDC 토큰을 npm 발행 토큰으로 교환한다.
+      - name: Publish packages
+        run: |
+          set -eu
+          if [ ! -s publish-plan.txt ]; then
+            echo '[publish] no package matched this release tag'
+            exit 0
+          fi
+          while IFS='|' read -r PKG_NAME PKG_DIR PKG_VERSION; do
+            if npm view "${PKG_NAME}@${PKG_VERSION}" version >/dev/null 2>&1; then
+              echo "[publish] skip ${PKG_NAME}@${PKG_VERSION}; already published"
+              continue
+            fi
+            echo "[publish] publishing ${PKG_NAME}@${PKG_VERSION}"
+            (cd "${PKG_DIR}" && yarn npm publish --access public)
+          done < publish-plan.txt
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -eu
+          if gh release view "$TAG_NAME" >/dev/null 2>&1; then
+            echo "[release] ${TAG_NAME} already exists; skipping"
+          else
+            gh release create "$TAG_NAME" --title "Release $TAG_NAME" --generate-notes
+          fi
