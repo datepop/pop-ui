@@ -1,0 +1,88 @@
+@use '../shared/variables.scss' as *;
+@use '../shared/functions' as fn;
+
+.StepNavigation {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.StepNavigation__Steps {
+  width: max-content;
+  gap: fn.spacing(300);
+  flex-wrap: nowrap;
+}
+
+.StepNavigation__Separator {
+  display: none;
+}
+
+.StepNavigation__Step {
+  height: 50px;
+  flex: none;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: $color-white;
+  color: $color-gray-400;
+  font-family: fn.$font-family;
+  cursor: pointer;
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 1;
+  }
+
+  &:focus-visible {
+    outline: fn.border-width(50) solid $color-aqua-800;
+    outline-offset: 2px;
+  }
+
+  &:global([data-progress]) .StepNavigation__StepLabel {
+    color: $color-aqua-800;
+  }
+}
+
+.StepNavigation__StepBody {
+  margin-inline-start: fn.spacing(200);
+}
+
+.StepNavigation__StepLabel {
+  display: flex;
+  align-items: center;
+  gap: fn.spacing(300);
+  color: $color-gray-400;
+  font-family: fn.$font-family;
+  font-size: fn.font-size(550);
+  font-weight: 700;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.StepNavigation__StepIcon {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  min-height: 28px;
+  border: 0;
+  background: $color-gray-400;
+  color: $color-white;
+  font-family: fn.$font-family;
+  font-size: fn.font-size(600);
+  font-weight: 700;
+  line-height: 1.3;
+
+  &:global([data-progress]) {
+    background: $color-aqua-800;
+    color: $color-white;
+  }
+
+  &:global([data-completed]) {
+    background: $color-gray-400;
+    color: $color-white;
+  }
+}
+
+.StepNavigation__CompletedIcon {
+  font-size: fn.font-size(600);
+  line-height: 1.3;
+}
