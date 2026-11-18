@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.3.0
+
+### Patch Changes
+
+- Align the foundation version with core for the linked 2.3.0 release.
+
 ## 2.2.7
 
 ### Patch Changes
