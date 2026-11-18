@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.3.0
+
+### Minor Changes
+
+- aeb80c2: Add a reusable numbered step navigation for multi-step forms.
+
 ## 2.2.7
 
 ### Patch Changes
