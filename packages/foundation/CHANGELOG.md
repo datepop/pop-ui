@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.2.7
+
+### Patch Changes
+
+- c3cd623: LottieInput 에 `backgroundImage` 옵션을 추가해 이미지 위에 로띠를 겹쳐 미리볼 수 있습니다.
+
+## 2.2.6
+
+### Patch Changes
+
+- b76685c: 호텔 Summary에 사용하는 원본 Android 및 디자인 시스템 자산과 Noto Sans KR/Montserrat 글꼴을 제공하고, 각 글꼴 파일의 배포 URL을 보존합니다.
+
 ## 2.2.5
 
 ### Patch Changes

@@ -34,6 +34,8 @@ export { SearchBar } from './SearchBar';
 export type { ISearchBarProps } from './SearchBar/types';
 export { SegmentButton } from './SegmentButton';
 export type { ISegmentButtonProps } from './SegmentButton/types';
+export { StepNavigation } from './StepNavigation';
+export type { IStepNavigationProps, IStepNavigationStep } from './StepNavigation/types';
 export { Tab } from './Tab';
 export type { ITabProps } from './Tab/types';
 export { TextField } from './TextField';
