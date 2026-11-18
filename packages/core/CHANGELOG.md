@@ -1,5 +1,16 @@
 # @pop-ui/core
 
+## 2.3.0
+
+### Minor Changes
+
+- aeb80c2: Add a reusable numbered step navigation for multi-step forms.
+
+### Patch Changes
+
+- Updated dependencies [aeb80c2]
+  - @pop-ui/foundation@2.3.0
+
 ## 2.2.7
 
 ### Patch Changes
