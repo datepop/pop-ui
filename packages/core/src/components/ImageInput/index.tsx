@@ -112,7 +112,7 @@ function ImageTile({
       readOnly={readOnly}
       isLoading={isLoading}
       itemIsLoading={item.isLoading}
-      canDelete={canDelete}
+      canDelete={item.canDelete ?? canDelete}
       isDragHandleOverlay
       hasLink={hasLink && canShowLink}
       linkUrl={item.url}
