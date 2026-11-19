@@ -1,5 +1,13 @@
 # @pop-ui/core
 
+## 2.3.1
+
+### Patch Changes
+
+- 0e36119: ImageInput 항목(`IImageInputItem`)에 `canDelete` 를 추가했습니다. 항목별로 삭제 버튼 노출을 정할 수 있고, 없으면 컴포넌트의 `canDelete` 를 따릅니다.
+- Updated dependencies [0e36119]
+  - @pop-ui/foundation@2.3.1
+
 ## 2.3.0
 
 ### Minor Changes
