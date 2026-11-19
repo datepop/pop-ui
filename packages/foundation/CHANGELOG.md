@@ -1,5 +1,11 @@
 # Changelog
 
+## 2.3.1
+
+### Patch Changes
+
+- 0e36119: `@pop-ui/core` 와 배포 버전을 맞춰 2.3.1 로 올렸습니다. `ImageInput` 항목별 `canDelete` 는 `@pop-ui/core` 에서 제공합니다.
+
 ## 2.3.0
 
 ### Minor Changes

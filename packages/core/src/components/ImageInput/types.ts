@@ -18,6 +18,8 @@ interface IImageInputItem {
   file?: File;
   isLoading?: boolean;
   position?: number;
+  /** 이 항목만 삭제 버튼 노출 여부를 따로 정한다. 없으면 컴포넌트의 `canDelete` 를 따른다. */
+  canDelete?: boolean;
 }
 
 type TImageInputChangeAction = 'create' | 'replace' | 'delete' | 'reorder' | 'crop';

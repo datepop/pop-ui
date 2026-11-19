@@ -616,6 +616,23 @@ describe('ImageInput', () => {
       cleanupRenderedApp(view);
     });
 
+    it('item canDelete overrides the component canDelete per item', () => {
+      const view = renderApp(
+        <ImageInput value={[{ ...makeItem('a'), canDelete: false }, makeItem('b')]} canDelete />,
+      );
+      expect(view.container.querySelectorAll('[aria-label="이미지 삭제"]')).toHaveLength(1);
+      cleanupRenderedApp(view);
+
+      const hidden = renderApp(
+        <ImageInput
+          value={[{ ...makeItem('a'), canDelete: true }, makeItem('b')]}
+          canDelete={false}
+        />,
+      );
+      expect(hidden.container.querySelectorAll('[aria-label="이미지 삭제"]')).toHaveLength(1);
+      cleanupRenderedApp(hidden);
+    });
+
     it('delete in readOnly → no onChange', () => {
       const onChange = vi.fn();
       const view = renderApp(<ImageInput value={[makeItem('a')]} readOnly onChange={onChange} />);
