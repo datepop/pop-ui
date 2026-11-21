@@ -296,7 +296,8 @@ export const DatePicker = ({
           onChange={() => {}}
           onInvalid={(event) => {
             event.preventDefault();
-            setAttemptedValidation(true);
+            // Keep reset and invalid notifications in their native event order.
+            queueMicrotask(() => setAttemptedValidation(true));
             triggerRef.current?.focus();
           }}
         />

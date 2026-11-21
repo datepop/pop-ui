@@ -2940,6 +2940,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^8.46.2"
     "@vitejs/plugin-react": "npm:^5.1.0"
     dayjs: "npm:^1.11.18"
+    dequal: "npm:^2.0.3"
     embla-carousel-react: "npm:^8.6.0"
     eslint: "npm:^9.38.0"
     eslint-plugin-react-hooks: "npm:^7.0.1"

@@ -50,6 +50,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@pop-ui/foundation": "workspace:*",
     "dayjs": "^1.11.18",
+    "dequal": "^2.0.3",
     "lottie-react": "^2.4.1",
     "react-easy-crop": "^5.5.3"
   },

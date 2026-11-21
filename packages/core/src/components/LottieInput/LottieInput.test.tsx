@@ -230,47 +230,63 @@ describe('LottieInput', () => {
       }
     });
 
-    it.each(['locked', 'new callback', 'replaced list', 'new scope', 'same scope'] as const)(
-      'handles a pending file read on rerender (%s)',
-      async (change) => {
-        let completeRead: () => void = () => {
-          throw new Error('file read was not started');
-        };
-        vi.spyOn(FileReader.prototype, 'readAsText').mockImplementation(function (
-          this: FileReader,
-        ) {
-          completeRead = () =>
-            this.onload?.call(this, {
-              target: { result: JSON.stringify(VALID_LOTTIE) },
-            } as ProgressEvent<FileReader>);
-        });
-        const onChange = vi.fn();
-        const nextChange = vi.fn();
-        const scope = change.includes('scope') ? 'a' : undefined;
-        const view = await renderApp(
-          <LottieInput value={[]} onChange={onChange} uploadScope={scope} />,
+    it.each([
+      'locked',
+      'new callback',
+      'copied items',
+      'replaced file',
+      'replaced list',
+      'new scope',
+      'same scope',
+    ] as const)('handles a pending file read on rerender (%s)', async (change) => {
+      let completeRead: () => void = () => {
+        throw new Error('file read was not started');
+      };
+      vi.spyOn(FileReader.prototype, 'readAsText').mockImplementation(function (this: FileReader) {
+        completeRead = () =>
+          this.onload?.call(this, {
+            target: { result: JSON.stringify(VALID_LOTTIE) },
+          } as ProgressEvent<FileReader>);
+      });
+      const onChange = vi.fn();
+      const nextChange = vi.fn();
+      const scope = change.includes('scope') ? 'a' : undefined;
+      const items = ['copied items', 'replaced file'].includes(change)
+        ? [makeItem('a', { file: makeLottieFile() })]
+        : [];
+      const nextItems =
+        change === 'replaced list'
+          ? [makeItem('b')]
+          : items.map((item) => ({
+              ...item,
+              file: change === 'replaced file' ? makeLottieFile() : item.file,
+              animationData: structuredClone(item.animationData),
+            }));
+      const view = await renderApp(
+        <LottieInput value={items} onChange={onChange} uploadScope={scope} />,
+      );
+      try {
+        const drop = mockDropzone.mock.calls[0][0].onDrop([makeLottieFile()]);
+        await act(async () =>
+          view.root.render(
+            <LottieInput
+              value={nextItems}
+              onChange={change === 'locked' ? onChange : nextChange}
+              uploadScope={change === 'new scope' ? 'b' : scope}
+              isLoading={change === 'locked'}
+            />,
+          ),
         );
-        try {
-          const drop = mockDropzone.mock.calls[0][0].onDrop([makeLottieFile()]);
-          await act(async () =>
-            view.root.render(
-              <LottieInput
-                value={change === 'replaced list' ? [makeItem('b')] : []}
-                onChange={change === 'locked' ? onChange : nextChange}
-                uploadScope={change === 'new scope' ? 'b' : scope}
-                isLoading={change === 'locked'}
-              />,
-            ),
-          );
-          completeRead();
-          await drop;
-          expect(onChange).toHaveBeenCalledTimes(change === 'new callback' ? 1 : 0);
-          expect(nextChange).toHaveBeenCalledTimes(change === 'same scope' ? 1 : 0);
-        } finally {
-          cleanupRenderedApp(view);
-        }
-      },
-    );
+        completeRead();
+        await drop;
+        expect(onChange).toHaveBeenCalledTimes(
+          ['new callback', 'copied items'].includes(change) ? 1 : 0,
+        );
+        expect(nextChange).toHaveBeenCalledTimes(change === 'same scope' ? 1 : 0);
+      } finally {
+        cleanupRenderedApp(view);
+      }
+    });
 
     it('readOnly hides delete buttons and dropzones', async () => {
       const view = await renderApp(<LottieInput value={[makeItem('a')]} readOnly />);

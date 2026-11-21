@@ -52,7 +52,7 @@ export function Button({
   onFocus,
   onBlur,
   onClickCapture,
-  onKeyDown,
+  onKeyDownCapture,
   className,
   classNames,
   loaderProps,
@@ -94,13 +94,13 @@ export function Button({
         setFocused(false);
         onBlur?.(event);
       }}
-      onKeyDown={(event) => {
+      onKeyDownCapture={(event) => {
         if (isButtonLoading && (event.key === ' ' || event.key === 'Enter')) {
           event.preventDefault();
           event.stopPropagation();
           return;
         }
-        onKeyDown?.(event);
+        onKeyDownCapture?.(event);
       }}
       onClickCapture={(event) => {
         if (isButtonLoading) {

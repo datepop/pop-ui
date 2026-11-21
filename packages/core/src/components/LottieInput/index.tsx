@@ -3,6 +3,7 @@
 import { DndContext, closestCenter } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
 import { ColorAqua700, ColorRed700, IconPhoto } from '@pop-ui/foundation';
+import { dequal } from 'dequal/lite';
 import { Suspense, lazy, useEffect, useState } from 'react';
 
 import {
@@ -214,7 +215,9 @@ export const LottieInput = ({
       if (
         useOriginalHandler &&
         (origin.value.length !== value.length ||
-          origin.value.some((item, index) => item !== value[index]))
+          origin.value.some(
+            (item, index) => item.file !== value[index].file || !dequal(item, value[index]),
+          ))
       )
         return;
       const notify = useOriginalHandler ? origin.onChange : onChange;
