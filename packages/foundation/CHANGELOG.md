@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.4.0
+
+### Minor Changes
+
+- d64e402: Expose shared action background, field border and placeholder color tokens. Use the same control heights for Button, TextField and Dropdown in the web components and Penpot library. The placeholder now uses gray 700. Medium Button labels share a typography token for 16px semibold text with a 20px line height. TextField and Dropdown share hover and focus border colors and keep error borders visible during interaction. TextField, Dropdown and SearchBar use independent error border and message tokens.
+- d64e402: Export shared web images as `foundationImages`. The deprecated `hotelSummaryImages` alias references the same catalog.
+- d64e402: Use `IconChevronDown` for downward chevrons and its `thick` prop for the heavier weight. Deprecate `IconHotelChevronDown` and `IconHotelChevronDownBold` while preserving their existing rendering on web and React Native.
+
 ## 2.3.1
 
 ### Patch Changes
