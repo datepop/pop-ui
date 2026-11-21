@@ -88,6 +88,39 @@ describe('Button', () => {
     cleanupRenderedApp(view);
   });
 
+  it('blocks loading activation keys before the caller handler and passes through Tab', () => {
+    const onKeyDown = vi.fn();
+    const formKeyDown = vi.fn();
+    const renderForm = (loading: boolean) => (
+      <form>
+        <Button onKeyDown={onKeyDown} isLoading={loading}>
+          저장
+        </Button>
+      </form>
+    );
+    const view = renderApp(renderForm(false));
+    const form = view.container.querySelector('form')!;
+    form.addEventListener('keydown', formKeyDown);
+    try {
+      const button = view.container.querySelector('button')!;
+      act(() => button.focus());
+      act(() => view.root.render(renderForm(true)));
+      for (const key of ['Enter', ' ']) {
+        const event = new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true });
+        button.dispatchEvent(event);
+        expect(event.defaultPrevented).toBe(true);
+      }
+      expect(onKeyDown).not.toHaveBeenCalled();
+      expect(formKeyDown).not.toHaveBeenCalled();
+      button.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
+      expect(onKeyDown).toHaveBeenCalledTimes(1);
+      expect(formKeyDown).toHaveBeenCalledTimes(1);
+    } finally {
+      form.removeEventListener('keydown', formKeyDown);
+      cleanupRenderedApp(view);
+    }
+  });
+
   it.each(BUTTON_VARIANTS)('maps %s to the SCSS class-based styling contract', (variant) => {
     const view = renderApp(<Button variant={variant}>{variant}</Button>);
 
@@ -101,7 +134,7 @@ describe('Button', () => {
   });
 
   it.each(BUTTON_SIZES.flatMap((size) => BUTTON_VARIANTS.map((variant) => ({ size, variant }))))(
-    'replaces children with the canonical loader for $variant / $size and disables the button while loading',
+    'overlays the canonical loader for $variant / $size and disables the button while loading',
     ({ size, variant }) => {
       const view = renderApp(
         <Button isLoading size={size} variant={variant}>
@@ -116,7 +149,10 @@ describe('Button', () => {
         color: 'currentColor',
         size: BUTTON_LOADER_SIZES[size],
       });
-      expect(view.container.querySelector('button')?.textContent ?? '').not.toContain('Submit');
+      const button = view.container.querySelector('button');
+      expect(button?.hasAttribute('data-loading-overlay')).toBe(true);
+      expect(button?.getAttribute('aria-busy')).toBe('true');
+      expect(button?.textContent).toBe('Submit');
       expect(
         view.container.querySelector('[data-testid="loader"]')?.getAttribute('data-color'),
       ).toBe('currentColor');
@@ -154,8 +190,21 @@ describe('Button', () => {
       color: 'currentColor',
       size: BUTTON_LOADER_SIZES.md,
     });
-    expect(view.container.querySelector('button')?.textContent ?? '').not.toContain('Loading prop');
+    expect(view.container.querySelector('button')?.textContent).toBe('Loading prop');
 
+    cleanupRenderedApp(view);
+  });
+
+  it('keeps the loader inline when the label is requested during loading', () => {
+    const view = renderApp(
+      <Button isLoading hideLabelOnLoading={false}>
+        Submit
+      </Button>,
+    );
+    const button = view.container.querySelector('button');
+    expect(button?.hasAttribute('data-loading-overlay')).toBe(false);
+    expect(button?.textContent).toBe('Submit');
+    expect(mockLoader).toHaveBeenCalledTimes(1);
     cleanupRenderedApp(view);
   });
 

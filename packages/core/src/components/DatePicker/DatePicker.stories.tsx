@@ -1,6 +1,12 @@
 import { useState } from 'react';
+import { expect, waitFor, within } from 'storybook/test';
 
 import { DatePicker } from '.';
+import { FieldComparison, checkFieldComparison } from '../../../../../.storybook/examples/FieldComparison';
+import {
+  WidthComparison,
+  checkComparisonWidth,
+} from '../../../../../.storybook/examples/WidthComparison';
 
 import type { IDatePickerProps } from './types';
 import type { Meta, StoryObj } from '@storybook/react-vite';
@@ -372,4 +378,73 @@ export const VisualContract_BehaviorModesAndSharedStateTargets: StoryObj<typeof 
   parameters: {
     controls: { disable: true },
   },
+};
+
+export const ContentAtDifferentWidths: StoryObj<typeof DatePicker> = {
+  name: '너비별 콘텐츠',
+  tags: ['pop-ui-contract'],
+  parameters: { layout: 'padded' },
+  play: async (context) => {
+    for (const column of await checkComparisonWidth(context)) {
+      const buttons = within(column).getAllByRole('button');
+      for (const [i, count] of [2, 3].entries()) {
+        const date = buttons[i].querySelector('span')!.firstChild!;
+        const dates = Array.from(date.textContent!.matchAll(/\d{4}년\s+\d+월\s+\d+일/g));
+        await expect(dates).toHaveLength(count);
+        for (const match of dates) {
+          const range = column.ownerDocument.createRange();
+          range.setStart(date, match.index);
+          range.setEnd(date, match.index + match[0].length);
+          await expect(range.getClientRects()).toHaveLength(1);
+        }
+      }
+      await expect(
+        within(column).getByText('예약 가능한 날짜를 한 개 이상 선택해주세요.'),
+      ).toBeVisible();
+    }
+  },
+  render: () => (
+    <WidthComparison>
+      <DatePicker type="range" defaultValue={['2026-11-18', '2026-11-20']} />
+      <DatePicker type="multiple" defaultValue={['2026-11-18', '2026-11-20', '2026-11-23']} />
+      <DatePicker placeholder="날짜 선택" error="예약 가능한 날짜를 한 개 이상 선택해주세요." />
+    </WidthComparison>
+  ),
+};
+
+export const FieldFeedback: StoryObj<typeof DatePicker> = {
+  name: '입력 상태와 피드백',
+  tags: ['pop-ui-contract', 'pop-ui-field'],
+  parameters: { layout: 'padded' },
+  play: async (context) => {
+    await checkFieldComparison(context);
+    for (const form of context.canvasElement.querySelectorAll('form')) {
+      const button = within(form).getByRole('button');
+      if (form.closest('[data-field-state="default"]')) {
+        await expect(form.reportValidity()).toBe(false);
+        await expect(button).toHaveFocus();
+        const message = await within(form).findByRole('alert');
+        await expect(message).toHaveTextContent('날짜를 선택해주세요.');
+        await expect(button.getAttribute('aria-describedby')?.split(/\s+/)).toContain(message.id);
+        form.reset();
+        await waitFor(() => expect(within(form).queryByRole('alert')).toBeNull());
+      } else if (form.closest('[data-field-state="filled"]')) {
+        await expect(form.checkValidity()).toBe(true);
+        await expect(button).toHaveAccessibleName(/예약 정보.*2026/);
+      }
+    }
+  },
+  render: () => (
+    <FieldComparison
+      renderField={(state, props) => (
+        <form>
+          <DatePicker
+            {...props}
+            defaultValue={state === 'filled' ? '2026-11-18' : undefined}
+            placeholder="날짜 선택"
+          />
+        </form>
+      )}
+    />
+  ),
 };

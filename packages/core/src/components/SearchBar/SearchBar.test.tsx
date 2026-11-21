@@ -1,185 +1,130 @@
-import React, { act } from 'react';
+import { MantineProvider } from '@mantine/core';
+import { act } from 'react';
 import { createRoot } from 'react-dom/client';
-
-const mockAutocomplete = vi.fn(
-  ({ className, size, error, rightSection, onChange }: Record<string, unknown>) => (
-    <div
-      className={String(className)}
-      data-error={String(error ?? '')}
-      data-size={String(size ?? '')}
-      data-testid="mantine-autocomplete"
-    >
-      <input
-        data-testid="autocomplete-input"
-        onChange={(e) => (onChange as ((value: string) => void) | undefined)?.(e.target.value)}
-      />
-      <div data-testid="right-section">{rightSection as React.ReactNode}</div>
-    </div>
-  ),
-);
-
-vi.mock('@mantine/core', () => {
-  const Input = Object.assign(
-    (props: Record<string, unknown>) => <div>{props.children as React.ReactNode}</div>,
-    {
-      Label: (props: Record<string, unknown>) => <label>{props.children as React.ReactNode}</label>,
-      Description: (props: Record<string, unknown>) => (
-        <div>{props.children as React.ReactNode}</div>
-      ),
-      Error: (props: Record<string, unknown>) => <div>{props.children as React.ReactNode}</div>,
-    },
-  );
-
-  return {
-    Autocomplete: (props: Record<string, unknown>) => mockAutocomplete(props),
-    Input,
-    Tooltip: (props: Record<string, unknown>) => <div>{props.children as React.ReactNode}</div>,
-  };
-});
-
-vi.mock('@pop-ui/foundation', () => ({
-  IconInfoCircle: () => <span data-testid="icon-info" />,
-  IconX: () => <span data-testid="icon-x" />,
-  IconSearch: () => <span data-testid="icon-search" />,
-}));
 
 import { SearchBar } from '.';
 import styles from './styles.module.scss';
 
+import type { ISearchBarProps } from './types';
 import type { Root } from 'react-dom/client';
 
-interface IRenderedApp {
-  container: HTMLDivElement;
-  root: Root;
-}
+vi.mock('@pop-ui/foundation', () => ({
+  IconInfoCircle: () => <span />,
+  IconX: () => <span />,
+  IconSearch: () => <span />,
+}));
 
 (
   globalThis as typeof globalThis & { IS_REACT_ACT_ENVIRONMENT?: boolean }
 ).IS_REACT_ACT_ENVIRONMENT = true;
 
-const renderApp = (ui: React.ReactNode): IRenderedApp => {
-  const container = document.createElement('div');
-  document.body.appendChild(container);
-
-  const root = createRoot(container);
-
-  act(() => {
-    root.render(ui);
-  });
-
-  return { container, root };
-};
-
-const cleanupRenderedApp = ({ container, root }: IRenderedApp): void => {
-  act(() => {
-    root.unmount();
-  });
-
-  container.remove();
-};
-
-const latestProps = () =>
-  mockAutocomplete.mock.calls[mockAutocomplete.mock.calls.length - 1]?.[0] as Record<
-    string,
-    unknown
-  >;
-
 describe('SearchBar', () => {
+  let root: Root;
+  let container: HTMLDivElement;
+
+  beforeEach(() => {
+    container = document.createElement('div');
+    document.body.appendChild(container);
+    root = createRoot(container);
+  });
+
   afterEach(() => {
-    mockAutocomplete.mockClear();
-    document.body.innerHTML = '';
+    act(() => root.unmount());
+    container.remove();
   });
 
-  it('transforms the Autocomplete payload into a string for the user onChange', () => {
-    const onChange = vi.fn();
-    const view = renderApp(<SearchBar onChange={onChange} />);
+  function render(props: ISearchBarProps) {
+    act(() =>
+      root.render(
+        <MantineProvider>
+          <SearchBar {...props} />
+        </MantineProvider>,
+      ),
+    );
+  }
 
-    const onChangeHandler = latestProps().onChange as (value: string) => void;
+  const clearButton = () =>
+    container.querySelector<HTMLButtonElement>('button[aria-label="검색어 지우기"]');
+  const input = () => container.querySelector('input')!;
 
-    act(() => {
-      onChangeHandler('hello');
-    });
-
-    expect(onChange).toHaveBeenCalledTimes(1);
-    expect(onChange).toHaveBeenCalledWith('hello');
-    expect(typeof onChange.mock.calls[0]?.[0]).toBe('string');
-
-    cleanupRenderedApp(view);
-  });
-
-  it('renders the clear button only when onClear is provided and text has been typed', () => {
+  it('clears a prefilled uncontrolled input and returns focus to it', () => {
     const onChange = vi.fn();
     const onClear = vi.fn();
-    const view = renderApp(<SearchBar onChange={onChange} onClear={onClear} />);
-
-    // textCount starts at 0 -> no clear button
-    expect(latestProps().rightSection).toBeUndefined();
-
-    // type -> drives textCount > 0
-    const onChangeHandler = latestProps().onChange as (value: string) => void;
+    render({ defaultValue: '예약', onChange, onClear, clearable: true, label: '검색' });
+    const button = clearButton()!;
+    expect(button.tabIndex).toBe(0);
+    expect(button).not.toHaveAttribute('aria-hidden', 'true');
+    expect(container.querySelector('label')?.control).toBe(input());
     act(() => {
-      onChangeHandler('abc');
+      button.focus();
+      button.click();
     });
-
-    const clearButton = view.container.querySelector(`.${styles['SearchBar__ClearButton']}`);
-    expect(clearButton).not.toBeNull();
-
-    act(() => {
-      (clearButton as HTMLElement).click();
-    });
+    expect(input()).toHaveValue('');
+    expect(input()).toHaveFocus();
+    expect(clearButton()).toBeNull();
+    expect(onChange).toHaveBeenCalledExactlyOnceWith('');
     expect(onClear).toHaveBeenCalledTimes(1);
-
-    cleanupRenderedApp(view);
   });
 
-  it('omits the clear button when onClear is absent even after typing', () => {
+  it('calls only onClear from the legacy clear button when clearable is not set', () => {
     const onChange = vi.fn();
-    const view = renderApp(<SearchBar onChange={onChange} />);
-
-    const onChangeHandler = latestProps().onChange as (value: string) => void;
-    act(() => {
-      onChangeHandler('abc');
-    });
-
-    expect(latestProps().rightSection).toBeUndefined();
-    expect(view.container.querySelector(`.${styles['SearchBar__ClearButton']}`)).toBeNull();
-
-    cleanupRenderedApp(view);
+    const onClear = vi.fn();
+    render({ defaultValue: '예약', onChange, onClear });
+    const button = clearButton()!;
+    expect(button.tabIndex).toBe(0);
+    act(() => button.click());
+    expect(onClear).toHaveBeenCalledTimes(1);
+    expect(onChange).not.toHaveBeenCalled();
+    render({ value: '', onChange, onClear });
+    expect(clearButton()).toBeNull();
   });
 
-  it('maps size to the matching Autocomplete className', () => {
-    const small = renderApp(<SearchBar size="sm" />);
-    expect(latestProps().className).toBe(styles['SearchBar--Small']);
-    cleanupRenderedApp(small);
-    mockAutocomplete.mockClear();
-
-    const medium = renderApp(<SearchBar size="md" />);
-    expect(latestProps().className).toBe(styles['SearchBar--Medium']);
-    cleanupRenderedApp(medium);
-    mockAutocomplete.mockClear();
-
-    const large = renderApp(<SearchBar size="lg" />);
-    expect(latestProps().className).toBe(styles['SearchBar--Large']);
-    cleanupRenderedApp(large);
+  it('keeps description and error visible when the caller order omits them', () => {
+    render({ inputWrapperOrder: ['input'], description: '설명', errorMsg: '오류' });
+    expect(container).toHaveTextContent('설명');
+    expect(container).toHaveTextContent('오류');
   });
 
-  it('defaults to the medium className when size is omitted', () => {
-    const view = renderApp(<SearchBar />);
-    expect(latestProps().className).toBe(styles['SearchBar--Medium']);
-    cleanupRenderedApp(view);
+  it('uses the current controlled value, including changes from the parent', () => {
+    const onChange = vi.fn();
+    render({ value: '', onChange, clearable: true });
+    expect(clearButton()).toBeNull();
+    render({ value: '외부 검색어', onChange, clearable: true });
+    act(() => clearButton()!.click());
+    expect(onChange).toHaveBeenCalledExactlyOnceWith('');
+    expect(input()).toHaveValue('외부 검색어');
+    render({ value: '', onChange, clearable: true });
+    expect(clearButton()).toBeNull();
   });
 
-  it('forwards errorMsg to the Autocomplete error prop', () => {
-    const view = renderApp(<SearchBar errorMsg="required field" />);
-    expect(latestProps().error).toBe('required field');
-    cleanupRenderedApp(view);
+  it('clears an uncontrolled input without a change handler', () => {
+    render({ defaultValue: '예약', clearable: true });
+    act(() => clearButton()!.click());
+    expect(input()).toHaveValue('');
+    expect(clearButton()).toBeNull();
   });
 
-  it('applies the top-label wrapper class by default', () => {
-    const view = renderApp(<SearchBar />);
-    const wrapper = view.container.querySelector(`.${styles['SearchBar--TopLabel']}`);
-    expect(wrapper).not.toBeNull();
-    expect(view.container.querySelector(`.${styles['SearchBar--LeftLabel']}`)).toBeNull();
-    cleanupRenderedApp(view);
+  it.each([{}, { disabled: true, clearable: true }, { readOnly: true, clearable: true }])(
+    'omits the clear action when it is unavailable',
+    (props) => {
+      render({ defaultValue: '예약', ...props });
+      expect(clearButton()).toBeNull();
+    },
+  );
+
+  it.each([
+    ['sm', 'Small'],
+    ['md', 'Medium'],
+    ['lg', 'Large'],
+  ] as const)('applies the %s size class', (size, suffix) => {
+    render({ size });
+    expect(container.querySelector('.' + styles['SearchBar--' + suffix])).not.toBeNull();
+  });
+
+  it('defaults to a medium field with a top label and forwards errors', () => {
+    render({ errorMsg: '필수 항목입니다' });
+    expect(container.querySelector('.' + styles['SearchBar--Medium'])).not.toBeNull();
+    expect(container.querySelector('.' + styles['SearchBar--TopLabel'])).not.toBeNull();
+    expect(input()).toHaveAttribute('aria-invalid', 'true');
   });
 });

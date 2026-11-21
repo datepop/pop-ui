@@ -120,6 +120,7 @@ const { MockInput, mockInput, mockTextarea, mockTooltip } = vi.hoisted(() => {
 
 vi.mock('@mantine/core', () => ({
   Input: Object.assign(MockInput, {
+    Wrapper: ({ children }: { children: React.ReactNode }) => <>{children}</>,
     Label: MockInput.Label,
     Description: MockInput.Description,
     Error: MockInput.Error,
@@ -277,7 +278,7 @@ describe('TextField', () => {
     expect(clearButton).not.toBeNull();
     expect(view.container.querySelector('[data-testid="icon-x"]')).toHaveAttribute(
       'data-size',
-      '20',
+      '16',
     );
 
     act(() => {
@@ -325,5 +326,13 @@ describe('TextField', () => {
     expect(props.disabled).toBe(true);
 
     cleanupRenderedApp(view);
+  });
+
+  it('renders the textarea description only in the outer feedback area', () => {
+    renderApp(
+      <TextField textarea description="설명" inputWrapperOrder={['input', 'description']} />,
+    );
+    const props = mockTextarea.mock.calls[0]?.[0] as { inputWrapperOrder?: string[] };
+    expect(props.inputWrapperOrder).toEqual(['input']);
   });
 });

@@ -2,11 +2,40 @@ export function generateItemId(): string {
   return crypto.randomUUID();
 }
 
-export function reorderItems<T>(current: T[], fromIndex: number, toIndex: number): T[] {
-  const result = [...current];
-  const [moved] = result.splice(fromIndex, 1);
-  result.splice(toIndex, 0, moved);
-  return result;
+// Rotate only editable slots. An upload keeps its slot even when another file crosses it.
+function movedPositions(from: number, to: number, locked: ReadonlySet<number>) {
+  const moves = new Map<number, number>();
+  if (
+    !Number.isSafeInteger(from) ||
+    !Number.isSafeInteger(to) ||
+    from === to ||
+    locked.has(from) ||
+    locked.has(to)
+  )
+    return moves;
+  const step = from < to ? 1 : -1;
+  let previous = from;
+  for (let position = from + step; position !== to + step; position += step) {
+    if (!locked.has(position)) {
+      moves.set(position, previous);
+      previous = position;
+    }
+  }
+  moves.set(from, to);
+  return moves;
+}
+
+export function reorderItems<T>(
+  current: T[],
+  from: number,
+  to: number,
+  locked: ReadonlySet<number> = new Set(),
+): T[] {
+  const moves = movedPositions(from, to, locked);
+  if (!moves.size) return current;
+  const next = [...current];
+  for (const [source, destination] of moves) next[destination] = current[source];
+  return next;
 }
 
 export function getPlaceholderCount(
@@ -34,19 +63,12 @@ export function reorderItemPositions<T extends { position?: number }>(
   current: T[],
   fromPosition: number,
   toPosition: number,
+  locked: ReadonlySet<number> = new Set(),
 ): T[] {
+  const moves = movedPositions(fromPosition, toPosition, locked);
+  if (!moves.size) return current;
   return current.map((item) => {
-    const pos = item.position;
-    if (pos == null) return item;
-    if (pos === fromPosition) return { ...item, position: toPosition };
-    // 앞→뒤: 사이 아이템들을 한 칸 앞으로
-    if (fromPosition < toPosition && pos > fromPosition && pos <= toPosition) {
-      return { ...item, position: pos - 1 };
-    }
-    // 뒤→앞: 사이 아이템들을 한 칸 뒤로
-    if (fromPosition > toPosition && pos >= toPosition && pos < fromPosition) {
-      return { ...item, position: pos + 1 };
-    }
-    return item;
+    const destination = item.position == null ? undefined : moves.get(item.position);
+    return destination === undefined ? item : { ...item, position: destination };
   });
 }

@@ -29,6 +29,17 @@ export default {
 
 export const Playground: StoryObj<typeof Radio> = {};
 
+export const SortOrder: StoryObj<typeof Radio> = {
+  name: '정렬 기준 선택',
+  parameters: { layout: 'centered' },
+  render: () => (
+    <div role="radiogroup" aria-label="정렬 기준" style={{ display: 'grid', gap: 16 }}>
+      <Radio name="sort-order" value="recent" label="최신순" defaultChecked />
+      <Radio name="sort-order" value="popular" label="인기순" />
+    </div>
+  ),
+};
+
 export const Sizes: StoryObj<typeof Radio> = {
   render: () => (
     <div style={rowStyle}>

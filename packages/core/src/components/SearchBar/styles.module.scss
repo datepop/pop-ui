@@ -1,5 +1,6 @@
 @use "../shared/variables.scss" as *;
 @use "../shared/functions" as fn;
+@use "../shared/field-tokens";
 
 .SearchBar--LeftLabel {
   display: flex;
@@ -10,60 +11,6 @@
 .SearchBar--TopLabel {
   display: flex;
   flex-direction: column;
-}
-
-.SearchBar__Label--Small {
-  font-family: fn.$font-family;
-  font-size: fn.font-size(450);
-  font-weight: 600;
-  letter-spacing: 0;
-  text-align: left;
-  margin: fn.spacing(200) 3px;
-}
-
-.SearchBar__Label--Medium {
-  font-family: fn.$font-family;
-  font-size: fn.font-size(500);
-  font-weight: 600;
-  letter-spacing: 0;
-  text-align: left;
-  margin: fn.spacing(300) fn.spacing(100);
-}
-
-.SearchBar__Label--Large {
-  font-family: fn.$font-family;
-  font-size: fn.font-size(550);
-  font-weight: 600;
-  letter-spacing: 0;
-  text-align: left;
-  margin: fn.spacing(400) fn.spacing(100);
-}
-
-.SearchBar__Tooltip--Small {
-  width: 14px;
-  height: 14px;
-}
-
-.SearchBar__Tooltip--Medium {
-  width: fn.spacing(400);
-  height: fn.spacing(400);
-}
-
-.SearchBar__Tooltip--Large {
-  width: 18px;
-  height: 18px;
-}
-
-@mixin SearchBarBorderFocus {
-  &:hover {
-    outline: fn.border-width(37) solid $color-aqua-300;
-    border-color: transparent;
-  }
-
-  &:focus-within {
-    outline: fn.border-width(37) solid $color-aqua-500;
-    border-color: transparent;
-  }
 }
 
 .SearchBar__Wrapper {
@@ -84,7 +31,7 @@
 
 .SearchBar--Textarea {
   textarea {
-    @include SearchBarBorderFocus;
+    @include field-tokens.interaction-states;
   }
 }
 
@@ -92,10 +39,9 @@
   input {
     height: 30px;
     min-height: 30px;
-    padding: fn.spacing(200);
     font-size: fn.font-size(450);
 
-    @include SearchBarBorderFocus;
+    @include field-tokens.interaction-states;
   }
 }
 
@@ -103,10 +49,9 @@
   input {
     height: fn.spacing(1000);
     min-height: fn.spacing(1000);
-    padding: fn.spacing(300);
     font-size: fn.font-size(450);
 
-    @include SearchBarBorderFocus;
+    @include field-tokens.interaction-states;
   }
 }
 
@@ -114,10 +59,9 @@
   input {
     height: 50px;
     min-height: 50px;
-    padding: fn.spacing(400);
     font-size: fn.font-size(500);
 
-    @include SearchBarBorderFocus;
+    @include field-tokens.interaction-states;
   }
 }
 
@@ -126,12 +70,12 @@
 }
 
 .SearchBar__ErrorMsg {
+  @include field-tokens.error-message;
+
   margin-top: fn.spacing(100);
 }
 
-.SearchBar__ClearButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
+.SearchBar__Description,
+.SearchBar__ErrorMsg {
+  overflow-wrap: anywhere;
 }

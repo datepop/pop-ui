@@ -202,6 +202,94 @@ describe('LottieInput', () => {
       cleanupRenderedApp(view);
     });
 
+    it('allows removing and moving a file while only its preview is loading', async () => {
+      vi.spyOn(globalThis, 'fetch').mockImplementation(() => new Promise<Response>(() => {}));
+      const onChange = vi.fn();
+      const other = makeItem('ready');
+      const view = await renderApp(
+        <LottieInput
+          value={[{ id: 'preview', url: '/preview.json' }, other]}
+          onChange={onChange}
+        />,
+      );
+      try {
+        expect(view.container.querySelector('[data-testid="loader"]')).toBeInTheDocument();
+        expect(view.container.querySelector('[aria-label="드래그로 순서 변경"]')).toBeEnabled();
+        const remove = view.container.querySelector<HTMLButtonElement>(
+          '[aria-label="Lottie 삭제"]',
+        )!;
+        expect(remove).toBeEnabled();
+        act(() => remove.click());
+        expect(onChange).toHaveBeenCalledWith([other], {
+          action: 'delete',
+          itemId: 'preview',
+          index: 0,
+        });
+      } finally {
+        cleanupRenderedApp(view);
+      }
+    });
+
+    it.each([
+      'locked',
+      'new callback',
+      'copied items',
+      'replaced file',
+      'replaced list',
+      'removed item',
+      'new scope',
+      'same scope',
+    ] as const)('handles a pending file read on rerender (%s)', async (change) => {
+      let completeRead: () => void = () => {
+        throw new Error('file read was not started');
+      };
+      vi.spyOn(FileReader.prototype, 'readAsText').mockImplementation(function (this: FileReader) {
+        completeRead = () =>
+          this.onload?.call(this, {
+            target: { result: JSON.stringify(VALID_LOTTIE) },
+          } as ProgressEvent<FileReader>);
+      });
+      const onChange = vi.fn();
+      const nextChange = vi.fn();
+      const scope = change.includes('scope') ? 'a' : undefined;
+      const items = ['copied items', 'replaced file', 'removed item'].includes(change)
+        ? [makeItem('a', { file: makeLottieFile() })]
+        : [];
+      const nextItems =
+        change === 'replaced list'
+          ? [makeItem('b')]
+          : items.map((item) => ({
+              ...item,
+              file: change === 'replaced file' ? makeLottieFile() : item.file,
+              animationData: structuredClone(item.animationData),
+            }));
+      if (change === 'removed item') delete nextItems[0];
+      const view = await renderApp(
+        <LottieInput value={items} onChange={onChange} uploadScope={scope} />,
+      );
+      try {
+        const drop = mockDropzone.mock.calls[0][0].onDrop([makeLottieFile()]);
+        await act(async () =>
+          view.root.render(
+            <LottieInput
+              value={nextItems}
+              onChange={change === 'locked' ? onChange : nextChange}
+              uploadScope={change === 'new scope' ? 'b' : scope}
+              isLoading={change === 'locked'}
+            />,
+          ),
+        );
+        completeRead();
+        await drop;
+        expect(onChange).toHaveBeenCalledTimes(
+          ['new callback', 'copied items'].includes(change) ? 1 : 0,
+        );
+        expect(nextChange).toHaveBeenCalledTimes(change === 'same scope' ? 1 : 0);
+      } finally {
+        cleanupRenderedApp(view);
+      }
+    });
+
     it('readOnly hides delete buttons and dropzones', async () => {
       const view = await renderApp(<LottieInput value={[makeItem('a')]} readOnly />);
       expect(view.container.querySelector('[aria-label="Lottie 삭제"]')).toBeNull();
@@ -209,12 +297,22 @@ describe('LottieInput', () => {
       cleanupRenderedApp(view);
     });
 
-    it('errorMsg renders Input.Error', async () => {
-      const view = await renderApp(<LottieInput value={[]} errorMsg="파일을 추가하세요" />);
-      expect(view.container.querySelector('[data-testid="input-error"]')).toHaveTextContent(
-        '파일을 추가하세요',
+    it.each([
+      [undefined, '기존 오류'],
+      [<strong key="message">새 오류</strong>, '새 오류'],
+      [false, null],
+      [null, null],
+    ] as const)('resolves error and its JSX alias (%#)', async (error, expected) => {
+      const view = await renderApp(
+        <LottieInput value={[]} errorMsg={<em>기존 오류</em>} error={error} />,
       );
-      cleanupRenderedApp(view);
+      try {
+        const message = view.container.querySelector('[data-testid="input-error"]');
+        if (expected === null) expect(message).toBeNull();
+        else expect(message?.textContent).toBe(expected);
+      } finally {
+        cleanupRenderedApp(view);
+      }
     });
 
     it('maxLength=2, 2 items → 0 placeholders', async () => {
@@ -243,6 +341,20 @@ describe('LottieInput', () => {
       expect(nextValue).toHaveLength(1);
       expect(meta).toMatchObject({ action: 'create', index: 0 });
       cleanupRenderedApp(view);
+    });
+
+    it('accepts a visible empty slot when an existing item is outside the slot range', async () => {
+      const items = [0, 1, 3].map((position) => ({ ...makeItem(String(position)), position }));
+      const onChange = vi.fn();
+      const view = await renderApp(<LottieInput length={3} value={items} onChange={onChange} />);
+      try {
+        await act(async () => mockDropzone.mock.calls[0][0].onDrop([makeLottieFile()]));
+        expect(onChange.mock.calls[0][0].map((item: ILottieInputItem) => item.position)).toEqual([
+          0, 1, 3, 2,
+        ]);
+      } finally {
+        cleanupRenderedApp(view);
+      }
     });
 
     it('dropping invalid file shows toast, no onChange', async () => {

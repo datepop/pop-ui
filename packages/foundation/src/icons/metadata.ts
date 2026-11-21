@@ -17,7 +17,23 @@ export enum IconCategory {
 }
 type TIconName = keyof typeof Icons;
 
+export const lineWeightIconNames: ReadonlySet<string> = new Set([
+  'IconArrowDown',
+  'IconArrowLeft',
+  'IconArrowRight',
+  'IconArrowUp',
+  'IconCheck',
+  'IconChevronDown',
+  'IconChevronLeft',
+  'IconChevronRight',
+  'IconChevronUp',
+  'IconX',
+  'IconMinus',
+  'IconPlus',
+] satisfies TIconName[]);
+
 interface IIconMetadataEntry {
+  replacedBy?: TIconName;
   categories: IconCategory[];
   variants: ('line' | 'filled')[];
 }
@@ -32,8 +48,16 @@ export const iconMetadata: Record<TIconName, IIconMetadataEntry> = {
   IconHotelCalendar: { categories: [IconCategory.CONTENT], variants: ['line'] },
   IconHotelCancellation: { categories: [IconCategory.CONTENT], variants: ['line'] },
   IconHotelCheck: { categories: [IconCategory.CONTENT], variants: ['line'] },
-  IconHotelChevronDown: { categories: [IconCategory.CONTENT], variants: ['line'] },
-  IconHotelChevronDownBold: { categories: [IconCategory.CONTENT], variants: ['line'] },
+  IconHotelChevronDown: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+    replacedBy: 'IconChevronDown',
+  },
+  IconHotelChevronDownBold: {
+    categories: [IconCategory.ACTION],
+    variants: ['line'],
+    replacedBy: 'IconChevronDown',
+  },
   IconHotelChevronRight: { categories: [IconCategory.CONTENT], variants: ['line'] },
   IconHotelChevronUpBold: { categories: [IconCategory.CONTENT], variants: ['line'] },
   IconHotelEvent: { categories: [IconCategory.CONTENT], variants: ['line'] },

@@ -26,6 +26,18 @@ describe('generated foundation color tokens', () => {
     expect(Object.keys(generatedColors)).toHaveLength(expectedColorTokenCount);
   });
 
+  it('resolves semantic aliases without adding them to the primitive swatch palette', () => {
+    const roles = transformedTokenData.color;
+    expect(generatedColors.ColorActionPrimaryBackground).toBe(
+      roles.action.primary.background.value.toLowerCase(),
+    );
+    expect(generatedColors.ColorTextPlaceholder).toBe(roles.text.placeholder.value.toLowerCase());
+    expect(generatedColors.ColorBorderDefault).toBe(roles.border.default.value.toLowerCase());
+    for (const role of ['action', 'text', 'border']) {
+      expect(foundationExports.colors).not.toHaveProperty(role);
+    }
+  });
+
   it('keeps generated values normalized and re-exported from the package entrypoint', () => {
     expect(generatedColors.ColorWhite).toBe('#ffffff');
     expect(generatedColors.ColorAqua600).toBe('#11badd');

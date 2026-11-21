@@ -1,5 +1,6 @@
 import type { IIconLineOnlyProps } from '../types/icon';
 
+/** @deprecated Use IconChevronDown with thick for new designs. */
 export default function IconHotelChevronDownBold({
   size = 16,
   color = '#333333',

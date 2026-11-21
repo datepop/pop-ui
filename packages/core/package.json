@@ -16,7 +16,8 @@
         "default": "./dist/core.umd.cjs"
       }
     },
-    "./styles.css": "./dist/core.css"
+    "./styles.css": "./dist/core.css",
+    "./fonts.css": "./dist/assets/fonts.css"
   },
   "sideEffects": [
     "**/*.css",
@@ -37,7 +38,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && sass --no-source-map src/components/shared/fonts/families.scss dist/assets/fonts.css",
     "typecheck": "tsc && tsc -p tsconfig.test.json",
     "lint": "eslint src --max-warnings 0",
     "lint:fix": "eslint src --fix",
@@ -49,6 +50,7 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@pop-ui/foundation": "workspace:*",
     "dayjs": "^1.11.18",
+    "dequal": "^2.0.3",
     "lottie-react": "^2.4.1",
     "react-easy-crop": "^5.5.3"
   },

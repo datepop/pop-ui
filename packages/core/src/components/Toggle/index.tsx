@@ -10,6 +10,7 @@ import type { IToggleProps } from './types';
 
 export const Toggle = ({
   size = 'md',
+  className,
   labelPosition = 'right',
   disabled,
   checked,
@@ -45,7 +46,7 @@ export const Toggle = ({
 
   return (
     <Switch
-      className={sizeStyle}
+      className={[sizeStyle, className].filter(Boolean).join(' ')}
       size={size}
       labelPosition={labelPosition}
       disabled={disabled}

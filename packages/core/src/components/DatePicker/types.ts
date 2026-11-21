@@ -1,10 +1,11 @@
 import type { TDayOfWeek } from '../CalendarDatePicker/types';
+import type { IFieldFeedbackProps } from '../shared/field';
 import type { PopoverProps } from '@mantine/core';
 import type { TDateDisplayType } from '@pop-ui/foundation';
 import type { ReactNode } from 'react';
 
-export interface IDatePickerProps {
-  size?: 'sm' | 'md' | 'lg';
+export interface IDatePickerProps extends IFieldFeedbackProps {
+  id?: string;
   type?: TDateDisplayType;
   withTime?: boolean;
   // 값 제어
@@ -14,8 +15,6 @@ export interface IDatePickerProps {
   // Input 외관
   placeholder?: string;
   label?: ReactNode;
-  description?: ReactNode;
-  error?: ReactNode;
   disabled?: boolean;
   clearable?: boolean;
   // 날짜 제약

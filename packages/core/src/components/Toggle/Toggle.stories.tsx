@@ -16,3 +16,9 @@ export const DefaultToggle: StoryObj<typeof Toggle> = {
     disabled: false,
   },
 };
+
+export const NotificationPreference: StoryObj<typeof Toggle> = {
+  name: "알림 설정",
+  parameters: { layout: "centered" },
+  args: { label: "알림 받기", size: "md", defaultChecked: false },
+};

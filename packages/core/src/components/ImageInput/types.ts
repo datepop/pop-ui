@@ -1,3 +1,4 @@
+import type { TMultiItemInputFeedback } from '../shared/field';
 import type { ReactNode } from 'react';
 
 type TImageMimeType =
@@ -38,7 +39,7 @@ interface IImagePreviewProps {
   item: IImageInputItem;
 }
 
-interface IImageInputProps {
+interface IImageInputProps extends TMultiItemInputFeedback {
   value: IImageInputItem[];
   onChange?: (nextValue: IImageInputItem[], meta: IImageInputChangeMeta) => void;
   accept?: TImageInputAccept;
@@ -52,7 +53,6 @@ interface IImageInputProps {
   hasEdit?: boolean;
   minLength?: number;
   maxLength?: number;
-  errorMsg?: ReactNode;
   isLoading?: boolean;
   readOnly?: boolean;
   gap?: number;

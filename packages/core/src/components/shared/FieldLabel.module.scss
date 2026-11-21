@@ -1,0 +1,49 @@
+@use "./focus";
+@use "./functions" as fn;
+
+.FieldLabel {
+  display: flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: fn.spacing(100);
+}
+
+.FieldLabel__Label {
+  font-family: fn.$font-family;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-align: left;
+}
+
+.FieldLabel[data-size="sm"] .FieldLabel__Label {
+  font-size: fn.font-size(450);
+  margin: fn.spacing(200) 3px;
+}
+
+.FieldLabel[data-size="md"] .FieldLabel__Label {
+  font-size: fn.font-size(500);
+  margin: fn.spacing(300) fn.spacing(100);
+}
+
+.FieldLabel[data-size="lg"] .FieldLabel__Label {
+  font-size: fn.font-size(550);
+  margin: fn.spacing(400) fn.spacing(100);
+}
+
+.FieldLabel__Help {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  color: inherit;
+  appearance: none;
+  padding: 0;
+  border: 0;
+  border-radius: fn.spacing(100);
+  background: transparent;
+  cursor: pointer;
+
+  &:focus-visible {
+    @include focus.ring;
+  }
+}

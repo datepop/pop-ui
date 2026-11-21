@@ -2,6 +2,13 @@
  * Do not edit directly, this file was auto-generated.
  */
 
+export const ColorBorderDefault = "#cdcdcd";
+export const ColorBorderHover = "#72eef1";
+export const ColorBorderFocus = "#0fd3d8";
+export const ColorBorderError = "#f03e3e";
+export const ColorTextPlaceholder = "#666666";
+export const ColorTextError = "#c92a2a";
+export const ColorActionPrimaryBackground = "#0fd3d8";
 export const ColorWhite = "#ffffff";
 export const ColorBlack = "#000000";
 export const ColorGray25 = "#fbfbfb";
