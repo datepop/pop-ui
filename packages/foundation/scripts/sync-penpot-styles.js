@@ -2,10 +2,12 @@
 // Run this function in the POP-UI file with the Penpot plugin API.
 function syncPopUiStyles() {
   const library = penpot.library.local;
-  if (penpot.currentFile.id !== '746ae1de-283e-8110-8008-f91083966ac9') {
-    throw new Error('Open the shared POP-UI file before syncing styles.');
+  // 파일 ID 대신 POP-UI 토큰 구조로 대상을 확인한다. 라이브러리를 이전·복제해도 스크립트를 고치지 않는다.
+  const tokens = library.tokens.sets.find((set) => set.name === 'global')?.tokens;
+  if (!tokens?.some((token) => token.type === 'color') ||
+    !tokens.some((token) => token.type === 'typography')) {
+    throw new Error('Open a file with the POP-UI global token set before syncing styles.');
   }
-  const tokens = library.tokens.sets.find((set) => set.name === 'global').tokens;
   const byName = new Map(tokens.map((token) => [token.name, token]));
   const sourceKey = 'pop-ui-token';
 

@@ -136,10 +136,10 @@ export const TextField = (allProps: TTextFieldProps) => {
             minRows={minRows}
             description={description}
             error={error}
-            inputWrapperOrder={['input']}
             onChange={onChangeHandler}
             value={currentValue}
             {...(restProps as Omit<TextareaProps, keyof ICommonTextFieldProps | 'vars'>)}
+            inputWrapperOrder={['input']}
           />
         ) : (
           <Input

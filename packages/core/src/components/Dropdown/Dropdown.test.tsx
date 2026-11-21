@@ -130,6 +130,18 @@ describe('Dropdown', () => {
     cleanupRenderedApp(view);
   });
 
+  it('appends passed description and error to a caller order that omits them', () => {
+    renderApp(<Dropdown inputWrapperOrder={['input']} description="설명" errorMsg="오류" />);
+    expect(mockMantineSelect.mock.calls[0]?.[0].inputWrapperOrder).toEqual([
+      'input',
+      'description',
+      'error',
+    ]);
+    mockMantineSelect.mockClear();
+    renderApp(<Dropdown inputWrapperOrder={['error', 'input']} errorMsg="오류" />);
+    expect(mockMantineSelect.mock.calls[0]?.[0].inputWrapperOrder).toEqual(['error', 'input']);
+  });
+
   it('toggles the chevron icon based on open/close callbacks from Select', () => {
     const onOpen = vi.fn();
     const onClose = vi.fn();

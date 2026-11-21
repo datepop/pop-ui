@@ -20,8 +20,8 @@ jobs:
       - run: yarn install --immutable
       - run: yarn check:penpot
       - run: node --test scripts/check-penpot-components.test.mjs
+      # Vitest resolves @pop-ui/foundation from its build output. Type checks stay in the Jenkins PR stage.
       - run: yarn workspace @pop-ui/foundation build
-      - run: yarn exec tsc -p packages/core/tsconfig.json --noEmit
       - run: yarn exec vitest run
       - run: yarn build-storybook --disable-telemetry
       - run: yarn exec playwright-core install --with-deps chromium

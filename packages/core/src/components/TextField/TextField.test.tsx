@@ -327,4 +327,12 @@ describe('TextField', () => {
 
     cleanupRenderedApp(view);
   });
+
+  it('renders the textarea description only in the outer feedback area', () => {
+    renderApp(
+      <TextField textarea description="설명" inputWrapperOrder={['input', 'description']} />,
+    );
+    const props = mockTextarea.mock.calls[0]?.[0] as { inputWrapperOrder?: string[] };
+    expect(props.inputWrapperOrder).toEqual(['input']);
+  });
 });

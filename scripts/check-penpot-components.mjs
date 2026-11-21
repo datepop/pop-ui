@@ -3,7 +3,8 @@ import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript';
 
-const fileId = '746ae1de-283e-8110-8008-f91083966ac9';
+// 라이브 조회 대상. 검증은 파일 ID 가 아니라 Components 페이지와 컴포넌트 계약으로 한다.
+const liveFileId = '746ae1de-283e-8110-8008-f91083966ac9';
 const snapshot = new URL('../docs/penpot-components.json', import.meta.url);
 const root = fileURLToPath(new URL('../', import.meta.url));
 const fieldStates = JSON.parse(
@@ -11,7 +12,6 @@ const fieldStates = JSON.parse(
 );
 
 export function extractCatalog(file) {
-  if (file.id !== fileId) throw new Error('Expected the POP-UI library file.');
   const pages = Object.values(file.data.pagesIndex).filter((page) => page.name === 'Components');
   if (pages.length !== 1) throw new Error('Expected one Components page.');
   const [page] = pages;
@@ -55,7 +55,7 @@ export function extractCatalog(file) {
   const components = [...groups.values()].sort((a, b) => a.name.localeCompare(b.name, 'en'));
   for (const group of components)
     group.variants.sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b), 'en'));
-  return { fileId, revision: file.revn, components };
+  return { fileId: file.id, revision: file.revn, components };
 }
 
 export function readCodeContract() {
@@ -119,7 +119,7 @@ export function readCodeContract() {
 }
 
 export function compareCatalog(contract, catalog) {
-  if (catalog.fileId !== fileId || !Array.isArray(catalog.components))
+  if (typeof catalog.fileId !== 'string' || !Array.isArray(catalog.components))
     throw new Error('Invalid POP-UI snapshot.');
   const findings = [];
   const seen = new Set();
@@ -200,7 +200,7 @@ async function main(args) {
         'content-type': 'application/json',
         accept: 'application/json',
       },
-      body: JSON.stringify({ id: fileId }),
+      body: JSON.stringify({ id: liveFileId }),
     });
     if (!response.ok) throw new Error(`Penpot get-file returned ${response.status}`);
     catalog = extractCatalog(await response.json());
@@ -218,7 +218,7 @@ async function main(args) {
     // One line per family keeps generated variant changes reviewable.
     writeFileSync(
       snapshot,
-      `{\n  "fileId": "${fileId}",\n  "revision": ${catalog.revision},\n  "components": [\n    ${catalog.components.map((c) => JSON.stringify(c)).join(',\n    ')}\n  ]\n}\n`,
+      `{\n  "fileId": "${catalog.fileId}",\n  "revision": ${catalog.revision},\n  "components": [\n    ${catalog.components.map((c) => JSON.stringify(c)).join(',\n    ')}\n  ]\n}\n`,
     );
   }
   console.log(

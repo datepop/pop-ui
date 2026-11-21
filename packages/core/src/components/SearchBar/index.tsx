@@ -1,11 +1,11 @@
 'use client';
 
-import { Autocomplete } from '@mantine/core';
+import { Autocomplete, Input } from '@mantine/core';
 import { IconX, IconSearch } from '@pop-ui/foundation';
-import { useId, useRef } from 'react';
+import { useId, useRef, useState } from 'react';
 
 import styles from './styles.module.scss';
-import { fieldContentOrder } from '../shared/field';
+import { fieldContentOrderWith } from '../shared/field';
 import { FieldLabel } from '../shared/FieldLabel';
 
 import type { ISearchBarProps } from './types';
@@ -24,11 +24,20 @@ export const SearchBar = ({
   clearable,
   clearButtonProps,
   onClear,
+  onChange,
   ...props
 }: ISearchBarProps) => {
   const generatedId = useId();
   const inputId = id ?? generatedId;
   const inputRef = useRef<HTMLInputElement>(null);
+  // clearable 없이 onClear 만 넘긴 기존 호출부는 값을 지우지 않고 onClear 만 호출하는 전용 버튼을 쓴다.
+  const [typedValue, setTypedValue] = useState(props.defaultValue ?? '');
+  const showLegacyClear =
+    !clearable &&
+    Boolean(onClear) &&
+    !props.disabled &&
+    !props.readOnly &&
+    Boolean(props.value ?? typedValue);
 
   let searchBarStyle = styles['SearchBar--Medium'];
   if (size === 'sm') {
@@ -65,7 +74,7 @@ export const SearchBar = ({
             {...props}
             size={size}
             required={required}
-            inputWrapperOrder={props.inputWrapperOrder ?? fieldContentOrder}
+            inputWrapperOrder={fieldContentOrderWith(props.inputWrapperOrder, description, error)}
             description={description}
             descriptionProps={{
               className: styles.SearchBar__Description,
@@ -76,7 +85,19 @@ export const SearchBar = ({
             className={searchBarStyle}
             id={inputId}
             ref={inputRef}
-            clearable={clearable || Boolean(onClear)}
+            onChange={(value) => {
+              setTypedValue(value);
+              onChange?.(value);
+            }}
+            clearable={clearable}
+            rightSection={
+              showLegacyClear ? (
+                <Input.ClearButton {...clearActionProps} onClick={onClear} />
+              ) : (
+                props.rightSection
+              )
+            }
+            rightSectionPointerEvents={showLegacyClear ? 'auto' : props.rightSectionPointerEvents}
             onClear={() => {
               inputRef.current?.focus();
               onClear?.();

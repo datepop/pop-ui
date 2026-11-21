@@ -6,7 +6,7 @@ import { IconChevronUp, IconChevronDown } from '@pop-ui/foundation';
 import { useId, useState } from 'react';
 
 import styles from './styles.module.scss';
-import { fieldContentOrder } from '../shared/field';
+import { fieldContentOrderWith } from '../shared/field';
 import { FieldLabel } from '../shared/FieldLabel';
 
 import type { IDropdownProps } from './types';
@@ -74,7 +74,7 @@ export const Dropdown = ({
       <div>
         <Select
           {...props}
-          inputWrapperOrder={props.inputWrapperOrder ?? fieldContentOrder}
+          inputWrapperOrder={fieldContentOrderWith(props.inputWrapperOrder, description, error)}
           description={description}
           descriptionProps={{ className: styles.Dropdown__Description, ...props.descriptionProps }}
           errorProps={{ className: styles.Dropdown__ErrorMsg, ...props.errorProps }}

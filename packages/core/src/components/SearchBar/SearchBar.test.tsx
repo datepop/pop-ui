@@ -50,7 +50,7 @@ describe('SearchBar', () => {
   it('clears a prefilled uncontrolled input and returns focus to it', () => {
     const onChange = vi.fn();
     const onClear = vi.fn();
-    render({ defaultValue: '예약', onChange, onClear, label: '검색' });
+    render({ defaultValue: '예약', onChange, onClear, clearable: true, label: '검색' });
     const button = clearButton()!;
     expect(button.tabIndex).toBe(0);
     expect(button).not.toHaveAttribute('aria-hidden', 'true');
@@ -64,6 +64,25 @@ describe('SearchBar', () => {
     expect(clearButton()).toBeNull();
     expect(onChange).toHaveBeenCalledExactlyOnceWith('');
     expect(onClear).toHaveBeenCalledTimes(1);
+  });
+
+  it('calls only onClear from the legacy clear button when clearable is not set', () => {
+    const onChange = vi.fn();
+    const onClear = vi.fn();
+    render({ defaultValue: '예약', onChange, onClear });
+    const button = clearButton()!;
+    expect(button.tabIndex).toBe(0);
+    act(() => button.click());
+    expect(onClear).toHaveBeenCalledTimes(1);
+    expect(onChange).not.toHaveBeenCalled();
+    render({ value: '', onChange, onClear });
+    expect(clearButton()).toBeNull();
+  });
+
+  it('keeps description and error visible when the caller order omits them', () => {
+    render({ inputWrapperOrder: ['input'], description: '설명', errorMsg: '오류' });
+    expect(container).toHaveTextContent('설명');
+    expect(container).toHaveTextContent('오류');
   });
 
   it('uses the current controlled value, including changes from the parent', () => {

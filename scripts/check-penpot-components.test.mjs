@@ -76,4 +76,9 @@ test('rejects duplicated visible input error layers in a live Penpot main instan
   assert.throws(() => extractCatalog(file), /Duplicate input error layer: SearchBar/);
   file.data.pagesIndex.page.objects.b.hidden = true;
   assert.equal(extractCatalog(file).components.length, 1);
+  // A migrated or duplicated library keeps the same contract under another file id.
+  file.id = 'copy';
+  const copy = extractCatalog(file);
+  assert.equal(copy.fileId, 'copy');
+  assert.deepEqual(compareCatalog(new Map(), copy), compareCatalog(new Map(), { ...copy, fileId }));
 });
