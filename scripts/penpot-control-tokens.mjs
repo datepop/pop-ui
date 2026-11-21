@@ -31,8 +31,13 @@ export function controlBindings(component, master, layers) {
   const bindings = [];
   if (props.type !== 'textarea') bindings.push([field, 'height', height]);
   if (state !== 'disabled' && state !== 'error') {
-    bindings.push([field, 'strokeColor', 'color.border.default']);
-    if (name === 'Dropdown' || state === 'default') {
+    const borderState = state === 'hover' || state === 'focus' ? state : 'default';
+    if (name === 'Dropdown' && state === 'keyboardFocus') {
+      bindings.push([findLayer('rect', 'Focus ring'), 'strokeColor', 'color.aqua.800']);
+    } else {
+      bindings.push([field, 'strokeColor', 'color.border.' + borderState]);
+    }
+    if (name === 'Dropdown' || ['default', 'hover', 'focus'].includes(state)) {
       const placeholder = findLayer('text', name === 'Dropdown' ? 'Placeholder' : fieldLayer);
       bindings.push([placeholder, 'fill', 'color.text.placeholder']);
     }

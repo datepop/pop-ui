@@ -1,11 +1,26 @@
 @use "variables" as *;
+@use "functions" as fn;
 
-@mixin colors {
+@mixin border-states {
   :where([data-mantine-color-scheme="light"]) &[data-variant="default"]:not([data-error], [data-disabled]) {
     --input-placeholder-color: #{$color-text-placeholder};
 
     &:not(:focus) {
       --input-bd: #{$color-border-default};
+    }
+  }
+
+  &:not(:disabled, [data-disabled]) {
+    &:hover {
+      outline: fn.border-width(37) solid $color-border-hover;
+    }
+
+    &:focus-within {
+      outline: fn.border-width(37) solid $color-border-focus;
+    }
+
+    &:is(:hover, :focus-within):not([data-error]) {
+      border-color: transparent;
     }
   }
 }

@@ -15,19 +15,9 @@
 }
 
 @mixin DropdownBorderFocus {
-  @include field-tokens.colors;
+  @include field-tokens.border-states;
 
-  &:hover {
-    outline: fn.border-width(37) solid $color-aqua-300;
-    border-color: transparent;
-  }
-
-  &:focus-within {
-    outline: fn.border-width(37) solid $color-aqua-500;
-    border-color: transparent;
-  }
-
-  &:focus-visible {
+  &:focus-visible:not(:disabled, [data-disabled]) {
     @include focus.ring;
   }
 }

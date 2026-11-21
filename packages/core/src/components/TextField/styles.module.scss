@@ -13,20 +13,6 @@
   flex-direction: column;
 }
 
-@mixin BorderFocus {
-  @include field-tokens.colors;
-
-  &:hover {
-    outline: fn.border-width(37) solid $color-aqua-300;
-    border-color: transparent;
-  }
-
-  &:focus-within {
-    outline: fn.border-width(37) solid $color-aqua-500;
-    border-color: transparent;
-  }
-}
-
 .TextField__Footer {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -55,7 +41,7 @@
 
 .TextField--Textarea {
   textarea {
-    @include BorderFocus;
+    @include field-tokens.border-states;
   }
 }
 
@@ -66,7 +52,7 @@
     padding: fn.spacing(200);
     font-size: fn.font-size(450);
 
-    @include BorderFocus;
+    @include field-tokens.border-states;
   }
 }
 
@@ -77,7 +63,7 @@
     padding: fn.spacing(300);
     font-size: fn.font-size(450);
 
-    @include BorderFocus;
+    @include field-tokens.border-states;
   }
 }
 
@@ -88,7 +74,7 @@
     padding: fn.spacing(400);
     font-size: fn.font-size(500);
 
-    @include BorderFocus;
+    @include field-tokens.border-states;
   }
 }
 

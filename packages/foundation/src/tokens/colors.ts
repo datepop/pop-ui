@@ -3,6 +3,8 @@
  */
 
 export const ColorBorderDefault = "#cdcdcd";
+export const ColorBorderHover = "#72eef1";
+export const ColorBorderFocus = "#0fd3d8";
 export const ColorTextPlaceholder = "#666666";
 export const ColorActionPrimaryBackground = "#0fd3d8";
 export const ColorWhite = "#ffffff";

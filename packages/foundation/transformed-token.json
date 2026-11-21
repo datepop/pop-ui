@@ -44,6 +44,14 @@
       "default": {
         "type": "color",
         "value": "#CDCDCD"
+      },
+      "hover": {
+        "type": "color",
+        "value": "#72EEF1"
+      },
+      "focus": {
+        "type": "color",
+        "value": "#0fd3d8"
       }
     },
     "text": {

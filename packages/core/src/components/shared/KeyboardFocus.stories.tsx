@@ -1,9 +1,10 @@
-import { ColorAqua800 } from '@pop-ui/foundation';
+import { ColorAqua800, ColorBorderFocus, ColorRed600 } from '@pop-ui/foundation';
 import { useId, useState } from 'react';
-import { expect, fn, within } from 'storybook/test';
+import { expect, fn, waitFor, within } from 'storybook/test';
 
 import { CONTROL_SIZES } from './controlSize';
 import { Checkbox } from '../Checkbox';
+import { Dropdown } from '../Dropdown';
 import { Radio } from '../Radio';
 import { TextField } from '../TextField';
 import { Toggle } from '../Toggle';
@@ -173,5 +174,71 @@ export const CheckboxAndToggle: StoryObj<typeof Checkbox> = {
         await expect(args.onChange).toHaveBeenCalledTimes(++changes);
       }
     }
+  },
+};
+
+export const FieldBorders: StoryObj = {
+  name: '입력 필드 테두리',
+  tags: ['pop-ui-contract'],
+  parameters: { layout: 'padded' },
+  render: () => (
+    <section>
+      <h2>입력 필드 테두리</h2>
+      <p>필드에 마우스를 올리거나 클릭하고, Tab 키로 다음 필드에 이동해 보세요.</p>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
+          maxWidth: 760,
+          gap: 32,
+        }}
+      >
+        {['기본', '오류'].map((state) => (
+          <fieldset
+            key={state}
+            style={{ display: 'grid', gap: 18, minWidth: 0, margin: 0, padding: 0, border: 0 }}
+          >
+            <legend>{state}</legend>
+            <TextField
+              label="예약자 이름"
+              placeholder="이름 입력"
+              error={state === '오류' && '예약자 이름을 입력해 주세요.'}
+            />
+            <Dropdown
+              label="예약 상태"
+              placeholder="상태 선택"
+              data={['예약', '완료']}
+              error={state === '오류' && '예약 상태를 선택해 주세요.'}
+            />
+          </fieldset>
+        ))}
+      </div>
+    </section>
+  ),
+  play: async ({ canvas, userEvent }) => {
+    const normal = within(canvas.getByRole('group', { name: '기본' }));
+    const invalid = within(canvas.getByRole('group', { name: '오류' }));
+    const text = invalid.getByRole('textbox', { name: '예약자 이름' });
+    const select = invalid.getByRole('textbox', { name: '예약 상태' });
+
+    normal.getByRole('textbox', { name: '예약 상태' }).focus();
+    await userEvent.tab();
+    await expect(text).toHaveFocus();
+    await expect(text).toHaveAccessibleDescription('예약자 이름을 입력해 주세요.');
+    await waitFor(() =>
+      expect(text).toHaveStyle({ outlineColor: ColorBorderFocus, borderTopColor: ColorRed600 }),
+    );
+    await userEvent.tab();
+    await expect(select).toHaveFocus();
+    await expect(select).toHaveAccessibleDescription('예약 상태를 선택해 주세요.');
+    await waitFor(() =>
+      expect(select).toHaveStyle({
+        outlineColor: ColorAqua800,
+        outlineWidth: '2px',
+        outlineOffset: '2px',
+        borderTopColor: ColorRed600,
+      }),
+    );
+    select.blur();
   },
 };

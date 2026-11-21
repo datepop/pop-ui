@@ -156,3 +156,20 @@ test('requires the shared typography token on every medium Button label', () => 
   delete label.appliedTokens.typography;
   assert.throws(() => inspectControlTokens({ data }, page), /Expected typography.control.label.md/);
 });
+
+test('requires field interaction variants for each default size and label placement', () => {
+  const family = {
+    name: 'Dropdown',
+    path: 'Core / Inputs',
+    axes: ['size', 'state', 'labelPosition'],
+    variants: ['top', 'left'].flatMap((position) =>
+      ['default', 'hover', 'focus', 'keyboardFocus'].map((state) => ['md', state, position]),
+    ),
+  };
+  const contract = new Map([['Dropdown', { axes: { size: ['md'] }, states: ['default'] }]]);
+  assert.deepEqual(compareCatalog(contract, catalog([family])), []);
+  family.variants.pop();
+  assert.deepEqual(compareCatalog(contract, catalog([family])), [
+    'Missing field interaction: Dropdown md, keyboardFocus, left',
+  ]);
+});

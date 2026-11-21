@@ -156,6 +156,18 @@ export function compareCatalog(contract, catalog) {
         if (value !== undefined && !values.includes(value))
           findings.push(`Unexpected: ${name} ${axis}=${value}`);
     }
+    if (name === 'TextField' || name === 'Dropdown') {
+      const stateIndex = axes.indexOf('state');
+      const interactionStates =
+        name === 'Dropdown' ? ['hover', 'focus', 'keyboardFocus'] : ['hover', 'focus'];
+      for (const base of variants.filter((row) => row[stateIndex] === 'default')) {
+        for (const state of interactionStates) {
+          const interaction = base.with(stateIndex, state);
+          if (!keys.has(JSON.stringify(interaction)))
+            findings.push('Missing field interaction: ' + name + ' ' + interaction.join(', '));
+        }
+      }
+    }
     for (const size of expected.axes.size ?? [undefined]) {
       for (const state of expected.states) {
         if (
@@ -222,6 +234,8 @@ async function main(args) {
   );
   const expected = [
     'color.border.default',
+    'color.border.hover',
+    'color.border.focus',
     'color.text.placeholder',
     'typography.control.label.md',
     'color.action.primary.background',
