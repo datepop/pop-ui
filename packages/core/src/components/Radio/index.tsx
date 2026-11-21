@@ -18,12 +18,12 @@ const RADIO_DIMENSION_BY_SIZE = {
   lg: 32,
 } as const;
 
-export const Radio = ({ size = 'md', ...props }: IRadioProps) => {
+export const Radio = ({ size = 'md', className, ...props }: IRadioProps) => {
   const sizeClassName = RADIO_CLASS_NAME_BY_SIZE[size];
   const sizeNumber = RADIO_DIMENSION_BY_SIZE[size];
   return (
     <MantineRadio
-      className={sizeClassName}
+      className={[sizeClassName, className].filter(Boolean).join(' ')}
       size={size}
       styles={{
         inner: { width: sizeNumber, height: sizeNumber },

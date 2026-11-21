@@ -42,6 +42,23 @@ export function App() {
 
 `PopUiProvider` sets up Mantine provider, CSS variable injection, and Notifications. `toast` depends on the `Notifications` mounted by this provider.
 
+### 입력의 설명과 오류
+
+`TextField`, `Dropdown`, `SearchBar`, `DatePicker`는 같은 `size`(`sm`, `md`, `lg`), `required`, `description`, `error`를 지원합니다. 설명과 오류를 함께 지정하면 입력 아래에 설명, 오류 순서로 표시됩니다. 표시한 문구는 해당 입력의 접근성 설명에 연결됩니다.
+
+```tsx
+<TextField label="이름" required description="예약자 이름을 입력해주세요." error={errors.name} />
+```
+
+`ImageInput`과 `LottieInput`도 `error`로 문자열 또는 JSX 오류 문구를 표시합니다.
+
+기존 `TextField`, `Dropdown`, `SearchBar`, `ImageInput`, `LottieInput`의 `errorMsg`는 `error`로 이전할 수 있습니다. `error`가 `undefined`이면 `errorMsg`를 사용하며, `false`나 `null`을 명시하면 오류를 해제합니다.
+
+### 공용 서체
+
+`@pop-ui/core/styles.css`를 가져오면 CSS와 Penpot에서 동일한 이름으로 공용 서체를 선택할 수 있습니다.
+`Noto Sans KR`은 400·500·600·700, `Montserrat`는 500·600·700 굵기를 제공합니다.
+
 ### Next.js App Router notes
 
 - 앱 엔트리에서 `@pop-ui/core/styles.css`를 직접 import 해야 합니다.
@@ -87,3 +104,7 @@ This phase stabilizes the following surfaces:
 ## What this package does not document here
 
 이 README는 아직 안정화되지 않은 다른 export 전체를 자세히 설명하지 않습니다. `CalendarDatePicker`, `DatePicker`, `Dropdown`, `ImageUploader`, `Modal`, `Pagination`, `SearchBar`, `SegmentButton`, `Tab`, `TimePicker`, `Toggle`, `Tooltip`, and map-related exports are outside the scope of this stabilization note.
+
+### 파일 업로더의 로딩
+
+`ImageInput`과 `LottieInput`에서 `isLoading`은 전체의 추가·삭제·순서 변경·이미지 편집을 잠급니다. `value` 안의 `item.isLoading`은 해당 파일만 잠그며, 다른 파일은 계속 추가·삭제·재정렬할 수 있습니다. 순서를 변경할 때 처리 중인 파일은 제자리에 남습니다. Lottie 미리보기를 읽는 동안에는 해당 파일도 삭제하거나 이동할 수 있습니다. `error`에 표시할 문구를 전달하면 키보드로 파일 추가 영역에 접근할 때도 같은 설명을 읽을 수 있습니다.

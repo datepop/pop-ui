@@ -1,5 +1,14 @@
 @use "../shared/variables.scss" as *;
 @use "../shared/functions" as fn;
+@use "../shared/focus";
+
+.Toggle--Small,
+.Toggle--Medium,
+.Toggle--Large {
+  input:focus-visible + [aria-hidden='true'] {
+    @include focus.ring;
+  }
+}
 
 .Toggle--Small {
   label {

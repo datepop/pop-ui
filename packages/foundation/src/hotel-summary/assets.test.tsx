@@ -40,8 +40,8 @@ it('ships the unmodified Android raster originals identified by the source inven
     'reviewStarOff',
     'profilePlaceholder',
   ]) {
-    const source = sources.find((entry) => entry.export === `hotelSummaryImages.${name}`);
-    const bytes = readFileSync(resolve('packages/foundation/src/hotel-summary', `${name}.webp`));
+    const source = sources.find((entry) => entry.export === `foundationImages.${name}`);
+    const bytes = readFileSync(resolve('packages/foundation/src/images', `${name}.webp`));
     expect(createHash('sha256').update(bytes).digest('hex')).toBe(source?.sha256);
   }
 });

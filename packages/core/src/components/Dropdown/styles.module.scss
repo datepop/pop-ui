@@ -1,5 +1,6 @@
 @use "../shared/variables.scss" as *;
 @use "../shared/functions" as fn;
+@use "../shared/focus";
 
 .Dropdown--LeftLabel {
   display: flex;
@@ -12,48 +13,6 @@
   flex-direction: column;
 }
 
-.Dropdown__Label--Small {
-  font-family: fn.$font-family;
-  font-size: fn.font-size(450);
-  font-weight: 600;
-  letter-spacing: 0;
-  text-align: left;
-  margin: fn.spacing(200) 3px;
-}
-
-.Dropdown__Label--Medium {
-  font-family: fn.$font-family;
-  font-size: fn.font-size(500);
-  font-weight: 600;
-  letter-spacing: 0;
-  text-align: left;
-  margin: fn.spacing(300) fn.spacing(100);
-}
-
-.Dropdown__Label--Large {
-  font-family: fn.$font-family;
-  font-size: fn.font-size(550);
-  font-weight: 600;
-  letter-spacing: 0;
-  text-align: left;
-  margin: fn.spacing(400) fn.spacing(100);
-}
-
-.Dropdown__Tooltip--Small {
-  width: 14px;
-  height: 14px;
-}
-
-.Dropdown__Tooltip--Medium {
-  width: fn.spacing(400);
-  height: fn.spacing(400);
-}
-
-.Dropdown__Tooltip--Large {
-  width: 18px;
-  height: 18px;
-}
-
 @mixin DropdownBorderFocus {
   &:hover {
     outline: fn.border-width(37) solid $color-aqua-300;
@@ -63,6 +22,52 @@
   &:focus-within {
     outline: fn.border-width(37) solid $color-aqua-500;
     border-color: transparent;
+  }
+
+  &:focus-visible {
+    @include focus.ring;
+  }
+}
+
+.Dropdown__Menu {
+  --menu-start: left;
+  --menu-end: right;
+
+  &:dir(rtl) {
+    --menu-start: right;
+    --menu-end: left;
+  }
+
+  // Mantine updates data-position after collision detection, including when the menu flips.
+  @each $placement, $origin in (
+    bottom: center top,
+    bottom-start: var(--menu-start) top,
+    bottom-end: var(--menu-end) top,
+    top: center bottom,
+    top-start: var(--menu-start) bottom,
+    top-end: var(--menu-end) bottom,
+    left: right center,
+    left-start: right top,
+    left-end: right bottom,
+    right: left center,
+    right-start: left top,
+    right-end: left bottom
+  ) {
+    &[data-position="#{$placement}"] {
+      transform-origin: $origin;
+    }
+  }
+}
+
+.Dropdown__Option {
+  overflow-wrap: anywhere;
+
+  &[data-combobox-selected] {
+    @include focus.ring;
+
+    outline-offset: -2px;
+    background-color: $color-white;
+    color: $color-gray-900;
   }
 }
 
@@ -105,4 +110,14 @@
 
 .Dropdown__ErrorMsg {
   margin-top: fn.spacing(100);
+}
+
+:is(.Dropdown--Small, .Dropdown--Medium, .Dropdown--Large) [data-with-right-section] input {
+  padding-inline-end: var(--input-right-section-size);
+  text-overflow: ellipsis;
+}
+
+.Dropdown__Description,
+.Dropdown__ErrorMsg {
+  overflow-wrap: anywhere;
 }

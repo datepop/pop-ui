@@ -1,6 +1,7 @@
 'use client';
 
 import { Button as MantineButton, Loader } from '@mantine/core';
+import { useState } from 'react';
 
 import { BUTTON_LOADER_SIZES } from './style';
 import styles from './styles.module.scss';
@@ -96,6 +97,9 @@ export function Button({
   loading = false,
   hideLabelOnLoading = true,
   disabled = false,
+  onFocus,
+  onBlur,
+  onClickCapture,
   className,
   classNames,
   loaderProps,
@@ -105,7 +109,9 @@ export function Button({
   // Mantine `loading`도 로딩 트리거로 받되, unstyled 모드에서 깨지는 Mantine 로더로 전달되지 않도록
   // 구조분해로 가로채 자체 Loader만 렌더한다.
   const isButtonLoading = isLoading || loading;
-  const isDisabled = disabled || isButtonLoading;
+  const [focused, setFocused] = useState(false);
+  // A native disabled button loses focus. Keep an already-focused button in place during loading.
+  const isDisabled = disabled || (isButtonLoading && !focused);
 
   return (
     <MantineButton
@@ -120,12 +126,33 @@ export function Button({
       )}
       classNames={mergeClassNamesWithDefault(classNames)}
       disabled={isDisabled}
+      aria-busy={isButtonLoading || undefined}
+      data-loading-overlay={(isButtonLoading && hideLabelOnLoading) || undefined}
       {...props}
+      aria-disabled={isButtonLoading || props['aria-disabled']}
+      onFocus={(event) => {
+        setFocused(true);
+        onFocus?.(event);
+      }}
+      onBlur={(event) => {
+        setFocused(false);
+        onBlur?.(event);
+      }}
+      onClickCapture={(event) => {
+        if (isButtonLoading) {
+          event.preventDefault();
+          event.stopPropagation();
+          return;
+        }
+        onClickCapture?.(event);
+      }}
     >
-      {isButtonLoading && <Loader color="currentColor" size={loaderSize} {...loaderProps} />}
-      <span className={styles.Button__Label}>
-        {isButtonLoading && hideLabelOnLoading ? null : children}
-      </span>
+      {isButtonLoading && (
+        <span className={styles.Button__Loader} aria-hidden>
+          <Loader color="currentColor" size={loaderSize} {...loaderProps} />
+        </span>
+      )}
+      <span className={styles.Button__Content}>{children}</span>
     </MantineButton>
   );
 }

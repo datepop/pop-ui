@@ -1,5 +1,10 @@
+import { IconBookmark } from '@pop-ui/foundation';
+import { useEffect, useRef, useState } from 'react';
+import { expect, waitFor } from 'storybook/test';
+
 import { Button } from './';
 import { BUTTON_SIZES, BUTTON_VARIANTS } from './types';
+import { Checkbox } from '../Checkbox';
 
 import type { IButtonProps, TButtonVariant } from './types';
 import type { Meta, StoryObj } from '@storybook/react-vite';
@@ -47,7 +52,8 @@ export default {
     },
     isLoading: {
       control: 'boolean',
-      description: 'Disables the button and replaces children with a loader.',
+      description:
+        'Disables the button and shows a centered loader while preserving its width by default.',
     },
     loading: {
       table: { disable: true },
@@ -67,6 +73,65 @@ export default {
 } satisfies Meta<typeof Button>;
 
 export const Playground: StoryObj<IButtonProps> = {};
+
+function LabelAlignmentComparison() {
+  const [showGuides, setShowGuides] = useState(false);
+  const [lowerLabel, setLowerLabel] = useState(false);
+  return (
+    <div style={stackStyle}>
+      <div style={rowStyle}>
+        <Checkbox
+          label="버튼 중심선 표시"
+          size="sm"
+          checked={showGuides}
+          onChange={(event) => setShowGuides(event.currentTarget.checked)}
+        />
+        <Checkbox
+          label="글자만 2px 아래로"
+          size="sm"
+          checked={lowerLabel}
+          onChange={(event) => setLowerLabel(event.currentTarget.checked)}
+        />
+      </div>
+      {BUTTON_SIZES.map((size) => (
+        <section key={size} aria-label={size}>
+          <strong>{size}</strong>
+          <div style={{ ...rowStyle, marginTop: 8 }}>
+            {['저장하기', 'Save', 'SAVE', 'Apply', '예약 Pay'].map((label) => (
+              <div key={label} style={{ position: 'relative' }}>
+                <Button
+                  size={size}
+                  variant="setting"
+                  leftSection={<IconBookmark size={24} color="currentColor" />}
+                >
+                  <span style={{ position: 'relative', top: lowerLabel ? 2 : 0 }}>{label}</span>
+                </Button>
+                {showGuides && (
+                  <span
+                    aria-hidden
+                    style={{
+                      position: 'absolute',
+                      top: '50%',
+                      insetInline: 0,
+                      borderTop: '1px dashed #2269a9',
+                      pointerEvents: 'none',
+                    }}
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  );
+}
+
+export const LabelAlignment: StoryObj<IButtonProps> = {
+  name: '한글·영문 라벨 정렬',
+  parameters: { layout: 'centered' },
+  render: () => <LabelAlignmentComparison />,
+};
 
 export const Variants: StoryObj<IButtonProps> = {
   render: (args) => (
@@ -115,9 +180,64 @@ export const Sizes: StoryObj<IButtonProps> = {
   },
 };
 
+function LoadingWidthExample() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [saveCount, setSaveCount] = useState(0);
+  const completionTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const [width, setWidth] = useState<number>();
+  const sampleRef = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    const button = sampleRef.current?.querySelector('button');
+    if (!button) return;
+
+    const observer = new ResizeObserver(() =>
+      setWidth(Math.round(button.getBoundingClientRect().width)),
+    );
+    observer.observe(button, { box: 'border-box' });
+    return () => {
+      observer.disconnect();
+      clearTimeout(completionTimer.current);
+    };
+  }, []);
+
+  return (
+    <section aria-label="로딩 전후 너비" style={stackStyle}>
+      <strong>로딩 전후 너비</strong>
+      <Checkbox
+        label="로딩 상태"
+        size="sm"
+        checked={isLoading}
+        onChange={(event) => {
+          clearTimeout(completionTimer.current);
+          setIsLoading(event.currentTarget.checked);
+        }}
+      />
+      <form
+        ref={sampleRef}
+        style={rowStyle}
+        onSubmit={(event) => {
+          event.preventDefault();
+          setSaveCount((count) => count + 1);
+          setIsLoading(true);
+          completionTimer.current = setTimeout(() => setIsLoading(false), 1500);
+        }}
+      >
+        <Button type="submit" isLoading={isLoading}>
+          저장하기
+        </Button>
+        <output>{width != null && `너비 ${width}px`}</output>
+        <output aria-label="저장 횟수">저장 {saveCount}회</output>
+      </form>
+    </section>
+  );
+}
+
 export const States: StoryObj<IButtonProps> = {
+  tags: ['pop-ui-contract'],
   render: (args) => (
     <div style={stackStyle}>
+      <LoadingWidthExample />
       {variants.map(({ label, value }) => (
         <div key={value} style={rowStyle}>
           <span style={labelStyle}>{label}</span>
@@ -128,12 +248,37 @@ export const States: StoryObj<IButtonProps> = {
             Disabled
           </Button>
           <Button {...args} variant={value} size="md" isLoading>
-            Loading
+            Default
           </Button>
         </div>
       ))}
     </div>
   ),
+  play: async ({ canvas, userEvent, canvasElement }) => {
+    await canvasElement.ownerDocument.fonts.ready;
+    const button = canvas.getByRole('button', { name: '저장하기' });
+    const width = button.getBoundingClientRect().width;
+    const checkbox = canvas.getByRole('checkbox', { name: '로딩 상태' });
+    checkbox.focus();
+    await userEvent.tab();
+    await expect(button).toHaveFocus();
+    await userEvent.keyboard('{Enter}');
+    await expect(button).toHaveAttribute('aria-disabled', 'true');
+    await expect(button).toHaveAccessibleName('저장하기');
+    await expect(button.getBoundingClientRect().width).toBe(width);
+    await userEvent.keyboard('{Enter}[Space]');
+    await expect(canvas.getByLabelText('저장 횟수')).toHaveTextContent('1회');
+    await waitFor(() => expect(button).not.toHaveAttribute('aria-busy'), { timeout: 4000 });
+    await expect(button).toHaveFocus();
+    await expect(button.getBoundingClientRect().width).toBe(width);
+    await userEvent.keyboard('[Space]');
+    await expect(canvas.getByLabelText('저장 횟수')).toHaveTextContent('2회');
+    await userEvent.tab();
+    const next = canvas.getAllByRole('button', { name: 'Default' })[0];
+    await expect(next).toHaveFocus();
+    await waitFor(() => expect(button).not.toHaveAttribute('aria-busy'), { timeout: 4000 });
+    await expect(next).toHaveFocus();
+  },
   argTypes: {
     variant: { table: { disable: true } },
     size: { table: { disable: true } },

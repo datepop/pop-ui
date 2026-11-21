@@ -335,21 +335,21 @@
     "sha256": "40454892389a00f03d4e320f9f1c0359d7a60170228ebaa33a62868470ce3bda"
   },
   {
-    "export": "hotelSummaryImages.favoriteOn",
+    "export": "foundationImages.favoriteOn",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable-xxxhdpi/ic_favorite_on.webp",
     "sha256": "3ae23c20b93387ec9d8e8a52ae628e378405bcacf1c5efd918c4b4d56c606ff2"
   },
   {
-    "export": "hotelSummaryImages.favoriteOff",
+    "export": "foundationImages.favoriteOff",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable-xxxhdpi/ic_favorite_off.webp",
     "sha256": "9840fd42abf111258925d5b18159cb89024d1b13dfee8d281dcfab4e29a843e0"
   },
   {
-    "export": "hotelSummaryImages.mapSample",
+    "export": "foundationImages.mapSample",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable-xxhdpi/spot_summary_map_sample.webp",
@@ -424,7 +424,7 @@
     "variant": "filled"
   },
   {
-    "export": "hotelSummaryImages.poploggerRecruitmentBanner",
+    "export": "foundationImages.poploggerRecruitmentBanner",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable-nodpi/poplogger_recruitment_banner.webp",
@@ -446,14 +446,14 @@
     "viewBox": "0 0 100 96"
   },
   {
-    "export": "hotelSummaryImages.reviewStarOn",
+    "export": "foundationImages.reviewStarOn",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable-xxhdpi/mydate_star_visit_blue.webp",
     "sha256": "21fdea16ebad5b069eb70f2e79dabb777d10cfc291bbef819707e5c6829fc57b"
   },
   {
-    "export": "hotelSummaryImages.reviewStarOff",
+    "export": "foundationImages.reviewStarOff",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable-xxhdpi/mydate_star_visit_brown.webp",
@@ -468,7 +468,7 @@
     "viewBox": "0 0 14 14"
   },
   {
-    "export": "hotelSummaryImages.profilePlaceholder",
+    "export": "foundationImages.profilePlaceholder",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable-xxhdpi/exception_no_cover_image.webp",

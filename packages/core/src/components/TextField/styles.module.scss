@@ -12,48 +12,6 @@
   flex-direction: column;
 }
 
-.TextField__Label--Small {
-  font-family: fn.$font-family;
-  font-size: fn.font-size(450);
-  font-weight: 600;
-  letter-spacing: 0;
-  text-align: left;
-  margin: fn.spacing(200) 3px;
-}
-
-.TextField__Label--Medium {
-  font-family: fn.$font-family;
-  font-size: fn.font-size(500);
-  font-weight: 600;
-  letter-spacing: 0;
-  text-align: left;
-  margin: fn.spacing(300) fn.spacing(100);
-}
-
-.TextField__Label--Large {
-  font-family: fn.$font-family;
-  font-size: fn.font-size(550);
-  font-weight: 600;
-  letter-spacing: 0;
-  text-align: left;
-  margin: fn.spacing(400) fn.spacing(100);
-}
-
-.TextField__Tooltip--Small {
-  width: 14px;
-  height: 14px;
-}
-
-.TextField__Tooltip--Medium {
-  width: fn.spacing(400);
-  height: fn.spacing(400);
-}
-
-.TextField__Tooltip--Large {
-  width: 18px;
-  height: 18px;
-}
-
 @mixin BorderFocus {
   &:hover {
     outline: fn.border-width(37) solid $color-aqua-300;
@@ -66,14 +24,24 @@
   }
 }
 
-.TextField__Wrapper {
-  position: relative;
+.TextField__Footer {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  column-gap: fn.spacing(200);
+  margin-top: fn.spacing(200);
+
+  > :is(.TextField__Description, .TextField__ErrorMsg) {
+    grid-column: 1;
+    margin-top: 0;
+    overflow-wrap: anywhere;
+  }
 }
 
 .TextField__TextCounter {
-  position: absolute;
-  bottom: -16px;
-  right: 0;
+  grid-column: 2;
+  grid-row: 1;
+  line-height: 1.4;
   font-family: fn.$font-family;
   font-size: fn.font-size(400);
   font-weight: 500;
@@ -121,6 +89,11 @@
   }
 }
 
+.TextField__Description,
+.TextField__ErrorMsg {
+  overflow-wrap: anywhere;
+}
+
 .TextField__Description {
   margin-top: fn.spacing(200);
 }
@@ -130,8 +103,25 @@
 }
 
 .TextField__ClearButton {
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  color: inherit;
+  appearance: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  border-radius: 4px;
+
+  &:focus-visible {
+    outline: 2px solid $color-aqua-500;
+  }
+}
+
+
+:is(.TextField--Small, .TextField--Medium, .TextField--Large)[data-with-right-section] input {
+  padding-inline-end: var(--input-right-section-size);
 }

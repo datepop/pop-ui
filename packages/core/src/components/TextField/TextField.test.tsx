@@ -120,6 +120,7 @@ const { MockInput, mockInput, mockTextarea, mockTooltip } = vi.hoisted(() => {
 
 vi.mock('@mantine/core', () => ({
   Input: Object.assign(MockInput, {
+    Wrapper: ({ children }: { children: React.ReactNode }) => <>{children}</>,
     Label: MockInput.Label,
     Description: MockInput.Description,
     Error: MockInput.Error,
@@ -277,7 +278,7 @@ describe('TextField', () => {
     expect(clearButton).not.toBeNull();
     expect(view.container.querySelector('[data-testid="icon-x"]')).toHaveAttribute(
       'data-size',
-      '20',
+      '16',
     );
 
     act(() => {

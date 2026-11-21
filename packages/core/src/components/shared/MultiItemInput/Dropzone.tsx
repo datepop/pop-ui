@@ -13,6 +13,8 @@ interface IPlaceholderDropzoneProps {
   width: number;
   height: number;
   isError: boolean;
+  errorId?: string;
+  fallbackLabel?: string;
   isLoading?: boolean;
   accept: TAccept;
   multiple: boolean;
@@ -24,6 +26,8 @@ export function PlaceholderDropzone({
   width,
   height,
   isError,
+  errorId,
+  fallbackLabel,
   isLoading,
   accept,
   multiple,
@@ -33,6 +37,11 @@ export function PlaceholderDropzone({
   return (
     <div className={styles.DropzoneOuter}>
       <MantineDropzone
+        role="button"
+        aria-disabled={isLoading || undefined}
+        aria-invalid={isError || undefined}
+        aria-describedby={errorId}
+        aria-label={fallbackLabel}
         onDrop={onDrop}
         accept={accept}
         multiple={multiple}

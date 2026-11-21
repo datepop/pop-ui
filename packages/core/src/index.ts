@@ -1,4 +1,4 @@
-import './components/shared/font.css';
+import './components/shared/font.scss';
 import './styles.css';
 
 export {

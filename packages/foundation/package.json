@@ -35,6 +35,7 @@
     "access": "public"
   },
   "scripts": {
+    "assets:penpot": "tsx scripts/export-penpot-assets.ts",
     "dev": "vite",
     "build": "yarn generate:native && vite build && yarn build:native",
     "build:native": "tsc -p tsconfig.native.json",

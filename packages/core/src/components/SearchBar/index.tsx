@@ -1,50 +1,49 @@
 'use client';
 
-import { Autocomplete, Input, Tooltip } from '@mantine/core';
-import { IconInfoCircle, IconX, IconSearch } from '@pop-ui/foundation';
-import { useCallback, useState } from 'react';
+import { Autocomplete } from '@mantine/core';
+import { IconX, IconSearch } from '@pop-ui/foundation';
+import { useId, useRef } from 'react';
 
 import styles from './styles.module.scss';
+import { fieldContentOrder } from '../shared/field';
+import { FieldLabel } from '../shared/FieldLabel';
 
 import type { ISearchBarProps } from './types';
 
 export const SearchBar = ({
+  id,
   label,
   labelPosition = 'top',
   size = 'md',
   required,
   tooltip,
-  tooltipPosition = 'top',
+  tooltipPosition,
   errorMsg,
+  error = errorMsg,
   description,
-  onChange,
+  clearable,
+  clearButtonProps,
   onClear,
   ...props
 }: ISearchBarProps) => {
-  const [textCount, setTextCount] = useState<number>(0);
+  const generatedId = useId();
+  const inputId = id ?? generatedId;
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  let labelStyle = styles['SearchBar__Label--Medium'];
   let searchBarStyle = styles['SearchBar--Medium'];
-  let tooltipStyle = styles['SearchBar__Tooltip--Medium'];
   if (size === 'sm') {
-    labelStyle = styles['SearchBar__Label--Small'];
     searchBarStyle = styles['SearchBar--Small'];
-    tooltipStyle = styles['SearchBar__Tooltip--Small'];
   } else if (size === 'lg') {
-    labelStyle = styles['SearchBar__Label--Large'];
     searchBarStyle = styles['SearchBar--Large'];
-    tooltipStyle = styles['SearchBar__Tooltip--Large'];
   }
 
-  const onChangeHandler = useCallback(
-    (value: string) => {
-      if (onChange) {
-        setTextCount(value?.length);
-        onChange(value);
-      }
-    },
-    [onChange],
-  );
+  const clearActionProps = {
+    icon: <IconX size={size === 'sm' ? 16 : size === 'lg' ? 24 : 20} />,
+    tabIndex: 0,
+    'aria-hidden': false,
+    'aria-label': '검색어 지우기',
+    ...clearButtonProps,
+  };
 
   return (
     <div
@@ -52,46 +51,40 @@ export const SearchBar = ({
         labelPosition === 'top' ? styles['SearchBar--TopLabel'] : styles['SearchBar--LeftLabel']
       }
     >
-      <div>
-        {label && (
-          <Input.Label required={required} className={labelStyle}>
-            {label}
-          </Input.Label>
-        )}
-        {tooltip && (
-          <Tooltip label={tooltip} position={tooltipPosition}>
-            <div className={tooltipStyle}>
-              <IconInfoCircle size={size === 'sm' ? 14 : size === 'lg' ? 20 : 16} />
-            </div>
-          </Tooltip>
-        )}
-      </div>
+      <FieldLabel
+        htmlFor={inputId}
+        label={label}
+        required={required}
+        size={size}
+        tooltip={tooltip}
+        tooltipPosition={tooltipPosition}
+      />
       <div>
         <div className={styles['SearchBar__Wrapper']}>
           <Autocomplete
             {...props}
             size={size}
-            error={errorMsg}
+            required={required}
+            inputWrapperOrder={props.inputWrapperOrder ?? fieldContentOrder}
+            description={description}
+            descriptionProps={{
+              className: styles.SearchBar__Description,
+              ...props.descriptionProps,
+            }}
+            errorProps={{ className: styles.SearchBar__ErrorMsg, ...props.errorProps }}
+            error={error}
             className={searchBarStyle}
-            onChange={onChangeHandler}
+            id={inputId}
+            ref={inputRef}
+            clearable={clearable || Boolean(onClear)}
+            onClear={() => {
+              inputRef.current?.focus();
+              onClear?.();
+            }}
+            clearButtonProps={clearActionProps}
             leftSection={<IconSearch size={size === 'sm' ? 16 : size === 'lg' ? 24 : 20} />}
-            rightSection={
-              onClear && textCount > 0 ? (
-                <div className={styles['SearchBar__ClearButton']} onClick={onClear}>
-                  <IconX size={size === 'sm' ? 16 : size === 'lg' ? 24 : 20} />
-                </div>
-              ) : undefined
-            }
           />
         </div>
-        {description && (
-          <Input.Description className={styles['SearchBar__Description']}>
-            {description}
-          </Input.Description>
-        )}
-        {errorMsg && (
-          <Input.Error className={styles['SearchBar__ErrorMsg']}>{errorMsg}</Input.Error>
-        )}
       </div>
     </div>
   );

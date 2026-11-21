@@ -18,13 +18,13 @@ const CHECKBOX_DIMENSION_BY_SIZE = {
   lg: 32,
 } as const;
 
-export const Checkbox = ({ size = 'md', ...props }: ICheckboxProps) => {
+export const Checkbox = ({ size = 'md', className, ...props }: ICheckboxProps) => {
   const sizeClassName = CHECKBOX_CLASS_NAME_BY_SIZE[size];
   const sizeNumber = CHECKBOX_DIMENSION_BY_SIZE[size];
 
   return (
     <MantineCheckbox
-      className={sizeClassName}
+      className={[sizeClassName, className].filter(Boolean).join(' ')}
       size={size}
       styles={{
         inner: {

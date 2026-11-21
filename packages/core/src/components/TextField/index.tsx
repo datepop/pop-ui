@@ -1,10 +1,11 @@
 'use client';
 
-import { Input, Textarea, Tooltip } from '@mantine/core';
-import { IconInfoCircle, IconX } from '@pop-ui/foundation';
-import { useCallback, useState } from 'react';
+import { Input, Textarea } from '@mantine/core';
+import { IconX } from '@pop-ui/foundation';
+import { useCallback, useId, useRef, useState } from 'react';
 
 import styles from './styles.module.scss';
+import { FieldLabel } from '../shared/FieldLabel';
 
 import type { ICommonTextFieldProps, TTextFieldProps } from './types';
 import type { InputProps, TextareaProps } from '@mantine/core';
@@ -27,13 +28,15 @@ const getTextLength = (value: unknown): number => {
 
 export const TextField = (allProps: TTextFieldProps) => {
   const {
+    id,
     label,
     labelPosition = 'top',
     size = 'md',
     required,
     tooltip,
-    tooltipPosition = 'top',
+    tooltipPosition,
     errorMsg,
+    error = errorMsg,
     description,
     textarea = false,
     maxTextCount,
@@ -41,6 +44,9 @@ export const TextField = (allProps: TTextFieldProps) => {
     onClear,
     ...otherProps
   } = allProps;
+  const generatedId = useId();
+  const fieldId = id ?? generatedId;
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const minRows = 'minRows' in allProps ? allProps.minRows : undefined;
   const {
@@ -58,18 +64,18 @@ export const TextField = (allProps: TTextFieldProps) => {
   );
   const currentValue = isControlled ? valueProp : uncontrolledValue;
   const textCount = getTextLength(currentValue);
+  const showCounter = maxTextCount !== undefined && maxTextCount > 0;
+  const showClear = Boolean(onClear && textCount && !restProps.disabled && !restProps.readOnly);
+  const descriptionId = description ? `${fieldId}-description` : undefined;
+  const hasErrorMessage = Boolean(error) && typeof error !== 'boolean';
+  const errorId = hasErrorMessage ? `${fieldId}-error` : undefined;
+  const describedBy = [descriptionId, errorId].filter(Boolean).join(' ') || undefined;
 
-  let labelStyle = styles['TextField__Label--Medium'];
   let textfieldStyle = styles['TextField--Medium'];
-  let tooltipStyle = styles['TextField__Tooltip--Medium'];
   if (size === 'sm') {
-    labelStyle = styles['TextField__Label--Small'];
     textfieldStyle = styles['TextField--Small'];
-    tooltipStyle = styles['TextField__Tooltip--Small'];
   } else if (size === 'lg') {
-    labelStyle = styles['TextField__Label--Large'];
     textfieldStyle = styles['TextField--Large'];
-    tooltipStyle = styles['TextField__Tooltip--Large'];
   }
 
   const onChangeHandler = useCallback(
@@ -92,6 +98,7 @@ export const TextField = (allProps: TTextFieldProps) => {
   );
 
   const handleClear = useCallback(() => {
+    inputRef.current?.focus();
     if (!isControlled) {
       setUncontrolledValue('');
     }
@@ -104,68 +111,83 @@ export const TextField = (allProps: TTextFieldProps) => {
         labelPosition === 'top' ? styles['TextField--TopLabel'] : styles['TextField--LeftLabel']
       }
     >
-      <div>
-        {label && (
-          <Input.Label required={required} className={labelStyle}>
-            {label}
-          </Input.Label>
+      <FieldLabel
+        htmlFor={fieldId}
+        label={label}
+        required={required}
+        size={size}
+        tooltip={tooltip}
+        tooltipPosition={tooltipPosition}
+      />
+      <Input.Wrapper
+        id={fieldId}
+        description={description}
+        error={error}
+        inputWrapperOrder={['input']}
+      >
+        {textarea ? (
+          <Textarea
+            id={fieldId}
+            required={required}
+            aria-required={required}
+            aria-describedby={describedBy}
+            className={styles['TextField--Textarea']}
+            size={size}
+            minRows={minRows}
+            description={description}
+            error={error}
+            inputWrapperOrder={['input']}
+            onChange={onChangeHandler}
+            value={currentValue}
+            {...(restProps as Omit<TextareaProps, keyof ICommonTextFieldProps | 'vars'>)}
+          />
+        ) : (
+          <Input
+            id={fieldId}
+            ref={inputRef}
+            required={required}
+            aria-required={required}
+            aria-describedby={describedBy}
+            rightSectionPointerEvents={showClear ? 'auto' : undefined}
+            className={textfieldStyle}
+            error={error}
+            onChange={onChangeHandler}
+            value={currentValue}
+            rightSection={
+              showClear ? (
+                <button
+                  type="button"
+                  className={styles['TextField__ClearButton']}
+                  aria-label="입력 내용 지우기"
+                  onClick={handleClear}
+                >
+                  <IconX size={size === 'sm' ? 14 : size === 'lg' ? 20 : 16} />
+                </button>
+              ) : undefined
+            }
+            {...(restProps as Omit<InputProps, keyof ICommonTextFieldProps | 'vars'>)}
+          />
         )}
-        {tooltip && (
-          <Tooltip label={tooltip} position={tooltipPosition}>
-            <div className={tooltipStyle}>
-              <IconInfoCircle size={size === 'sm' ? 14 : size === 'lg' ? 20 : 16} />
-            </div>
-          </Tooltip>
+        {(description || hasErrorMessage || showCounter) && (
+          <div className={showCounter ? styles.TextField__Footer : undefined}>
+            {description && (
+              <Input.Description id={descriptionId} className={styles['TextField__Description']}>
+                {description}
+              </Input.Description>
+            )}
+            {hasErrorMessage && (
+              <Input.Error id={errorId} className={styles['TextField__ErrorMsg']}>
+                {error}
+              </Input.Error>
+            )}
+            {showCounter && (
+              <span className={styles.TextField__TextCounter}>
+                {textCount}/{maxTextCount}
+              </span>
+            )}
+          </div>
         )}
-      </div>
-      <div>
-        <div className={styles['TextField__Wrapper']}>
-          {textarea ? (
-            <Textarea
-              className={styles['TextField--Textarea']}
-              size={size}
-              minRows={minRows}
-              error={errorMsg}
-              onChange={onChangeHandler}
-              value={currentValue}
-              {...(restProps as Omit<TextareaProps, keyof ICommonTextFieldProps | 'vars'>)}
-            />
-          ) : (
-            <Input
-              className={textfieldStyle}
-              error={errorMsg}
-              onChange={onChangeHandler}
-              value={currentValue}
-              rightSection={
-                onClear && textCount > 0 ? (
-                  <button
-                    type="button"
-                    className={styles['TextField__ClearButton']}
-                    aria-label="입력 내용 지우기"
-                    onClick={handleClear}
-                  >
-                    <IconX size={size === 'sm' ? 16 : size === 'lg' ? 24 : 20} />
-                  </button>
-                ) : undefined
-              }
-              {...(restProps as Omit<InputProps, keyof ICommonTextFieldProps | 'vars'>)}
-            />
-          )}
-          {maxTextCount && maxTextCount > 0 && (
-            <span
-              className={styles['TextField__TextCounter']}
-            >{`${textCount}/${maxTextCount}`}</span>
-          )}
-        </div>
-        {description && (
-          <Input.Description className={styles['TextField__Description']}>
-            {description}
-          </Input.Description>
-        )}
-        {errorMsg && (
-          <Input.Error className={styles['TextField__ErrorMsg']}>{errorMsg}</Input.Error>
-        )}
-      </div>
+      </Input.Wrapper>
     </div>
   );
 };

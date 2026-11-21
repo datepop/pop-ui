@@ -1,6 +1,8 @@
+import { foundationImages } from '@pop-ui/foundation';
 import { useEffect, useState } from 'react';
 
 import { ImageInput } from '.';
+import { checkUploadLoading, UploadLoadingExample } from '../../../../../.storybook/examples/UploadLoadingExample';
 
 import type { IImageInputItem } from './types';
 import type { IImageInputChangeMeta } from './types';
@@ -43,7 +45,7 @@ export const Playground: StoryObj<typeof ImageInput> = {
     canDelete: true,
     readOnly: false,
     isLoading: false,
-    errorMsg: '',
+    error: '',
     placeholder: '이미지를 추가하세요',
   },
 };
@@ -142,13 +144,13 @@ export const ErrorState: StoryObj<typeof ImageInput> = {
       <ImageInput
         value={[]}
         minLength={2}
-        errorMsg="이미지를 최소 2장 이상 등록해 주세요."
+        error="이미지를 최소 2장 이상 등록해 주세요."
         placeholder="이미지를 추가하세요"
       />
       <ImageInput
         value={SAMPLE_ITEMS.slice(0, 1)}
         minLength={3}
-        errorMsg="필수 이미지가 부족합니다."
+        error="필수 이미지가 부족합니다."
         placeholder="이미지를 추가하세요"
       />
     </div>
@@ -176,21 +178,17 @@ export const LoadingState: StoryObj<typeof ImageInput> = {
 
 // item.isLoading (per-item): 특정 타일만 로딩, 추가는 가능
 export const PerItemLoadingState: StoryObj<typeof ImageInput> = {
+  name: '파일별 로딩과 조작',
+  tags: ['pop-ui-contract'],
+  play: checkUploadLoading,
   render: () => (
-    <div style={stackStyle}>
-      <p style={{ margin: 0, fontSize: 12, color: '#666' }}>
-        item.isLoading (per-item) — 첫 번째 타일만 로딩, 추가/다른 타일은 정상
-      </p>
-      <ImageInput
-        value={[
-          { id: 'item-1', url: 'https://picsum.photos/seed/a/300/300', isLoading: true },
-          { id: 'item-2', url: 'https://picsum.photos/seed/b/300/300' },
-        ]}
-        maxLength={5}
-        canDelete
-        placeholder="이미지를 추가하세요"
-      />
-    </div>
+    <UploadLoadingExample<IImageInputItem>
+      initialItems={[
+        { id: 'first', position:0, url: foundationImages.mapSample, isLoading:true },
+        { id: 'second', position:1, url: foundationImages.profilePlaceholder },
+      ]}
+      render={props => <ImageInput {...props} placeholder="파일 추가" />}
+    />
   ),
 };
 

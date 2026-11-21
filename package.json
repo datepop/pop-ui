@@ -24,6 +24,7 @@
     "build-storybook": "storybook build",
     "token-transform": "cd packages/foundation && yarn token-transform",
     "token-build": "cd packages/foundation && yarn token-build",
+    "token:penpot": "node scripts/export-penpot-tokens.mjs",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "lint:style": "stylelint \"packages/**/*.scss\"",
@@ -31,7 +32,9 @@
     "typecheck": "lerna run --scope @pop-ui/editor-core build --stream && lerna run typecheck --stream",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "prepare": "husky || true"
+    "prepare": "husky || true",
+    "check:penpot": "node scripts/check-penpot-components.mjs",
+    "test:stories": "node scripts/check-responsive-stories.mjs"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
@@ -58,6 +61,7 @@
     "jsdom": "^27.1.0",
     "lerna": "^9.0.0",
     "lint-staged": "^16.2.6",
+    "playwright-core": "1.59.1",
     "postcss-scss": "^4.0.9",
     "prettier": "^3.6.2",
     "react": "^19.2.0",

@@ -1,7 +1,12 @@
 @use "../shared/variables.scss" as *;
 @use "../shared/functions" as fn;
+@use "../shared/focus";
 
 @mixin CheckboxColor {
+  &:focus-visible {
+    @include focus.ring;
+  }
+
   &:hover {
     background-color: $color-aqua-50;
     border-color: $color-aqua-300;

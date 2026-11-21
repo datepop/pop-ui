@@ -1,6 +1,7 @@
 @use 'sass:map';
 @use '../shared/variables.scss' as *;
 @use '../shared/functions' as fn;
+@use '../shared/focus';
 
 @function button-font-weight($weight-token) {
   @if $weight-token == Bold {
@@ -62,7 +63,7 @@ $button-size-layout-map: (
     font-family: fn.$font-family,
     font-size: $font-size-500,
     font-weight: $font-weight-semibold,
-    line-height: $lh-300,
+    line-height: 1.25,
     radius: $border-radius-150,
     section-gap: $spacing-150,
   ),
@@ -330,19 +331,20 @@ $button-variant-class-map: (
   #{$class-name} {
     @include ButtonVariantState($variant, default);
 
-    &:hover:not(:disabled) {
+    &:hover:not(:disabled, [aria-busy='true']) {
       @include ButtonVariantState($variant, hover);
     }
 
-    &:active:not(:disabled) {
+    &:active:not(:disabled, [aria-busy='true']) {
       @include ButtonVariantState($variant, active);
     }
 
-    &:focus-visible:not(:disabled) {
+    &:focus-visible:not(:disabled, [aria-busy='true']) {
       @include ButtonVariantState($variant, focus);
     }
 
-    &:disabled {
+    &:disabled,
+    &[aria-busy='true'] {
       &.Button__Disabled {
         @include ButtonVariantState($variant, disabled);
       }
@@ -377,7 +379,27 @@ $button-variant-class-map: (
     width: 100%;
   }
 
-  &:disabled {
+  &[data-loading-overlay] {
+    position: relative;
+
+    .Button__Content,
+    .Button__Section {
+      opacity: 0;
+    }
+
+    .Button__Loader {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+  }
+
+  &:focus-visible {
+    @include focus.ring;
+  }
+
+  &:disabled,
+  &[aria-busy='true'] {
     cursor: not-allowed;
   }
 }
@@ -390,7 +412,8 @@ $button-variant-class-map: (
   width: 100%;
 }
 
-.Button__Label {
+.Button__Label,
+.Button__Content {
   display: inline-flex;
   align-items: center;
   justify-content: center;

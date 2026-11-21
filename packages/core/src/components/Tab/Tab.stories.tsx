@@ -29,3 +29,18 @@ export const DefaultTab: StoryObj<typeof Tab> = {
     defaultValue: "default tab 1",
   },
 };
+
+export const StatusPanels: StoryObj<typeof Tab> = {
+  name: "상태별 내용 전환",
+  parameters: { layout: "centered" },
+  args: {
+    w: 320,
+    defaultValue: "all",
+    containerPaddingTop: "md",
+    tabList: [
+      { title: "전체", value: "all", body: "전체 내역 3건" },
+      { title: "예약", value: "reserved", body: "예약 내역 2건" },
+      { title: "완료", value: "completed", body: "완료 내역 1건" },
+    ],
+  },
+};
