@@ -110,6 +110,18 @@
   color: $color-gray-500;
 }
 
+.DatePicker__Input:has(.DatePicker__Value) {
+  height: auto;
+  padding-inline-end: var(--input-right-section-size, var(--date-picker-section-width));
+}
+
+.DatePicker__Value {
+  display: block;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
 .DatePicker__Section {
   width: var(--date-picker-section-width);
   color: $color-gray-700;
@@ -349,4 +361,17 @@
     background: $color-gray-300;
     color: $color-white;
   }
+}
+
+.DatePicker__Input[data-error] {
+  border-color: $color-red-500;
+}
+
+.DatePicker__Description {
+  overflow-wrap: anywhere;
+}
+
+.DatePicker__Error {
+  margin-top: fn.spacing(100);
+  overflow-wrap: anywhere;
 }

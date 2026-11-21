@@ -202,6 +202,59 @@ describe('LottieInput', () => {
       cleanupRenderedApp(view);
     });
 
+    it('allows removing and moving a file while only its preview is loading', async () => {
+      vi.spyOn(globalThis, 'fetch').mockImplementation(() => new Promise<Response>(() => {}));
+      const onChange = vi.fn();
+      const other = makeItem('ready');
+      const view = await renderApp(
+        <LottieInput
+          value={[{ id: 'preview', url: '/preview.json' }, other]}
+          onChange={onChange}
+        />,
+      );
+      try {
+        expect(view.container.querySelector('[data-testid="loader"]')).toBeInTheDocument();
+        expect(view.container.querySelector('[aria-label="드래그로 순서 변경"]')).toBeEnabled();
+        const remove = view.container.querySelector<HTMLButtonElement>(
+          '[aria-label="Lottie 삭제"]',
+        )!;
+        expect(remove).toBeEnabled();
+        act(() => remove.click());
+        expect(onChange).toHaveBeenCalledWith([other], {
+          action: 'delete',
+          itemId: 'preview',
+          index: 0,
+        });
+      } finally {
+        cleanupRenderedApp(view);
+      }
+    });
+
+    it('discards an in-flight file read if the uploader becomes locked', async () => {
+      let completeRead: () => void = () => {
+        throw new Error('file read was not started');
+      };
+      vi.spyOn(FileReader.prototype, 'readAsText').mockImplementation(function (this: FileReader) {
+        completeRead = () =>
+          this.onload?.call(this, {
+            target: { result: JSON.stringify(VALID_LOTTIE) },
+          } as ProgressEvent<FileReader>);
+      });
+      const onChange = vi.fn();
+      const view = await renderApp(<LottieInput value={[]} onChange={onChange} />);
+      try {
+        const drop = mockDropzone.mock.calls[0][0].onDrop([makeLottieFile()]);
+        await act(async () =>
+          view.root.render(<LottieInput value={[]} onChange={onChange} isLoading />),
+        );
+        completeRead();
+        await drop;
+        expect(onChange).not.toHaveBeenCalled();
+      } finally {
+        cleanupRenderedApp(view);
+      }
+    });
+
     it('readOnly hides delete buttons and dropzones', async () => {
       const view = await renderApp(<LottieInput value={[makeItem('a')]} readOnly />);
       expect(view.container.querySelector('[aria-label="Lottie 삭제"]')).toBeNull();
@@ -209,12 +262,22 @@ describe('LottieInput', () => {
       cleanupRenderedApp(view);
     });
 
-    it('errorMsg renders Input.Error', async () => {
-      const view = await renderApp(<LottieInput value={[]} errorMsg="파일을 추가하세요" />);
-      expect(view.container.querySelector('[data-testid="input-error"]')).toHaveTextContent(
-        '파일을 추가하세요',
+    it.each([
+      [undefined, '기존 오류'],
+      [<strong key="message">새 오류</strong>, '새 오류'],
+      [false, null],
+      [null, null],
+    ] as const)('resolves error and its JSX alias (%#)', async (error, expected) => {
+      const view = await renderApp(
+        <LottieInput value={[]} errorMsg={<em>기존 오류</em>} error={error} />,
       );
-      cleanupRenderedApp(view);
+      try {
+        const message = view.container.querySelector('[data-testid="input-error"]');
+        if (expected === null) expect(message).toBeNull();
+        else expect(message?.textContent).toBe(expected);
+      } finally {
+        cleanupRenderedApp(view);
+      }
     });
 
     it('maxLength=2, 2 items → 0 placeholders', async () => {

@@ -6,7 +6,7 @@ import { DateTimePicker } from '@mantine/dates';
 import { IconCalendar, formatDateDisplay, toValueString, parseDateValue } from '@pop-ui/foundation';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat.js';
-import { useState } from 'react';
+import { useId, useState } from 'react';
 
 dayjs.extend(customParseFormat);
 
@@ -17,6 +17,7 @@ import {
   mergeClassNamesWithDefault,
   resolveDatePickerValue,
 } from '../CalendarDatePicker/utils';
+import { fieldContentOrder } from '../shared/field';
 
 import type { IDatePickerProps } from './types';
 import type {
@@ -84,6 +85,10 @@ const toDateOrNull = (v: DateValue | null | undefined): Date | null => {
 };
 
 export const DatePicker = ({
+  id,
+  label,
+  required,
+  description,
   size = 'md',
   type = 'default',
   withTime,
@@ -95,6 +100,7 @@ export const DatePicker = ({
   defaultValue,
   onChange,
   placeholder,
+  error,
   disabled,
   minDate,
   maxDate,
@@ -106,6 +112,8 @@ export const DatePicker = ({
 }: IDatePickerProps) => {
   const resolvedValueFormat = valueFormat ?? (withTime ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD');
 
+  const generatedId = useId();
+  const fieldId = id ?? generatedId;
   const [opened, setOpened] = useState(false);
   const [internalValue, setInternalValue] = useState<TInternalDateValue>(
     () =>
@@ -152,6 +160,14 @@ export const DatePicker = ({
 
     return (
       <DateTimePicker
+        id={fieldId}
+        label={label}
+        required={required}
+        aria-required={required}
+        descriptionProps={{ className: styles.DatePicker__Description }}
+        errorProps={{ className: styles.DatePicker__Error }}
+        description={description}
+        inputWrapperOrder={fieldContentOrder}
         className={joinClassNames(
           styles.DatePickerBase,
           styles.DatePickerRoot,
@@ -184,6 +200,7 @@ export const DatePicker = ({
           // Mantine 8은 Date 또는 DateStringValue를 emit — 공개 API 형식(string | null)으로 변환
           onChange?.(next ? dayjs(next).format(resolvedValueFormat) : null);
         }}
+        error={error}
         placeholder={placeholder}
         disabled={disabled}
         minDate={minDate}
@@ -202,7 +219,8 @@ export const DatePicker = ({
   const displayText = formatDateDisplay(
     resolvedValue as TInternalDateValue,
     type,
-    displayValueFormat,
+    // Keep the spaces inside each selected date together when the list wraps.
+    type === 'default' ? displayValueFormat : displayValueFormat.replaceAll(' ', '\u00a0'),
   );
 
   const handleCalendarChange = (newValue: DateValue) => {
@@ -230,7 +248,15 @@ export const DatePicker = ({
   };
 
   return (
-    <div
+    <Input.Wrapper
+      id={fieldId}
+      label={label}
+      required={required}
+      description={description}
+      error={error}
+      inputWrapperOrder={fieldContentOrder}
+      descriptionProps={{ className: styles.DatePicker__Description }}
+      errorProps={{ className: styles.DatePicker__Error }}
       className={joinClassNames(styles.DatePickerBase, styles.DatePickerRoot, sizeStyle, className)}
     >
       <Popover
@@ -251,6 +277,9 @@ export const DatePicker = ({
             data-disabled={disabled ? true : undefined}
           >
             <Input
+              error={Boolean(error)}
+              aria-required={required}
+              id={fieldId}
               component="button"
               type="button"
               classNames={{
@@ -265,7 +294,7 @@ export const DatePicker = ({
               data-disabled={disabled ? true : undefined}
             >
               {displayText ? (
-                <span>{displayText}</span>
+                <span className={styles.DatePicker__Value}>{displayText}</span>
               ) : (
                 <span className={styles.DatePicker__Placeholder}>{placeholder}</span>
               )}
@@ -286,6 +315,6 @@ export const DatePicker = ({
           />
         </Popover.Dropdown>
       </Popover>
-    </div>
+    </Input.Wrapper>
   );
 };

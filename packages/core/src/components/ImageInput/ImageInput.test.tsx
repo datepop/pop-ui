@@ -363,12 +363,22 @@ describe('ImageInput', () => {
       cleanupRenderedApp(view);
     });
 
-    it('errorMsg renders Input.Error', () => {
-      const view = renderApp(<ImageInput value={[]} errorMsg="이미지를 추가하세요" />);
-      expect(view.container.querySelector('[data-testid="input-error"]')).toHaveTextContent(
-        '이미지를 추가하세요',
+    it.each([
+      [undefined, '기존 오류'],
+      [<strong key="message">새 오류</strong>, '새 오류'],
+      [false, null],
+      [null, null],
+    ] as const)('resolves error and its JSX alias (%#)', async (error, expected) => {
+      const view = await renderApp(
+        <ImageInput value={[]} errorMsg={<em>기존 오류</em>} error={error} />,
       );
-      cleanupRenderedApp(view);
+      try {
+        const message = view.container.querySelector('[data-testid="input-error"]');
+        if (expected === null) expect(message).toBeNull();
+        else expect(message?.textContent).toBe(expected);
+      } finally {
+        cleanupRenderedApp(view);
+      }
     });
 
     it('shows a keyboard-accessible edit icon on tiles when hasEdit is enabled', () => {
@@ -623,13 +633,23 @@ describe('ImageInput', () => {
       expect(view.container.querySelectorAll('[aria-label="이미지 삭제"]')).toHaveLength(1);
       cleanupRenderedApp(view);
 
+      const onChange = vi.fn();
       const hidden = renderApp(
         <ImageInput
           value={[{ ...makeItem('a'), canDelete: true }, makeItem('b')]}
           canDelete={false}
+          onChange={onChange}
         />,
       );
-      expect(hidden.container.querySelectorAll('[aria-label="이미지 삭제"]')).toHaveLength(1);
+      const buttons =
+        hidden.container.querySelectorAll<HTMLButtonElement>('[aria-label="이미지 삭제"]');
+      expect(buttons).toHaveLength(1);
+      act(() => buttons[0].click());
+      expect(onChange).toHaveBeenCalledWith([makeItem('b')], {
+        action: 'delete',
+        itemId: 'a',
+        index: 0,
+      });
       cleanupRenderedApp(hidden);
     });
 
@@ -637,6 +657,23 @@ describe('ImageInput', () => {
       const onChange = vi.fn();
       const view = renderApp(<ImageInput value={[makeItem('a')]} readOnly onChange={onChange} />);
       expect(view.container.querySelector('[aria-label="이미지 삭제"]')).toBeNull();
+      expect(onChange).not.toHaveBeenCalled();
+      cleanupRenderedApp(view);
+    });
+
+    it.each([
+      ['ImageInput loading', { isLoading: true }],
+      ['item loading', { itemIsLoading: true }],
+    ])('delete while %s → no onChange', (_label, { isLoading, itemIsLoading }) => {
+      const onChange = vi.fn();
+      const item = { ...makeItem('a'), canDelete: true, isLoading: itemIsLoading };
+      const view = renderApp(
+        <ImageInput value={[item]} isLoading={isLoading} canDelete={false} onChange={onChange} />,
+      );
+      const button = view.container.querySelector<HTMLButtonElement>('[aria-label="이미지 삭제"]');
+
+      expect(button).toBeDisabled();
+      act(() => button?.click());
       expect(onChange).not.toHaveBeenCalled();
       cleanupRenderedApp(view);
     });

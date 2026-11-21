@@ -1,6 +1,7 @@
 @use 'sass:map';
 @use '../shared/variables.scss' as *;
 @use '../shared/functions' as fn;
+@use '../shared/focus';
 
 $radio-config-small: (
   size: 18px,
@@ -30,6 +31,10 @@ $radio-config-large: (
 }
 
 @mixin RadioColor {
+  &:focus-visible {
+    @include focus.ring;
+  }
+
   &:hover {
     background-color: $color-aqua-50;
     border-color: $color-aqua-300;

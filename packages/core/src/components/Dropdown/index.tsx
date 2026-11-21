@@ -1,46 +1,59 @@
 'use client';
 
-import { Input, Select, Tooltip } from '@mantine/core';
-import {
-  ColorBlack,
-  ColorGray100,
-  IconInfoCircle,
-  IconChevronUp,
-  IconChevronDown,
-} from '@pop-ui/foundation';
-import { useState } from 'react';
+import { Select } from '@mantine/core';
+import { useReducedMotion } from '@mantine/hooks';
+import { IconChevronUp, IconChevronDown } from '@pop-ui/foundation';
+import { useId, useState } from 'react';
 
 import styles from './styles.module.scss';
+import { fieldContentOrderWith } from '../shared/field';
+import { FieldLabel } from '../shared/FieldLabel';
 
 import type { IDropdownProps } from './types';
-import type { CSSProperties } from '@mantine/core';
+
+const menuTransition = {
+  in: { opacity: 1, transform: 'scale(1)' },
+  out: { opacity: 0, transform: 'scale(0.96)' },
+  transitionProperty: 'opacity, transform',
+};
 
 export const Dropdown = ({
+  id,
   label,
   labelPosition = 'top',
   size = 'md',
   required,
   tooltip,
-  tooltipPosition = 'top',
+  tooltipPosition,
   errorMsg,
+  error = errorMsg,
   description,
+  comboboxProps,
+  onDropdownOpen,
+  onDropdownClose,
+  dropdownOpened,
+  defaultDropdownOpened,
+  classNames,
+  onKeyDown,
   ...props
 }: IDropdownProps) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const generatedId = useId();
+  const inputId = id ?? generatedId;
+  const [opened, setOpened] = useState(defaultDropdownOpened ?? false);
+  const isOpen = dropdownOpened ?? opened;
+  const reduceMotion = useReducedMotion();
+  const closeDropdown = () => {
+    setOpened(false);
+    onDropdownClose?.();
+  };
 
-  let labelStyle = styles['Dropdown__Label--Medium'];
   let selectStyle = styles['Dropdown--Medium'];
-  let tooltipStyle = styles['Dropdown__Tooltip--Medium'];
   let chevronSize = 18;
   if (size === 'sm') {
-    labelStyle = styles['Dropdown__Label--Small'];
     selectStyle = styles['Dropdown--Small'];
-    tooltipStyle = styles['Dropdown__Tooltip--Small'];
     chevronSize = 14;
   } else if (size === 'lg') {
-    labelStyle = styles['Dropdown__Label--Large'];
     selectStyle = styles['Dropdown--Large'];
-    tooltipStyle = styles['Dropdown__Tooltip--Large'];
     chevronSize = 24;
   }
 
@@ -50,48 +63,71 @@ export const Dropdown = ({
         labelPosition === 'top' ? styles['Dropdown--TopLabel'] : styles['Dropdown--LeftLabel']
       }
     >
-      <div>
-        {label && (
-          <Input.Label required={required} className={labelStyle}>
-            {label}
-          </Input.Label>
-        )}
-        {tooltip && (
-          <Tooltip label={tooltip} position={tooltipPosition}>
-            <div className={tooltipStyle}>
-              <IconInfoCircle size={size === 'sm' ? 14 : size === 'lg' ? 20 : 16} />
-            </div>
-          </Tooltip>
-        )}
-      </div>
+      <FieldLabel
+        htmlFor={inputId}
+        label={label}
+        required={required}
+        size={size}
+        tooltip={tooltip}
+        tooltipPosition={tooltipPosition}
+      />
       <div>
         <Select
           {...props}
+          inputWrapperOrder={fieldContentOrderWith(props.inputWrapperOrder, description, error)}
+          description={description}
+          descriptionProps={{ className: styles.Dropdown__Description, ...props.descriptionProps }}
+          errorProps={{ className: styles.Dropdown__ErrorMsg, ...props.errorProps }}
+          comboboxProps={{
+            // Keep options available for Mantine's keyboard index while the menu animates in.
+            keepMounted: true,
+            position: 'bottom-start',
+            ...comboboxProps,
+            transitionProps: {
+              transition: menuTransition,
+              duration: 150,
+              exitDuration: comboboxProps?.transitionProps?.duration ?? 100,
+              timingFunction: 'ease-out',
+              ...comboboxProps?.transitionProps,
+              ...(reduceMotion && { duration: 0, exitDuration: 0 }),
+            },
+          }}
+          id={inputId}
           size={size}
-          error={errorMsg}
+          required={required}
+          error={error}
           className={selectStyle}
           rightSection={
             isOpen ? <IconChevronUp size={chevronSize} /> : <IconChevronDown size={chevronSize} />
           }
-          onDropdownOpen={() => setIsOpen(true)}
-          onDropdownClose={() => setIsOpen(false)}
-          styles={{
-            option: {
-              '&[data-selected]': {
-                '&, &:hover': {
-                  backgroundColor: ColorGray100,
-                  color: ColorBlack,
-                } as CSSProperties,
-              } as CSSProperties,
-            } as CSSProperties,
+          dropdownOpened={isOpen}
+          onDropdownOpen={() => {
+            setOpened(true);
+            onDropdownOpen?.();
+          }}
+          onDropdownClose={closeDropdown}
+          onKeyDown={(event) => {
+            onKeyDown?.(event);
+            if (
+              event.key === 'Tab' &&
+              !event.defaultPrevented &&
+              isOpen &&
+              !props.searchable &&
+              !props.autoSelectOnBlur
+            ) {
+              closeDropdown();
+            }
+          }}
+          classNames={(theme, selectProps, ctx) => {
+            const slots =
+              typeof classNames === 'function' ? classNames(theme, selectProps, ctx) : classNames;
+            return {
+              ...slots,
+              dropdown: [styles.Dropdown__Menu, slots?.dropdown].filter(Boolean).join(' '),
+              option: [styles.Dropdown__Option, slots?.option].filter(Boolean).join(' '),
+            };
           }}
         />
-        {description && (
-          <Input.Description className={styles['Dropdown__Description']}>
-            {description}
-          </Input.Description>
-        )}
-        {errorMsg && <Input.Error className={styles['Dropdown__ErrorMsg']}>{errorMsg}</Input.Error>}
       </div>
     </div>
   );

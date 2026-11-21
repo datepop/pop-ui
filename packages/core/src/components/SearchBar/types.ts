@@ -1,13 +1,12 @@
+import type { IFieldFeedbackProps, IFieldLabelProps, ILegacyFieldError } from '../shared/field';
 import type { AutocompleteProps } from '@mantine/core';
 
-export interface ISearchBarProps extends AutocompleteProps {
-  label?: string;
+export interface ISearchBarProps
+  extends Omit<AutocompleteProps, keyof IFieldFeedbackProps | keyof IFieldLabelProps>,
+    IFieldFeedbackProps,
+    IFieldLabelProps,
+    ILegacyFieldError {
   labelPosition?: 'top' | 'left';
-  size?: 'sm' | 'md' | 'lg';
-  tooltip?: string;
-  tooltipPosition?: 'top' | 'bottom' | 'left' | 'right';
-  description?: string;
-  errorMsg?: string;
   onChange?: (value: string) => void;
   onClear?: () => void;
 }

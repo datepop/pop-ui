@@ -1,3 +1,4 @@
+import { Button } from '@pop-ui/core';
 import React, { useRef, useState } from 'react';
 
 import { EditorComponent } from './index';
@@ -126,15 +127,6 @@ export const EditorRef: StoryObj<typeof EditorComponent> = {
       ]);
       const ref = useRef<IEditorRef>(null);
 
-      const buttonStyle: React.CSSProperties = {
-        padding: '4px 10px',
-        fontSize: '12px',
-        border: '1px solid #d1d5db',
-        borderRadius: '4px',
-        cursor: 'pointer',
-        background: '#f9fafb',
-      };
-
       return (
         <div>
           <div
@@ -148,56 +140,71 @@ export const EditorRef: StoryObj<typeof EditorComponent> = {
               borderRadius: '6px',
             }}
           >
-            <button style={buttonStyle} onClick={() => ref.current?.focus()}>
+            <Button variant="basic" size="sm" onClick={() => ref.current?.focus()}>
               focus()
-            </button>
-            <button style={buttonStyle} onClick={() => ref.current?.insertH1()}>
+            </Button>
+            <Button variant="basic" size="sm" onClick={() => ref.current?.insertH1()}>
               insertH1()
-            </button>
-            <button style={buttonStyle} onClick={() => ref.current?.insertUl()}>
+            </Button>
+            <Button variant="basic" size="sm" onClick={() => ref.current?.insertUl()}>
               insertUl()
-            </button>
-            <button style={buttonStyle} onClick={() => ref.current?.insertOl()}>
+            </Button>
+            <Button variant="basic" size="sm" onClick={() => ref.current?.insertOl()}>
               insertOl()
-            </button>
-            <button style={buttonStyle} onClick={() => ref.current?.insertHr('default')}>
+            </Button>
+            <Button variant="basic" size="sm" onClick={() => ref.current?.insertHr('default')}>
               insertHr(default)
-            </button>
-            <button style={buttonStyle} onClick={() => ref.current?.insertHr('short')}>
+            </Button>
+            <Button variant="basic" size="sm" onClick={() => ref.current?.insertHr('short')}>
               insertHr(short)
-            </button>
-            <button style={buttonStyle} onClick={() => ref.current?.insertBlockquote('default')}>
+            </Button>
+            <Button
+              variant="basic"
+              size="sm"
+              onClick={() => ref.current?.insertBlockquote('default')}
+            >
               insertBlockquote(default)
-            </button>
-            <button style={buttonStyle} onClick={() => ref.current?.insertBlockquote('solid')}>
+            </Button>
+            <Button
+              variant="basic"
+              size="sm"
+              onClick={() => ref.current?.insertBlockquote('solid')}
+            >
               insertBlockquote(solid)
-            </button>
-            <button
-              style={buttonStyle}
+            </Button>
+            <Button
+              variant="basic"
+              size="sm"
               onClick={() => ref.current?.insertLink('https://example.com')}
             >
               insertLink()
-            </button>
-            <button
-              style={buttonStyle}
+            </Button>
+            <Button
+              variant="basic"
+              size="sm"
               onClick={() => ref.current?.insertImages(['https://picsum.photos/600/400'])}
             >
               insertImages()
-            </button>
-            <button
-              style={buttonStyle}
+            </Button>
+            <Button
+              variant="basic"
+              size="sm"
               onClick={() =>
                 ref.current?.insertSpots([{ id: 1, name: '경복궁', address: '서울 종로구' }])
               }
             >
               insertSpots()
-            </button>
-            <button style={buttonStyle} onClick={() => ref.current?.insertTextBlockAtStart()}>
+            </Button>
+            <Button variant="basic" size="sm" onClick={() => ref.current?.insertTextBlockAtStart()}>
               insertTextBlockAtStart()
-            </button>
-            <button style={buttonStyle} onClick={() => ref.current?.scrollToHashtag('해시태그')}>
+            </Button>
+            <Button
+              variant="basic"
+              size="sm"
+              onClick={() => ref.current?.scrollToHashtag('해시태그')}
+            >
               scrollToHashtag()
-            </button>
+            </Button>
           </div>
           <EditorComponent ref={ref} value={value} onChange={setValue} inlineToolbar />
         </div>

@@ -131,11 +131,15 @@ export const markerStyles = `
       2px 2px 0 white;
   }
 
+  .pop-ui-map {
+    container: pop-ui-map / inline-size;
+  }
+
   /* Popdeal Marker */
   .popdeal-marker {
     transform: translate(-50%, -100%);
     padding: 10px 16px;
-    width: fit-content;
+    width: max-content;
     max-width: 210px;
     position: relative;
     display: flex;
@@ -149,6 +153,13 @@ export const markerStyles = `
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.12);
     border-radius: 12px;
     color: #3D3D3D;
+  }
+
+  @container pop-ui-map (max-width: 210px) {
+    .popdeal-marker {
+      box-sizing: border-box;
+      max-width: 100cqi;
+    }
   }
 
   .popdeal-marker:hover {
@@ -190,6 +201,7 @@ export const markerStyles = `
 
   .popdeal-marker-section {
     display: flex;
+    max-width: 100%;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -199,6 +211,7 @@ export const markerStyles = `
 
   .popdeal-marker-section-header {
     display: flex;
+    max-width: 100%;
     justify-content: center;
     align-items: center;
     gap: 4px;
@@ -217,7 +230,8 @@ export const markerStyles = `
     font-weight: 700;
     font-size: 14px;
     text-align: center;
-    width: 100%;
+    min-width: 0;
+    overflow-wrap: anywhere;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -248,6 +262,11 @@ export const markerStyles = `
     color: #6E6E6E;
     font-weight: 600;
     font-size: 12px;
+    max-width: 50%;
+    flex-shrink: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .popdeal-marker-category::before {

@@ -1,0 +1,45 @@
+/*
+Copyright (c) 2021 Kil Hyung-jin, with Reserved Font Name Pretendard.
+https://github.com/orioncactus/pretendard
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at:
+http://scripts.sil.org/OFL
+*/
+
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url('./PretendardVariable.woff2') format('woff2-variations');
+}
+
+$families: (
+  'Noto Sans KR': (
+    400: 'NotoSansKR-Regular',
+    500: 'NotoSansKR-Medium',
+    600: 'NotoSansKR-SemiBold',
+    700: 'NotoSansKR-Bold',
+  ),
+  'Montserrat': (
+    500: 'Montserrat-Medium',
+    600: 'Montserrat-SemiBold',
+    700: 'Montserrat-Bold',
+  ),
+);
+
+@each $family, $weights in $families {
+  // Keep the previous CSS family names available to existing consumers.
+  @each $alias in ($family, 'POP-UI #{$family}', 'Pop UI Hotel #{$family}') {
+    @each $weight, $file in $weights {
+      @font-face {
+        font-family: $alias;
+        font-style: normal;
+        font-weight: $weight;
+        font-display: swap;
+        src: url('./fonts/#{$file}.woff2') format('woff2');
+      }
+    }
+  }
+}

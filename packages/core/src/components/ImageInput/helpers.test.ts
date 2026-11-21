@@ -301,6 +301,23 @@ describe('addItemAtPosition', () => {
 
 // ─── reorderItemPositions ───────────────────────────────────────────────────
 
+describe('reorder around uploads', () => {
+  const locked = new Set([1]);
+  const ids = ['a', 'upload', 'c', 'd'];
+  const slots = ids.map((id, position) => ({ id, position }));
+  it('keeps the uploading slot fixed while moving other files in either direction', () => {
+    expect(reorderItems(ids, 0, 3, locked)).toEqual(['c', 'upload', 'd', 'a']);
+    expect(reorderItems(ids, 3, 0, locked)).toEqual(['d', 'upload', 'a', 'c']);
+    expect(reorderItemPositions(slots, 0, 3, locked).map((item) => item.position)).toEqual([
+      3, 1, 0, 2,
+    ]);
+  });
+  it('rejects a locked source or destination', () => {
+    expect(reorderItems(ids, 0, 1, locked)).toBe(ids);
+    expect(reorderItemPositions(slots, 1, 3, locked)).toBe(slots);
+  });
+});
+
 describe('reorderItemPositions', () => {
   it('앞→뒤: 0→2이면 [a,b,c] → [b,c,a]', () => {
     const items = [

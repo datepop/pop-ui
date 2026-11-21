@@ -86,3 +86,11 @@ Button, CalendarDatePicker, Checkbox, DatePicker, Dropdown, ImageInput, LottieIn
 - 빌드: `yarn build` (foundation → 전체), `yarn build:core`, `yarn build:foundation`
 - Storybook: `yarn build-storybook`
 - 배포는 README의 changeset(`yarn changeset` → `yarn version-packages`) → `release/*` → Chromatic → `main` → `vX.Y.Z` 태그 절차. `package.json` 버전 수동 편집 금지.
+
+### POP-UI 이름과 Penpot 운영
+
+- 공용 컴포넌트 이름은 공개 export에 맞춘다. 아이콘은 모양과 방향, 서체는 실제 family 이름을 쓴다. 호텔·예약 같은 사용처, 한글·영문, 화면 너비별 조합은 Storybook과 Penpot의 Examples에서 보여준다.
+- Penpot의 Components에는 같은 컴포넌트의 원본 세트를 하나 둔다. 크기는 코드의 `size`, 시각 변형은 `variant` 값을 따른다. 공용 컨트롤의 세 크기는 `shared/controlSize.ts`에서 정의한다. 선택 여부는 `checked`, 선택한 항목은 `value`로 표현한다. Penpot의 `state`는 조작 결과의 예시이며 `filled`는 값이 있는 상태, `error`는 오류가 표시된 상태다.
+- 공개 이름을 바꿀 때는 기존 이름에 대체 API를 명시하고 Changeset에 이전 방법을 적는다. 기존 이름의 제거는 호환성이 깨지는 릴리스에서 다룬다.
+- 컴포넌트·변형을 변경한 PR에서는 코드, Penpot 원본, 관련 Storybook 예시를 함께 확인한다. Penpot 원본은 `yarn check:penpot --live`로 대조한다. 의도한 변경은 `yarn check:penpot --live --write`로 스냅샷을 다시 만들고 diff를 확인한다. 두 명령은 해당 파일 읽기 권한이 있는 `PENPOT_ACCESS_TOKEN`을 사용한다.
+- PR 검사는 체크인한 스냅샷과 코드의 공개 컴포넌트·크기·변형을 대조한다. 공통 입력은 각 크기별 네 대표 상태도 확인한다. Storybook에서 너비 또는 인터랙션을 보장할 예시는 `pop-ui-contract` 태그와 `play` 검증을 함께 추가한다. 로컬 실행은 `yarn build-storybook`, `yarn exec playwright-core install chromium`, `yarn test:stories` 순서다.

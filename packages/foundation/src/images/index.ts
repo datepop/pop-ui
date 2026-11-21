@@ -7,7 +7,7 @@ import reviewStarOff from './reviewStarOff.webp';
 import reviewStarOn from './reviewStarOn.webp';
 
 /** Original Android images. mapSample is a sample, never a missing-location fallback. Web only. */
-export const hotelSummaryImages = {
+export const foundationImages = {
   favoriteOn,
   favoriteOff,
   mapSample,
@@ -16,3 +16,6 @@ export const hotelSummaryImages = {
   reviewStarOff,
   profilePlaceholder,
 } as const;
+
+/** @deprecated Use foundationImages. */
+export const hotelSummaryImages = foundationImages;

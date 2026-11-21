@@ -2,7 +2,6 @@
 
 import { DndContext, closestCenter } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
-import { Input } from '@mantine/core';
 import { ColorAqua700, ColorRed700, IconPhoto } from '@pop-ui/foundation';
 import { Suspense, lazy, useEffect, useState } from 'react';
 
@@ -18,6 +17,8 @@ import { PlaceholderDropzone } from '../shared/MultiItemInput/Dropzone';
 import { SortableEmptySlot } from '../shared/MultiItemInput/SortableEmptySlot';
 import { TileShell } from '../shared/MultiItemInput/TileShell';
 import { usePositionGrid } from '../shared/MultiItemInput/usePositionGrid';
+import { useUploadCommit } from '../shared/MultiItemInput/useUploadCommit';
+import { useUploadFeedback } from '../shared/MultiItemInput/useUploadFeedback';
 import { toast } from '../Toast';
 
 import type { ILottieInputItem, ILottieInputProps } from './types';
@@ -116,8 +117,8 @@ function LottieTile({
       width={width}
       height={height}
       readOnly={readOnly}
-      isLoading={isLoading}
-      itemIsLoading={item.isLoading || tileLoading}
+      isLoading={isLoading || item.isLoading}
+      isPreviewLoading={tileLoading}
       canDelete={canDelete}
       hasLink={hasLink}
       linkUrl={item.url}
@@ -157,7 +158,7 @@ export const LottieInput = ({
   onChange,
   width = 160,
   height = 200,
-  placeholder = 'Lottie JSON 파일을 넣어주세요',
+  placeholder = 'Lottie 파일을 넣어주세요',
   hasIcon = true,
   hasLink = false,
   onLinkClick,
@@ -165,6 +166,7 @@ export const LottieInput = ({
   minLength,
   maxLength,
   errorMsg,
+  error = errorMsg,
   isLoading,
   readOnly,
   gap = 8,
@@ -186,24 +188,22 @@ export const LottieInput = ({
     sensors,
     handleDragEnd,
     getMetaIndex,
-  } = usePositionGrid({ value, length, minLength, maxLength, onChange });
+    getEditableItem,
+    canAddFiles,
+  } = usePositionGrid({
+    value,
+    length,
+    minLength,
+    maxLength,
+    onChange,
+    disabled: Boolean(readOnly || isLoading),
+  });
 
-  const isError = !!errorMsg;
+  const { isError, errorId, message } = useUploadFeedback(error);
 
-  const handleDrop = async (files: File[]) => {
-    if (readOnly) return;
-
-    const sorted = [...files].sort((a, b) => a.name.localeCompare(b.name));
-    const results = await Promise.all(sorted.map(parseLottieFile));
-
-    let invalidCount = 0;
-    const validFiles = sorted.filter((_, i) => {
-      if (results[i] !== null) return true;
-      invalidCount++;
-      return false;
-    });
-
-    if (invalidCount > 0) {
+  const commitFiles = useUploadCommit((files: File[], invalidCount: number, position?: number) => {
+    if (!canAddFiles(position)) return;
+    if (invalidCount) {
       toast({
         id: 'invalid-lottie-files',
         message:
@@ -212,44 +212,28 @@ export const LottieInput = ({
             : `${invalidCount}개의 파일이 유효하지 않은 Lottie JSON입니다`,
       });
     }
-
-    if (validFiles.length === 0) return;
-
-    const prevLength = value.length;
-    const next = addItems(value, validFiles, resolvedMaxLength);
-    if (next.length === prevLength) return;
-
+    if (!files.length) return;
+    const next =
+      position === undefined
+        ? addItems(value, files, resolvedMaxLength)
+        : addItemAtPosition(value, files[0], position);
     onChange?.(next, {
       action: 'create',
-      itemId: next[prevLength].id,
-      index: prevLength,
+      itemId: next[value.length].id,
+      index: position ?? value.length,
     });
-  };
+  });
 
-  const handlePositionDrop = async (position: number, files: File[]) => {
-    if (readOnly) return;
-    const file = files[0];
-    if (!file) return;
-
-    const data = await parseLottieFile(file);
-    if (!data) {
-      toast({
-        id: 'invalid-lottie-files',
-        message: '유효하지 않은 Lottie JSON 파일입니다',
-      });
-      return;
-    }
-
-    const next = addItemAtPosition(value, file, position);
-    onChange?.(next, {
-      action: 'create',
-      itemId: next[next.length - 1].id,
-      index: position,
-    });
+  const handleDrop = async (files: File[], position?: number) => {
+    if (!canAddFiles(position)) return;
+    const candidates = position === undefined ? files : files.slice(0, 1);
+    const results = await Promise.all(candidates.map(parseLottieFile));
+    const valid = candidates.filter((_, index) => results[index] !== null);
+    commitFiles(valid, candidates.length - valid.length, position);
   };
 
   const handleDelete = (id: string) => {
-    if (readOnly) return;
+    if (!canDelete || !getEditableItem(id)) return;
     const index = getMetaIndex(id);
     const next = deleteItem(value, id);
     onChange?.(next, { action: 'delete', itemId: id, index });
@@ -290,11 +274,13 @@ export const LottieInput = ({
                   !readOnly && (
                     <SortableEmptySlot key={slotId} id={slotId}>
                       <PlaceholderDropzone
-                        onDrop={(files) => handlePositionDrop(pos, files)}
+                        onDrop={(files) => handleDrop(files, pos)}
                         accept={LOTTIE_ACCEPT}
                         multiple={false}
                         isLoading={isLoading}
                         isError={isError}
+                        errorId={errorId}
+                        fallbackLabel={placeholder ? undefined : 'Lottie 파일 추가'}
                         width={width}
                         height={height}
                       >
@@ -336,11 +322,13 @@ export const LottieInput = ({
                   Array.from({ length: placeholderCount }, (_, i) => (
                     <PlaceholderDropzone
                       key={`placeholder-${i}`}
-                      onDrop={handleDrop}
+                      onDrop={(files) => handleDrop(files)}
                       accept={LOTTIE_ACCEPT}
                       multiple={resolvedMaxLength !== 1}
                       isLoading={isLoading}
                       isError={isError}
+                      errorId={errorId}
+                      fallbackLabel={placeholder ? undefined : 'Lottie 파일 추가'}
                       width={width}
                       height={height}
                     >
@@ -362,7 +350,7 @@ export const LottieInput = ({
         </SortableContext>
       </DndContext>
 
-      {isError && <Input.Error mt={8}>{errorMsg}</Input.Error>}
+      {message}
     </div>
   );
 };

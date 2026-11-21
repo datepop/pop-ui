@@ -1,7 +1,7 @@
 import { Stack, Text, Paper, Group, TextInput, Button, Box, Select } from '@mantine/core';
 import React, { useState } from 'react';
 
-import { iconMetadata, IconCategory } from './metadata';
+import { iconMetadata, IconCategory, lineWeightIconNames } from './metadata';
 import {
   ColorGray900,
   ColorWhite,
@@ -23,21 +23,6 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 type TIconStoryProps = IIconProps & {
   thick?: boolean;
 };
-
-const lineWeightIconNames = new Set([
-  'IconArrowDown',
-  'IconArrowLeft',
-  'IconArrowRight',
-  'IconArrowUp',
-  'IconCheck',
-  'IconChevronDown',
-  'IconChevronLeft',
-  'IconChevronRight',
-  'IconChevronUp',
-  'IconX',
-  'IconMinus',
-  'IconPlus',
-]);
 
 const iconModules = import.meta.glob<{ default: React.FC<TIconStoryProps> }>('./Icon*.tsx', {
   eager: true,
@@ -64,6 +49,7 @@ const iconList = Object.entries(iconModules)
     const meta = name in iconMetadata ? iconMetadata[name as keyof typeof iconMetadata] : null;
     return {
       name,
+      replacedBy: meta?.replacedBy,
       component: module.default,
       defaultSize: 24,
       categories: meta?.categories ?? [],
@@ -71,7 +57,7 @@ const iconList = Object.entries(iconModules)
       supportsLineWeight: lineWeightIconNames.has(name),
     };
   })
-  .filter((icon) => !icon.name.includes('.stories'))
+  .filter((icon) => !icon.name.includes('.stories') && !icon.replacedBy)
   .sort((a, b) => a.name.localeCompare(b.name));
 
 const categoryOptions: { value: string; label: string }[] = [

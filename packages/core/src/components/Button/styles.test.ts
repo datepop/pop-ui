@@ -28,8 +28,10 @@ const getDeclarations = (selector: string): Record<string, string> => {
 describe('Button styles', () => {
   it('keeps the warning focus-visible text colour consistent with the other warning states', () => {
     const base = getDeclarations('.Button--Warning');
-    const hover = getDeclarations('.Button--Warning:hover:not(:disabled)');
-    const focus = getDeclarations('.Button--Warning:focus-visible:not(:disabled)');
+    const hover = getDeclarations('.Button--Warning:hover:not(:disabled, [aria-busy=true])');
+    const focus = getDeclarations(
+      '.Button--Warning:focus-visible:not(:disabled, [aria-busy=true])',
+    );
 
     expect(focus.color).toBe(base.color);
     expect(focus.color).toBe(hover.color);

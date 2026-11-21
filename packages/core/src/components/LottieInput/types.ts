@@ -1,3 +1,4 @@
+import type { TMultiItemInputFeedback } from '../shared/field';
 import type { ReactNode } from 'react';
 
 interface ILottieInputItem {
@@ -19,7 +20,7 @@ interface ILottieInputChangeMeta {
   nextIndex?: number;
 }
 
-interface ILottieInputProps {
+interface ILottieInputProps extends TMultiItemInputFeedback {
   value: ILottieInputItem[];
   onChange?: (nextValue: ILottieInputItem[], meta: ILottieInputChangeMeta) => void;
   width?: number;
@@ -31,7 +32,6 @@ interface ILottieInputProps {
   length?: number;
   minLength?: number;
   maxLength?: number;
-  errorMsg?: ReactNode;
   isLoading?: boolean;
   readOnly?: boolean;
   gap?: number;

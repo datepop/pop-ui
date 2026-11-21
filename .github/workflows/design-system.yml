@@ -1,0 +1,33 @@
+name: POP-UI design system
+
+on: pull_request
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: corepack enable
+      - run: yarn install --immutable
+      - run: yarn check:penpot
+      - run: node --test scripts/check-penpot-components.test.mjs
+      # Vitest resolves @pop-ui/foundation from its build output. Type checks stay in the Jenkins PR stage.
+      - run: yarn workspace @pop-ui/foundation build
+      - run: yarn exec vitest run
+      - run: yarn build-storybook --disable-telemetry
+      - run: yarn exec playwright-core install --with-deps chromium
+      - run: yarn test:stories
+      - name: Review package changesets
+        if: ${{ !startsWith(github.head_ref, 'release/') }}
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: yarn changeset status --since="$BASE_SHA"
