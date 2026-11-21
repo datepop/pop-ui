@@ -10,6 +10,11 @@ export function controlBindings(component, master, layers) {
   const height = 'size.control.' + size;
   if (name === 'Button') {
     const bindings = [[master, 'height', height]];
+    if (size === 'md') {
+      const labels = layers.filter((layer) => layer.name === 'Label' && layer.type === 'text');
+      if (labels.length !== 1) throw new Error('Expected one medium Button label: ' + master.id);
+      bindings.push([labels[0], 'typography', 'typography.control.label.md']);
+    }
     if (props.variant === 'primary' && ['default', 'loading', 'loadingWithLabel'].includes(state))
       bindings.push([master, 'fill', 'color.action.primary.background']);
     return bindings;

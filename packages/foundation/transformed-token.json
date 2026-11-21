@@ -1,4 +1,28 @@
 {
+  "typography": {
+    "control": {
+      "label": {
+        "md": {
+          "fontFamily": {
+            "value": "Pretendard",
+            "type": "fontFamilies"
+          },
+          "fontWeight": {
+            "value": "SemiBold",
+            "type": "fontWeights"
+          },
+          "fontSize": {
+            "value": 16,
+            "type": "fontSizes"
+          },
+          "lineHeight": {
+            "value": "125%",
+            "type": "lineHeights"
+          }
+        }
+      }
+    }
+  },
   "size": {
     "control": {
       "sm": {
@@ -25,7 +49,7 @@
     "text": {
       "placeholder": {
         "type": "color",
-        "value": "#B0B0B0"
+        "value": "#666666"
       }
     },
     "action": {

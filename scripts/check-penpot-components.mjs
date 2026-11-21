@@ -3,6 +3,8 @@ import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript';
 
+import { isDeepStrictEqual } from 'node:util';
+import { convertToken } from './export-penpot-tokens.mjs';
 import { inspectControlTokens } from './penpot-control-tokens.mjs';
 
 // 라이브 조회 대상. 검증은 파일 ID 가 아니라 Components 페이지와 컴포넌트 계약으로 한다.
@@ -221,13 +223,19 @@ async function main(args) {
   const expected = [
     'color.border.default',
     'color.text.placeholder',
+    'typography.control.label.md',
     'color.action.primary.background',
     ...Object.keys(global.size.control).map((size) => 'size.control.' + size),
   ];
   for (const name of expected) {
     const source = name.split('.').reduce((entry, key) => entry?.[key], global);
     const actual = catalog.controlTokens?.[name];
-    if (!actual?.bindings || actual.type !== source?.type || actual.value !== source?.value)
+    if (
+      !actual?.bindings ||
+      !source ||
+      actual.type !== source.type ||
+      !isDeepStrictEqual(actual.value, convertToken(source, name).$value)
+    )
       findings.push('Missing or inconsistent control token: ' + name);
   }
   if ((fromFile >= 0 || args.includes('--live')) && !args.includes('--write')) {

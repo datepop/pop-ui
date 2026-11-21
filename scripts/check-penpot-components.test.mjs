@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { inspectControlTokens } from './penpot-control-tokens.mjs';
 import { compareCatalog, compareSnapshots, extractCatalog } from './check-penpot-components.mjs';
 
 const fileId = '746ae1de-283e-8110-8008-f91083966ac9';
@@ -85,7 +86,7 @@ test('rejects duplicated visible input error layers in a live Penpot main instan
 
 test('rejects replacing a semantic binding with its equal-valued palette color', () => {
   const tokens = {
-    size: { control: { md: { $type: 'sizing', $value: '40px' } } },
+    size: { control: { sm: { $type: 'sizing', $value: '30px' } } },
     color: { action: { primary: { background: { $type: 'color', $value: '{color.aqua.500}' } } } },
   };
   const master = {
@@ -93,7 +94,7 @@ test('rejects replacing a semantic binding with its equal-valued palette color',
     componentId: 'c',
     mainInstance: true,
     appliedTokens: {
-      height: 'size.control.md',
+      height: 'size.control.sm',
       fill: 'color.action.primary.background',
     },
   };
@@ -110,7 +111,7 @@ test('rejects replacing a semantic binding with its equal-valued palette color',
           mainInstanceId: 'button',
           variantProperties: Object.entries({
             state: 'default',
-            size: 'md',
+            size: 'sm',
             variant: 'primary',
           }).map(([name, value]) => ({ name, value })),
         },
@@ -120,4 +121,38 @@ test('rejects replacing a semantic binding with its equal-valued palette color',
   assert.equal(extractCatalog(file).controlTokens['color.action.primary.background'].bindings, 1);
   master.appliedTokens.fill = 'color.aqua.500';
   assert.throws(() => extractCatalog(file), /Expected color.action.primary.background/);
+});
+
+test('requires the shared typography token on every medium Button label', () => {
+  const label = {
+    type: 'text',
+    name: 'Label',
+    appliedTokens: { typography: 'typography.control.label.md' },
+  };
+  const page = {
+    id: 'p',
+    objects: {
+      b: { id: 'b', shapes: ['l'], appliedTokens: { height: 'size.control.md' } },
+      l: label,
+    },
+  };
+  const data = {
+    components: {
+      c: {
+        name: 'Button',
+        mainInstancePage: 'p',
+        mainInstanceId: 'b',
+        variantProperties: [{ name: 'size', value: 'md' }],
+      },
+    },
+    tokensLib: {
+      global: {
+        size: { control: { md: { $value: '40px' } } },
+        typography: { control: { label: { md: { $type: 'typography' } } } },
+      },
+    },
+  };
+  assert.equal(inspectControlTokens({ data }, page)['typography.control.label.md'].bindings, 1);
+  delete label.appliedTokens.typography;
+  assert.throws(() => inspectControlTokens({ data }, page), /Expected typography.control.label.md/);
 });

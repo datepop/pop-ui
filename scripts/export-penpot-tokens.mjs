@@ -1,8 +1,6 @@
 import { readFile, writeFile } from 'node:fs/promises';
-
-const source = JSON.parse(
-  await readFile(new URL('../packages/foundation/token.json', import.meta.url), 'utf8'),
-);
+import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const weights = {
   Thin: '100',
@@ -16,7 +14,7 @@ const weights = {
   Black: '900',
 };
 
-function convertToken({ type, value, description = '' }, path) {
+export function convertToken({ type, value, description = '' }, path) {
   let penpotType = type;
   let penpotValue = value;
   const alias = typeof value === 'string' && /^\{[^{}]+\}$/.test(value);
@@ -50,7 +48,10 @@ function convertToken({ type, value, description = '' }, path) {
           fontFamilies: [value.fontFamily],
           fontSizes: value.fontSize,
           fontWeights: value.fontWeight,
-          lineHeights: value.lineHeight,
+          lineHeights:
+            typeof value.lineHeight === 'string' && value.lineHeight.endsWith('%')
+              ? String(parseFloat(value.lineHeight) / 100)
+              : value.lineHeight,
           letterSpacing: value.letterSpacing ?? '0',
           textCase: value.textCase ?? 'none',
           textDecoration: value.textDecoration ?? 'none',
@@ -89,18 +90,24 @@ function convertGroup(group, path) {
   );
 }
 
-const sets = Object.entries(source).filter(
-  ([name, group]) => !name.startsWith('$') && Object.keys(group).length,
-);
-const output = Object.fromEntries(sets.map(([name, group]) => [name, convertGroup(group, name)]));
-output.$themes = source.$themes ?? [];
-output.$metadata = {
-  ...source.$metadata,
-  tokenSetOrder: (source.$metadata?.tokenSetOrder ?? Object.keys(output)).filter(
-    (name) => Object.hasOwn(output, name) && !name.startsWith('$'),
-  ),
-};
+if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  const source = JSON.parse(
+    await readFile(new URL('../packages/foundation/token.json', import.meta.url), 'utf8'),
+  );
 
-const json = JSON.stringify(output, null, 2) + '\n';
-if (process.argv[2]) await writeFile(process.argv[2], json);
-else process.stdout.write(json);
+  const sets = Object.entries(source).filter(
+    ([name, group]) => !name.startsWith('$') && Object.keys(group).length,
+  );
+  const output = Object.fromEntries(sets.map(([name, group]) => [name, convertGroup(group, name)]));
+  output.$themes = source.$themes ?? [];
+  output.$metadata = {
+    ...source.$metadata,
+    tokenSetOrder: (source.$metadata?.tokenSetOrder ?? Object.keys(output)).filter(
+      (name) => Object.hasOwn(output, name) && !name.startsWith('$'),
+    ),
+  };
+
+  const json = JSON.stringify(output, null, 2) + '\n';
+  if (process.argv[2]) await writeFile(process.argv[2], json);
+  else process.stdout.write(json);
+}

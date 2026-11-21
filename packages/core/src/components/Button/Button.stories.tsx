@@ -1,4 +1,12 @@
-import { IconBookmark } from '@pop-ui/foundation';
+import {
+  ColorActionPrimaryBackground,
+  ColorAqua600,
+  ColorAqua700,
+  ColorAqua800,
+  ColorBlack,
+  ColorWhite,
+  IconBookmark,
+} from '@pop-ui/foundation';
 import { useEffect, useRef, useState } from 'react';
 import { expect, waitFor } from 'storybook/test';
 
@@ -284,5 +292,87 @@ export const States: StoryObj<IButtonProps> = {
     size: { table: { disable: true } },
     disabled: { table: { disable: true } },
     isLoading: { table: { disable: true } },
+  },
+};
+
+export const PrimaryLabelContrast: StoryObj<IButtonProps> = {
+  name: 'Primary 글자색 비교',
+  tags: ['pop-ui-contract'],
+  parameters: { layout: 'padded' },
+  render: () => {
+    const states = [
+      ['기본', ColorActionPrimaryBackground],
+      ['호버', ColorAqua600],
+      ['누름', ColorAqua700],
+      ['키보드 포커스', ColorAqua700],
+    ] as const;
+    return (
+      <table style={{ borderSpacing: '8px 16px', textAlign: 'left' }}>
+        <caption style={{ textAlign: 'left', fontWeight: 600 }}>Primary 버튼 · 중간 크기</caption>
+        <thead>
+          <tr>
+            <th>상태</th>
+            <th>흰색 · 현재</th>
+            <th>검정 · 비교</th>
+          </tr>
+        </thead>
+        <tbody>
+          {states.map(([state, backgroundColor]) => (
+            <tr key={state}>
+              <th scope="row">{state}</th>
+              {[ColorWhite, ColorBlack].map((color) => (
+                <td key={color}>
+                  <div style={rowStyle}>
+                    {['저장하기', 'Save'].map((label) => (
+                      <Button
+                        key={label}
+                        size="md"
+                        variant="primary"
+                        leftSection={<IconBookmark size={24} color="currentColor" />}
+                        style={{
+                          color,
+                          backgroundColor,
+                          outline:
+                            state === '키보드 포커스' ? `2px solid ${ColorAqua800}` : undefined,
+                          outlineOffset: 2,
+                        }}
+                      >
+                        {label}
+                      </Button>
+                    ))}
+                  </div>
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
+  },
+  play: async ({ canvasElement }) => {
+    const rows = canvasElement.querySelectorAll('tbody tr');
+    await expect(rows).toHaveLength(4);
+    for (const row of rows) {
+      const buttons = Array.from(row.querySelectorAll('button'));
+      await expect(buttons.map((button) => button.textContent)).toEqual([
+        '저장하기',
+        'Save',
+        '저장하기',
+        'Save',
+      ]);
+      for (const [index, button] of buttons.entries()) {
+        const color = index < 2 ? 'rgb(255, 255, 255)' : 'rgb(0, 0, 0)';
+        await expect(button).toHaveStyle({
+          color,
+          fontSize: '16px',
+          fontWeight: '600',
+          lineHeight: '20px',
+        });
+        await expect(getComputedStyle(button.querySelector('svg path')!).stroke).toBe(color);
+        await expect(getComputedStyle(button).backgroundColor).toBe(
+          getComputedStyle(buttons[0]).backgroundColor,
+        );
+      }
+    }
   },
 };
