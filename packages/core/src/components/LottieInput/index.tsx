@@ -223,7 +223,7 @@ export const LottieInput = ({
       itemId: next[value.length].id,
       index: position ?? value.length,
     });
-  }, uploadScope ?? onChange);
+  }, uploadScope);
 
   const handleDrop = async (files: File[], position?: number) => {
     if (!canAddFiles(position)) return;

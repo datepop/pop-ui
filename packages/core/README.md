@@ -111,4 +111,4 @@ This phase stabilizes the following surfaces:
 
 `ImageInput`과 `LottieInput`에서 `isLoading`은 전체의 추가·삭제·순서 변경·이미지 편집을 잠급니다. `value` 안의 `item.isLoading`은 해당 파일만 잠그며, 다른 파일은 계속 추가·삭제·재정렬할 수 있습니다. 순서를 변경할 때 처리 중인 파일은 제자리에 남습니다. Lottie 미리보기를 읽는 동안에는 해당 파일도 삭제하거나 이동할 수 있습니다. `error`에 표시할 문구를 전달하면 키보드로 파일 추가 영역에 접근할 때도 같은 설명을 읽을 수 있습니다.
 
-같은 `LottieInput`에서 편집 대상을 바꾸는 화면은 `uploadScope={record.id}`를 지정하면 이전 대상에서 읽기 시작한 파일을 폐기합니다. 같은 대상은 콜백이 바뀌어도 읽기를 마칩니다. 키를 생략하면 `onChange` 콜백의 변경을 대상 전환으로 취급합니다.
+같은 `LottieInput`에서 편집 대상을 바꾸는 화면은 `uploadScope={record.id}`를 지정하면 이전 대상에서 읽기 시작한 파일을 폐기합니다. 레코드마다 `key={record.id}`로 컴포넌트를 다시 마운트해도 같은 효과가 있습니다. 같은 편집 대상에서 콜백만 바뀌면 읽기를 마칩니다.

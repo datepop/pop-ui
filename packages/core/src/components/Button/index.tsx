@@ -95,7 +95,10 @@ export function Button({
         onBlur?.(event);
       }}
       onKeyDown={(event) => {
-        if (isButtonLoading && (event.key === ' ' || event.key === 'Enter')) event.preventDefault();
+        if (isButtonLoading && (event.key === ' ' || event.key === 'Enter')) {
+          event.preventDefault();
+          return;
+        }
         onKeyDown?.(event);
       }}
       onClickCapture={(event) => {

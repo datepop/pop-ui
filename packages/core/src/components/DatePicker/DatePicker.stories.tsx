@@ -423,6 +423,9 @@ export const FieldFeedback: StoryObj<typeof DatePicker> = {
       if (form.closest('[data-field-state="default"]')) {
         await expect(form.reportValidity()).toBe(false);
         await expect(button).toHaveFocus();
+        const message = await within(form).findByRole('alert');
+        await expect(message).toHaveTextContent('날짜를 선택해주세요.');
+        await expect(button.getAttribute('aria-describedby')?.split(/\s+/)).toContain(message.id);
       } else if (form.closest('[data-field-state="filled"]')) {
         await expect(form.checkValidity()).toBe(true);
         await expect(button).toHaveAccessibleName(/예약 정보.*2026/);

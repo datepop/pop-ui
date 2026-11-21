@@ -170,6 +170,9 @@ export function compareCatalog(contract, catalog) {
       }
     }
     if (name === 'TextField' || name === 'Dropdown') {
+      if (name === 'TextField' && !axes.includes('type')) {
+        findings.push('Missing field axis: TextField type');
+      }
       const states =
         name === 'Dropdown'
           ? ['default', 'hover', 'focus', 'keyboardFocus']
@@ -178,10 +181,19 @@ export function compareCatalog(contract, catalog) {
         for (const labelPosition of expected.axes.labelPosition) {
           for (const type of name === 'TextField' ? ['input', 'textarea'] : [undefined]) {
             for (const state of states) {
-              const props = { size, labelPosition, type, state };
-              const row = axes.map((axis) => props[axis]);
-              if (!keys.has(JSON.stringify(row)))
-                findings.push('Missing field interaction: ' + name + ' ' + row.join(', '));
+              const props = type
+                ? { size, state, labelPosition, type }
+                : { size, state, labelPosition };
+              const required = Object.entries(props);
+              if (
+                !variants.some((row) =>
+                  required.every(([axis, value]) => row[axes.indexOf(axis)] === value),
+                )
+              ) {
+                findings.push(
+                  'Missing field interaction: ' + name + ' ' + Object.values(props).join(', '),
+                );
+              }
             }
           }
         }

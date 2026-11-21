@@ -112,6 +112,7 @@ export const DatePicker = ({
   const generatedId = useId();
   const fieldId = id ?? generatedId;
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const [attemptedValidation, setAttemptedValidation] = useState(false);
   const [opened, setOpened] = useState(false);
   const [internalValue, setInternalValue] = useState<TInternalDateValue>(
     () =>
@@ -219,6 +220,9 @@ export const DatePicker = ({
   const hasCompleteDate = Array.isArray(resolvedValue)
     ? resolvedValue.length > 0 && resolvedValue.every(Boolean)
     : Boolean(resolvedValue);
+  const missingRequiredDate = attemptedValidation && required && !disabled && !hasCompleteDate;
+  const fieldError =
+    missingRequiredDate && (!error || typeof error === 'boolean') ? '날짜를 선택해주세요.' : error;
   const displayText = formatDateDisplay(
     resolvedValue as TInternalDateValue,
     type,
@@ -257,10 +261,13 @@ export const DatePicker = ({
       labelProps={{ id: fieldId + '-label' }}
       required={required}
       description={description}
-      error={error}
+      error={fieldError}
       inputWrapperOrder={fieldContentOrder}
       descriptionProps={{ className: styles.DatePicker__Description }}
-      errorProps={{ className: styles.DatePicker__Error }}
+      errorProps={{
+        className: styles.DatePicker__Error,
+        role: missingRequiredDate ? 'alert' : undefined,
+      }}
       className={joinClassNames(styles.DatePickerBase, styles.DatePickerRoot, sizeStyle, className)}
     >
       {required && (
@@ -274,6 +281,7 @@ export const DatePicker = ({
           onChange={() => {}}
           onInvalid={(event) => {
             event.preventDefault();
+            setAttemptedValidation(true);
             triggerRef.current?.focus();
           }}
         />
@@ -296,7 +304,7 @@ export const DatePicker = ({
             data-disabled={disabled ? true : undefined}
           >
             <Input
-              error={Boolean(error)}
+              error={Boolean(fieldError)}
               aria-required={required}
               id={fieldId}
               component="button"

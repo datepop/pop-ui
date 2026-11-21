@@ -253,3 +253,25 @@ test('checks every supported button size and variant pair', () => {
     'Missing Button size=sm variant=ghost',
   ]);
 });
+
+test('checks TextField type even when removed and permits additional axes', () => {
+  const contract = new Map([
+    ['TextField', { axes: { size: ['md'], labelPosition: ['top'] }, states: [] }],
+  ]);
+  const family = {
+    name: 'TextField',
+    path: 'Core / Inputs',
+    axes: ['size', 'labelPosition', 'state', 'type', 'icon'],
+    variants: ['input', 'textarea'].flatMap((type) =>
+      ['default', 'hover', 'focus'].map((state) => ['md', 'top', state, type, 'none']),
+    ),
+  };
+  assert.deepEqual(compareCatalog(contract, catalog([family])), []);
+  family.axes.splice(3, 1);
+  family.variants = family.variants
+    .filter((row) => row[3] === 'input')
+    .map(([size, label, state, , icon]) => [size, label, state, icon]);
+  assert.ok(
+    compareCatalog(contract, catalog([family])).includes('Missing field axis: TextField type'),
+  );
+});

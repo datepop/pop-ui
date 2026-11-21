@@ -265,7 +265,9 @@ describe('LottieInput', () => {
           completeRead();
           await drop;
           expect(onChange).not.toHaveBeenCalled();
-          expect(nextChange).toHaveBeenCalledTimes(change === 'same scope' ? 1 : 0);
+          expect(nextChange).toHaveBeenCalledTimes(
+            change === 'same scope' || change === 'new callback' ? 1 : 0,
+          );
         } finally {
           cleanupRenderedApp(view);
         }

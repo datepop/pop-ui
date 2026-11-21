@@ -88,6 +88,32 @@ describe('Button', () => {
     cleanupRenderedApp(view);
   });
 
+  it('blocks loading activation keys before the caller handler and passes through Tab', () => {
+    const onKeyDown = vi.fn();
+    const view = renderApp(<Button onKeyDown={onKeyDown}>저장</Button>);
+    try {
+      const button = view.container.querySelector('button')!;
+      act(() => button.focus());
+      act(() =>
+        view.root.render(
+          <Button onKeyDown={onKeyDown} isLoading>
+            저장
+          </Button>,
+        ),
+      );
+      for (const key of ['Enter', ' ']) {
+        const event = new KeyboardEvent('keydown', { key, bubbles: true, cancelable: true });
+        button.dispatchEvent(event);
+        expect(event.defaultPrevented).toBe(true);
+      }
+      expect(onKeyDown).not.toHaveBeenCalled();
+      button.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
+      expect(onKeyDown).toHaveBeenCalledTimes(1);
+    } finally {
+      cleanupRenderedApp(view);
+    }
+  });
+
   it.each(BUTTON_VARIANTS)('maps %s to the SCSS class-based styling contract', (variant) => {
     const view = renderApp(<Button variant={variant}>{variant}</Button>);
 

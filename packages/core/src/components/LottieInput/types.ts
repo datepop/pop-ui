@@ -23,7 +23,7 @@ interface ILottieInputChangeMeta {
 interface ILottieInputProps extends TMultiItemInputFeedback {
   value: ILottieInputItem[];
   onChange?: (nextValue: ILottieInputItem[], meta: ILottieInputChangeMeta) => void;
-  /** 편집 대상의 고유 키. 생략하면 onChange가 바뀔 때 진행 중인 파일 읽기를 폐기합니다. */
+  /** 편집 대상의 고유 키. 키가 바뀌면 이전 대상에서 진행 중인 파일 읽기를 폐기합니다. */
   uploadScope?: string | number;
   width?: number;
   height?: number;
