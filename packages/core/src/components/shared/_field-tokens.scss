@@ -1,0 +1,11 @@
+@use "variables" as *;
+
+@mixin colors {
+  :where([data-mantine-color-scheme="light"]) &[data-variant="default"]:not([data-error], [data-disabled]) {
+    --input-placeholder-color: #{$color-text-placeholder};
+
+    &:not(:focus) {
+      --input-bd: #{$color-border-default};
+    }
+  }
+}

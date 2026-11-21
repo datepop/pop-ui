@@ -253,6 +253,12 @@ yarn build
 `yarn token:penpot /tmp/pop-ui.tokens.json`을 실행하면 Penpot의 단일 파일 가져오기 형식으로 변환합니다.
 토큰 이름과 참조를 유지해야 기존 레이어의 연결도 유지됩니다.
 
+TextField와 Dropdown의 기본 테두리는 `color.border.default`, 플레이스홀더는
+`color.text.placeholder`를 사용합니다. Primary Button의 기본·로딩 배경은
+`color.action.primary.background`를 사용합니다. 한 줄 입력 영역과 버튼 본체의 높이는
+`size.control.sm/md/lg`에 연결합니다. 여러 줄 입력은 콘텐츠에 맞춰 높이를 유지합니다.
+`yarn check:penpot --live`는 원본 컴포넌트가 이 역할 토큰을 직접 참조하는지 검사합니다.
+
 토큰을 갱신할 때는 [POP-UI 라이브러리](https://design.datepop.co.kr/?screen=workspace&file-id=746ae1de-283e-8110-8008-f91083966ac9)의 Tokens 탭에서 JSON을 가져오고 `global` 세트가 활성화되어 있는지 확인합니다.
 이어서 같은 파일의 Penpot MCP `execute_code`에서 [스타일 동기화 스크립트](scripts/sync-penpot-styles.js) 내용을 실행합니다.
 그러면 에셋 탭의 색상과 타이포그래피가 `global` 토큰 값으로 갱신됩니다. 같은 이름의 기존 에셋은 ID를 유지하므로 제품 파일에서 적용한 스타일 연결도 유지됩니다.

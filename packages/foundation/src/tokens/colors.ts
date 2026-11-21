@@ -2,6 +2,9 @@
  * Do not edit directly, this file was auto-generated.
  */
 
+export const ColorBorderDefault = "#cdcdcd";
+export const ColorTextPlaceholder = "#b0b0b0";
+export const ColorActionPrimaryBackground = "#0fd3d8";
 export const ColorWhite = "#ffffff";
 export const ColorBlack = "#000000";
 export const ColorGray25 = "#fbfbfb";

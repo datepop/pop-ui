@@ -48,7 +48,7 @@
 
 $button-size-layout-map: (
   sm: (
-    height: 30px,
+    height: $size-control-sm,
     padding-x: $spacing-300,
     font-family: fn.$font-family,
     font-size: $font-size-450,
@@ -58,7 +58,7 @@ $button-size-layout-map: (
     section-gap: $spacing-100,
   ),
   md: (
-    height: 40px,
+    height: $size-control-md,
     padding-x: $spacing-400,
     font-family: fn.$font-family,
     font-size: $font-size-500,
@@ -68,7 +68,7 @@ $button-size-layout-map: (
     section-gap: $spacing-150,
   ),
   lg: (
-    height: 50px,
+    height: $size-control-lg,
     padding-x: $spacing-500,
     font-family: fn.$font-family,
     font-size: $font-size-550,
@@ -113,7 +113,7 @@ $button-size-class-map: (
 $button-variant-color-map: (
   primary: (
     default: (
-      bg: $color-aqua-500,
+      bg: $color-action-primary-background,
       text: $color-white,
       border: transparent,
     ),

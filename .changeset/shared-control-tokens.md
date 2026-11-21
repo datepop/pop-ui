@@ -1,0 +1,6 @@
+---
+'@pop-ui/core': patch
+'@pop-ui/foundation': minor
+---
+
+Expose shared action background, field border and placeholder color tokens. Use the same control heights for Button, TextField and Dropdown in the web components and Penpot library.

@@ -1,5 +1,41 @@
 {
+  "size": {
+    "control": {
+      "sm": {
+        "type": "sizing",
+        "value": "30px"
+      },
+      "md": {
+        "type": "sizing",
+        "value": "40px"
+      },
+      "lg": {
+        "type": "sizing",
+        "value": "50px"
+      }
+    }
+  },
   "color": {
+    "border": {
+      "default": {
+        "type": "color",
+        "value": "#CDCDCD"
+      }
+    },
+    "text": {
+      "placeholder": {
+        "type": "color",
+        "value": "#B0B0B0"
+      }
+    },
+    "action": {
+      "primary": {
+        "background": {
+          "type": "color",
+          "value": "#0fd3d8"
+        }
+      }
+    },
     "white": {
       "value": "#ffffff",
       "type": "color"

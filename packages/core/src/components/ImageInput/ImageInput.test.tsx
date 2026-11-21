@@ -662,8 +662,8 @@ describe('ImageInput', () => {
     });
 
     it.each([
-      ['ImageInput loading', { isLoading: true }],
-      ['item loading', { itemIsLoading: true }],
+      ['ImageInput loading', { isLoading: true, itemIsLoading: false }],
+      ['item loading', { isLoading: false, itemIsLoading: true }],
     ])('delete while %s → no onChange', (_label, { isLoading, itemIsLoading }) => {
       const onChange = vi.fn();
       const item = { ...makeItem('a'), canDelete: true, isLoading: itemIsLoading };

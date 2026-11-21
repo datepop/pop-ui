@@ -82,3 +82,42 @@ test('rejects duplicated visible input error layers in a live Penpot main instan
   assert.equal(copy.fileId, 'copy');
   assert.deepEqual(compareCatalog(new Map(), copy), compareCatalog(new Map(), { ...copy, fileId }));
 });
+
+test('rejects replacing a semantic binding with its equal-valued palette color', () => {
+  const tokens = {
+    size: { control: { md: { $type: 'sizing', $value: '40px' } } },
+    color: { action: { primary: { background: { $type: 'color', $value: '{color.aqua.500}' } } } },
+  };
+  const master = {
+    id: 'button',
+    componentId: 'c',
+    mainInstance: true,
+    appliedTokens: {
+      height: 'size.control.md',
+      fill: 'color.action.primary.background',
+    },
+  };
+  const page = { id: 'p', name: 'Components', objects: { button: master } };
+  const file = {
+    data: {
+      tokensLib: { global: tokens },
+      pagesIndex: { p: page },
+      components: {
+        c: {
+          id: 'c',
+          name: 'Button',
+          mainInstancePage: 'p',
+          mainInstanceId: 'button',
+          variantProperties: Object.entries({
+            state: 'default',
+            size: 'md',
+            variant: 'primary',
+          }).map(([name, value]) => ({ name, value })),
+        },
+      },
+    },
+  };
+  assert.equal(extractCatalog(file).controlTokens['color.action.primary.background'].bindings, 1);
+  master.appliedTokens.fill = 'color.aqua.500';
+  assert.throws(() => extractCatalog(file), /Expected color.action.primary.background/);
+});

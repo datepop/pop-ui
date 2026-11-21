@@ -29,6 +29,7 @@ function convertToken({ type, value, description = '' }, path) {
     case 'borderWidth':
     case 'fontSizes':
     case 'spacing':
+    case 'sizing':
       if (/^-?\d+(?:\.\d+)?$/.test(value)) penpotValue = `${value}px`;
       break;
     case 'fontFamilies':

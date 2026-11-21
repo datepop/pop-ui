@@ -3,6 +3,8 @@ import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import ts from 'typescript';
 
+import { inspectControlTokens } from './penpot-control-tokens.mjs';
+
 // 라이브 조회 대상. 검증은 파일 ID 가 아니라 Components 페이지와 컴포넌트 계약으로 한다.
 const liveFileId = '746ae1de-283e-8110-8008-f91083966ac9';
 const snapshot = new URL('../docs/penpot-components.json', import.meta.url);
@@ -55,7 +57,12 @@ export function extractCatalog(file) {
   const components = [...groups.values()].sort((a, b) => a.name.localeCompare(b.name, 'en'));
   for (const group of components)
     group.variants.sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b), 'en'));
-  return { fileId: file.id, revision: file.revn, components };
+  return {
+    fileId: file.id,
+    revision: file.revn,
+    components,
+    controlTokens: inspectControlTokens(file, page),
+  };
 }
 
 export function readCodeContract() {
@@ -208,6 +215,21 @@ async function main(args) {
     catalog = extractCatalog(JSON.parse(readFileSync(args[fromFile + 1], 'utf8')));
   else catalog = JSON.parse(readFileSync(snapshot, 'utf8'));
   const findings = compareCatalog(readCodeContract(), catalog);
+  const { global } = JSON.parse(
+    readFileSync(resolve(root, 'packages/foundation/token.json'), 'utf8'),
+  );
+  const expected = [
+    'color.border.default',
+    'color.text.placeholder',
+    'color.action.primary.background',
+    ...Object.keys(global.size.control).map((size) => 'size.control.' + size),
+  ];
+  for (const name of expected) {
+    const source = name.split('.').reduce((entry, key) => entry?.[key], global);
+    const actual = catalog.controlTokens?.[name];
+    if (!actual?.bindings || actual.type !== source?.type || actual.value !== source?.value)
+      findings.push('Missing or inconsistent control token: ' + name);
+  }
   if ((fromFile >= 0 || args.includes('--live')) && !args.includes('--write')) {
     findings.push(...compareSnapshots(JSON.parse(readFileSync(snapshot, 'utf8')), catalog));
   }
@@ -218,7 +240,7 @@ async function main(args) {
     // One line per family keeps generated variant changes reviewable.
     writeFileSync(
       snapshot,
-      `{\n  "fileId": "${catalog.fileId}",\n  "revision": ${catalog.revision},\n  "components": [\n    ${catalog.components.map((c) => JSON.stringify(c)).join(',\n    ')}\n  ]\n}\n`,
+      `{\n  "fileId": "${catalog.fileId}",\n  "revision": ${catalog.revision},\n  "controlTokens": ${JSON.stringify(catalog.controlTokens)},\n  "components": [\n    ${catalog.components.map((c) => JSON.stringify(c)).join(',\n    ')}\n  ]\n}\n`,
     );
   }
   console.log(
