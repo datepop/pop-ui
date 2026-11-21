@@ -173,3 +173,37 @@ test('requires field interaction variants for each default size and label placem
     'Missing field interaction: Dropdown md, keyboardFocus, left',
   ]);
 });
+
+test('rejects swapping equal-valued error message and border tokens', () => {
+  const page = {
+    id: 'p',
+    objects: {
+      master: { shapes: ['field', 'message'] },
+      field: {
+        type: 'rect',
+        name: 'Input-input',
+        appliedTokens: { strokeColor: 'color.border.error' },
+      },
+      message: {
+        type: 'text',
+        name: 'InputWrapper-error',
+        appliedTokens: { fill: 'color.text.error' },
+      },
+    },
+  };
+  const error = { $type: 'color', $value: '{color.red.600}' };
+  const data = {
+    components: {
+      search: {
+        name: 'SearchBar',
+        mainInstancePage: 'p',
+        mainInstanceId: 'master',
+        variantProperties: [{ name: 'state', value: 'error' }],
+      },
+    },
+    tokensLib: { global: { color: { border: { error }, text: { error } } } },
+  };
+  assert.equal(inspectControlTokens({ data }, page)['color.text.error'].bindings, 1);
+  page.objects.message.appliedTokens.fill = 'color.border.error';
+  assert.throws(() => inspectControlTokens({ data }, page), /Expected color.text.error/);
+});

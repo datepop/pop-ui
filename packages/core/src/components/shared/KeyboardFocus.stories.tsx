@@ -1,11 +1,18 @@
-import { ColorAqua800, ColorBorderFocus, ColorRed600 } from '@pop-ui/foundation';
+import {
+  ColorAqua800,
+  ColorBorderError,
+  ColorBorderFocus,
+  ColorTextError,
+} from '@pop-ui/foundation';
 import { useId, useState } from 'react';
 import { expect, fn, waitFor, within } from 'storybook/test';
 
 import { CONTROL_SIZES } from './controlSize';
+import { Button } from '../Button';
 import { Checkbox } from '../Checkbox';
 import { Dropdown } from '../Dropdown';
 import { Radio } from '../Radio';
+import { SearchBar } from '../SearchBar';
 import { TextField } from '../TextField';
 import { Toggle } from '../Toggle';
 
@@ -177,14 +184,63 @@ export const CheckboxAndToggle: StoryObj<typeof Checkbox> = {
   },
 };
 
+function ReservationFields({ validate }: { validate: boolean }) {
+  const [name, setName] = useState('');
+  const [status, setStatus] = useState<string | null>(null);
+  const [query, setQuery] = useState('');
+  return (
+    <fieldset style={{ display: 'grid', gap: 18, minWidth: 0, margin: 0, padding: 0, border: 0 }}>
+      <legend>{validate ? '오류 복구' : '기본'}</legend>
+      <TextField
+        label="예약자 이름"
+        placeholder="이름 입력"
+        value={name}
+        onChange={(event) => setName(event.currentTarget.value)}
+        error={validate && !name.trim() && '예약자 이름을 입력해 주세요.'}
+      />
+      <Dropdown
+        label="예약 상태"
+        placeholder="상태 선택"
+        data={['예약', '완료']}
+        value={status}
+        onChange={setStatus}
+        error={validate && !status && '예약 상태를 선택해 주세요.'}
+      />
+      <SearchBar
+        label="장소 검색"
+        placeholder="장소 입력"
+        data={['서울시청', '홍대입구']}
+        value={query}
+        onChange={setQuery}
+        error={validate && !query.trim() && '장소를 입력해 주세요.'}
+      />
+      {validate && (
+        <div>
+          <Button
+            size="sm"
+            variant="basic"
+            onClick={() => {
+              setName('');
+              setStatus(null);
+              setQuery('');
+            }}
+          >
+            입력 초기화
+          </Button>
+        </div>
+      )}
+    </fieldset>
+  );
+}
+
 export const FieldBorders: StoryObj = {
-  name: '입력 필드 테두리',
+  name: '입력 필드 상태와 오류 복구',
   tags: ['pop-ui-contract'],
   parameters: { layout: 'padded' },
   render: () => (
     <section>
-      <h2>입력 필드 테두리</h2>
-      <p>필드에 마우스를 올리거나 클릭하고, Tab 키로 다음 필드에 이동해 보세요.</p>
+      <h2>입력 필드 상태와 오류 복구</h2>
+      <p>Tab으로 이동하며 이름과 장소를 입력하고 예약 상태를 선택해 보세요.</p>
       <div
         style={{
           display: 'grid',
@@ -193,52 +249,57 @@ export const FieldBorders: StoryObj = {
           gap: 32,
         }}
       >
-        {['기본', '오류'].map((state) => (
-          <fieldset
-            key={state}
-            style={{ display: 'grid', gap: 18, minWidth: 0, margin: 0, padding: 0, border: 0 }}
-          >
-            <legend>{state}</legend>
-            <TextField
-              label="예약자 이름"
-              placeholder="이름 입력"
-              error={state === '오류' && '예약자 이름을 입력해 주세요.'}
-            />
-            <Dropdown
-              label="예약 상태"
-              placeholder="상태 선택"
-              data={['예약', '완료']}
-              error={state === '오류' && '예약 상태를 선택해 주세요.'}
-            />
-          </fieldset>
-        ))}
+        <ReservationFields validate={false} />
+        <ReservationFields validate />
       </div>
     </section>
   ),
   play: async ({ canvas, userEvent }) => {
     const normal = within(canvas.getByRole('group', { name: '기본' }));
-    const invalid = within(canvas.getByRole('group', { name: '오류' }));
-    const text = invalid.getByRole('textbox', { name: '예약자 이름' });
-    const select = invalid.getByRole('textbox', { name: '예약 상태' });
+    const invalid = within(canvas.getByRole('group', { name: '오류 복구' }));
+    const name = invalid.getByRole('textbox', { name: '예약자 이름' });
+    const status = invalid.getByRole('textbox', { name: '예약 상태' });
+    const query = invalid.getByRole('textbox', { name: '장소 검색' });
 
-    normal.getByRole('textbox', { name: '예약 상태' }).focus();
+    async function checkError(input: HTMLElement, message: string, outline: string) {
+      await expect(input).toHaveFocus();
+      await expect(input).toHaveAttribute('aria-invalid', 'true');
+      await expect(input).toHaveAccessibleDescription(message);
+      await expect(invalid.getByText(message)).toHaveStyle({ color: ColorTextError });
+      await waitFor(() =>
+        expect(input).toHaveStyle({ outlineColor: outline, borderTopColor: ColorBorderError }),
+      );
+    }
+
+    async function checkRecovered(input: HTMLElement, message: string, outline: string) {
+      await expect(input).toHaveFocus();
+      await expect(input).toHaveAttribute('aria-invalid', 'false');
+      await expect(input).toHaveStyle({ outlineColor: outline, outlineStyle: 'solid' });
+      await expect(input).not.toHaveAccessibleDescription(message);
+      await expect(invalid.queryByText(message)).not.toBeInTheDocument();
+      await waitFor(() => expect(input).not.toHaveStyle({ borderTopColor: ColorBorderError }));
+    }
+
+    normal.getByRole('textbox', { name: '장소 검색' }).focus();
     await userEvent.tab();
-    await expect(text).toHaveFocus();
-    await expect(text).toHaveAccessibleDescription('예약자 이름을 입력해 주세요.');
-    await waitFor(() =>
-      expect(text).toHaveStyle({ outlineColor: ColorBorderFocus, borderTopColor: ColorRed600 }),
-    );
+    await checkError(name, '예약자 이름을 입력해 주세요.', ColorBorderFocus);
+    await userEvent.keyboard('민지');
+    await checkRecovered(name, '예약자 이름을 입력해 주세요.', ColorBorderFocus);
     await userEvent.tab();
-    await expect(select).toHaveFocus();
-    await expect(select).toHaveAccessibleDescription('예약 상태를 선택해 주세요.');
-    await waitFor(() =>
-      expect(select).toHaveStyle({
-        outlineColor: ColorAqua800,
-        outlineWidth: '2px',
-        outlineOffset: '2px',
-        borderTopColor: ColorRed600,
-      }),
-    );
-    select.blur();
+    await checkError(status, '예약 상태를 선택해 주세요.', ColorAqua800);
+    await expect(status).toHaveStyle({ outlineWidth: '2px', outlineOffset: '2px' });
+    await userEvent.keyboard('{ArrowDown}{Enter}');
+    await expect(status).toHaveValue('예약');
+    await checkRecovered(status, '예약 상태를 선택해 주세요.', ColorAqua800);
+    await userEvent.tab();
+    await checkError(query, '장소를 입력해 주세요.', ColorBorderFocus);
+    await userEvent.keyboard('서울');
+    await checkRecovered(query, '장소를 입력해 주세요.', ColorBorderFocus);
+    await userEvent.keyboard('{Escape}');
+    await userEvent.click(invalid.getByRole('button', { name: '입력 초기화' }));
+    for (const input of [name, status, query]) {
+      await expect(input).toHaveValue('');
+      await expect(input).toHaveAttribute('aria-invalid', 'true');
+    }
   },
 };

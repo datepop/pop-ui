@@ -80,7 +80,12 @@ export const SearchBar = ({
               className: styles.SearchBar__Description,
               ...props.descriptionProps,
             }}
-            errorProps={{ className: styles.SearchBar__ErrorMsg, ...props.errorProps }}
+            errorProps={{
+              ...props.errorProps,
+              className: [styles.SearchBar__ErrorMsg, props.errorProps?.className]
+                .filter(Boolean)
+                .join(' '),
+            }}
             error={error}
             className={searchBarStyle}
             id={inputId}

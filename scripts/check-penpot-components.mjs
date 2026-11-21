@@ -236,6 +236,8 @@ async function main(args) {
     'color.border.default',
     'color.border.hover',
     'color.border.focus',
+    'color.border.error',
+    'color.text.error',
     'color.text.placeholder',
     'typography.control.label.md',
     'color.action.primary.background',

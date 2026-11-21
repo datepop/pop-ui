@@ -102,6 +102,8 @@
 }
 
 .Dropdown__ErrorMsg {
+  @include field-tokens.error-message;
+
   margin-top: fn.spacing(100);
 }
 

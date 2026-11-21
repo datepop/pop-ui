@@ -77,7 +77,12 @@ export const Dropdown = ({
           inputWrapperOrder={fieldContentOrderWith(props.inputWrapperOrder, description, error)}
           description={description}
           descriptionProps={{ className: styles.Dropdown__Description, ...props.descriptionProps }}
-          errorProps={{ className: styles.Dropdown__ErrorMsg, ...props.errorProps }}
+          errorProps={{
+            ...props.errorProps,
+            className: [styles.Dropdown__ErrorMsg, props.errorProps?.className]
+              .filter(Boolean)
+              .join(' '),
+          }}
           comboboxProps={{
             // Keep options available for Mantine's keyboard index while the menu animates in.
             keepMounted: true,

@@ -52,12 +52,20 @@
       "focus": {
         "type": "color",
         "value": "#0fd3d8"
+      },
+      "error": {
+        "type": "color",
+        "value": "#F03E3E"
       }
     },
     "text": {
       "placeholder": {
         "type": "color",
         "value": "#666666"
+      },
+      "error": {
+        "type": "color",
+        "value": "#F03E3E"
       }
     },
     "action": {

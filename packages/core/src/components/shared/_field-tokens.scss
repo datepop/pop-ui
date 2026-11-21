@@ -10,6 +10,20 @@
     }
   }
 
+  @include interaction-states;
+}
+
+@mixin error-message {
+  :where([data-mantine-color-scheme="light"]) & {
+    color: $color-text-error;
+  }
+}
+
+@mixin interaction-states {
+  :where([data-mantine-color-scheme="light"]) &[data-error]:not([data-variant="unstyled"], :disabled, [data-disabled]) {
+    border-color: $color-border-error;
+  }
+
   &:not(:disabled, [data-disabled]) {
     &:hover {
       outline: fn.border-width(37) solid $color-border-hover;

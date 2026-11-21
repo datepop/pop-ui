@@ -2,9 +2,9 @@
 // A slot is selected by its role and state so equal-valued icons and backgrounds stay independent.
 export function controlBindings(component, master, layers) {
   const { name } = component;
-  if (!['Button', 'Dropdown', 'TextField'].includes(name)) return [];
+  if (!['Button', 'Dropdown', 'TextField', 'SearchBar'].includes(name)) return [];
   const props = Object.fromEntries(
-    component.variantProperties.map(({ name, value }) => [name, value]),
+    (component.variantProperties ?? []).map(({ name, value }) => [name, value]),
   );
   const { size, state } = props;
   const height = 'size.control.' + size;
@@ -20,6 +20,7 @@ export function controlBindings(component, master, layers) {
     return bindings;
   }
 
+  if (name === 'SearchBar' && state !== 'error') return [];
   const fieldLayer = name === 'Dropdown' ? 'Field' : 'Input-input';
   const findLayer = (type, layerName) => {
     const matches = layers.filter((s) => s.type === type && s.name === layerName);
@@ -29,7 +30,14 @@ export function controlBindings(component, master, layers) {
   };
   const field = findLayer('rect', fieldLayer);
   const bindings = [];
-  if (props.type !== 'textarea') bindings.push([field, 'height', height]);
+  if (state === 'error') {
+    const messages = layers.filter((s) => s.type === 'text' && s.name === 'InputWrapper-error');
+    if (messages.filter((s) => !s.hidden).length !== 1)
+      throw new Error('Expected one visible error message: ' + master.id);
+    bindings.push([field, 'strokeColor', 'color.border.error']);
+    for (const message of messages) bindings.push([message, 'fill', 'color.text.error']);
+  }
+  if (name !== 'SearchBar' && props.type !== 'textarea') bindings.push([field, 'height', height]);
   if (state !== 'disabled' && state !== 'error') {
     const borderState = state === 'hover' || state === 'focus' ? state : 'default';
     if (name === 'Dropdown' && state === 'keyboardFocus') {

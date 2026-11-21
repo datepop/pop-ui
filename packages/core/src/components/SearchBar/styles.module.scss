@@ -1,5 +1,6 @@
 @use "../shared/variables.scss" as *;
 @use "../shared/functions" as fn;
+@use "../shared/field-tokens";
 
 .SearchBar--LeftLabel {
   display: flex;
@@ -10,18 +11,6 @@
 .SearchBar--TopLabel {
   display: flex;
   flex-direction: column;
-}
-
-@mixin SearchBarBorderFocus {
-  &:hover {
-    outline: fn.border-width(37) solid $color-aqua-300;
-    border-color: transparent;
-  }
-
-  &:focus-within {
-    outline: fn.border-width(37) solid $color-aqua-500;
-    border-color: transparent;
-  }
 }
 
 .SearchBar__Wrapper {
@@ -42,7 +31,7 @@
 
 .SearchBar--Textarea {
   textarea {
-    @include SearchBarBorderFocus;
+    @include field-tokens.interaction-states;
   }
 }
 
@@ -52,7 +41,7 @@
     min-height: 30px;
     font-size: fn.font-size(450);
 
-    @include SearchBarBorderFocus;
+    @include field-tokens.interaction-states;
   }
 }
 
@@ -62,7 +51,7 @@
     min-height: fn.spacing(1000);
     font-size: fn.font-size(450);
 
-    @include SearchBarBorderFocus;
+    @include field-tokens.interaction-states;
   }
 }
 
@@ -72,7 +61,7 @@
     min-height: 50px;
     font-size: fn.font-size(500);
 
-    @include SearchBarBorderFocus;
+    @include field-tokens.interaction-states;
   }
 }
 
@@ -81,6 +70,8 @@
 }
 
 .SearchBar__ErrorMsg {
+  @include field-tokens.error-message;
+
   margin-top: fn.spacing(100);
 }
 
