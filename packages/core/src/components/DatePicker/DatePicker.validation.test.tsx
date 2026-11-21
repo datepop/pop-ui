@@ -25,6 +25,12 @@ it('clears a failed required check after a valid date, including a later control
       container.querySelector('input[required]')!.dispatchEvent(new Event('invalid'));
     });
     expect(container.querySelector('[role="alert"]')).toHaveTextContent('날짜를 선택해주세요.');
+    const form = container.querySelector('form')!;
+    await act(async () => {
+      form.reset();
+      expect(form.reportValidity()).toBe(false);
+    });
+    expect(container.querySelector('[role="alert"]')).toHaveTextContent('날짜를 선택해주세요.');
     await render('2026-11-22');
     expect(container.querySelector('[role="alert"]')).toBeNull();
     await render(null);

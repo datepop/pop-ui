@@ -236,6 +236,7 @@ describe('LottieInput', () => {
       'copied items',
       'replaced file',
       'replaced list',
+      'removed item',
       'new scope',
       'same scope',
     ] as const)('handles a pending file read on rerender (%s)', async (change) => {
@@ -251,7 +252,7 @@ describe('LottieInput', () => {
       const onChange = vi.fn();
       const nextChange = vi.fn();
       const scope = change.includes('scope') ? 'a' : undefined;
-      const items = ['copied items', 'replaced file'].includes(change)
+      const items = ['copied items', 'replaced file', 'removed item'].includes(change)
         ? [makeItem('a', { file: makeLottieFile() })]
         : [];
       const nextItems =
@@ -262,6 +263,7 @@ describe('LottieInput', () => {
               file: change === 'replaced file' ? makeLottieFile() : item.file,
               animationData: structuredClone(item.animationData),
             }));
+      if (change === 'removed item') delete nextItems[0];
       const view = await renderApp(
         <LottieInput value={items} onChange={onChange} uploadScope={scope} />,
       );

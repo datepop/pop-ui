@@ -214,10 +214,8 @@ export const LottieInput = ({
       const useOriginalHandler = uploadScope === undefined && origin.onChange !== onChange;
       if (
         useOriginalHandler &&
-        (origin.value.length !== value.length ||
-          origin.value.some(
-            (item, index) => item.file !== value[index].file || !dequal(item, value[index]),
-          ))
+        (!dequal(origin.value, value) ||
+          origin.value.some((item, index) => item.file !== value[index]?.file))
       )
         return;
       const notify = useOriginalHandler ? origin.onChange : onChange;

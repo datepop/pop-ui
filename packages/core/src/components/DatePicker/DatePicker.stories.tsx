@@ -427,12 +427,6 @@ export const FieldFeedback: StoryObj<typeof DatePicker> = {
         await expect(message).toHaveTextContent('날짜를 선택해주세요.');
         await expect(button.getAttribute('aria-describedby')?.split(/\s+/)).toContain(message.id);
         form.reset();
-        const validAfterReset = form.reportValidity();
-        await expect(validAfterReset).toBe(false);
-        await expect(await within(form).findByRole('alert')).toHaveTextContent(
-          '날짜를 선택해주세요.',
-        );
-        form.reset();
         await waitFor(() => expect(within(form).queryByRole('alert')).toBeNull());
       } else if (form.closest('[data-field-state="filled"]')) {
         await expect(form.checkValidity()).toBe(true);
