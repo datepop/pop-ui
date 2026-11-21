@@ -6,6 +6,7 @@ import { IconChevronUp, IconChevronDown } from '@pop-ui/foundation';
 import { useId, useState } from 'react';
 
 import styles from './styles.module.scss';
+import { mergeClassNamesWithDefault } from '../shared/classNames';
 import { fieldContentOrderWith } from '../shared/field';
 import { FieldLabel } from '../shared/FieldLabel';
 
@@ -123,15 +124,10 @@ export const Dropdown = ({
               closeDropdown();
             }
           }}
-          classNames={(theme, selectProps, ctx) => {
-            const slots =
-              typeof classNames === 'function' ? classNames(theme, selectProps, ctx) : classNames;
-            return {
-              ...slots,
-              dropdown: [styles.Dropdown__Menu, slots?.dropdown].filter(Boolean).join(' '),
-              option: [styles.Dropdown__Option, slots?.option].filter(Boolean).join(' '),
-            };
-          }}
+          classNames={mergeClassNamesWithDefault(
+            { dropdown: styles.Dropdown__Menu, option: styles.Dropdown__Option },
+            classNames,
+          )}
         />
       </div>
     </div>

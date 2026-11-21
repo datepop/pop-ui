@@ -1,4 +1,4 @@
-import './font.scss';
+import './fonts/families.scss';
 
 import type { Meta, StoryObj } from '@storybook/react-vite';
 

@@ -66,10 +66,12 @@ export const TextField = (allProps: TTextFieldProps) => {
   const textCount = getTextLength(currentValue);
   const showCounter = maxTextCount !== undefined && maxTextCount > 0;
   const showClear = Boolean(onClear && textCount && !restProps.disabled && !restProps.readOnly);
-  const descriptionId = description ? `${fieldId}-description` : undefined;
+  const { descriptionProps, errorProps } = allProps.textarea ? allProps : {};
+  const descriptionId = description
+    ? (descriptionProps?.id ?? `${fieldId}-description`)
+    : undefined;
   const hasErrorMessage = Boolean(error) && typeof error !== 'boolean';
-  const errorId = hasErrorMessage ? `${fieldId}-error` : undefined;
-  const describedBy = [descriptionId, errorId].filter(Boolean).join(' ') || undefined;
+  const errorId = hasErrorMessage ? (errorProps?.id ?? `${fieldId}-error`) : undefined;
 
   let textfieldStyle = styles['TextField--Medium'];
   if (size === 'sm') {
@@ -128,9 +130,7 @@ export const TextField = (allProps: TTextFieldProps) => {
         {textarea ? (
           <Textarea
             id={fieldId}
-            required={required}
             aria-required={required}
-            aria-describedby={describedBy}
             className={styles['TextField--Textarea']}
             size={size}
             minRows={minRows}
@@ -145,9 +145,7 @@ export const TextField = (allProps: TTextFieldProps) => {
           <Input
             id={fieldId}
             ref={inputRef}
-            required={required}
             aria-required={required}
-            aria-describedby={describedBy}
             rightSectionPointerEvents={showClear ? 'auto' : undefined}
             className={textfieldStyle}
             error={error}
@@ -171,12 +169,24 @@ export const TextField = (allProps: TTextFieldProps) => {
         {(description || hasErrorMessage || showCounter) && (
           <div className={showCounter ? styles.TextField__Footer : undefined}>
             {description && (
-              <Input.Description id={descriptionId} className={styles['TextField__Description']}>
+              <Input.Description
+                {...descriptionProps}
+                id={descriptionId}
+                className={[styles.TextField__Description, descriptionProps?.className]
+                  .filter(Boolean)
+                  .join(' ')}
+              >
                 {description}
               </Input.Description>
             )}
             {hasErrorMessage && (
-              <Input.Error id={errorId} className={styles['TextField__ErrorMsg']}>
+              <Input.Error
+                {...errorProps}
+                id={errorId}
+                className={[styles.TextField__ErrorMsg, errorProps?.className]
+                  .filter(Boolean)
+                  .join(' ')}
+              >
                 {error}
               </Input.Error>
             )}

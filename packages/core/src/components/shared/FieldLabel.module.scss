@@ -1,4 +1,4 @@
-@use "./variables" as *;
+@use "./focus";
 @use "./functions" as fn;
 
 .FieldLabel {
@@ -44,6 +44,6 @@
   cursor: pointer;
 
   &:focus-visible {
-    outline: 2px solid $color-aqua-500;
+    @include focus.ring;
   }
 }

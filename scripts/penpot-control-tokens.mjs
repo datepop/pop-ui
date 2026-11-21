@@ -31,9 +31,10 @@ export function controlBindings(component, master, layers) {
   const field = findLayer('rect', fieldLayer);
   const bindings = [];
   if (state === 'error') {
-    const messages = layers.filter((s) => s.type === 'text' && s.name === 'InputWrapper-error');
-    if (messages.filter((s) => !s.hidden).length !== 1)
-      throw new Error('Expected one visible error message: ' + master.id);
+    const messages = layers.filter(
+      (s) => !s.hidden && s.type === 'text' && s.name === 'InputWrapper-error',
+    );
+    if (messages.length !== 1) throw new Error('Expected one visible error message: ' + master.id);
     bindings.push([field, 'strokeColor', 'color.border.error']);
     for (const message of messages) bindings.push([message, 'fill', 'color.text.error']);
   }

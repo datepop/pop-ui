@@ -29,7 +29,7 @@ export interface IButtonProps
   extends Omit<MantineButtonProps, 'variant' | 'styles'>,
     Pick<
       ButtonHTMLAttributes<HTMLButtonElement>,
-      'onFocus' | 'onBlur' | 'onClickCapture' | 'aria-disabled'
+      'onFocus' | 'onBlur' | 'onClickCapture' | 'onKeyDown' | 'aria-disabled'
     > {
   type?: 'button' | 'submit' | 'reset';
   onClick?: MouseEventHandler<HTMLButtonElement>;

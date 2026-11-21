@@ -109,12 +109,13 @@ export function usePositionGrid<
 
   const canAddFiles = (position?: number) => {
     if (disabled || isPositionMode !== (position !== undefined)) return false;
-    if (resolvedMaxLength != null && value.length >= resolvedMaxLength) return false;
+    if (position === undefined)
+      return resolvedMaxLength == null || value.length < resolvedMaxLength;
     return (
-      position === undefined ||
-      (position >= 0 &&
-        position < slotIds.length &&
-        !value.some((item) => item.position === position))
+      Number.isInteger(position) &&
+      position >= 0 &&
+      position < slotIds.length &&
+      !value.some((item) => item.position === position)
     );
   };
 

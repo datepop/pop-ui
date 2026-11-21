@@ -380,7 +380,9 @@ $button-variant-class-map: (
   }
 
   &[data-loading-overlay] {
-    position: relative;
+    .Button__Inner {
+      position: relative;
+    }
 
     .Button__Content,
     .Button__Section {

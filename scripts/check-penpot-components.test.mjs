@@ -1,7 +1,12 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { inspectControlTokens } from './penpot-control-tokens.mjs';
-import { compareCatalog, compareSnapshots, extractCatalog } from './check-penpot-components.mjs';
+import {
+  compareCatalog,
+  comparePaletteSources,
+  compareSnapshots,
+  extractCatalog,
+} from './check-penpot-components.mjs';
 
 const fileId = '746ae1de-283e-8110-8008-f91083966ac9';
 const group = {
@@ -166,10 +171,15 @@ test('requires field interaction variants for each default size and label placem
       ['default', 'hover', 'focus', 'keyboardFocus'].map((state) => ['md', state, position]),
     ),
   };
-  const contract = new Map([['Dropdown', { axes: { size: ['md'] }, states: ['default'] }]]);
+  const contract = new Map([
+    ['Dropdown', { axes: { size: ['md'], labelPosition: ['top', 'left'] }, states: ['default'] }],
+  ]);
   assert.deepEqual(compareCatalog(contract, catalog([family])), []);
-  family.variants.pop();
+  family.variants = family.variants.filter(
+    ([, state, position]) => !(position === 'left' && ['default', 'keyboardFocus'].includes(state)),
+  );
   assert.deepEqual(compareCatalog(contract, catalog([family])), [
+    'Missing field interaction: Dropdown md, default, left',
     'Missing field interaction: Dropdown md, keyboardFocus, left',
   ]);
 });
@@ -203,7 +213,43 @@ test('rejects swapping equal-valued error message and border tokens', () => {
     },
     tokensLib: { global: { color: { border: { error }, text: { error } } } },
   };
+  page.objects.master.shapes.push('hidden');
+  page.objects.hidden = { type: 'text', name: 'InputWrapper-error', hidden: true };
   assert.equal(inspectControlTokens({ data }, page)['color.text.error'].bindings, 1);
   page.objects.message.appliedTokens.fill = 'color.border.error';
   assert.throws(() => inspectControlTokens({ data }, page), /Expected color.text.error/);
+});
+
+test('checks the resolved palette behind bound color roles', () => {
+  const palette = { type: 'color', value: '#C92A2A' };
+  const role = { type: 'color', value: '{color.red.800}' };
+  const source = { color: { text: { error: role }, red: { 800: palette } } };
+  const penpot = {
+    color: {
+      text: { error: { $type: 'color', $value: role.value } },
+      red: { 800: { $type: 'color', $value: '#FFFFFF' } },
+    },
+  };
+  assert.deepEqual(comparePaletteSources({ 'color.text.error': role }, source, penpot), [
+    'Inconsistent color source: color.red.800',
+  ]);
+});
+
+test('checks every supported button size and variant pair', () => {
+  const family = {
+    name: 'Button',
+    path: 'Actions',
+    axes: ['size', 'variant'],
+    variants: [
+      ['sm', 'primary'],
+      ['md', 'primary'],
+      ['md', 'ghost'],
+    ],
+  };
+  const contract = new Map([
+    ['Button', { axes: { size: ['sm', 'md'], variant: ['primary', 'ghost'] }, states: [] }],
+  ]);
+  assert.deepEqual(compareCatalog(contract, catalog([family])), [
+    'Missing Button size=sm variant=ghost',
+  ]);
 });

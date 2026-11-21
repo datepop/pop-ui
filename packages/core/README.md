@@ -57,6 +57,8 @@ export function App() {
 ### 공용 서체
 
 `@pop-ui/core/styles.css`를 가져오면 CSS와 Penpot에서 동일한 이름으로 공용 서체를 선택할 수 있습니다.
+표준 이름으로 번들 글꼴을 등록하려면 `import '@pop-ui/core/fonts.css'`를 추가합니다. 자체 글꼴을 등록한 앱은 기본 스타일만 사용하면 됩니다.
+
 `Noto Sans KR`은 400·500·600·700, `Montserrat`는 500·600·700 굵기를 제공합니다.
 
 ### Next.js App Router notes
@@ -108,3 +110,5 @@ This phase stabilizes the following surfaces:
 ### 파일 업로더의 로딩
 
 `ImageInput`과 `LottieInput`에서 `isLoading`은 전체의 추가·삭제·순서 변경·이미지 편집을 잠급니다. `value` 안의 `item.isLoading`은 해당 파일만 잠그며, 다른 파일은 계속 추가·삭제·재정렬할 수 있습니다. 순서를 변경할 때 처리 중인 파일은 제자리에 남습니다. Lottie 미리보기를 읽는 동안에는 해당 파일도 삭제하거나 이동할 수 있습니다. `error`에 표시할 문구를 전달하면 키보드로 파일 추가 영역에 접근할 때도 같은 설명을 읽을 수 있습니다.
+
+같은 `LottieInput`에서 편집 대상을 바꾸는 화면은 `uploadScope={record.id}`를 지정하면 이전 대상에서 읽기 시작한 파일을 폐기합니다. 같은 대상은 콜백이 바뀌어도 읽기를 마칩니다. 키를 생략하면 `onChange` 콜백의 변경을 대상 전환으로 취급합니다.

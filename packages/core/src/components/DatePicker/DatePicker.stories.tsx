@@ -416,15 +416,29 @@ export const FieldFeedback: StoryObj<typeof DatePicker> = {
   name: '입력 상태와 피드백',
   tags: ['pop-ui-contract', 'pop-ui-field'],
   parameters: { layout: 'padded' },
-  play: checkFieldComparison,
+  play: async (context) => {
+    await checkFieldComparison(context);
+    for (const form of context.canvasElement.querySelectorAll('form')) {
+      const button = within(form).getByRole('button');
+      if (form.closest('[data-field-state="default"]')) {
+        await expect(form.reportValidity()).toBe(false);
+        await expect(button).toHaveFocus();
+      } else if (form.closest('[data-field-state="filled"]')) {
+        await expect(form.checkValidity()).toBe(true);
+        await expect(button).toHaveAccessibleName(/예약 정보.*2026/);
+      }
+    }
+  },
   render: () => (
     <FieldComparison
       renderField={(state, props) => (
-        <DatePicker
-          {...props}
-          defaultValue={state === 'filled' ? '2026-11-18' : undefined}
-          placeholder="날짜 선택"
-        />
+        <form>
+          <DatePicker
+            {...props}
+            defaultValue={state === 'filled' ? '2026-11-18' : undefined}
+            placeholder="날짜 선택"
+          />
+        </form>
       )}
     />
   ),

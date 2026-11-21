@@ -43,7 +43,9 @@ export async function checkFieldComparison(context: { canvasElement: HTMLElement
     ).getByLabelText(/^예약 정보\s*\*?$/);
     for (const state of fieldStates) {
       const sample = column.querySelector<HTMLElement>(`[data-field-state="${state}"]`)!;
-      const field = within(sample).getByLabelText(/^예약 정보\s*\*?$/);
+      const field = within(sample).getByLabelText(/^예약 정보(?:\s|\*|$)/, {
+        selector: 'input, textarea, button:not([aria-label])',
+      });
       const help = within(sample).getByText(description);
       const ids = field.getAttribute('aria-describedby')?.split(/\s+/);
       await expect(ids).toContain(help.id);

@@ -156,6 +156,7 @@ function LottieTile({
 export const LottieInput = ({
   value = [],
   onChange,
+  uploadScope,
   width = 160,
   height = 200,
   placeholder = 'Lottie 파일을 넣어주세요',
@@ -222,7 +223,7 @@ export const LottieInput = ({
       itemId: next[value.length].id,
       index: position ?? value.length,
     });
-  });
+  }, uploadScope ?? onChange);
 
   const handleDrop = async (files: File[], position?: number) => {
     if (!canAddFiles(position)) return;

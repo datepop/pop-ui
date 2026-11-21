@@ -6,7 +6,7 @@ import { DateTimePicker } from '@mantine/dates';
 import { IconCalendar, formatDateDisplay, toValueString, parseDateValue } from '@pop-ui/foundation';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat.js';
-import { useId, useState } from 'react';
+import { useId, useRef, useState } from 'react';
 
 dayjs.extend(customParseFormat);
 
@@ -14,16 +14,13 @@ import { CalendarDatePicker } from '../CalendarDatePicker';
 import styles from './styles.module.scss';
 import {
   getEmptyValueForType,
-  mergeClassNamesWithDefault,
   resolveDatePickerValue,
 } from '../CalendarDatePicker/utils';
+import { mergeClassNamesWithDefault } from '../shared/classNames';
 import { fieldContentOrder } from '../shared/field';
 
 import type { IDatePickerProps } from './types';
-import type {
-  TMantineClassNameRecord,
-  TMantineClassNamesResolver,
-} from '../CalendarDatePicker/types';
+import type { TMantineClassNameRecord, TMantineClassNamesResolver } from '../shared/classNames';
 import type { PopoverProps, PopoverStylesNames } from '@mantine/core';
 import type { DateTimePickerProps, DateTimePickerStylesNames, DateValue } from '@mantine/dates';
 
@@ -114,6 +111,7 @@ export const DatePicker = ({
 
   const generatedId = useId();
   const fieldId = id ?? generatedId;
+  const triggerRef = useRef<HTMLButtonElement>(null);
   const [opened, setOpened] = useState(false);
   const [internalValue, setInternalValue] = useState<TInternalDateValue>(
     () =>
@@ -210,12 +208,17 @@ export const DatePicker = ({
   }
 
   const parsedExternalValue =
-    value != null ? (parseDateValue(value, type, resolvedValueFormat) as DateValue) : undefined;
+    value !== undefined
+      ? (parseDateValue(value, type, resolvedValueFormat) as DateValue)
+      : undefined;
   const resolvedValue = resolveDatePickerValue({
     type,
     externalValue: parsedExternalValue,
     internalValue: internalValue as DateValue,
   });
+  const hasCompleteDate = Array.isArray(resolvedValue)
+    ? resolvedValue.length > 0 && resolvedValue.every(Boolean)
+    : Boolean(resolvedValue);
   const displayText = formatDateDisplay(
     resolvedValue as TInternalDateValue,
     type,
@@ -251,6 +254,7 @@ export const DatePicker = ({
     <Input.Wrapper
       id={fieldId}
       label={label}
+      labelProps={{ id: fieldId + '-label' }}
       required={required}
       description={description}
       error={error}
@@ -259,6 +263,21 @@ export const DatePicker = ({
       errorProps={{ className: styles.DatePicker__Error }}
       className={joinClassNames(styles.DatePickerBase, styles.DatePickerRoot, sizeStyle, className)}
     >
+      {required && (
+        <input
+          className={styles.DatePicker__Validity}
+          tabIndex={-1}
+          aria-hidden="true"
+          required
+          disabled={disabled}
+          value={hasCompleteDate ? 'selected' : ''}
+          onChange={() => {}}
+          onInvalid={(event) => {
+            event.preventDefault();
+            triggerRef.current?.focus();
+          }}
+        />
+      )}
       <Popover
         opened={opened}
         onClose={() => setOpened(false)}
@@ -281,6 +300,10 @@ export const DatePicker = ({
               aria-required={required}
               id={fieldId}
               component="button"
+              ref={triggerRef}
+              aria-labelledby={
+                label && displayText ? fieldId + '-label ' + fieldId + '-value' : undefined
+              }
               type="button"
               classNames={{
                 input: styles.DatePicker__Input,
@@ -294,7 +317,9 @@ export const DatePicker = ({
               data-disabled={disabled ? true : undefined}
             >
               {displayText ? (
-                <span className={styles.DatePicker__Value}>{displayText}</span>
+                <span id={fieldId + '-value'} className={styles.DatePicker__Value}>
+                  {displayText}
+                </span>
               ) : (
                 <span className={styles.DatePicker__Placeholder}>{placeholder}</span>
               )}

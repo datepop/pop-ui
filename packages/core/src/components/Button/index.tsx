@@ -5,20 +5,15 @@ import { useState } from 'react';
 
 import { BUTTON_LOADER_SIZES } from './style';
 import styles from './styles.module.scss';
+import { mergeClassNamesWithDefault } from '../shared/classNames';
 
 import type { IButtonProps } from './types';
 import type {
   ButtonProps as MantineButtonProps,
   ButtonStylesNames,
-  MantineTheme,
 } from '@mantine/core';
 
 type TButtonClassNameRecord = Partial<Record<ButtonStylesNames, string>>;
-type TButtonClassNamesResolver =
-  | TButtonClassNameRecord
-  | ((theme: MantineTheme, props: MantineButtonProps, ctx: unknown) => TButtonClassNameRecord)
-  | null;
-
 const DEFAULT_CLASS_NAMES = {
   inner: styles.Button__Inner,
   label: styles.Button__Label,
@@ -45,49 +40,6 @@ const BUTTON_VARIANT_CLASS_NAMES = {
 const joinClassNames = (...values: Array<string | undefined>) =>
   values.filter(Boolean).join(' ') || undefined;
 
-const mergeClassNamesWithDefault = (
-  classNames?: TButtonClassNamesResolver,
-):
-  | TButtonClassNameRecord
-  | ((theme: MantineTheme, props: MantineButtonProps, ctx: unknown) => TButtonClassNameRecord) => {
-  const mergeObjects = (
-    defaults: TButtonClassNameRecord,
-    custom: TButtonClassNameRecord,
-  ): TButtonClassNameRecord => {
-    const merged: TButtonClassNameRecord = Object.keys(defaults).reduce((acc, key) => {
-      const typedKey = key as ButtonStylesNames;
-      const mergedClassName = [defaults[typedKey], custom[typedKey]].filter(Boolean).join(' ');
-
-      if (mergedClassName) {
-        acc[typedKey] = mergedClassName;
-      }
-
-      return acc;
-    }, {} as TButtonClassNameRecord);
-
-    Object.keys(custom).forEach((key) => {
-      const typedKey = key as ButtonStylesNames;
-
-      if (!(typedKey in defaults) && custom[typedKey]) {
-        merged[typedKey] = custom[typedKey];
-      }
-    });
-
-    return merged;
-  };
-
-  if (typeof classNames === 'function') {
-    return (theme: MantineTheme, props: MantineButtonProps, ctx: unknown) =>
-      mergeObjects(DEFAULT_CLASS_NAMES, classNames(theme, props, ctx));
-  }
-
-  if (typeof classNames === 'object' && classNames !== null && !Array.isArray(classNames)) {
-    return mergeObjects(DEFAULT_CLASS_NAMES, classNames);
-  }
-
-  return DEFAULT_CLASS_NAMES;
-};
-
 export function Button({
   children,
   size = 'md',
@@ -100,6 +52,7 @@ export function Button({
   onFocus,
   onBlur,
   onClickCapture,
+  onKeyDown,
   className,
   classNames,
   loaderProps,
@@ -124,7 +77,10 @@ export function Button({
         BUTTON_VARIANT_CLASS_NAMES[variant],
         className,
       )}
-      classNames={mergeClassNamesWithDefault(classNames)}
+      classNames={mergeClassNamesWithDefault<ButtonStylesNames, MantineButtonProps>(
+        DEFAULT_CLASS_NAMES,
+        classNames,
+      )}
       disabled={isDisabled}
       aria-busy={isButtonLoading || undefined}
       data-loading-overlay={(isButtonLoading && hideLabelOnLoading) || undefined}
@@ -137,6 +93,10 @@ export function Button({
       onBlur={(event) => {
         setFocused(false);
         onBlur?.(event);
+      }}
+      onKeyDown={(event) => {
+        if (isButtonLoading && (event.key === ' ' || event.key === 'Enter')) event.preventDefault();
+        onKeyDown?.(event);
       }}
       onClickCapture={(event) => {
         if (isButtonLoading) {

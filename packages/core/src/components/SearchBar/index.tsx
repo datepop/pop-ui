@@ -54,6 +54,11 @@ export const SearchBar = ({
     ...clearButtonProps,
   };
 
+  const handleClear = () => {
+    inputRef.current?.focus();
+    onClear?.();
+  };
+
   return (
     <div
       className={
@@ -97,16 +102,13 @@ export const SearchBar = ({
             clearable={clearable}
             rightSection={
               showLegacyClear ? (
-                <Input.ClearButton {...clearActionProps} onClick={onClear} />
+                <Input.ClearButton {...clearActionProps} onClick={handleClear} />
               ) : (
                 props.rightSection
               )
             }
             rightSectionPointerEvents={showLegacyClear ? 'auto' : props.rightSectionPointerEvents}
-            onClear={() => {
-              inputRef.current?.focus();
-              onClear?.();
-            }}
+            onClear={handleClear}
             clearButtonProps={clearActionProps}
             leftSection={<IconSearch size={size === 'sm' ? 16 : size === 'lg' ? 24 : 20} />}
           />

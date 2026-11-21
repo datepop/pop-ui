@@ -4,8 +4,10 @@ function syncPopUiStyles() {
   const library = penpot.library.local;
   // 파일 ID 대신 POP-UI 토큰 구조로 대상을 확인한다. 라이브러리를 이전·복제해도 스크립트를 고치지 않는다.
   const tokens = library.tokens.sets.find((set) => set.name === 'global')?.tokens;
-  if (!tokens?.some((token) => token.type === 'color') ||
-    !tokens.some((token) => token.type === 'typography')) {
+  if (
+    !tokens?.some((token) => token.name === 'color.aqua.50' && token.type === 'color') ||
+    !tokens.some((token) => token.name === 'web.H1-40-bold' && token.type === 'typography')
+  ) {
     throw new Error('Open a file with the POP-UI global token set before syncing styles.');
   }
   const byName = new Map(tokens.map((token) => [token.name, token]));
@@ -17,7 +19,7 @@ function syncPopUiStyles() {
     if (!ref) return String(value).replace(/px$/, '');
     const resolved = byName.get(ref[1])?.resolvedValueString;
     if (resolved == null) throw new Error('Unresolved token ' + ref[1]);
-    return resolved;
+    return String(resolved).replace(/px$/, '');
   }
 
   function findStyle(styles, token, create) {
@@ -48,8 +50,15 @@ function syncPopUiStyles() {
       if (style.opacity !== opacity) style.opacity = opacity;
     } else if (token.type === 'typography') {
       const props = token.value;
-      const family = resolve(props.fontFamily);
-      const weight = resolve(props.fontWeight);
+      function property(key, plural) {
+        const raw = props[key] ?? props[plural];
+        if (raw == null) throw new Error('Missing ' + key + ' for ' + token.name);
+        return resolve(raw);
+      }
+      const family = property('fontFamily', 'fontFamilies');
+      const weight = property('fontWeight', 'fontWeights');
+      const fontSize = property('fontSize', 'fontSizes');
+      const lineHeight = property('lineHeight', 'lineHeights');
       const font = penpot.fonts.findByName(family);
       const variant = font?.variants.find((v) => v.fontWeight === weight && v.fontStyle === 'normal');
       if (!variant) throw new Error('Missing font for ' + token.name);
@@ -57,8 +66,11 @@ function syncPopUiStyles() {
       if (style.fontFamily !== family || style.fontWeight !== weight || style.fontStyle !== 'normal') {
         style.setFont(font, variant);
       }
-      for (const key of ['fontSize', 'lineHeight', 'letterSpacing']) {
-        const value = resolve(props[key]);
+      for (const [key, value] of Object.entries({
+        fontSize,
+        lineHeight,
+        letterSpacing: resolve(props.letterSpacing ?? 0),
+      })) {
         if (style[key] !== value) style[key] = value;
       }
     }

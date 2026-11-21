@@ -266,11 +266,13 @@ export const States: StoryObj<IButtonProps> = {
     await expect(button).toHaveAttribute('aria-disabled', 'true');
     await expect(button).toHaveAccessibleName('저장하기');
     await expect(button.getBoundingClientRect().width).toBe(width);
-    await userEvent.keyboard('{Enter}[Space]');
+    await userEvent.keyboard('{Enter}[Space>]');
     await expect(canvas.getByLabelText('저장 횟수')).toHaveTextContent('1회');
     await waitFor(() => expect(button).not.toHaveAttribute('aria-busy'), { timeout: 4000 });
     await expect(button).toHaveFocus();
     await expect(button.getBoundingClientRect().width).toBe(width);
+    await userEvent.keyboard('[/Space]');
+    await expect(canvas.getByLabelText('저장 횟수')).toHaveTextContent('1회');
     await userEvent.keyboard('[Space]');
     await expect(canvas.getByLabelText('저장 횟수')).toHaveTextContent('2회');
     await userEvent.tab();

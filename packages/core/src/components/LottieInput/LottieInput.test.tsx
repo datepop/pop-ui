@@ -230,30 +230,47 @@ describe('LottieInput', () => {
       }
     });
 
-    it('discards an in-flight file read if the uploader becomes locked', async () => {
-      let completeRead: () => void = () => {
-        throw new Error('file read was not started');
-      };
-      vi.spyOn(FileReader.prototype, 'readAsText').mockImplementation(function (this: FileReader) {
-        completeRead = () =>
-          this.onload?.call(this, {
-            target: { result: JSON.stringify(VALID_LOTTIE) },
-          } as ProgressEvent<FileReader>);
-      });
-      const onChange = vi.fn();
-      const view = await renderApp(<LottieInput value={[]} onChange={onChange} />);
-      try {
-        const drop = mockDropzone.mock.calls[0][0].onDrop([makeLottieFile()]);
-        await act(async () =>
-          view.root.render(<LottieInput value={[]} onChange={onChange} isLoading />),
+    it.each(['locked', 'new callback', 'new scope', 'same scope'] as const)(
+      'handles a pending file read on rerender (%s)',
+      async (change) => {
+        let completeRead: () => void = () => {
+          throw new Error('file read was not started');
+        };
+        vi.spyOn(FileReader.prototype, 'readAsText').mockImplementation(function (
+          this: FileReader,
+        ) {
+          completeRead = () =>
+            this.onload?.call(this, {
+              target: { result: JSON.stringify(VALID_LOTTIE) },
+            } as ProgressEvent<FileReader>);
+        });
+        const onChange = vi.fn();
+        const nextChange = vi.fn();
+        const scope = change.includes('scope') ? 'a' : undefined;
+        const view = await renderApp(
+          <LottieInput value={[]} onChange={onChange} uploadScope={scope} />,
         );
-        completeRead();
-        await drop;
-        expect(onChange).not.toHaveBeenCalled();
-      } finally {
-        cleanupRenderedApp(view);
-      }
-    });
+        try {
+          const drop = mockDropzone.mock.calls[0][0].onDrop([makeLottieFile()]);
+          await act(async () =>
+            view.root.render(
+              <LottieInput
+                value={[]}
+                onChange={change === 'locked' ? onChange : nextChange}
+                uploadScope={change === 'new scope' ? 'b' : scope}
+                isLoading={change === 'locked'}
+              />,
+            ),
+          );
+          completeRead();
+          await drop;
+          expect(onChange).not.toHaveBeenCalled();
+          expect(nextChange).toHaveBeenCalledTimes(change === 'same scope' ? 1 : 0);
+        } finally {
+          cleanupRenderedApp(view);
+        }
+      },
+    );
 
     it('readOnly hides delete buttons and dropzones', async () => {
       const view = await renderApp(<LottieInput value={[makeItem('a')]} readOnly />);
@@ -306,6 +323,20 @@ describe('LottieInput', () => {
       expect(nextValue).toHaveLength(1);
       expect(meta).toMatchObject({ action: 'create', index: 0 });
       cleanupRenderedApp(view);
+    });
+
+    it('accepts a visible empty slot when an existing item is outside the slot range', async () => {
+      const items = [0, 1, 3].map((position) => ({ ...makeItem(String(position)), position }));
+      const onChange = vi.fn();
+      const view = await renderApp(<LottieInput length={3} value={items} onChange={onChange} />);
+      try {
+        await act(async () => mockDropzone.mock.calls[0][0].onDrop([makeLottieFile()]));
+        expect(onChange.mock.calls[0][0].map((item: ILottieInputItem) => item.position)).toEqual([
+          0, 1, 3, 2,
+        ]);
+      } finally {
+        cleanupRenderedApp(view);
+      }
     });
 
     it('dropping invalid file shows toast, no onChange', async () => {

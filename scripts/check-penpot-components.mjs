@@ -156,15 +156,34 @@ export function compareCatalog(contract, catalog) {
         if (value !== undefined && !values.includes(value))
           findings.push(`Unexpected: ${name} ${axis}=${value}`);
     }
+    if (name === 'Button') {
+      for (const size of expected.axes.size) {
+        for (const variant of expected.axes.variant) {
+          if (
+            !variants.some(
+              (row) =>
+                row[axes.indexOf('size')] === size && row[axes.indexOf('variant')] === variant,
+            )
+          )
+            findings.push('Missing Button size=' + size + ' variant=' + variant);
+        }
+      }
+    }
     if (name === 'TextField' || name === 'Dropdown') {
-      const stateIndex = axes.indexOf('state');
-      const interactionStates =
-        name === 'Dropdown' ? ['hover', 'focus', 'keyboardFocus'] : ['hover', 'focus'];
-      for (const base of variants.filter((row) => row[stateIndex] === 'default')) {
-        for (const state of interactionStates) {
-          const interaction = base.with(stateIndex, state);
-          if (!keys.has(JSON.stringify(interaction)))
-            findings.push('Missing field interaction: ' + name + ' ' + interaction.join(', '));
+      const states =
+        name === 'Dropdown'
+          ? ['default', 'hover', 'focus', 'keyboardFocus']
+          : ['default', 'hover', 'focus'];
+      for (const size of expected.axes.size) {
+        for (const labelPosition of expected.axes.labelPosition) {
+          for (const type of name === 'TextField' ? ['input', 'textarea'] : [undefined]) {
+            for (const state of states) {
+              const props = { size, labelPosition, type, state };
+              const row = axes.map((axis) => props[axis]);
+              if (!keys.has(JSON.stringify(row)))
+                findings.push('Missing field interaction: ' + name + ' ' + row.join(', '));
+            }
+          }
         }
       }
     }
@@ -206,9 +225,32 @@ export function compareSnapshots(previous, current) {
   ];
 }
 
+// Check every link of a color alias, including the final palette value.
+export function comparePaletteSources(bindings, source, penpot) {
+  const findings = [];
+  const checked = new Set();
+  for (const [role, definition] of Object.entries(bindings)) {
+    if (definition.type !== 'color') continue;
+    let name = role;
+    while (name && !checked.has(name)) {
+      checked.add(name);
+      const path = name.split('.');
+      const expected = path.reduce((node, part) => node?.[part], source);
+      const actual = path.reduce((node, part) => node?.[part], penpot);
+      if (expected?.type !== 'color' || actual?.$type !== 'color' || actual.$value !== expected.value) {
+        findings.push('Inconsistent color source: ' + name);
+        break;
+      }
+      name = /^\{([^{}]+)\}$/.exec(expected.value)?.[1];
+    }
+  }
+  return findings;
+}
+
 async function main(args) {
   const fromFile = args.indexOf('--from-file');
   let catalog;
+  let file;
   if (args.includes('--live')) {
     const token = process.env.PENPOT_ACCESS_TOKEN;
     if (!token) throw new Error('Set PENPOT_ACCESS_TOKEN to read the live POP-UI file.');
@@ -224,15 +266,17 @@ async function main(args) {
       body: JSON.stringify({ id: liveFileId }),
     });
     if (!response.ok) throw new Error(`Penpot get-file returned ${response.status}`);
-    catalog = extractCatalog(await response.json());
+    file = await response.json();
   } else if (fromFile >= 0)
-    catalog = extractCatalog(JSON.parse(readFileSync(args[fromFile + 1], 'utf8')));
+    file = JSON.parse(readFileSync(args[fromFile + 1], 'utf8'));
   else catalog = JSON.parse(readFileSync(snapshot, 'utf8'));
+  if (file) catalog = extractCatalog(file);
   const findings = compareCatalog(readCodeContract(), catalog);
   const { global } = JSON.parse(
     readFileSync(resolve(root, 'packages/foundation/token.json'), 'utf8'),
   );
   const expected = [
+    'color.aqua.800',
     'color.border.default',
     'color.border.hover',
     'color.border.focus',
@@ -254,6 +298,10 @@ async function main(args) {
     )
       findings.push('Missing or inconsistent control token: ' + name);
   }
+  if (file)
+    findings.push(
+      ...comparePaletteSources(catalog.controlTokens, global, file.data.tokensLib.global),
+    );
   if ((fromFile >= 0 || args.includes('--live')) && !args.includes('--write')) {
     findings.push(...compareSnapshots(JSON.parse(readFileSync(snapshot, 'utf8')), catalog));
   }
@@ -261,6 +309,8 @@ async function main(args) {
   if (args.includes('--write')) {
     if (!args.includes('--live') && fromFile < 0)
       throw new Error('Provide a fresh Penpot source with --write.');
+    if (!Number.isSafeInteger(catalog.revision) || catalog.revision < 0)
+      throw new Error('Expected a nonnegative integer Penpot revision.');
     // One line per family keeps generated variant changes reviewable.
     writeFileSync(
       snapshot,

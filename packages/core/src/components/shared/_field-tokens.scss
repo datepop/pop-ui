@@ -21,7 +21,7 @@
 
 @mixin interaction-states {
   :where([data-mantine-color-scheme="light"]) &[data-error]:not([data-variant="unstyled"], :disabled, [data-disabled]) {
-    border-color: $color-border-error;
+    --input-bd: #{$color-border-error};
   }
 
   &:not(:disabled, [data-disabled]) {

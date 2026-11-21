@@ -262,8 +262,7 @@ export const markerStyles = `
     color: #6E6E6E;
     font-weight: 600;
     font-size: 12px;
-    max-width: 50%;
-    flex-shrink: 0;
+    min-width: 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
