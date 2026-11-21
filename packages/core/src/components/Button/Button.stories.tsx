@@ -1,16 +1,9 @@
-import {
-  ColorActionPrimaryBackground,
-  ColorAqua600,
-  ColorAqua700,
-  ColorAqua800,
-  ColorBlack,
-  ColorWhite,
-  IconBookmark,
-} from '@pop-ui/foundation';
+import { IconBookmark } from '@pop-ui/foundation';
 import { useEffect, useRef, useState } from 'react';
 import { expect, waitFor } from 'storybook/test';
 
 import { Button } from './';
+import comparison from './PrimaryBackground.stories.module.scss';
 import { BUTTON_SIZES, BUTTON_VARIANTS } from './types';
 import { Checkbox } from '../Checkbox';
 
@@ -295,82 +288,56 @@ export const States: StoryObj<IButtonProps> = {
   },
 };
 
+// Keep the existing Storybook link when the comparison changes.
 export const PrimaryLabelContrast: StoryObj<IButtonProps> = {
-  name: 'Primary 글자색 비교',
+  name: 'Primary 배경과 포커스 비교',
   tags: ['pop-ui-contract'],
   parameters: { layout: 'padded' },
-  render: () => {
-    const states = [
-      ['기본', ColorActionPrimaryBackground],
-      ['호버', ColorAqua600],
-      ['누름', ColorAqua700],
-      ['키보드 포커스', ColorAqua700],
-    ] as const;
-    return (
-      <table style={{ borderSpacing: '8px 16px', textAlign: 'left' }}>
-        <caption style={{ textAlign: 'left', fontWeight: 600 }}>Primary 버튼 · 중간 크기</caption>
-        <thead>
-          <tr>
-            <th>상태</th>
-            <th>흰색 · 현재</th>
-            <th>검정 · 비교</th>
-          </tr>
-        </thead>
-        <tbody>
-          {states.map(([state, backgroundColor]) => (
-            <tr key={state}>
-              <th scope="row">{state}</th>
-              {[ColorWhite, ColorBlack].map((color) => (
-                <td key={color}>
-                  <div style={rowStyle}>
-                    {['저장하기', 'Save'].map((label) => (
-                      <Button
-                        key={label}
-                        size="md"
-                        variant="primary"
-                        leftSection={<IconBookmark size={24} color="currentColor" />}
-                        style={{
-                          color,
-                          backgroundColor,
-                          outline:
-                            state === '키보드 포커스' ? `2px solid ${ColorAqua800}` : undefined,
-                          outlineOffset: 2,
-                        }}
-                      >
-                        {label}
-                      </Button>
-                    ))}
-                  </div>
-                </td>
+  render: () => (
+    <section>
+      <h2>Primary 버튼 배경 비교</h2>
+      <p>버튼에 마우스를 올리거나 누르고, Tab 키로 포커스를 이동해 보세요.</p>
+      <div style={{ ...rowStyle, gap: '32px', alignItems: 'flex-start' }}>
+        {['현재 배경', '한 단계 짙은 배경'].map((title, index) => (
+          <fieldset key={title} style={{ margin: 0, padding: 0, border: 0 }}>
+            <legend style={{ marginBottom: 12, fontWeight: 600 }}>{title}</legend>
+            <div
+              style={rowStyle}
+              className={index === 1 ? comparison.PrimaryBackgroundCandidate : undefined}
+            >
+              {['저장하기', 'Save'].map((label) => (
+                <Button
+                  key={label}
+                  size="md"
+                  variant="primary"
+                  leftSection={<IconBookmark size={24} color="currentColor" />}
+                >
+                  {label}
+                </Button>
               ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    );
-  },
-  play: async ({ canvasElement }) => {
-    const rows = canvasElement.querySelectorAll('tbody tr');
-    await expect(rows).toHaveLength(4);
-    for (const row of rows) {
-      const buttons = Array.from(row.querySelectorAll('button'));
-      await expect(buttons.map((button) => button.textContent)).toEqual([
-        '저장하기',
-        'Save',
+            </div>
+          </fieldset>
+        ))}
+      </div>
+    </section>
+  ),
+  play: async ({ canvas }) => {
+    for (const name of ['현재 배경', '한 단계 짙은 배경']) {
+      const group = canvas.getByRole('group', { name });
+      const buttons = group.querySelectorAll('button');
+      await expect(Array.from(buttons, (button) => button.textContent)).toEqual([
         '저장하기',
         'Save',
       ]);
-      for (const [index, button] of buttons.entries()) {
-        const color = index < 2 ? 'rgb(255, 255, 255)' : 'rgb(0, 0, 0)';
+      for (const button of buttons) {
         await expect(button).toHaveStyle({
-          color,
+          color: 'rgb(255, 255, 255)',
           fontSize: '16px',
           fontWeight: '600',
           lineHeight: '20px',
         });
-        await expect(getComputedStyle(button.querySelector('svg path')!).stroke).toBe(color);
-        await expect(getComputedStyle(button).backgroundColor).toBe(
-          getComputedStyle(buttons[0]).backgroundColor,
+        await expect(getComputedStyle(button.querySelector('path')!).stroke).toBe(
+          'rgb(255, 255, 255)',
         );
       }
     }

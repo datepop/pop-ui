@@ -1,0 +1,15 @@
+@use '../shared/variables' as tokens;
+
+// Preview the next palette step using the production button's transitions and focus ring.
+.PrimaryBackgroundCandidate button:enabled {
+  background-color: tokens.$color-aqua-600;
+
+  &:hover {
+    background-color: tokens.$color-aqua-700;
+  }
+
+  &:active,
+  &:focus-visible {
+    background-color: tokens.$color-aqua-800;
+  }
+}
