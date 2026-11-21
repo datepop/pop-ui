@@ -202,35 +202,52 @@ export const LottieInput = ({
 
   const { isError, errorId, message } = useUploadFeedback(error);
 
-  const commitFiles = useUploadCommit((files: File[], invalidCount: number, position?: number) => {
-    if (!canAddFiles(position)) return;
-    if (invalidCount) {
-      toast({
-        id: 'invalid-lottie-files',
-        message:
-          invalidCount === 1
-            ? '유효하지 않은 Lottie JSON 파일입니다'
-            : `${invalidCount}개의 파일이 유효하지 않은 Lottie JSON입니다`,
+  const commitFiles = useUploadCommit(
+    (
+      origin: Pick<ILottieInputProps, 'value' | 'onChange'>,
+      files: File[],
+      invalidCount: number,
+      position?: number,
+    ) => {
+      // With no record key, never route a pending drop to a replacement handler or mix two lists.
+      const useOriginalHandler = uploadScope === undefined && origin.onChange !== onChange;
+      if (
+        useOriginalHandler &&
+        (origin.value.length !== value.length ||
+          origin.value.some((item, index) => item !== value[index]))
+      )
+        return;
+      const notify = useOriginalHandler ? origin.onChange : onChange;
+      if (!canAddFiles(position)) return;
+      if (invalidCount) {
+        toast({
+          id: 'invalid-lottie-files',
+          message:
+            invalidCount === 1
+              ? '유효하지 않은 Lottie JSON 파일입니다'
+              : `${invalidCount}개의 파일이 유효하지 않은 Lottie JSON입니다`,
+        });
+      }
+      if (!files.length) return;
+      const next =
+        position === undefined
+          ? addItems(value, files, resolvedMaxLength)
+          : addItemAtPosition(value, files[0], position);
+      notify?.(next, {
+        action: 'create',
+        itemId: next[value.length].id,
+        index: position ?? value.length,
       });
-    }
-    if (!files.length) return;
-    const next =
-      position === undefined
-        ? addItems(value, files, resolvedMaxLength)
-        : addItemAtPosition(value, files[0], position);
-    onChange?.(next, {
-      action: 'create',
-      itemId: next[value.length].id,
-      index: position ?? value.length,
-    });
-  }, uploadScope);
+    },
+    uploadScope,
+  );
 
   const handleDrop = async (files: File[], position?: number) => {
     if (!canAddFiles(position)) return;
     const candidates = position === undefined ? files : files.slice(0, 1);
     const results = await Promise.all(candidates.map(parseLottieFile));
     const valid = candidates.filter((_, index) => results[index] !== null);
-    commitFiles(valid, candidates.length - valid.length, position);
+    commitFiles({ onChange, value }, valid, candidates.length - valid.length, position);
   };
 
   const handleDelete = (id: string) => {

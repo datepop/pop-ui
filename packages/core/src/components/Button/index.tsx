@@ -97,6 +97,7 @@ export function Button({
       onKeyDown={(event) => {
         if (isButtonLoading && (event.key === ' ' || event.key === 'Enter')) {
           event.preventDefault();
+          event.stopPropagation();
           return;
         }
         onKeyDown?.(event);

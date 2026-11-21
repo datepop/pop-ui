@@ -6,7 +6,7 @@ import { DateTimePicker } from '@mantine/dates';
 import { IconCalendar, formatDateDisplay, toValueString, parseDateValue } from '@pop-ui/foundation';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat.js';
-import { useId, useRef, useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 
 dayjs.extend(customParseFormat);
 
@@ -120,6 +120,18 @@ export const DatePicker = ({
       (getEmptyValueForType(type) as TInternalDateValue),
   );
 
+  useEffect(() => {
+    const form = triggerRef.current?.form;
+    if (!form || withTime) return;
+    const resetValidation = (event: Event) => {
+      queueMicrotask(() => {
+        if (!event.defaultPrevented) setAttemptedValidation(false);
+      });
+    };
+    form.addEventListener('reset', resetValidation);
+    return () => form.removeEventListener('reset', resetValidation);
+  }, [withTime]);
+
   let sizeStyle = styles['DatePicker--Medium'];
   let iconSize = 18;
   let calendarSectionWidth = 42;
@@ -220,6 +232,9 @@ export const DatePicker = ({
   const hasCompleteDate = Array.isArray(resolvedValue)
     ? resolvedValue.length > 0 && resolvedValue.every(Boolean)
     : Boolean(resolvedValue);
+  if (attemptedValidation && (hasCompleteDate || !required || disabled)) {
+    setAttemptedValidation(false);
+  }
   const missingRequiredDate = attemptedValidation && required && !disabled && !hasCompleteDate;
   const fieldError =
     missingRequiredDate && (!error || typeof error === 'boolean') ? '날짜를 선택해주세요.' : error;

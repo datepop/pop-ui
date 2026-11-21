@@ -230,7 +230,7 @@ describe('LottieInput', () => {
       }
     });
 
-    it.each(['locked', 'new callback', 'new scope', 'same scope'] as const)(
+    it.each(['locked', 'new callback', 'replaced list', 'new scope', 'same scope'] as const)(
       'handles a pending file read on rerender (%s)',
       async (change) => {
         let completeRead: () => void = () => {
@@ -255,7 +255,7 @@ describe('LottieInput', () => {
           await act(async () =>
             view.root.render(
               <LottieInput
-                value={[]}
+                value={change === 'replaced list' ? [makeItem('b')] : []}
                 onChange={change === 'locked' ? onChange : nextChange}
                 uploadScope={change === 'new scope' ? 'b' : scope}
                 isLoading={change === 'locked'}
@@ -264,10 +264,8 @@ describe('LottieInput', () => {
           );
           completeRead();
           await drop;
-          expect(onChange).not.toHaveBeenCalled();
-          expect(nextChange).toHaveBeenCalledTimes(
-            change === 'same scope' || change === 'new callback' ? 1 : 0,
-          );
+          expect(onChange).toHaveBeenCalledTimes(change === 'new callback' ? 1 : 0);
+          expect(nextChange).toHaveBeenCalledTimes(change === 'same scope' ? 1 : 0);
         } finally {
           cleanupRenderedApp(view);
         }

@@ -90,7 +90,9 @@ describe('Button', () => {
 
   it('blocks loading activation keys before the caller handler and passes through Tab', () => {
     const onKeyDown = vi.fn();
+    const formKeyDown = vi.fn();
     const view = renderApp(<Button onKeyDown={onKeyDown}>저장</Button>);
+    view.container.parentElement!.addEventListener('keydown', formKeyDown);
     try {
       const button = view.container.querySelector('button')!;
       act(() => button.focus());
@@ -107,9 +109,12 @@ describe('Button', () => {
         expect(event.defaultPrevented).toBe(true);
       }
       expect(onKeyDown).not.toHaveBeenCalled();
+      expect(formKeyDown).not.toHaveBeenCalled();
       button.dispatchEvent(new KeyboardEvent('keydown', { key: 'Tab', bubbles: true }));
       expect(onKeyDown).toHaveBeenCalledTimes(1);
+      expect(formKeyDown).toHaveBeenCalledTimes(1);
     } finally {
+      view.container.parentElement!.removeEventListener('keydown', formKeyDown);
       cleanupRenderedApp(view);
     }
   });

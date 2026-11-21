@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { expect, within } from 'storybook/test';
+import { expect, waitFor, within } from 'storybook/test';
 
 import { DatePicker } from '.';
 import { FieldComparison, checkFieldComparison } from '../../../../../.storybook/examples/FieldComparison';
@@ -426,6 +426,8 @@ export const FieldFeedback: StoryObj<typeof DatePicker> = {
         const message = await within(form).findByRole('alert');
         await expect(message).toHaveTextContent('날짜를 선택해주세요.');
         await expect(button.getAttribute('aria-describedby')?.split(/\s+/)).toContain(message.id);
+        form.reset();
+        await waitFor(() => expect(within(form).queryByRole('alert')).toBeNull());
       } else if (form.closest('[data-field-state="filled"]')) {
         await expect(form.checkValidity()).toBe(true);
         await expect(button).toHaveAccessibleName(/예약 정보.*2026/);
