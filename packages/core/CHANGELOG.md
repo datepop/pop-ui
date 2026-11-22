@@ -1,5 +1,31 @@
 # @pop-ui/core
 
+## 2.4.0
+
+### Minor Changes
+
+- d64e402: TextField, Dropdown, SearchBar의 라벨 도움말을 키보드와 터치로 열 수 있습니다. Dropdown은 목록이 열리거나 닫힐 때 전달받은 콜백을 호출합니다. ImageInput과 LottieInput은 JSX를 포함한 오류 문구를 `error`로 받으며 기존 `errorMsg`도 지원합니다.
+- d64e402: TextField, Dropdown, SearchBar, DatePicker에서 `description`, `error`, `required`를 같은 방식으로 사용할 수 있습니다. 설명과 오류는 해당 입력에 연결되며 SearchBar는 오류를 한 번만 표시합니다. 기존 TextField, Dropdown, SearchBar의 `errorMsg`는 계속 지원합니다. 두 속성을 함께 전달하면 `error`가 우선합니다.
+- d64e402: Import `@pop-ui/core/fonts.css` to register the shared font families as `Noto Sans KR` and `Montserrat`. Existing CSS using either the `POP-UI` or `Pop UI Hotel` prefix continues to load the same files.
+- d64e402: 여러 레코드에서 같은 `LottieInput`을 재사용할 때 `uploadScope={record.id}`를 지정하면 이전 레코드의 파일 읽기 결과를 폐기합니다.
+
+### Patch Changes
+
+- d64e402: Show a keyboard focus ring and retain focus when a Button starts loading, while blocking repeated activation.
+- d64e402: Keep the Button's original width and accessible name while its default loading spinner is visible.
+- d64e402: Set the medium Button label line height to 20px at its default 16px font size.
+- d64e402: Use the Button keyboard focus ring on Checkboxes and Toggle tracks in every size.
+- d64e402: Connect the Dropdown label to its input so the field can be focused through its label.
+- d64e402: Fade and scale the Dropdown menu from the edge nearest its trigger, opening over 150ms and closing over 100ms. Respect reduced motion, distinguish the highlighted option from the current value, and dismiss the menu on Tab.
+- d64e402: Use the shared keyboard focus ring on Radio controls in all sizes.
+- d64e402: Keep map prices and date values readable in narrow containers. Show DatePicker validation feedback and render Dropdown errors once.
+- d64e402: Make the SearchBar clear button keyboard accessible, reflect prefilled and externally updated values, and return focus to the search input after clearing.
+- d64e402: Expose shared action background, field border and placeholder color tokens. Use the same control heights for Button, TextField and Dropdown in the web components and Penpot library. The placeholder now uses gray 700. Medium Button labels share a typography token for 16px semibold text with a 20px line height. TextField and Dropdown share hover and focus border colors and keep error borders visible during interaction. TextField, Dropdown and SearchBar use independent error border and message tokens.
+- d64e402: Align TextField help and character counts, and make its clear button accessible by pointer and keyboard.
+- d64e402: ImageInput과 LottieInput의 전체·파일별 로딩에서 편집 가능 여부를 통일했습니다. 처리 중인 파일은 삭제와 이동이 잠기며, Lottie 미리보기 로딩 중에는 삭제와 이동이 가능합니다. 파일 추가 영역은 표시된 오류 문구를 접근성 설명으로 제공합니다. LottieInput의 기본 안내 문구를 “Lottie 파일을 넣어주세요”로 변경했습니다.
+- Updated dependencies [d64e402]
+  - @pop-ui/foundation@2.4.0
+
 ## 2.3.1
 
 ### Patch Changes
