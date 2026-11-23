@@ -107,6 +107,7 @@ export const Map = ({ options, onLoad }: IMapProps) => {
   return (
     <div
       ref={containerRef}
+      className="pop-ui-map"
       style={{
         width: typeof width === 'number' ? `${width}px` : width,
         height: typeof height === 'number' ? `${height}px` : height,

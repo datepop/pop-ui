@@ -1,15 +1,12 @@
+import type { IFieldFeedbackProps, IFieldLabelProps, ILegacyFieldError } from '../shared/field';
 import type { InputProps, TextareaProps } from '@mantine/core';
 import type { ChangeEvent } from 'react';
 
-export interface ICommonTextFieldProps {
-  label?: string;
+export interface ICommonTextFieldProps
+  extends IFieldFeedbackProps,
+    IFieldLabelProps,
+    ILegacyFieldError {
   labelPosition?: 'top' | 'left';
-  size?: 'sm' | 'md' | 'lg';
-  required?: boolean;
-  tooltip?: string;
-  tooltipPosition?: 'top' | 'bottom' | 'left' | 'right';
-  description?: string;
-  errorMsg?: string;
   maxTextCount?: number;
   onChange?: (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onClear?: () => void;

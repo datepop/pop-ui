@@ -1,5 +1,81 @@
 {
+  "typography": {
+    "control": {
+      "label": {
+        "md": {
+          "fontFamily": {
+            "value": "Pretendard",
+            "type": "fontFamilies"
+          },
+          "fontWeight": {
+            "value": "SemiBold",
+            "type": "fontWeights"
+          },
+          "fontSize": {
+            "value": 16,
+            "type": "fontSizes"
+          },
+          "lineHeight": {
+            "value": "125%",
+            "type": "lineHeights"
+          }
+        }
+      }
+    }
+  },
+  "size": {
+    "control": {
+      "sm": {
+        "type": "sizing",
+        "value": "30px"
+      },
+      "md": {
+        "type": "sizing",
+        "value": "40px"
+      },
+      "lg": {
+        "type": "sizing",
+        "value": "50px"
+      }
+    }
+  },
   "color": {
+    "border": {
+      "default": {
+        "type": "color",
+        "value": "#CDCDCD"
+      },
+      "hover": {
+        "type": "color",
+        "value": "#72EEF1"
+      },
+      "focus": {
+        "type": "color",
+        "value": "#0fd3d8"
+      },
+      "error": {
+        "type": "color",
+        "value": "#F03E3E"
+      }
+    },
+    "text": {
+      "placeholder": {
+        "type": "color",
+        "value": "#666666"
+      },
+      "error": {
+        "type": "color",
+        "value": "#C92A2A"
+      }
+    },
+    "action": {
+      "primary": {
+        "background": {
+          "type": "color",
+          "value": "#0fd3d8"
+        }
+      }
+    },
     "white": {
       "value": "#ffffff",
       "type": "color"

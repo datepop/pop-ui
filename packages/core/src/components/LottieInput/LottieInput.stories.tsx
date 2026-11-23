@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { LottieInput } from '.';
 import successCheckJson from './example_lottie.json';
+import { checkUploadLoading, UploadLoadingExample } from '../../../../../.storybook/examples/UploadLoadingExample';
 
 import type { ILottieInputItem } from './types';
 import type { Meta, StoryObj } from '@storybook/react-vite';
@@ -43,8 +44,7 @@ export const Playground: StoryObj<typeof LottieInput> = {
     canDelete: true,
     readOnly: false,
     isLoading: false,
-    errorMsg: '',
-    placeholder: 'Lottie JSON 파일을 넣어주세요',
+    error: '',
   },
 };
 
@@ -63,7 +63,6 @@ export const Interactive: StoryObj<typeof LottieInput> = {
           maxLength={5}
           hasIcon
           canDelete
-          placeholder="Lottie JSON 파일을 넣어주세요"
         />
       </div>
     );
@@ -80,7 +79,6 @@ export const ReadOnly: StoryObj<typeof LottieInput> = {
         readOnly
         hasLink
         onLinkClick={(item) => alert(`링크 클릭: ${item.id}`)}
-        placeholder="Lottie JSON 파일을 넣어주세요"
       />
     </div>
   ),
@@ -94,14 +92,12 @@ export const ErrorState: StoryObj<typeof LottieInput> = {
       <LottieInput
         value={[]}
         minLength={2}
-        errorMsg="Lottie 파일을 최소 2개 이상 등록해 주세요."
-        placeholder="Lottie JSON 파일을 넣어주세요"
+        error="Lottie 파일을 최소 2개 이상 등록해 주세요."
       />
       <LottieInput
         value={SAMPLE_ITEMS.slice(0, 1)}
         minLength={3}
-        errorMsg="필수 Lottie 파일이 부족합니다."
-        placeholder="Lottie JSON 파일을 넣어주세요"
+        error="필수 Lottie 파일이 부족합니다."
       />
     </div>
   ),
@@ -119,7 +115,6 @@ export const LoadingState: StoryObj<typeof LottieInput> = {
         value={SAMPLE_ITEMS.slice(0, 2)}
         isLoading
         maxLength={5}
-        placeholder="Lottie JSON 파일을 넣어주세요"
       />
     </div>
   ),
@@ -128,21 +123,17 @@ export const LoadingState: StoryObj<typeof LottieInput> = {
 // ─── PerItemLoadingState ──────────────────────────────────────────────────────
 
 export const PerItemLoadingState: StoryObj<typeof LottieInput> = {
+  name: '파일별 로딩과 조작',
+  tags: ['pop-ui-contract'],
+  play: checkUploadLoading,
   render: () => (
-    <div style={stackStyle}>
-      <p style={{ margin: 0, fontSize: 12, color: '#666' }}>
-        item.isLoading (per-item) — 첫 번째 타일만 로딩
-      </p>
-      <LottieInput
-        value={[
-          { id: 'item-1', animationData: SAMPLE_ANIMATION_DATA, isLoading: true },
-          { id: 'item-2', animationData: SAMPLE_ANIMATION_DATA },
-        ]}
-        maxLength={5}
-        canDelete
-        placeholder="Lottie JSON 파일을 넣어주세요"
-      />
-    </div>
+    <UploadLoadingExample<ILottieInputItem>
+      initialItems={[
+        { ...SAMPLE_ITEMS[0], position:0, isLoading:true },
+        { ...SAMPLE_ITEMS[1], position:1 },
+      ]}
+      render={props => <LottieInput {...props} />}
+    />
   ),
 };
 

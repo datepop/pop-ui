@@ -3,10 +3,7 @@ import dayjs from 'dayjs';
 import type {
   TCalendarDatePickerType,
   TExcludeCheckerOptions,
-  TMantineClassNameRecord,
-  TMantineClassNamesResolver,
 } from './types';
-import type { MantineTheme } from '@mantine/core';
 import type { DateValue } from '@mantine/dates';
 
 /**
@@ -239,86 +236,4 @@ export const resolveDatePickerValue = ({
   return getEmptyValueForType(type);
 };
 
-/**
- * 기본 classNames와 사용자 제공 classNames를 병합
- *
- * 함수형 classNames의 경우 래핑하여 기본 classNames와 병합하고,
- * 객체형 classNames의 경우 직접 병합합니다.
- * 각 키에 대해 기본 클래스와 커스텀 클래스를 공백으로 연결하므로,
- * 두 스타일이 모두 적용되며 커스텀 클래스가 우선순위를 가집니다.
- * customClassNames에 defaultClassNames에 없는 키가 있어도 결과에 포함됩니다.
- * DatePickerStylesNames에 속하는 키만 허용됩니다.
- *
- * @param defaultClassNames - 기본 클래스명 객체
- * @param classNames - 사용자 제공 클래스명 (함수, 객체, 또는 null/undefined)
- * @returns 병합된 클래스명 (함수형이면 래핑된 함수, 객체형이면 병합된 객체, 그 외는 기본 객체)
- *
- * @example
- * // 객체형
- * const merged = mergeClassNamesWithDefault(
- *   { day: 'default-day', header: 'default-header' },
- *   { day: 'custom-day', calendarHeaderLevel: 'custom-level' }
- * );
- * // => { day: 'default-day custom-day', header: 'default-header', calendarHeaderLevel: 'custom-level' }
- *
- * // 함수형
- * const mergedFn = mergeClassNamesWithDefault(
- *   { day: 'default-day' },
- *   (theme, props, ctx) => ({ day: 'function-day' })
- * );
- * // => (theme, props, ctx) => { day: 'default-day function-day' }
- */
-export const mergeClassNamesWithDefault = <TStylesNames extends string, TProps>(
-  defaultClassNames: TMantineClassNameRecord<TStylesNames>,
-  classNames?: TMantineClassNamesResolver<TStylesNames, TProps>,
-):
-  | TMantineClassNameRecord<TStylesNames>
-  | ((
-      theme: MantineTheme,
-      props: TProps,
-      ctx: unknown,
-    ) => TMantineClassNameRecord<TStylesNames>) => {
-  // 객체 병합 헬퍼 함수
-  const mergeObjects = (
-    defaultClassNames: TMantineClassNameRecord<TStylesNames>,
-    customClassNames: TMantineClassNameRecord<TStylesNames>,
-  ): TMantineClassNameRecord<TStylesNames> => {
-    // 1. defaultClassNames의 모든 키를 순회하여 병합
-    const merged: TMantineClassNameRecord<TStylesNames> = Object.keys(defaultClassNames).reduce(
-      (acc, key) => {
-        const typedKey = key as TStylesNames;
-        const defaultClass = defaultClassNames[typedKey];
-        const customClass = customClassNames[typedKey];
-
-        const mergedClass = [defaultClass, customClass].filter(Boolean).join(' ');
-        if (mergedClass) {
-          acc[typedKey] = mergedClass;
-        }
-
-        return acc;
-      },
-      {} as TMantineClassNameRecord<TStylesNames>,
-    );
-
-    Object.keys(customClassNames).forEach((key) => {
-      const typedKey = key as TStylesNames;
-      const customClass = customClassNames[typedKey];
-      if (!(typedKey in defaultClassNames) && customClass) {
-        merged[typedKey] = customClass;
-      }
-    });
-
-    return merged;
-  };
-
-  if (typeof classNames === 'function') {
-    return (theme: MantineTheme, props: TProps, ctx: unknown) =>
-      mergeObjects(defaultClassNames, classNames(theme, props, ctx));
-  }
-
-  if (typeof classNames === 'object' && classNames !== null && !Array.isArray(classNames)) {
-    return mergeObjects(defaultClassNames, classNames);
-  }
-
-  return defaultClassNames;
-};
+export { mergeClassNamesWithDefault } from '../shared/classNames';

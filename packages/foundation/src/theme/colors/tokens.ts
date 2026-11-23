@@ -29,7 +29,8 @@ export const colors: IColorPaletteType = Object.entries(rawColors).reduce(
     // Flat token (e.g. white: { value: '#fff', type: 'color' })
     if (typeof entryObj.value === 'string') {
       acc[colorName] = { default: entryObj.value };
-    } else {
+    } else if (Object.keys(entryObj).some((key) => /^\d+$/.test(key))) {
+      // Only palette scales belong in the swatch catalog and Mantine color tuples.
       // Nested shades (e.g. gray: { 50: { value: '#...', type: 'color' } })
       acc[colorName] = Object.entries(entryObj as Record<string, ITokenValue>).reduce(
         (shadeAcc, [shade, tokenValue]) => {

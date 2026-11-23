@@ -1,3 +1,4 @@
+import type { TMultiItemInputFeedback } from '../shared/field';
 import type { ReactNode } from 'react';
 
 interface ILottieInputItem {
@@ -19,9 +20,11 @@ interface ILottieInputChangeMeta {
   nextIndex?: number;
 }
 
-interface ILottieInputProps {
+interface ILottieInputProps extends TMultiItemInputFeedback {
   value: ILottieInputItem[];
   onChange?: (nextValue: ILottieInputItem[], meta: ILottieInputChangeMeta) => void;
+  /** 편집 대상의 고유 키. 키가 바뀌면 이전 대상에서 진행 중인 파일 읽기를 폐기합니다. */
+  uploadScope?: string | number;
   width?: number;
   height?: number;
   placeholder?: ReactNode | ((index: number) => ReactNode);
@@ -31,7 +34,6 @@ interface ILottieInputProps {
   length?: number;
   minLength?: number;
   maxLength?: number;
-  errorMsg?: ReactNode;
   isLoading?: boolean;
   readOnly?: boolean;
   gap?: number;

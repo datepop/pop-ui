@@ -2907,7 +2907,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pop-ui/core@workspace:packages/core":
+"@pop-ui/core@workspace:*, @pop-ui/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@pop-ui/core@workspace:packages/core"
   dependencies:
@@ -2940,6 +2940,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^8.46.2"
     "@vitejs/plugin-react": "npm:^5.1.0"
     dayjs: "npm:^1.11.18"
+    dequal: "npm:^2.0.3"
     embla-carousel-react: "npm:^8.6.0"
     eslint: "npm:^9.38.0"
     eslint-plugin-react-hooks: "npm:^7.0.1"
@@ -2986,6 +2987,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@pop-ui/editor@workspace:packages/editor"
   dependencies:
+    "@pop-ui/core": "workspace:*"
     "@pop-ui/editor-core": "workspace:*"
     "@pop-ui/foundation": "workspace:*"
     "@types/node": "npm:^24.9.2"
@@ -11710,6 +11712,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"playwright-core@npm:1.59.1":
+  version: 1.59.1
+  resolution: "playwright-core@npm:1.59.1"
+  bin:
+    playwright-core: cli.js
+  checksum: 10/d27857a6701587c2a9bfa26fed9a5d8c617a392299b99b187f2ddc198d012a1e296449806bc907220debea938152677e8b4d91d304ed00645f762f778de3abec
+  languageName: node
+  linkType: hard
+
 "polished@npm:^4.3.1":
   version: 4.3.1
   resolution: "polished@npm:4.3.1"
@@ -12919,6 +12930,7 @@ __metadata:
     jsdom: "npm:^27.1.0"
     lerna: "npm:^9.0.0"
     lint-staged: "npm:^16.2.6"
+    playwright-core: "npm:1.59.1"
     postcss-scss: "npm:^4.0.9"
     prettier: "npm:^3.6.2"
     react: "npm:^19.2.0"

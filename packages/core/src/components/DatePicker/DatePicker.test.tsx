@@ -74,7 +74,7 @@ vi.mock('@mantine/core', () => {
     { Target: MockPopoverTarget, Dropdown: MockPopoverDropdown },
   );
 
-  return { Input: MockInput, Popover: MockPopover };
+  return { Input: Object.assign(MockInput, { Wrapper: ({ children }: { children: React.ReactNode }) => <>{children}</> }), Popover: MockPopover };
 });
 
 vi.mock('@pop-ui/foundation', () => ({

@@ -15,3 +15,9 @@ export const DefaultSegmentButton: StoryObj<typeof SegmentButton> = {
     disabled: false,
   },
 };
+
+export const ViewSelection: StoryObj<typeof SegmentButton> = {
+  name: "보기 방식 선택",
+  parameters: { layout: "centered" },
+  args: { data: ["목록", "주변 지도"], defaultValue: "목록", size: "md" },
+};

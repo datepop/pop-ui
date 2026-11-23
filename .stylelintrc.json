@@ -38,6 +38,6 @@
     "storybook-static/**/*",
     "coverage/**/*",
     "packages/core/src/components/shared/variables.scss",
-    "packages/core/src/components/shared/font.css"
+    "packages/core/src/components/shared/font.scss"
   ]
 }

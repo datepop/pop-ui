@@ -160,6 +160,13 @@
   }
 }
 
+.DeleteButton:disabled,
+.DragHandle:disabled,
+.DragHandleOverlay:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
 // ─── Placeholder Dropzone ─────────────────────────────────────────────────────
 // .DropzoneOuter 부모 선택자를 추가해 specificity (0,2,0)으로 Mantine 기본 스타일 (0,1,0)을 덮어씁니다.
 

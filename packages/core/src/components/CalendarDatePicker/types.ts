@@ -1,19 +1,7 @@
-import type { MantineTheme } from '@mantine/core';
+import type { TMantineClassNameRecord } from '../shared/classNames';
 import type { DatePickerProps, DateValue, DatePickerStylesNames } from '@mantine/dates';
 
 export type TDayOfWeek = 0 | 1 | 2 | 3 | 4 | 5 | 6;
-
-export type TMantineClassNameRecord<TStylesNames extends string = DatePickerStylesNames> = Partial<
-  Record<TStylesNames, string>
->;
-
-export type TMantineClassNamesResolver<
-  TStylesNames extends string = DatePickerStylesNames,
-  TProps = DatePickerProps,
-> =
-  | TMantineClassNameRecord<TStylesNames>
-  | ((theme: MantineTheme, props: TProps, ctx: unknown) => TMantineClassNameRecord<TStylesNames>)
-  | null;
 
 export type TMantineClassNames = TMantineClassNameRecord<DatePickerStylesNames>;
 /**

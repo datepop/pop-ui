@@ -103,6 +103,12 @@ const meta = {
 
 export default meta;
 
+export const SaveFeedback: StoryObj = {
+  name: '저장 알림',
+  parameters: { layout: 'centered' },
+  render: () => <Button onClick={() => toast('변경 사항을 저장했어요')}>저장</Button>,
+};
+
 export const Basic: StoryObj = {
   parameters: {
     docs: {

@@ -18,7 +18,7 @@ interface ITileShellProps {
   height: number;
   readOnly: boolean;
   isLoading?: boolean;
-  itemIsLoading?: boolean;
+  isPreviewLoading?: boolean;
   canDelete: boolean;
   hasLink: boolean;
   isDragHandleOverlay?: boolean;
@@ -39,7 +39,7 @@ export function TileShell({
   height,
   readOnly,
   isLoading,
-  itemIsLoading,
+  isPreviewLoading,
   canDelete,
   hasLink,
   isDragHandleOverlay = false,
@@ -54,13 +54,15 @@ export function TileShell({
 }: ITileShellProps) {
   const [isDragOver, setIsDragOver] = useState(false);
 
+  const editLocked = readOnly || Boolean(isLoading);
+
   const handleDragOver = (e: React.DragEvent) => {
-    if (!onFileDrop || readOnly || isLoading || itemIsLoading) return;
+    if (!onFileDrop || editLocked) return;
     e.preventDefault();
   };
 
   const handleDragEnter = (e: React.DragEvent) => {
-    if (!onFileDrop || readOnly || isLoading || itemIsLoading) return;
+    if (!onFileDrop || editLocked) return;
     e.preventDefault();
     setIsDragOver(true);
   };
@@ -74,7 +76,7 @@ export function TileShell({
   const handleDrop = (e: React.DragEvent) => {
     e.preventDefault();
     setIsDragOver(false);
-    if (!onFileDrop || readOnly || isLoading || itemIsLoading) return;
+    if (!onFileDrop || editLocked) return;
     const file = e.dataTransfer.files[0];
     if (file) onFileDrop(file);
   };
@@ -93,7 +95,11 @@ export function TileShell({
     transform,
     transition,
     isDragging,
-  } = useSortable({ id, disabled: readOnly, animateLayoutChanges });
+  } = useSortable({
+    id,
+    disabled: { draggable: editLocked, droppable: editLocked },
+    animateLayoutChanges,
+  });
 
   const dragHandle = !readOnly && totalCount > 1 && (
     <button
@@ -103,7 +109,7 @@ export function TileShell({
       {...attributes}
       {...listeners}
       aria-label="드래그로 순서 변경"
-      disabled={isDragHandleOverlay && (!!isLoading || !!itemIsLoading)}
+      disabled={editLocked}
       onClick={isDragHandleOverlay ? (event) => event.stopPropagation() : undefined}
     >
       <IconDragMenu size={20} color={ColorGray600} />
@@ -114,22 +120,23 @@ export function TileShell({
     (hasLink && !!linkUrl && !!onLinkClick) ||
     !!actionBarExtra;
 
-  const tileCursor = readOnly || isLoading || itemIsLoading || !onTileClick ? 'default' : 'pointer';
+  const tileCursor = editLocked || !onTileClick ? 'default' : 'pointer';
 
   return (
     <div
       ref={setNodeRef}
       className={styles.TileContainer}
       style={{
-        transform: CSS.Transform.toString(transform),
+        transform: editLocked ? undefined : CSS.Transform.toString(transform),
         transition,
         opacity: isDragging ? 0.4 : 1,
       }}
     >
-      {!readOnly && canDelete && !isLoading && (
+      {!readOnly && canDelete && (
         <button
           type="button"
           className={styles.DeleteButton}
+          disabled={isLoading}
           onClick={onDelete}
           aria-label={deleteAriaLabel}
         >
@@ -140,7 +147,7 @@ export function TileShell({
       <div
         className={`${styles.Tile}${isDragOver ? ` ${styles.TileDragOver}` : ''}`}
         style={{ width, height, cursor: tileCursor }}
-        onClick={() => !readOnly && !isLoading && !itemIsLoading && onTileClick?.()}
+        onClick={editLocked ? undefined : onTileClick}
         onDragOver={handleDragOver}
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
@@ -148,7 +155,7 @@ export function TileShell({
       >
         {children}
         {isDragHandleOverlay && dragHandle}
-        {(isLoading || itemIsLoading) && (
+        {(isLoading || isPreviewLoading) && (
           <div className={styles.LoadingOverlay}>
             <Loader size={width / 6} color={ColorAqua500} />
           </div>

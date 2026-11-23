@@ -1,0 +1,27 @@
+$families: (
+  'Noto Sans KR': (
+    400: 'NotoSansKR-Regular',
+    500: 'NotoSansKR-Medium',
+    600: 'NotoSansKR-SemiBold',
+    700: 'NotoSansKR-Bold',
+  ),
+  'Montserrat': (
+    500: 'Montserrat-Medium',
+    600: 'Montserrat-SemiBold',
+    700: 'Montserrat-Bold',
+  ),
+);
+
+@mixin register($prefix, $dir) {
+  @each $family, $weights in $families {
+    @each $weight, $file in $weights {
+      @font-face {
+        font-family: '#{$prefix}#{$family}';
+        font-style: normal;
+        font-weight: $weight;
+        font-display: swap;
+        src: url('#{$dir}/#{$file}.woff2') format('woff2');
+      }
+    }
+  }
+}

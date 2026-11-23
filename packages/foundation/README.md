@@ -1,6 +1,6 @@
 # @pop-ui/foundation
 
-Pop UI의 디자인 토큰, 아이콘, 일러스트레이션 등 기본 요소를 제공하는 패키지입니다.
+POP-UI의 디자인 토큰, 아이콘, 일러스트레이션 등 기본 요소를 제공하는 패키지입니다.
 React(웹)와 React Native를 모두 지원합니다.
 
 ## 설치
@@ -247,6 +247,39 @@ yarn build
 
 **참고**: Token 파일을 수정한 후에는 반드시 위 과정을 거쳐 재생성해야 합니다.
 
+#### Penpot 공유 라이브러리
+
+디자인 토큰의 원본은 `packages/foundation/token.json`입니다. 저장소 루트에서
+`yarn token:penpot /tmp/pop-ui.tokens.json`을 실행하면 Penpot의 단일 파일 가져오기 형식으로 변환합니다.
+토큰 이름과 참조를 유지해야 기존 레이어의 연결도 유지됩니다.
+
+TextField와 Dropdown의 기본 테두리는 `color.border.default`, 플레이스홀더는
+`color.text.placeholder`를 사용합니다. Primary Button의 기본·로딩 배경은
+`color.action.primary.background`를 사용합니다. 한 줄 입력 영역과 버튼 본체의 높이는
+`size.control.sm/md/lg`에 연결합니다. 여러 줄 입력은 콘텐츠에 맞춰 높이를 유지합니다.
+`yarn check:penpot --live`는 원본 컴포넌트가 이 역할 토큰을 직접 참조하는지 검사합니다.
+
+토큰을 갱신할 때는 [POP-UI 라이브러리](https://design.datepop.co.kr/?screen=workspace&file-id=746ae1de-283e-8110-8008-f91083966ac9)의 Tokens 탭에서 JSON을 가져오고 `global` 세트가 활성화되어 있는지 확인합니다.
+이어서 같은 파일의 Penpot MCP `execute_code`에서 [스타일 동기화 스크립트](scripts/sync-penpot-styles.js) 내용을 실행합니다.
+그러면 에셋 탭의 색상과 타이포그래피가 `global` 토큰 값으로 갱신됩니다. 같은 이름의 기존 에셋은 ID를 유지하므로 제품 파일에서 적용한 스타일 연결도 유지됩니다.
+제품 파일에서는 에셋의 **라이브러리 관리**에서 POP-UI를 연결하고 토큰 소스로 지정합니다.
+[버튼 사용 예시](https://design.datepop.co.kr/?screen=workspace&file-id=746ae1de-283e-8110-8008-f913e2c5b49c)에서 라벨을 수정한 뒤 `state`를 바꿔 확인할 수 있습니다.
+
+벡터 에셋이 변경되면 저장소 루트에서
+`yarn workspace @pop-ui/foundation assets:penpot /tmp/pop-ui.assets.json`을 실행합니다.
+공개 아이콘·일러스트·브랜드 컴포넌트를 실제 SVG로 렌더링하고, 같은 구현을 가리키는 export는
+`aliases`에 모읍니다. `variants`에는 지원하는 `variant`와 `thick` 조합 및 SVG가 들어 있습니다.
+Penpot에서 Foundation 에셋은 `Icons`, `Illustrations`, `Brand`, `Images`로 분류합니다.
+공용 이미지는 `Images` 페이지에 모으고 코드의 키를 에셋 이름으로 사용합니다.
+예를 들어 `foundationImages.favoriteOn`의 원본은 `src/images/favoriteOn.webp`이고,
+에셋 경로는 `Foundation / Images / favoriteOn`입니다.
+에셋 설명에는 코드의 전체 이름을 기록하고, 분류를 바꿀 때는 기존 에셋의 경로를 수정해 ID를 유지합니다.
+
+컴포넌트 옵션을 추가할 때는 `@pop-ui/core` 또는 `@pop-ui/editor`의 props와 Storybook을
+확인하고 기존 Penpot 메인 컴포넌트를 갱신합니다. 기존 variant를 유지하면 제품 파일에서
+연결한 인스턴스와 수정한 문구를 계속 사용할 수 있습니다. 지도 배경 예시에는
+`foundationImages.mapSample`을 사용합니다.
+
 ### 스크립트
 
 | 명령어 | 설명 |
@@ -332,4 +365,4 @@ MIT
 
 ## 관련 패키지
 
-- [@pop-ui/core](https://www.npmjs.com/package/@pop-ui/core) - Pop UI 컴포넌트 라이브러리
+- [@pop-ui/core](https://www.npmjs.com/package/@pop-ui/core) - POP-UI 컴포넌트 라이브러리

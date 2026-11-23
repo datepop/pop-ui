@@ -2,7 +2,6 @@
 
 import { DndContext, closestCenter } from '@dnd-kit/core';
 import { SortableContext, rectSortingStrategy } from '@dnd-kit/sortable';
-import { Input } from '@mantine/core';
 import { IMAGE_MIME_TYPE } from '@mantine/dropzone';
 import {
   ColorAqua700,
@@ -32,6 +31,8 @@ import { PlaceholderDropzone } from '../shared/MultiItemInput/Dropzone';
 import { SortableEmptySlot } from '../shared/MultiItemInput/SortableEmptySlot';
 import { TileShell } from '../shared/MultiItemInput/TileShell';
 import { usePositionGrid } from '../shared/MultiItemInput/usePositionGrid';
+import { useUploadCommit } from '../shared/MultiItemInput/useUploadCommit';
+import { useUploadFeedback } from '../shared/MultiItemInput/useUploadFeedback';
 
 import type {
   TImageInputAccept,
@@ -110,8 +111,7 @@ function ImageTile({
       width={width}
       height={height}
       readOnly={readOnly}
-      isLoading={isLoading}
-      itemIsLoading={item.isLoading}
+      isLoading={isLoading || item.isLoading}
       canDelete={item.canDelete ?? canDelete}
       isDragHandleOverlay
       hasLink={hasLink && canShowLink}
@@ -135,6 +135,7 @@ function ImageTile({
     >
       <input
         ref={fileInputRef}
+        disabled={readOnly || isLoading || item.isLoading}
         type="file"
         accept={toInputAccept(accept)}
         style={{ display: 'none' }}
@@ -203,6 +204,7 @@ export const ImageInput = ({
   minLength,
   maxLength,
   errorMsg,
+  error = errorMsg,
   isLoading,
   readOnly,
   gap = 8,
@@ -222,9 +224,18 @@ export const ImageInput = ({
     sensors,
     handleDragEnd,
     getMetaIndex,
-  } = usePositionGrid({ value, length, minLength, maxLength, onChange });
+    getEditableItem,
+    canAddFiles,
+  } = usePositionGrid({
+    value,
+    length,
+    minLength,
+    maxLength,
+    onChange,
+    disabled: Boolean(readOnly || isLoading),
+  });
 
-  const isError = !!errorMsg;
+  const { isError, errorId, message } = useUploadFeedback(error);
   const [editingItem, setEditingItem] = useState<IImageInputItem | null>(null);
   const [previewSelection, setPreviewSelection] = useState<
     (Pick<IImageInputItem, 'id'> & { url: string }) | null
@@ -244,52 +255,45 @@ export const ImageInput = ({
     return () => revokeItemUrls(latestValueRef.current);
   }, []);
 
-  const handleDrop = (files: File[]) => {
-    if (readOnly) return;
-    const prevLength = value.length;
-    const next = addItems(value, files, resolvedMaxLength);
-    if (next.length === prevLength) return;
+  const handleDrop = useUploadCommit((files: File[], position?: number) => {
+    if (!canAddFiles(position) || !files.length) return;
+    const next =
+      position === undefined
+        ? addItems(value, files, resolvedMaxLength)
+        : addItemAtPosition(value, files[0], position);
     onChange?.(next, {
       action: 'create',
-      itemId: next[prevLength].id,
-      index: prevLength,
+      itemId: next[value.length].id,
+      index: position ?? value.length,
     });
-  };
-
-  const handlePositionDrop = (position: number, files: File[]) => {
-    if (readOnly) return;
-    const file = files[0];
-    if (!file) return;
-    const next = addItemAtPosition(value, file, position);
-    onChange?.(next, {
-      action: 'create',
-      itemId: next[next.length - 1].id,
-      index: position,
-    });
-  };
+  });
 
   const handleDelete = (id: string) => {
-    if (readOnly) return;
+    const item = getEditableItem(id);
+    if (!item || !(item.canDelete ?? canDelete)) return;
     const index = getMetaIndex(id);
     const next = deleteItem(value, id);
     onChange?.(next, { action: 'delete', itemId: id, index });
   };
 
   const handleReplace = (id: string, file: File) => {
-    if (readOnly) return;
+    if (!getEditableItem(id)) return;
     const index = getMetaIndex(id);
     const next = replaceItem(value, id, file);
     onChange?.(next, { action: 'replace', itemId: id, index });
   };
 
-  const handleCropSubmit = (file: File) => {
-    if (!editingItem) return;
-    const id = editingItem.id;
-    const index = getMetaIndex(id);
-    const next = cropItem(value, id, file);
+  const editable = editingItem && getEditableItem(editingItem.id);
+  const canCrop = hasEdit && editable && editable.url === editingItem?.url;
+  if (editingItem && !canCrop) setEditingItem(null);
+
+  const commitCrop = useUploadCommit((original: IImageInputItem, file: File) => {
+    if (!canCrop || original !== editingItem) return;
+    const index = getMetaIndex(original.id);
+    const next = cropItem(value, original.id, file);
     setEditingItem(null);
-    onChange?.(next, { action: 'crop', itemId: id, index });
-  };
+    onChange?.(next, { action: 'crop', itemId: original.id, index });
+  });
 
   const resolvedPlaceholder = (index: number) => {
     const text = typeof placeholder === 'function' ? placeholder(index) : placeholder;
@@ -333,11 +337,13 @@ export const ImageInput = ({
                   !readOnly && (
                     <SortableEmptySlot key={slotId} id={slotId}>
                       <PlaceholderDropzone
-                        onDrop={(files) => handlePositionDrop(pos, files)}
+                        onDrop={(files) => handleDrop(files, pos)}
                         accept={accept ?? IMAGE_MIME_TYPE}
                         multiple={false}
                         isLoading={isLoading}
                         isError={isError}
+                        errorId={errorId}
+                        fallbackLabel={placeholder ? undefined : '이미지 추가'}
                         width={width}
                         height={height}
                       >
@@ -386,11 +392,13 @@ export const ImageInput = ({
                   Array.from({ length: placeholderCount }, (_, i) => (
                     <PlaceholderDropzone
                       key={`placeholder-${i}`}
-                      onDrop={handleDrop}
+                      onDrop={(files) => handleDrop(files)}
                       accept={accept ?? IMAGE_MIME_TYPE}
                       multiple={resolvedMaxLength !== 1}
                       isLoading={isLoading}
                       isError={isError}
+                      errorId={errorId}
+                      fallbackLabel={placeholder ? undefined : '이미지 추가'}
                       width={width}
                       height={height}
                     >
@@ -412,14 +420,14 @@ export const ImageInput = ({
         </SortableContext>
       </DndContext>
 
-      {isError && <Input.Error mt={8}>{errorMsg}</Input.Error>}
+      {message}
 
       {hasEdit && (
         <ImageInputCropModal
           item={editingItem}
           isOpen={!!editingItem}
           onClose={() => setEditingItem(null)}
-          onSubmit={handleCropSubmit}
+          onSubmit={(file) => editingItem && commitCrop(editingItem, file)}
         />
       )}
 

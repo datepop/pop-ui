@@ -3,6 +3,7 @@ import React from 'react';
 import '@mantine/core/styles.css';
 import '@mantine/dates/styles.css';
 import '@mantine/notifications/styles.css';
+import '../packages/core/src/components/shared/font.scss';
 import { PopUiProvider } from '../packages/core/src/theme/ThemeProvider';
 
 import type { Preview } from '@storybook/react-vite';

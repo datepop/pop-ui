@@ -6,7 +6,7 @@ import { DateTimePicker } from '@mantine/dates';
 import { IconCalendar, formatDateDisplay, toValueString, parseDateValue } from '@pop-ui/foundation';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat.js';
-import { useState } from 'react';
+import { useEffect, useId, useRef, useState } from 'react';
 
 dayjs.extend(customParseFormat);
 
@@ -14,15 +14,13 @@ import { CalendarDatePicker } from '../CalendarDatePicker';
 import styles from './styles.module.scss';
 import {
   getEmptyValueForType,
-  mergeClassNamesWithDefault,
   resolveDatePickerValue,
 } from '../CalendarDatePicker/utils';
+import { mergeClassNamesWithDefault } from '../shared/classNames';
+import { fieldContentOrder } from '../shared/field';
 
 import type { IDatePickerProps } from './types';
-import type {
-  TMantineClassNameRecord,
-  TMantineClassNamesResolver,
-} from '../CalendarDatePicker/types';
+import type { TMantineClassNameRecord, TMantineClassNamesResolver } from '../shared/classNames';
 import type { PopoverProps, PopoverStylesNames } from '@mantine/core';
 import type { DateTimePickerProps, DateTimePickerStylesNames, DateValue } from '@mantine/dates';
 
@@ -84,6 +82,10 @@ const toDateOrNull = (v: DateValue | null | undefined): Date | null => {
 };
 
 export const DatePicker = ({
+  id,
+  label,
+  required,
+  description,
   size = 'md',
   type = 'default',
   withTime,
@@ -95,6 +97,7 @@ export const DatePicker = ({
   defaultValue,
   onChange,
   placeholder,
+  error,
   disabled,
   minDate,
   maxDate,
@@ -106,12 +109,28 @@ export const DatePicker = ({
 }: IDatePickerProps) => {
   const resolvedValueFormat = valueFormat ?? (withTime ? 'YYYY-MM-DD HH:mm' : 'YYYY-MM-DD');
 
+  const generatedId = useId();
+  const fieldId = id ?? generatedId;
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const [attemptedValidation, setAttemptedValidation] = useState(false);
   const [opened, setOpened] = useState(false);
   const [internalValue, setInternalValue] = useState<TInternalDateValue>(
     () =>
       parseDateValue(value ?? defaultValue, type, resolvedValueFormat) ??
       (getEmptyValueForType(type) as TInternalDateValue),
   );
+
+  useEffect(() => {
+    const form = triggerRef.current?.form;
+    if (!form || withTime) return;
+    const resetValidation = (event: Event) => {
+      queueMicrotask(() => {
+        if (!event.defaultPrevented) setAttemptedValidation(false);
+      });
+    };
+    form.addEventListener('reset', resetValidation);
+    return () => form.removeEventListener('reset', resetValidation);
+  }, [withTime]);
 
   let sizeStyle = styles['DatePicker--Medium'];
   let iconSize = 18;
@@ -152,6 +171,14 @@ export const DatePicker = ({
 
     return (
       <DateTimePicker
+        id={fieldId}
+        label={label}
+        required={required}
+        aria-required={required}
+        descriptionProps={{ className: styles.DatePicker__Description }}
+        errorProps={{ className: styles.DatePicker__Error }}
+        description={description}
+        inputWrapperOrder={fieldContentOrder}
         className={joinClassNames(
           styles.DatePickerBase,
           styles.DatePickerRoot,
@@ -184,6 +211,7 @@ export const DatePicker = ({
           // Mantine 8은 Date 또는 DateStringValue를 emit — 공개 API 형식(string | null)으로 변환
           onChange?.(next ? dayjs(next).format(resolvedValueFormat) : null);
         }}
+        error={error}
         placeholder={placeholder}
         disabled={disabled}
         minDate={minDate}
@@ -193,16 +221,28 @@ export const DatePicker = ({
   }
 
   const parsedExternalValue =
-    value != null ? (parseDateValue(value, type, resolvedValueFormat) as DateValue) : undefined;
+    value !== undefined
+      ? (parseDateValue(value, type, resolvedValueFormat) as DateValue)
+      : undefined;
   const resolvedValue = resolveDatePickerValue({
     type,
     externalValue: parsedExternalValue,
     internalValue: internalValue as DateValue,
   });
+  const hasCompleteDate = Array.isArray(resolvedValue)
+    ? resolvedValue.length > 0 && resolvedValue.every(Boolean)
+    : Boolean(resolvedValue);
+  if (attemptedValidation && (hasCompleteDate || !required || disabled)) {
+    setAttemptedValidation(false);
+  }
+  const missingRequiredDate = attemptedValidation && required && !disabled && !hasCompleteDate;
+  const fieldError =
+    missingRequiredDate && (!error || typeof error === 'boolean') ? '날짜를 선택해주세요.' : error;
   const displayText = formatDateDisplay(
     resolvedValue as TInternalDateValue,
     type,
-    displayValueFormat,
+    // Keep the spaces inside each selected date together when the list wraps.
+    type === 'default' ? displayValueFormat : displayValueFormat.replaceAll(' ', '\u00a0'),
   );
 
   const handleCalendarChange = (newValue: DateValue) => {
@@ -230,9 +270,38 @@ export const DatePicker = ({
   };
 
   return (
-    <div
+    <Input.Wrapper
+      id={fieldId}
+      label={label}
+      labelProps={{ id: fieldId + '-label' }}
+      required={required}
+      description={description}
+      error={fieldError}
+      inputWrapperOrder={fieldContentOrder}
+      descriptionProps={{ className: styles.DatePicker__Description }}
+      errorProps={{
+        className: styles.DatePicker__Error,
+        role: missingRequiredDate ? 'alert' : undefined,
+      }}
       className={joinClassNames(styles.DatePickerBase, styles.DatePickerRoot, sizeStyle, className)}
     >
+      {required && (
+        <input
+          className={styles.DatePicker__Validity}
+          tabIndex={-1}
+          aria-hidden="true"
+          required
+          disabled={disabled}
+          value={hasCompleteDate ? 'selected' : ''}
+          onChange={() => {}}
+          onInvalid={(event) => {
+            event.preventDefault();
+            // Keep reset and invalid notifications in their native event order.
+            queueMicrotask(() => setAttemptedValidation(true));
+            triggerRef.current?.focus();
+          }}
+        />
+      )}
       <Popover
         opened={opened}
         onClose={() => setOpened(false)}
@@ -251,7 +320,14 @@ export const DatePicker = ({
             data-disabled={disabled ? true : undefined}
           >
             <Input
+              error={Boolean(fieldError)}
+              aria-required={required}
+              id={fieldId}
               component="button"
+              ref={triggerRef}
+              aria-labelledby={
+                label && displayText ? fieldId + '-label ' + fieldId + '-value' : undefined
+              }
               type="button"
               classNames={{
                 input: styles.DatePicker__Input,
@@ -265,7 +341,9 @@ export const DatePicker = ({
               data-disabled={disabled ? true : undefined}
             >
               {displayText ? (
-                <span>{displayText}</span>
+                <span id={fieldId + '-value'} className={styles.DatePicker__Value}>
+                  {displayText}
+                </span>
               ) : (
                 <span className={styles.DatePicker__Placeholder}>{placeholder}</span>
               )}
@@ -286,6 +364,6 @@ export const DatePicker = ({
           />
         </Popover.Dropdown>
       </Popover>
-    </div>
+    </Input.Wrapper>
   );
 };

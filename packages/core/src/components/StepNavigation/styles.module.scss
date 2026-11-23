@@ -1,5 +1,6 @@
 @use '../shared/variables.scss' as *;
 @use '../shared/functions' as fn;
+@use '../shared/focus';
 
 .StepNavigation {
   max-width: 100%;
@@ -33,8 +34,7 @@
   }
 
   &:focus-visible {
-    outline: fn.border-width(50) solid $color-aqua-800;
-    outline-offset: 2px;
+    @include focus.ring;
   }
 
   &:global([data-progress]) .StepNavigation__StepLabel {
