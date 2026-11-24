@@ -1,6 +1,6 @@
 [
   {
-    "export": "IconHotelAmenity",
+    "export": "IconAmenity",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/ic_hotel_amenity.xml",
@@ -8,7 +8,7 @@
     "viewBox": "0 0 24 24"
   },
   {
-    "export": "IconHotelAmenitySmall",
+    "export": "IconAmenitySmall",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/ic_hotel_amenity_small.xml",
@@ -16,7 +16,7 @@
     "viewBox": "0 0 20 20"
   },
   {
-    "export": "IconHotelEvent",
+    "export": "IconEvent",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/ic_hotel_event.xml",
@@ -24,7 +24,7 @@
     "viewBox": "0 0 24 24"
   },
   {
-    "export": "IconHotelRoomSection",
+    "export": "IconRoomSection",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/ic_hotel_room_section.xml",
@@ -32,7 +32,7 @@
     "viewBox": "0 0 24 24"
   },
   {
-    "export": "IconHotelCalendar",
+    "export": "IconCalendarCompact",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/ic_hotel_calendar.xml",
@@ -40,7 +40,7 @@
     "viewBox": "0 0 16 16"
   },
   {
-    "export": "IconHotelPerson",
+    "export": "IconPerson",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/ic_hotel_person.xml",
@@ -48,7 +48,7 @@
     "viewBox": "0 0 16 16"
   },
   {
-    "export": "IconHotelPin",
+    "export": "IconPin",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/ic_hotel_pin.xml",
@@ -56,7 +56,7 @@
     "viewBox": "0 0 7.9979 10.25"
   },
   {
-    "export": "IconHotelChevronRight",
+    "export": "IconChevronRightCompact",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/ic_hotel_chevron_right.xml",
@@ -64,7 +64,7 @@
     "viewBox": "0 0 12 12"
   },
   {
-    "export": "IconHotelChevronDown",
+    "export": "IconChevronDownCompact",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/ic_hotel_chevron_down.xml",
@@ -72,7 +72,7 @@
     "viewBox": "0 0 14 14"
   },
   {
-    "export": "IconHotelChevronDownBold",
+    "export": "IconChevronDownBold",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/ic_hotel_chevron_down_bold.xml",
@@ -80,7 +80,7 @@
     "viewBox": "0 0 16 16"
   },
   {
-    "export": "IconHotelChevronUpBold",
+    "export": "IconChevronUpBold",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/ic_hotel_chevron_up_bold.xml",
@@ -88,7 +88,7 @@
     "viewBox": "0 0 16 16"
   },
   {
-    "export": "IconHotelBed",
+    "export": "IconBed",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/ic_hotel_bed.xml",
@@ -96,7 +96,7 @@
     "viewBox": "0 0 16 16"
   },
   {
-    "export": "IconHotelCancellation",
+    "export": "IconCancellation",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/ic_hotel_cancellation.xml",
@@ -104,7 +104,7 @@
     "viewBox": "0 0 16 16"
   },
   {
-    "export": "IconHotelCheck",
+    "export": "IconCheckCompact",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/ic_hotel_check.xml",
@@ -112,7 +112,7 @@
     "viewBox": "0 0 12 12"
   },
   {
-    "export": "IconHotelInformation",
+    "export": "IconInformation",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/ic_hotel_detail_information.xml",
@@ -120,7 +120,7 @@
     "viewBox": "0 0 14 14"
   },
   {
-    "export": "IconHotelSeller",
+    "export": "IconSeller",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/ic_hotel_seller.xml",
@@ -128,7 +128,7 @@
     "viewBox": "0 0 16 16"
   },
   {
-    "export": "IconHotelSupportCall",
+    "export": "IconSupportCall",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/ic_hotel_support_call.xml",
@@ -136,7 +136,7 @@
     "viewBox": "0 0 13.6668 13.6668"
   },
   {
-    "export": "IconHotelReport",
+    "export": "IconReportCompact",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/ic_hotel_report.xml",
@@ -144,7 +144,7 @@
     "viewBox": "0 0 16 16"
   },
   {
-    "export": "IconHotelSummaryMap",
+    "export": "IconSummaryMap",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/ic_spot_summary_map.xml",
@@ -152,7 +152,7 @@
     "viewBox": "0 0 31 30"
   },
   {
-    "export": "IconHotelNaverLogo",
+    "export": "IconNaverLogo",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/spot_naver_logo.xml",
@@ -160,7 +160,7 @@
     "viewBox": "0 0 18 18"
   },
   {
-    "export": "IconHotelNaverSearch",
+    "export": "IconNaverSearch",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/spot_naver_search.xml",
@@ -168,7 +168,7 @@
     "viewBox": "0 0 17 17"
   },
   {
-    "export": "IconHotelFooterCheck",
+    "export": "IconFooterCheck",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/ic_spot_pi_check.xml",
@@ -176,7 +176,7 @@
     "viewBox": "0 0 15 15"
   },
   {
-    "export": "IconHotelFooterFavorite",
+    "export": "IconFooterFavorite",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/ic_spot_bottom_favorite_off.xml",
@@ -184,7 +184,7 @@
     "viewBox": "0 0 18 17"
   },
   {
-    "export": "IconHotelFooterFavorite",
+    "export": "IconFooterFavorite",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/ic_spot_bottom_favorite_on.xml",
@@ -192,7 +192,7 @@
     "viewBox": "0 0 18 17"
   },
   {
-    "export": "IconHotelFacilityPet",
+    "export": "IconFacilityPet",
     "repo": "datepop/inhouse",
     "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
     "path": "src/pages/SpotContentWritePage/HotelBasic/assets/pet.svg",
@@ -200,7 +200,7 @@
     "viewBox": "0 0 20 20"
   },
   {
-    "export": "IconHotelFacilityLuggage",
+    "export": "IconFacilityLuggage",
     "repo": "datepop/inhouse",
     "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
     "path": "src/pages/SpotContentWritePage/HotelBasic/assets/luggage.svg",
@@ -208,7 +208,7 @@
     "viewBox": "0 0 20 20"
   },
   {
-    "export": "IconHotelFacilityRefrigerator",
+    "export": "IconFacilityRefrigerator",
     "repo": "datepop/inhouse",
     "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
     "path": "src/pages/SpotContentWritePage/HotelBasic/assets/refrigerator.svg",
@@ -216,7 +216,7 @@
     "viewBox": "0 0 20 20"
   },
   {
-    "export": "IconHotelFacilityBreakfast",
+    "export": "IconFacilityBreakfast",
     "repo": "datepop/inhouse",
     "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
     "path": "src/pages/SpotContentWritePage/HotelBasic/assets/breakfast.svg",
@@ -224,7 +224,7 @@
     "viewBox": "0 0 20 20"
   },
   {
-    "export": "IconHotelFacilityWifi",
+    "export": "IconFacilityWifi",
     "repo": "datepop/inhouse",
     "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
     "path": "src/pages/SpotContentWritePage/HotelBasic/assets/wifi.svg",
@@ -232,7 +232,7 @@
     "viewBox": "0 0 20 20"
   },
   {
-    "export": "IconHotelFacilityNoSmoking",
+    "export": "IconFacilityNoSmoking",
     "repo": "datepop/inhouse",
     "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
     "path": "src/pages/SpotContentWritePage/HotelBasic/assets/no-smoking.svg",
@@ -240,7 +240,7 @@
     "viewBox": "0 0 20 20"
   },
   {
-    "export": "IconHotelFacilityOtt",
+    "export": "IconFacilityOtt",
     "repo": "datepop/inhouse",
     "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
     "path": "src/pages/SpotContentWritePage/HotelBasic/assets/ott.svg",
@@ -248,7 +248,7 @@
     "viewBox": "0 0 20 20"
   },
   {
-    "export": "IconHotelFacilityAmenities",
+    "export": "IconFacilityAmenities",
     "repo": "datepop/inhouse",
     "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
     "path": "src/pages/SpotContentWritePage/HotelBasic/assets/amenities.svg",
@@ -256,7 +256,7 @@
     "viewBox": "0 0 20 20"
   },
   {
-    "export": "IconHotelFacilitySauna",
+    "export": "IconFacilitySauna",
     "repo": "datepop/inhouse",
     "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
     "path": "src/pages/SpotContentWritePage/HotelBasic/assets/sauna.svg",
@@ -264,7 +264,7 @@
     "viewBox": "0 0 20 20"
   },
   {
-    "export": "IconHotelFacilityTv",
+    "export": "IconFacilityTv",
     "repo": "datepop/inhouse",
     "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
     "path": "src/pages/SpotContentWritePage/HotelBasic/assets/tv.svg",
@@ -272,7 +272,7 @@
     "viewBox": "0 0 20 20"
   },
   {
-    "export": "IconHotelFacilityFitness",
+    "export": "IconFacilityFitness",
     "repo": "datepop/inhouse",
     "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
     "path": "src/pages/SpotContentWritePage/HotelBasic/assets/fitness.svg",
@@ -280,7 +280,7 @@
     "viewBox": "0 0 20 20"
   },
   {
-    "export": "IconHotelFacilityStyler",
+    "export": "IconFacilityStyler",
     "repo": "datepop/inhouse",
     "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
     "path": "src/pages/SpotContentWritePage/HotelBasic/assets/styler.svg",
@@ -288,7 +288,7 @@
     "viewBox": "0 0 20 20"
   },
   {
-    "export": "IconHotelFacilityAirPurifier",
+    "export": "IconFacilityAirPurifier",
     "repo": "datepop/inhouse",
     "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
     "path": "src/pages/SpotContentWritePage/HotelBasic/assets/air-purifier.svg",
@@ -296,7 +296,7 @@
     "viewBox": "0 0 20 20"
   },
   {
-    "export": "IconHotelFacilityWashingMachine",
+    "export": "IconFacilityWashingMachine",
     "repo": "datepop/inhouse",
     "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
     "path": "src/pages/SpotContentWritePage/HotelBasic/assets/washing-machine.svg",
@@ -304,7 +304,7 @@
     "viewBox": "0 0 20 20"
   },
   {
-    "export": "IconHotelFacilityBathtub",
+    "export": "IconFacilityBathtub",
     "repo": "datepop/inhouse",
     "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
     "path": "src/pages/SpotContentWritePage/HotelBasic/assets/bathtub.svg",
@@ -312,7 +312,7 @@
     "viewBox": "0 0 20 20"
   },
   {
-    "export": "IconHotelFacilityAirConditioner",
+    "export": "IconFacilityAirConditioner",
     "repo": "datepop/inhouse",
     "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
     "path": "src/pages/SpotContentWritePage/HotelBasic/assets/air-conditioner.svg",
@@ -320,7 +320,7 @@
     "viewBox": "0 0 20 20"
   },
   {
-    "export": "IconHotelFacilityDryer",
+    "export": "IconFacilityDryer",
     "repo": "datepop/inhouse",
     "commit": "dbb0f4ef1f698f1901d714332d716bd31300e7a4",
     "path": "src/pages/SpotContentWritePage/HotelBasic/assets/dryer.svg",
@@ -398,7 +398,7 @@
     "sha256": "447b848269bdae2e8e30f385a95f24dcc54a80304b00452159cdd3f687d6cfc3"
   },
   {
-    "export": "IconHotelPoploggerArrowRight",
+    "export": "IconPoploggerArrowRight",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/poplogger_recruitment_arrow_right.xml",
@@ -406,7 +406,7 @@
     "viewBox": "0 0 16 16"
   },
   {
-    "export": "IconHotelHelpful",
+    "export": "IconHelpful",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/icon_unselected_helpful.xml",
@@ -415,7 +415,7 @@
     "variant": "line"
   },
   {
-    "export": "IconHotelHelpful",
+    "export": "IconHelpful",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/icon_selected_helpful.xml",
@@ -460,7 +460,7 @@
     "sha256": "10a9976a0c51f12fe312e0c8d74a19bd84ec5ede0b8e6b28f313be38d92c259e"
   },
   {
-    "export": "IconHotelPoplogChevronRight",
+    "export": "IconPoplogChevronRight",
     "repo": "datepop/datepop-android",
     "commit": "06a9ac7df065775c5a9748ee80c71d068e89e097",
     "path": "core-res/src/main/res/drawable/chevron_right_gray.xml",
