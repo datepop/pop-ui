@@ -30,7 +30,9 @@ export const TimePicker = ({ size = 'md', ...props }: ITimePickerProps) => {
       {...props}
       rightSection={
         <ActionIcon
+          aria-label="시간 선택"
           bg="transparent"
+          disabled={props.disabled || props.readOnly}
           onClick={() => {
             timeInputRef.current?.showPicker?.();
           }}

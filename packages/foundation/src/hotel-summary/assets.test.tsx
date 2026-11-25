@@ -6,11 +6,11 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { expect, it } from 'vitest';
 
 import sources from '../../../../docs/hotel-summary-assets.sources.json';
-import { IconHotelFacilityOtt, IconHotelFooterFavorite, IconHotelHelpful } from '../icons';
+import { IconFacilityOtt, IconFooterFavorite, IconHelpful } from '../icons';
 
 it('retains the original off/on favorite paint without changing its geometry', () => {
-  const off = renderToStaticMarkup(<IconHotelFooterFavorite />);
-  const on = renderToStaticMarkup(<IconHotelFooterFavorite variant="filled" />);
+  const off = renderToStaticMarkup(<IconFooterFavorite />);
+  const on = renderToStaticMarkup(<IconFooterFavorite variant="filled" />);
   expect(off).toContain('fill-opacity="0.063"');
   expect(on).toContain('fill-opacity="1"');
   expect(off.match(/ d="[^"]+"/g)).toEqual(on.match(/ d="[^"]+"/g));
@@ -20,8 +20,8 @@ it('retains the original off/on favorite paint without changing its geometry', (
 it('keeps facility clip paths separate when several instances share a document', () => {
   const html = renderToStaticMarkup(
     <>
-      <IconHotelFacilityOtt />
-      <IconHotelFacilityOtt />
+      <IconFacilityOtt />
+      <IconFacilityOtt />
     </>,
   );
   const ids = [...html.matchAll(/id="([^"]+)"/g)].map((match) => match[1]);
@@ -47,8 +47,8 @@ it('ships the unmodified Android raster originals identified by the source inven
 });
 
 it("retains the helpful variants' distinct original canvases and selected paint", () => {
-  const off = renderToStaticMarkup(<IconHotelHelpful />);
-  const on = renderToStaticMarkup(<IconHotelHelpful variant="filled" />);
+  const off = renderToStaticMarkup(<IconHelpful />);
+  const on = renderToStaticMarkup(<IconHelpful variant="filled" />);
   expect(off).toContain('viewBox="0 0 20 20"');
   expect(off).toContain('fill="none"');
   expect(on).toContain('viewBox="0 0 24 24"');

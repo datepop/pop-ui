@@ -33,7 +33,7 @@ $time-picker-config-large: (
 }
 
 @mixin TimePickerFocus {
-  &:hover {
+  &:enabled:hover {
     outline: fn.border-width(37) solid $color-aqua-300;
     border-color: transparent;
     background-color: $color-white;
